@@ -1,4 +1,4 @@
-site_name: My Docs
+site_name: Kabason Docs
 
 theme:
   name: material
@@ -52,7 +52,7 @@ extra:
             using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
   social:
     - icon: fontawesome/brands/linkedin 
-      link: https://fosstodon.org/@squidfunk
+      link: https://linkedin.com/in/christian-kaba-b8247a157
 
 
 plugins:
@@ -61,3 +61,37 @@ plugins:
   - offline
 
 copyright: Copyright &copy; 2024 - 2028 Christian Kaba
+
+nav:
+  - Home: index.md
+  - Home Lab:
+      - Introduction: home-lab/introduction.md
+      - Introduction: home-lab/introduction.md
+      - Virtualization:
+          - Proxmox VE: 
+              - Overview: home-lab/virtualization/proxmox/proxmox.md
+              - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
+              - Proxmox VE Configuration: home-lab/virtualization/proxmox/proxmox-configuration.md
+              - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
+              - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
+              - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
+          - VMWare ESXi: home-lab/virtualization/vmware.md
+      - Application:
+          - Audiobookshelf: Home-lab/Application/audiobookshelf.md
+          - Authentik: Home-lab/Application/authentik.md
+          - Bookstack: Home-lab/Application/bookstack.md
+          - Nextcloud: Home-lab/Application/nextcloud.md
+          - OpenVPN: Home-lab/Application/openvpn.md
+          - Pairdrop: Home-lab/Application/pairdrop.md
+          - Paperless-NGX: Home-lab/Application/paperless.md
+          - Snipe-IT: Home-lab/Application/snipeit.md
+          - Zabbix: Home-lab/Application/zabbix.md
+      - Services:
+          - Cloudflare: 
+              - Introduction: home-lab/services/cloudflare.md
+              - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
+          - DNS: home-lab/services/dns.md
+          - Email: home-lab/services/email.md
+          - Home Assistant: home-lab/services/home-assistant.md
+  
+  - About: about.md
