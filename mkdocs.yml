@@ -90,7 +90,7 @@ nav:
           - Cloudflare: 
               - Introduction: home-lab/services/cloudflare.md
               - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
-          - DNS: home-lab/services/dns.md
+         # - DNS: home-lab/services/dns.md
           - Email: home-lab/services/email.md
           - Home Assistant: home-lab/services/home-assistant.md
   
