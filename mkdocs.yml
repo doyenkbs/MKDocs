@@ -62,11 +62,9 @@ plugins:
 
 copyright: Copyright &copy; 2024 - 2028 Christian Kaba
 
-nav:
-  - Home: index.md
+nav:  
   - Home Lab:
-      - Introduction: home-lab/introduction.md
-      - Introduction: home-lab/introduction.md
+      - Introduction: index.md
       - Virtualization:
           - Proxmox VE: 
               - Overview: home-lab/virtualization/proxmox/proxmox.md
