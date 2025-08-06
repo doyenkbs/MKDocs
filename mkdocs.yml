@@ -105,6 +105,7 @@ nav:
       - Overview: home-lab/homelab.md
       - Docker: home-lab/docker.md
       - Virtualization:
+          - Overview: home-lab/virtualization/virtualization.md
           - Proxmox VE: 
               - Overview: home-lab/virtualization/proxmox/proxmox.md
               - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
@@ -114,6 +115,7 @@ nav:
               - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
           - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
       - Self-Hosted Applications:
+          - Overview: home-lab/application/applications.md
           - Audiobookshelf: home-lab/application/audiobookshelf.md
           - Authentik: home-lab/application/authentik.md
           - Bookstack: home-lab/application/bookstack.md
@@ -124,6 +126,7 @@ nav:
           - Snipe-IT: home-lab/application/snipeit.md
           - Zabbix: home-lab/application/zabbix.md
       - Core Services & Integrations:
+          - Overview: home-lab/services/services.md
           - Cloudflare: 
               - Overview: home-lab/services/cloudflare/cloudflare.md
               - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
