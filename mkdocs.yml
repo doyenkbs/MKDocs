@@ -76,15 +76,15 @@ nav:
               - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
           - VMWare ESXi: home-lab/virtualization/vmware.md
       - Application:
-              - Audiobookshelf: Home-lab/Application/audiobookshelf.md
-              - Authentik: Home-lab/Application/authentik.md
-              - Bookstack: Home-lab/Application/bookstack.md
-              - Nextcloud: Home-lab/Application/nextcloud.md
-              - OpenVPN: Home-lab/Application/openvpn.md
-              - Pairdrop: Home-lab/Application/pairdrop.md
-              - Paperless-NGX: Home-lab/Application/paperless.md
-              - Snipe-IT: Home-lab/Application/snipeit.md
-              - Zabbix: Home-lab/Application/zabbix.md
+              - Audiobookshelf: Home-lab/application/audiobookshelf.md
+              - Authentik: Home-lab/application/authentik.md
+              - Bookstack: Home-lab/application/bookstack.md
+              - Nextcloud: Home-lab/application/nextcloud.md
+              - OpenVPN: Home-lab/application/openvpn.md
+              - Pairdrop: Home-lab/application/pairdrop.md
+              - Paperless-NGX: Home-lab/application/paperless.md
+              - Snipe-IT: Home-lab/application/snipeit.md
+              - Zabbix: Home-lab/application/zabbix.md
       - Services:
               - Cloudflare: 
                   - Introduction: home-lab/services/cloudflare.md
