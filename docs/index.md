@@ -13,9 +13,9 @@ A Home Lab is a personal environment where you can test, learn, and run your own
 
 Choose a project to get going, for example:
 
-- [Audiobookshelf Installation](home-lab/application//audiobookshelf.md) – Stream and manage your audiobooks and podcasts
+- [Audiobookshelf Installation](home-lab/application/audiobookshelf.md) – Stream and manage your audiobooks and podcasts
 - [Authentik Setup](home-lab/application/authentik.md) – Centralize authentication with an open-source identity provider and SSO platform
-- [BookStack Installation](https://kabason.net/home-lab/application/bookstack.html) – Deploy your personal wiki and knowledge base
+- [BookStack Installation](home-lab/application/bookstack.md) – Deploy your personal wiki and knowledge base
 - [Cloudflare Tunnel](home-lab/services/cloudflare//cloudflare.md) – Expose internal home lab services securely to the internet without opening firewall ports
 - [Home Assistant Installation](home-lab/services/homeassistant.md) – Automate your home easily
 - [Nextcloud Installation](home-lab/application/nextcloud.md) – Manage your files and calendars securely
