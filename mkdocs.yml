@@ -23,7 +23,7 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
-    - navigation.expand
+    #- navigation.expand
     - navigation.path
     - navigation.indexes
     - toc.follow
@@ -60,17 +60,17 @@ nav:
               - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
               - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
               - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
-          - VMWare ESXi: home-lab/virtualization/vmware.md
+          - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
       - Application:
-              - Audiobookshelf: Home-lab/application/audiobookshelf.md
-              - Authentik: Home-lab/application/authentik.md
-              - Bookstack: Home-lab/application/bookstack.md
-              - Nextcloud: Home-lab/application/nextcloud.md
-              - OpenVPN: Home-lab/application/openvpn.md
-              - Pairdrop: Home-lab/application/pairdrop.md
-              - Paperless-NGX: Home-lab/application/paperless.md
-              - Snipe-IT: Home-lab/application/snipeit.md
-              - Zabbix: Home-lab/application/zabbix.md
+              - Audiobookshelf: home-lab/application/audiobookshelf.md
+              - Authentik: home-lab/application/authentik.md
+              - Bookstack: home-lab/application/bookstack.md
+              - Nextcloud: home-lab/application/nextcloud.md
+              - OpenVPN: home-lab/application/openvpn.md
+              - Pairdrop: home-lab/application/pairdrop.md
+              - Paperless-NGX: home-lab/application/paperless.md
+              - Snipe-IT: home-lab/application/snipeit.md
+              - Zabbix: home-lab/application/zabbix.md
       - Services:
               - Cloudflare: 
                   - Introduction: home-lab/services/cloudflare.md
