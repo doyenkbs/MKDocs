@@ -100,7 +100,8 @@ extra:
     property: !ENV GOOGLE_ANALYTICS_KEY
 
 # Page tree
-nav:  
+nav:
+  - Home: index.md
   - Home Lab:
       - home-lab/index.md
       - Docker: home-lab/docker.md

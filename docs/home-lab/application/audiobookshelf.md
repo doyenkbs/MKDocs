@@ -19,8 +19,6 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/Proxmo
 
 During installation, you'll be prompted for the following settings:
 
-Data table
-
 |Prompt	            |Example / Recommendation                                   |
 |-------------------|-----------------------------------------------------------|
 |Container ID	    |905 (or any unused ID)                                     |
@@ -66,5 +64,5 @@ scp "/path/to/your/file" user@<container-ip>:/<media-folder>/
 * See the container logs in Proxmox UI if troubleshooting is needed.
 
 ***Reference:***
-[Audiobookshelf Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf)
-[Audiobookshelf Docs](https://www.audiobookshelf.org/docs)
+- [Audiobookshelf Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf)
+- [Audiobookshelf Docs](https://www.audiobookshelf.org/docs)
