@@ -8,7 +8,7 @@ Paperless-ngx provides an interactive setup script that automates configuration.
 
 ## **1. Install Docker & Docker Compose**
 
-Before proceeding, ensure that Docker and Docker Compose are installed on your Debian 12 system. Please follow the detailed [Docker Installation Guide](docs/home-lab/docker.md) in this documentation to set up Docker and Docker Compose correctly.
+Before proceeding, ensure that Docker and Docker Compose are installed on your Debian 12 system. Please follow the detailed [Docker Installation Guide](home-lab/docker.md) in this documentation to set up Docker and Docker Compose correctly.
 
 ## **2. Run the Official Paperless-ngx Installation Script**
 
