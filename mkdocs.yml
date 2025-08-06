@@ -1,8 +1,8 @@
 site_name: Kabason Docs
 site_url: https://kabason.net/
+site_author: Christian Kaba
 site_description: >-
-  Write your documentation in Markdown and create a professional static site in
-  minutes – searchable, customizable, in 60+ languages, for all devices
+  Kabason Docs is a personal knowledge base and documentation site for my home lab, projects, and interests. It serves as a resource for myself and others to learn about various technologies and applications I use.
 
 # Configuration
 theme:
@@ -44,8 +44,6 @@ theme:
     - content.tabs.link
     - content.footnote.tooltips
     
-
-
 # Extensions
 markdown_extensions:
   - abbr
@@ -103,11 +101,11 @@ extra:
 nav:
   - Home: index.md
   - Home Lab:
-      - home-lab/index.md
+      - home-lab/homelab.md
       - Docker: home-lab/docker.md
       - "Virtualization":
           - Proxmox VE: 
-              - home-lab/virtualization/proxmox/index.md
+              - home-lab/virtualization/proxmox/proxmox.md
               - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
               - Proxmox VE Configuration: home-lab/virtualization/proxmox/proxmox-configuration.md
               - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
@@ -126,7 +124,7 @@ nav:
               - Zabbix: home-lab/application/zabbix.md
       - "Services":
               - Cloudflare: 
-                  - home-lab/services/index.md
+                  - home-lab/services/cloudflare.md
                   - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
             # - DNS: home-lab/services/dns.md
               - Email: home-lab/services/email.md

@@ -1,7 +1,6 @@
 # **What is Docker and Docker Compose?**
 
 ---
-
 ## **Docker**
 
 Docker is an open-source platform that enables you to automate the deployment, scaling, and management of applications inside lightweight, portable containers. Containers isolate your applications from the host system, making them portable and consistent across different environments. Unlike virtual machines, containers share the host OS kernel, which makes them more resource-efficient.
@@ -9,13 +8,11 @@ Docker is an open-source platform that enables you to automate the deployment, s
 Docker is ideal for running single services or applications in isolated environments and provides all the necessary commands to build, run, and manage containers.
 
 ---
-
 ## **Docker Compose**
 
 Docker Compose is a tool for defining and managing multi-container Docker applications. With Docker Compose, you define your application’s services, networks, and volumes in a single YAML file (typically called docker-compose.yml). Compose allows you to start, stop, and manage multiple containers as a single application with just one command. It is especially useful for applications consisting of several interdependent services (like a web server, database, and cache).
 
 ---
-
 ## **Key differences:**
 
 Docker is best for running and managing single containers.
@@ -23,13 +20,10 @@ Docker is best for running and managing single containers.
 Docker Compose is designed to organize and manage multiple containers together as one application stack, handling configuration and network setup automatically.
 
 ---
-
 ## **Installing Docker & Docker Compose**
 
 Below are the installation steps for Docker and Docker Compose on Debian and Ubuntu.
-
-## **Install Docker & Docker Compose on Debian**
-
+### **Install Docker & Docker Compose on Debian**
 ```bash
 # Update package lists and install dependencies
 sudo apt-get update
@@ -53,13 +47,10 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 # Enable and start Docker service
 sudo systemctl enable --now docker
 sudo service docker start
-
 ```
 
 ---
-
-## **Install Docker & Docker Compose on Ubuntu**
-
+### **Install Docker & Docker Compose on Ubuntu**
 ```bash
 # Update package lists and install dependencies
 sudo apt-get update
@@ -86,10 +77,7 @@ sudo service docker start
 ```
 
 ---
-
-## References
-[Docker Documentation](https://docs.docker.com/get-started/get-docker)
-
-[Docker Compose Documentation](https://docs.docker.com/compose)
-
-[What is Docker Compose?](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel
+### **References**
+- [Docker Documentation](https://docs.docker.com/get-started/get-docker)
+- [Docker Compose Documentation](https://docs.docker.com/compose)
+- [What is Docker Compose?](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel
