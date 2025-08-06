@@ -2,7 +2,8 @@ site_name: Kabason Docs
 site_url: https://kabason.net/
 site_author: Christian Kaba
 site_description: >-
-  Kabason Docs is a personal knowledge base and documentation site for my home lab, projects, and interests. It serves as a resource for myself and others to learn about various technologies and applications I use.
+  Kabason Docs is a personal knowledge base and documentation site for my home lab, projects, and interests. 
+  It serves as a resource for myself and others to learn about various technologies and applications I use.
 
 # Configuration
 theme:
