@@ -77,7 +77,7 @@ sudo service docker start
 ```
 
 ---
-### **References**
+### ***References***
 - [Docker Documentation](https://docs.docker.com/get-started/get-docker)
 - [Docker Compose Documentation](https://docs.docker.com/compose)
 - [What is Docker Compose?](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel

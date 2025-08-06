@@ -55,6 +55,6 @@ http://<your-static-ip>:3000
 * PairDrop works cross-browser and is accessible on your LAN unless you configure additional network access.
 
 ***References:***
-- [PairDrop Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
+> - [PairDrop Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
 
 

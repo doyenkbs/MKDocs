@@ -102,7 +102,7 @@ extra:
 nav:
   - Home: index.md
   - Home Lab:
-      - Overview: homelab.md
+      - Overview: home-lab/homelab.md
       - Docker: home-lab/docker.md
       - Virtualization:
           - Proxmox VE: 
@@ -125,11 +125,11 @@ nav:
           - Zabbix: home-lab/application/zabbix.md
       - Core Services & Integrations:
           - Cloudflare: 
-              - Overview: home-lab/services/cloudflare.md
+              - Overview: home-lab/services/cloudflare/cloudflare.md
               - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
          # - DNS: home-lab/services/dns.md
           - Email: home-lab/services/email.md
-          - Home Assistant: home-lab/services/home-assistant.md
+          - Home Assistant: home-lab/services/homeassistant.md
   
   - About: about.md
   - Tags: tags.md
