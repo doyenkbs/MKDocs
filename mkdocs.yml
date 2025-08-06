@@ -65,6 +65,7 @@ copyright: Copyright &copy; 2024 - 2028 Christian Kaba
 nav:  
   - Home Lab:
       - Introduction: index.md
+      - Docker: home-lab/docker.md
       - Virtualization:
           - Proxmox VE: 
               - Overview: home-lab/virtualization/proxmox/proxmox.md
