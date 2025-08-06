@@ -6,9 +6,9 @@ This page documents the complete process for installing BookStack, a self-hosted
 
 ## **Prerequisites**
 
-    - Fresh Ubuntu 24.04 LTS server (minimal install, recommended as LXC or VM)
-    - Root or sudo access
-    - Static IP address
+> - Fresh Ubuntu 24.04 LTS server (minimal install, recommended as LXC or VM)
+> - Root or sudo access
+> - Static IP address
 
 ## **Ubuntu 24.04 Installation Script**
 

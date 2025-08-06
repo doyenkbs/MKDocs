@@ -1,29 +1,30 @@
-# Welcome to My Home Lab Docs
+# Welcome to My Home Lab Documentation
 
-This documentation site covers the setup, management, and operation of my personal Home Lab infrastructure. Here you will find detailed guides and references to help you deploy, configure, and maintain various self-hosted services that empower privacy, control, and automation.
+Welcome to the comprehensive documentation for my Home Lab infrastructure.  
+This site provides detailed guides, installation instructions, and configuration tips to help you deploy and manage a variety of self-hosted applications, network setups, and core services.
 
 ---
 ## Why a Home Lab?
 
-A Home Lab is a dedicated environment where you can experiment with and run your own services and infrastructure. It allows you to learn, improve system resilience, practice IT skills, and maintain full control over your data and privacy.
+A Home Lab is a personal environment where you can test, learn, and run your own IT services and infrastructure. It provides full control over your data, enhances privacy, and allows experimentation with new technologies.
 
 ---
 ## Getting Started
 
 Choose a project to get going, for example:
 
-- [Audiobookshelf Installation](./audiobookshelf.md) – Stream and manage your audiobooks and podcasts
-- [Authentik Setup](authentik.md) – Centralize authentication with an open-source identity provider and SSO platform
+- [Audiobookshelf Installation](home-lab/application//audiobookshelf.md) – Stream and manage your audiobooks and podcasts
+- [Authentik Setup](home-lab/application/authentik.md) – Centralize authentication with an open-source identity provider and SSO platform
 - [BookStack Installation](https://kabason.net/home-lab/application/bookstack.html) – Deploy your personal wiki and knowledge base
-- [Cloudflare Tunnel](./cloudflare.md) – Expose internal home lab services securely to the internet without opening firewall ports
-- [Home Assistant Installation](homeassistant.md) – Automate your home easily
-- [Nextcloud Installation](nextcloud.md) – Manage your files and calendars securely
-- [OpenVPN Installation](openvpn.md) – Connect remotely with encrypted tunnels
-- [PairDrop Installation](pairdrop.md) – Fast, secure local file transfers hosted 
-- [Paperless-ngx Deployment](./paperless.html) – Organize scanned documents and PDFs
-- [Proxmox VE Basics](proxmox.md) – Manage your virtual machines and containers with Proxmox virtualization platform 
-- [Snipe-IT Installation](./snipeit.md) – Manage your IT assets
-- [Zabbix Monitoring Setup](zabbix.md) – Start monitoring your lab infrastructure today  
+- [Cloudflare Tunnel](home-lab/services/cloudflare//cloudflare.md) – Expose internal home lab services securely to the internet without opening firewall ports
+- [Home Assistant Installation](home-lab/services/homeassistant.md) – Automate your home easily
+- [Nextcloud Installation](home-lab/application/nextcloud.md) – Manage your files and calendars securely
+- [OpenVPN Installation](home-lab/application/openvpn.md) – Connect remotely with encrypted tunnels
+- [PairDrop Installation](home-lab/application/pairdrop.md) – Fast, secure local file transfers hosted 
+- [Paperless-ngx Deployment](home-lab/application//paperless.md) – Organize scanned documents and PDFs
+- [Proxmox VE Basics](home-lab/virtualization/proxmox/proxmox.md) – Manage your virtual machines and containers with Proxmox virtualization platform 
+- [Snipe-IT Installation](home-lab/application//snipeit.md) – Manage your IT assets
+- [Zabbix Monitoring Setup](home-lab/application/zabbix.md) – Start monitoring your lab infrastructure today  
  
  
 ---
