@@ -6,15 +6,15 @@ Paperless-ngx is a self-hosted document management system that indexes, OCRs, an
 
 Paperless-ngx provides an interactive setup script that automates configuration. The script collects your preferences, generates the necessary Docker Compose files, pulls images, starts the application, and sets up your superuser account.
 
-# 1. Install Docker & Docker Compose
+## 1. Install Docker & Docker Compose
 
 Before proceeding, ensure that Docker and Docker Compose are installed on your Debian 12 system. Please follow the detailed Docker Installation Guide in this documentation to set up Docker and Docker Compose correctly.
 
-# 2. Run the Official Paperless-ngx Installation Script
+## 2. Run the Official Paperless-ngx Installation Script
 
 Download and execute the setup script directly from the Paperless-ngx project:
 
-```bash
+#### bash
 bash -c "$(curl --location --silent --show-error https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/install-paperless-ngx.sh)"
 
 Follow the interactive prompts to complete the configuration. The script will:
@@ -27,7 +27,7 @@ Follow the interactive prompts to complete the configuration. The script will:
 
 - Start Paperless-ngx and perform initial setup
 
-# 3. Access the Paperless-ngx Web Interface
+## 3. Access the Paperless-ngx Web Interface
 
 Once the script finishes, open your browser and visit:
 
@@ -36,7 +36,7 @@ Once the script finishes, open your browser and visit:
 
 Log in with the superuser credentials you defined during setup.
 
-# References
+## References
 [Paperless-ngx GitHub Repository](https://github.com/paperless-ngx/paperless-ngx)
 
 [Docker Installation Guide for Debian](https://docs.docker.com/engine/install/debian)
