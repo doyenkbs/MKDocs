@@ -20,8 +20,8 @@ Docker Compose is designed to organize and manage multiple containers together a
 
 Below are the installation steps for Docker and Docker Compose on Debian and Ubuntu.
 
-Install Docker & Docker Compose on Debian
-bash
+## Install Docker & Docker Compose on Debian
+```bash
 # Update package lists and install dependencies
 sudo apt-get update
 sudo apt-get install ca-certificates curl gnupg lsb-release
@@ -43,9 +43,10 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 
 # Enable and start Docker service
 sudo systemctl enable --now docker
-sudo service docker start
-Install Docker & Docker Compose on Ubuntu
-bash
+sudo service docker start```
+
+## Install Docker & Docker Compose on Ubuntu
+```bash
 # Update package lists and install dependencies
 sudo apt-get update
 sudo apt-get install ca-certificates curl gnupg lsb-release
@@ -67,11 +68,11 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 
 # Enable and start Docker service
 sudo systemctl enable --now docker
-sudo service docker start
+sudo service docker start```
 
 ## References
 [Docker Documentation](https://docs.docker.com/get-started/get-docker)
 
 [Docker Compose Documentation](https://docs.docker.com/compose)
 
-[What is Docker Compose?](https://cyberpanel.net/blog/docker-compose-vs-docker) (CyberPanel)
+[What is Docker Compose?](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel
