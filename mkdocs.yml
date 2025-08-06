@@ -30,7 +30,7 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
-    #- navigation.expand
+    - navigation.expand
     - navigation.path
     - navigation.indexes
     - toc.follow
@@ -90,7 +90,7 @@ copyright: Copyright &copy; 2024 - 2028 Christian Kaba
 
 # Additional configuration
 extra:
-  homepage: https://wiki.kabason.net
+  homepage: https://kabason.net
   social:
     - icon: fontawesome/brands/linkedin 
       link: https://linkedin.com/in/christian-kaba-b8247a157
@@ -102,34 +102,34 @@ extra:
 nav:
   - Home: index.md
   - Home Lab:
-      - home-lab/homelab.md
+      - Overview: homelab.md
       - Docker: home-lab/docker.md
-      - "Virtualization":
+      - Virtualization:
           - Proxmox VE: 
-              - home-lab/virtualization/proxmox/proxmox.md
+              - Overview: home-lab/virtualization/proxmox/proxmox.md
               - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
               - Proxmox VE Configuration: home-lab/virtualization/proxmox/proxmox-configuration.md
               - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
               - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
               - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
           - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
-      - "Application":
-              - Audiobookshelf: home-lab/application/audiobookshelf.md
-              - Authentik: home-lab/application/authentik.md
-              - Bookstack: home-lab/application/bookstack.md
-              - Nextcloud: home-lab/application/nextcloud.md
-              - OpenVPN: home-lab/application/openvpn.md
-              - Pairdrop: home-lab/application/pairdrop.md
-              - Paperless-NGX: home-lab/application/paperless.md
-              - Snipe-IT: home-lab/application/snipeit.md
-              - Zabbix: home-lab/application/zabbix.md
-      - "Services":
-              - Cloudflare: 
-                  - home-lab/services/cloudflare.md
-                  - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
-            # - DNS: home-lab/services/dns.md
-              - Email: home-lab/services/email.md
-              - Home Assistant: home-lab/services/home-assistant.md
+      - Self-Hosted Applications:
+          - Audiobookshelf: home-lab/application/audiobookshelf.md
+          - Authentik: home-lab/application/authentik.md
+          - Bookstack: home-lab/application/bookstack.md
+          - Nextcloud: home-lab/application/nextcloud.md
+          - OpenVPN: home-lab/application/openvpn.md
+          - Pairdrop: home-lab/application/pairdrop.md
+          - Paperless-NGX: home-lab/application/paperless.md
+          - Snipe-IT: home-lab/application/snipeit.md
+          - Zabbix: home-lab/application/zabbix.md
+      - Core Services & Integrations:
+          - Cloudflare: 
+              - Overview: home-lab/services/cloudflare.md
+              - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
+         # - DNS: home-lab/services/dns.md
+          - Email: home-lab/services/email.md
+          - Home Assistant: home-lab/services/home-assistant.md
   
   - About: about.md
-  - tags: tags.md
+  - Tags: tags.md
