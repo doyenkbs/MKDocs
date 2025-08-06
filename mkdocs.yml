@@ -42,8 +42,7 @@ extra:
 
 plugins:
   - search
-  - tags:
-      - tag_file: tags.md
+  - tags
   - offline
 
 copyright: Copyright &copy; 2024 - 2028 Christian Kaba
