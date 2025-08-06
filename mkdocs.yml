@@ -1,5 +1,10 @@
 site_name: Kabason Docs
+site_url: https://kabason.net/
+site_description: >-
+  Write your documentation in Markdown and create a professional static site in
+  minutes – searchable, customizable, in 60+ languages, for all devices
 
+# Configuration
 theme:
   name: material
   palette: 
@@ -15,6 +20,7 @@ theme:
         name: Switch to light mode
   logo: assets/logo.png
   favicon: images/favicon.png
+  
   features:
     - navigation.instant
     - navigation.instant.prefetch
@@ -32,14 +38,50 @@ theme:
     - search.highlight
     - search.share
     - navigation.footer
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tabs.link
+    - content.footnote.tooltips
+    
 
-extra:
-  homepage: https://wiki.kabason.net
-  social:
-    - icon: fontawesome/brands/linkedin 
-      link: https://linkedin.com/in/christian-kaba-b8247a157
 
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - footnotes
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.details
+  - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
 
+# Plugins
 plugins:
   - search
   - tags
@@ -47,20 +89,31 @@ plugins:
 
 copyright: Copyright &copy; 2024 - 2028 Christian Kaba
 
+# Additional configuration
+extra:
+  homepage: https://wiki.kabason.net
+  social:
+    - icon: fontawesome/brands/linkedin 
+      link: https://linkedin.com/in/christian-kaba-b8247a157
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+
+# Page tree
 nav:  
   - Home Lab:
-      - Introduction: index.md
+      - home-lab/index.md
       - Docker: home-lab/docker.md
-      - Virtualization:
+      - "Virtualization":
           - Proxmox VE: 
-              - Overview: home-lab/virtualization/proxmox/proxmox.md
+              - home-lab/virtualization/proxmox/index.md
               - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
               - Proxmox VE Configuration: home-lab/virtualization/proxmox/proxmox-configuration.md
               - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
               - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
               - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
           - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
-      - Application:
+      - "Application":
               - Audiobookshelf: home-lab/application/audiobookshelf.md
               - Authentik: home-lab/application/authentik.md
               - Bookstack: home-lab/application/bookstack.md
@@ -70,9 +123,9 @@ nav:
               - Paperless-NGX: home-lab/application/paperless.md
               - Snipe-IT: home-lab/application/snipeit.md
               - Zabbix: home-lab/application/zabbix.md
-      - Services:
+      - "Services":
               - Cloudflare: 
-                  - Introduction: home-lab/services/cloudflare.md
+                  - home-lab/services/index.md
                   - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
             # - DNS: home-lab/services/dns.md
               - Email: home-lab/services/email.md

@@ -1,21 +1,24 @@
-# Paperless-ngx Installation on Debian 12 (Official Script)
+# ***Paperless-ngx Installation on Debian 12**
+
+---
+
+## **Overview**
 
 Paperless-ngx is a self-hosted document management system that indexes, OCRs, and organizes scanned documents and PDFs. This guide explains how to install Paperless-ngx on Debian 12 using the official installation script with Docker Compose.
 
-## Overview
-
 Paperless-ngx provides an interactive setup script that automates configuration. The script collects your preferences, generates the necessary Docker Compose files, pulls images, starts the application, and sets up your superuser account.
 
-## 1. Install Docker & Docker Compose
+## **1. Install Docker & Docker Compose**
 
-Before proceeding, ensure that Docker and Docker Compose are installed on your Debian 12 system. Please follow the detailed Docker Installation Guide in this documentation to set up Docker and Docker Compose correctly.
+Before proceeding, ensure that Docker and Docker Compose are installed on your Debian 12 system. Please follow the detailed [Docker Installation Guide](./docker.md) in this documentation to set up Docker and Docker Compose correctly.
 
-## 2. Run the Official Paperless-ngx Installation Script
+## **2. Run the Official Paperless-ngx Installation Script**
 
 Download and execute the setup script directly from the Paperless-ngx project:
 
-#### bash
+``` bash
 bash -c "$(curl --location --silent --show-error https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/install-paperless-ngx.sh)"
+```
 
 Follow the interactive prompts to complete the configuration. The script will:
 
@@ -27,20 +30,18 @@ Follow the interactive prompts to complete the configuration. The script will:
 
 - Start Paperless-ngx and perform initial setup
 
-## 3. Access the Paperless-ngx Web Interface
+## **3. Access the Paperless-ngx Web Interface**
 
 Once the script finishes, open your browser and visit:
 
 
-### http://<your-server-ip>:8000
+> http://<your-server-ip>:8000
 
 Log in with the superuser credentials you defined during setup.
 
-## References
-[Paperless-ngx GitHub Repository](https://github.com/paperless-ngx/paperless-ngx)
-
-[Docker Installation Guide for Debian](https://docs.docker.com/engine/install/debian)
-
-[Official Paperless-ngx Documentation](https://docs.paperless-ngx.com)
+!!! note "**References**"
+    [Paperless-ngx GitHub Repository](https://github.com/paperless-ngx/paperless-ngx)
+    [Docker Installation Guide for Debian](https://docs.docker.com/engine/install/debian)
+    [Official Paperless-ngx Documentation](https://docs.paperless-ngx.com)
 
 Adapt this guide if your directory structure or environment differs. For advanced configuration (backups, environment files, custom compose options), see the official documentation.
