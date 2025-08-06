@@ -18,8 +18,6 @@ This command will start an interactive installation menu managed by the helper s
 
 The script will guide you through several basic setup options. Common prompts include:
 
-Data table
-
 |Prompt	                |Example / Recommendation       |
 |-----------------------|-------------------------------|
 |Container ID	        |100 (or any unused ID)         |
@@ -40,7 +38,6 @@ Adjust these as needed for your lab's environment and network.
     - Create an LXC container
     - Install Docker inside the container
     - Deploy the PairDrop Docker image
-
 This process is automated—wait for it to finish and note any output or log locations for future reference.
 
 **4. Access the PairDrop Web Interface**
@@ -53,11 +50,11 @@ http://<your-static-ip>:3000
 
 ## **Additional Notes**
 
-    * You can review or update your container’s configuration from the Proxmox web UI.
-    * For container management and updates, check the official helper scripts and project repository.
-    * PairDrop works cross-browser and is accessible on your LAN unless you configure additional network access.
+* You can review or update your container’s configuration from the Proxmox web UI.
+* For container management and updates, check the official helper scripts and project repository.
+* PairDrop works cross-browser and is accessible on your LAN unless you configure additional network access.
 
-!!! note "***References:***"
-    [PairDrop Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
+***References:***
+[PairDrop Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
 
 

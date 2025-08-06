@@ -93,7 +93,6 @@ php artisan config:clear
 ```
 
 ## First Login
-
 Once installation and setup are complete, access BookStack in your browser at:
 
 > *http(s)://your-domain-or-server-ip*

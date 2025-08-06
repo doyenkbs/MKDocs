@@ -20,6 +20,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/Proxmo
 During installation, you'll be prompted for the following settings:
 
 Data table
+
 |Prompt	            |Example / Recommendation                                   |
 |-------------------|-----------------------------------------------------------|
 |Container ID	    |905 (or any unused ID)                                     |
@@ -46,7 +47,7 @@ Once setup is complete, open:
 ``` text
 http://<your-static-ip>:13378
 ```
-> Replace <your-static-ip> with the IP you assigned to the container.
+> Replace 'your-static-ip' with the IP you assigned to the container.
 
 **5. Transferring Media Files**
 
@@ -56,14 +57,14 @@ scp "/path/to/your/file" user@<container-ip>:/<media-folder>/
 ```
 
 !!! note
-    Replace /path/to/your/file, user, <container-ip>, and <media-folder> with the appropriate values for your environment.
+    Replace /path/to/your/file, user, 'container-ip', and 'media-folder' with the appropriate values for your environment.
 
 ## **Additional Notes**
 
-    * This script is designed to make deployment on Proxmox seamless and repeatable.
-    * You can reference the [Proxmox Community Scripts](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf) repository for updates and more container options.
-    * See the container logs in Proxmox UI if troubleshooting is needed.
+* This script is designed to make deployment on Proxmox seamless and repeatable.
+* You can reference the [Proxmox Community Scripts](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf) repository for updates and more container options.
+* See the container logs in Proxmox UI if troubleshooting is needed.
 
-!!! note "**Reference:**"
-    [Audiobookshelf Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf)
-    [Audiobookshelf Docs](https://www.audiobookshelf.org/docs)
+***Reference:***
+[Audiobookshelf Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf)
+[Audiobookshelf Docs](https://www.audiobookshelf.org/docs)
