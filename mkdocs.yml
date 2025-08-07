@@ -104,35 +104,41 @@ nav:
   - Home Lab:
       - Overview: home-lab/homelab.md
       - Docker: home-lab/docker.md
+
       - Virtualization:
           - Overview: home-lab/virtualization/virtualization.md
-          - Proxmox VE: 
-              - Overview: home-lab/virtualization/proxmox/proxmox.md
-              - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
-              - Proxmox VE Configuration: home-lab/virtualization/proxmox/proxmox-configuration.md
-              - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
-              - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
-              - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
-          - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
+          - Platforms:
+              - Proxmox VE: 
+                  - Overview: home-lab/virtualization/proxmox/proxmox.md
+                  - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
+                  - Proxmox VE Configuration: home-lab/virtualization/proxmox/proxmox-configuration.md
+                  - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
+                  - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
+                  - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
+              - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
+
       - Self-Hosted Applications:
           - Overview: home-lab/application/applications.md
-          - Audiobookshelf: home-lab/application/audiobookshelf.md
-          - Authentik: home-lab/application/authentik.md
-          - Bookstack: home-lab/application/bookstack.md
-          - Nextcloud: home-lab/application/nextcloud.md
-          - OpenVPN: home-lab/application/openvpn.md
-          - Pairdrop: home-lab/application/pairdrop.md
-          - Paperless-NGX: home-lab/application/paperless.md
-          - Snipe-IT: home-lab/application/snipeit.md
-          - Zabbix: home-lab/application/zabbix.md
+          - Apps:
+              - Audiobookshelf: home-lab/application/audiobookshelf.md
+              - Authentik: home-lab/application/authentik.md
+              - Bookstack: home-lab/application/bookstack.md
+              - Nextcloud: home-lab/application/nextcloud.md
+              - OpenVPN: home-lab/application/openvpn.md
+              - Pairdrop: home-lab/application/pairdrop.md
+              - Paperless-NGX: home-lab/application/paperless.md
+              - Snipe-IT: home-lab/application/snipeit.md
+              - Zabbix: home-lab/application/zabbix.md
+
       - Core Services & Integrations:
           - Overview: home-lab/services/services.md
-          - Cloudflare: 
-              - Overview: home-lab/services/cloudflare/cloudflare.md
-              - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
-         # - DNS: home-lab/services/dns.md
-          - Email: home-lab/services/email.md
-          - Home Assistant: home-lab/services/homeassistant.md
+          - Services:
+              - Cloudflare: 
+                  - Overview: home-lab/services/cloudflare/cloudflare.md
+                  - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
+            # - DNS: home-lab/services/dns.md
+              - Email: home-lab/services/email.md
+              - Home Assistant: home-lab/services/homeassistant.md
   
   - About: about.md
   - Tags: tags.md
