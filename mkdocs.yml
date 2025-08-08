@@ -79,15 +79,7 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.tilde
-# recently added
-  - material.extensions.preview:
-      configurations:
-        - targets:
-            include:
-              - changelog/index.md
-              - customization.md
-              - insiders/changelog/*
-              - setup/extensions/*
+
 
 # Plugins
 plugins:
