@@ -19,15 +19,15 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-  logo: assets/logo.png
-  favicon: images/favicon.png
+  #logo: assets/logo.png
+  #favicon: images/favicon.png
   
   features:
     - navigation.instant
     - navigation.instant.prefetch
     - navigation.instant.progress
     - navigation.instant.preview
-    #- navigation.tabs
+    - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
@@ -128,7 +128,7 @@ nav:
   - Core Services & Integrations:
         - index.md: home-lab/services/index.md
         - Cloudflare: 
-              - index.md: home-lab/services/cloudflare/cloudflare.md
+              - Overview: home-lab/services/cloudflare/cloudflare.md
               - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
       # - DNS: home-lab/services/dns.md
         - Email: home-lab/services/email.md
