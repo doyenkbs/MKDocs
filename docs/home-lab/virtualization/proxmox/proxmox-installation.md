@@ -1,4 +1,4 @@
-# 📥 Proxmox VE Installation
+# **Proxmox VE Installation**
 
 ## 🛠 Requirements
 Before starting, make sure you have:
@@ -16,7 +16,7 @@ Before starting, make sure you have:
 Get the latest Proxmox VE ISO from the official site:  
 ➡️ [**Proxmox Downloads**](https://www.proxmox.com/en/downloads)  
 
-![Proxmox Download Page](images/proxmox-download.png)
+![Proxmox Download Page](images/proxmox.png)
 
 ---
 

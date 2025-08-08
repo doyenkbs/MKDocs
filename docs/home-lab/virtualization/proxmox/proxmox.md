@@ -6,6 +6,7 @@ This guide documents how I installed, configured, and currently use **Proxmox VE
 It covers:
 
 - Installing Proxmox VE
-- Configuring storage
+- Proxmox Post-Installation
+- Configuring Proxmox Datacenter Manager
 - Creating virtual machines and LXC containers
 - Using templates for rapid deployment
