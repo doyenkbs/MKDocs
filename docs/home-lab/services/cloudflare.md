@@ -39,17 +39,23 @@ Run BookStack in your home lab and access it remotely via `https://wiki.example.
 ## **Add Your Domain and Transfer DNS to Cloudflare**
 
 1. In the Cloudflare dashboard, click **Onboard a domain**.
+
 2. Enter your domain name (e.g., `example.com`) and click **Continue**.
+
 3. Select the **Free Plan** (recommended for home lab use) or another plan if you need additional features.
+
 4. Cloudflare will automatically scan and import your existing DNS records.  
-   - **Review your DNS records** the imported records and make sure they match the ones from your current DNS provider and click **Continue to activation**
+   1. **Review your DNS records** the imported records and make sure they match the ones from your current DNS provider and click **Continue to activation**
+
 5. Cloudflare will provide **two new nameservers** (e.g., `abby.ns.cloudflare.com` and `damon.ns.cloudflare.com`).
+
 6. Log in to your **domain registrar** (e.g., Namecheap, GoDaddy, Google Domains).
+
 7. Replace your registrar’s existing nameservers with the **Cloudflare-provided nameservers**.
+
 8. Save the changes and allow up to 24 hours for DNS propagation (often completes in minutes).
 
 ⏱️ Once propagation is complete, Cloudflare will manage your domain’s DNS and provide security and performance benefits.
 
 !!! note
-    Skip step 2 if you purchased your domain through Cloudflare.
----
+    You can skip step 2 if Cloudflare is your domain registrar.

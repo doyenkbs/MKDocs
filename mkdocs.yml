@@ -129,7 +129,7 @@ nav:
   - Core Services & Integrations:
         - index.md: home-lab/services/index.md
         - Cloudflare:
-            -Cloudflare: 
+            - Cloudflare: 
                 - index.md: home-lab/services/cloudflare.md
                 - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
       # - DNS: home-lab/services/dns.md
