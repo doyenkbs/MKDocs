@@ -9,7 +9,9 @@
 ##  **Installation & Initial Setup**
 
 1. **Install PDM** either:
-   - **Via the ISO installer** (similar to Proxmox VE) 
+
+   - **Via the ISO installer** (similar to Proxmox VE)
+
    - **Community Script Installer**:
      You can also install Proxmox Datacenter Manager using a community-maintained script:
      ```bash
@@ -17,6 +19,7 @@
      ```
 !!! note
   This method automates repository setup and package installation, making setup quicker and simpler.
+
    - **Or on Debian Bookworm by adding the PDM repository and installing packages**:  
      ```bash
      echo 'deb http://download.proxmox.com/debian/pdm bookworm pdm‑test' >/etc/apt/sources.list.d/pdm-test.list
@@ -38,7 +41,7 @@
 
 ---
 
-##  Summary
+##  **Summary**
 
 PDM is a promising yet evolving tool offering centralized management for distributed Proxmox environments. It’s ideal for home labs and multi-site setups—just be cautious in production until later stable releases.
 

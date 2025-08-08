@@ -7,23 +7,30 @@
 1. **Download or upload an LXC template** to your Proxmox storage (e.g., `local`).
 
 2. Go to **Create CT** in the Proxmox Web GUI.
-**General:** **Hostname:** e.g., `ubuntu-container`
-**Template:** Select the desired LXC template (e.g., `ubuntu-22.04-standard`)
-**Root Disk:**
-   - Choose `local-lvm` or other storage  
-   - Set disk size
-**CPU & Memory:** Example: `**1-2 cores**`, `**2GB RAM**`
-**Network:**
-   - Select `vmbr0` (bridge to LAN)  
-   - Set IP configuration (DHCP or static IP)
-**Confirm** and finish the container creation wizard.
+
+   - **General:** **Hostname:** e.g., `ubuntu-container`
+
+   - **Template:** Select the desired LXC template (e.g., `ubuntu-22.04-standard`)
+
+   - **Root Disk:**
+         - Choose `local-lvm` or other storage  
+         - Set disk size
+
+   - **CPU & Memory:** Example: `1-2 cores`, `2GB RAM`
+
+   - **Network:**
+         - Select `vmbr0` (bridge to LAN)  
+         - Set IP configuration (DHCP or static IP)
+
+   - **Confirm** and finish the container creation wizard.
 
 ---
 
 #### **Post-Container Setup:**
-1. **Start** the container.  
-2. Access the container console via Proxmox GUI or SSH.  
-3. Inside the container, update packages and install necessary software:  
+
+* **Start** the container.  
+* Access the container console via Proxmox GUI or SSH.  
+* Inside the container, update packages and install necessary software:  
 
 ---
 #### **LXC Templates**
@@ -34,7 +41,7 @@ LXC templates allow you to quickly deploy containers with pre-installed operatin
 
 #### Steps to use or add LXC templates:
 
-"1. **Download templates directly from the Proxmox GUI**  
+1. **Download templates directly from the Proxmox GUI**  
  :    - Navigate to **Node Name → Local (storage) → Content**  
       - Click **Templates**  
       - Select and download the desired LXC template (e.g., `ubuntu-22.04-standard`)
@@ -47,8 +54,8 @@ LXC templates allow you to quickly deploy containers with pre-installed operatin
 
 #### **Using LXC Templates**
 
-- When creating a new container, select the downloaded or uploaded template as the base image  
-- Proceed with container creation as usual
+   - When creating a new container, select the downloaded or uploaded template as the base image  
+   - Proceed with container creation as usual
 
 ---
 

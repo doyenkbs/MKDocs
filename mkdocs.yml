@@ -116,6 +116,7 @@ nav:
               - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
 
       - "Self-Hosted Applications":
+              - Overview: home-lab/application/self-hosted.md
               - Audiobookshelf: home-lab/application/audiobookshelf.md
               - Authentik: home-lab/application/authentik.md
               - Bookstack: home-lab/application/bookstack.md

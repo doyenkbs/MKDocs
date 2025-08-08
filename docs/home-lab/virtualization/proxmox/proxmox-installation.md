@@ -1,6 +1,6 @@
 # **Proxmox VE Installation**
 
-## 🛠 Requirements
+## **Requirements**
 Before starting, make sure you have:
 
 - **CPU** with virtualization support (**Intel VT-x** / **AMD-V**)  
@@ -11,8 +11,8 @@ Before starting, make sure you have:
 
 ---
 
-## 🔧 Installation Steps
-### 1. Download the Latest ISO
+## **Installation Steps**
+### **1. Download the Latest ISO**
 Get the latest Proxmox VE ISO from the official site:  
 ➡️ [**Proxmox Downloads**](https://www.proxmox.com/en/downloads)  
 
@@ -20,7 +20,7 @@ Get the latest Proxmox VE ISO from the official site:
 
 ---
 
-### 2. Create a Bootable USB Drive
+### **2. Create a Bootable USB Drive**
 You can use **Rufus** (Windows) or the `dd` command (Linux/macOS).  
 
 **Windows (Rufus):**  
@@ -37,18 +37,18 @@ sudo dd if=proxmox-ve.iso of=/dev/sdX bs=4M status=progress && sync
 
 ---
 
-### 3. Boot and Install Proxmox VE
+### **3. Boot and Install Proxmox VE**
 1. Boot your system from the USB drive.  
 2. Follow the installation wizard:  
-   - ✅ Accept the EULA  
-   - 💾 Select the target disk (_use ZFS if you want snapshots or have multiple disks_)  
-   - 🌍 Set your country, time zone, and keyboard layout  
-   - 🔑 Create the **root password** and enter your email address  
-   - 🌐 Assign a static IP, hostname (e.g., `proxmox.local`), and gateway  
+   - Accept the EULA  
+   - Select the target disk (_use ZFS if you want snapshots or have multiple disks_)  
+   - Set your country, time zone, and keyboard layout  
+   - Create the **root password** and enter your email address  
+   - Assign a static IP, hostname (e.g., `proxmox.local`), and gateway  
 
 ---
 
-### 4. Reboot and Access the Web GUI
+### **4. Reboot and Access the Web GUI**
 After installation, reboot your server and open the web interface in your browser:  
 
 `https://<proxmox-ip>:8006`

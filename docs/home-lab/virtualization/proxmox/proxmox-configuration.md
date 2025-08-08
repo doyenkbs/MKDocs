@@ -1,7 +1,5 @@
 ## **Initial Configuration**
 
-#### **Post-Installation**
-
 **Update system:**
 ```bash
 apt update && apt full-upgrade -y
@@ -28,13 +26,19 @@ Set up storage — configure `local-lvm` or add additional disks via `ZFS` or `e
 A Linux bridge is required to give your VMs and containers network access through your host’s physical NIC.
 
 **1. Log in to the Proxmox Web GUI:** `https://<proxmox-ip>:8006`
+
 **2. Go to:** `Datacenter → Node Name → System → Network`
+
 **3. Click:** `Create → Linux Bridge`
+
 **4. Configure:**
-    - **Name:** `vmbr0` (default bridge name)  
-    - **IPv4/CIDR:** Set if this bridge will have an IP (optional if only bridging traffic)  
-    - **Gateway (IPv4):** Your network gateway (only if assigning IP)  
-    - **Bridge ports:** Your physical NIC (e.g., `eno1` or `eth0`)  
+        * **Name:** `vmbr0` (default bridge name)  
+        * **IPv4/CIDR:** Set if this bridge will have an IP (optional if only bridging traffic)  
+        * **Gateway (IPv4):** Your network gateway (only if assigning IP)  
+        * **Bridge ports:** Your physical NIC (e.g., `eno1` or `eth0`)  
+
 **5. Click:** `Create`
+
 **6. Apply changes:** Click **Apply Configuration** and confirm.
+
 **7. (Optional):** Edit your VM or LXC container’s network settings to use `vmbr0` as the bridge.
