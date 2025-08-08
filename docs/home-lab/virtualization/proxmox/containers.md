@@ -8,21 +8,21 @@
 
 2. Go to **Create CT** in the Proxmox Web GUI.
 
-- **General:** **Hostname:** e.g., `ubuntu-container`
+> - **General:** **Hostname:** e.g., `ubuntu-container`
 
-- **Template:** Select the desired LXC template (e.g., `ubuntu-22.04-standard`)
+> - **Template:** Select the desired LXC template (e.g., `ubuntu-22.04-standard`)
 
-- **Root Disk:**
+> - **Root Disk:**
 1. Choose `local-lvm` or other storage  
 2. Set disk size
 
-- **CPU & Memory:** Example: `1-2 cores`, `2GB RAM`
+> - **CPU & Memory:** Example: `1-2 cores`, `2GB RAM`
 
-- **Network:**
+> - **Network:**
 1. Select `vmbr0` (bridge to LAN)  
 3. Set IP configuration (DHCP or static IP)
 
-- **Confirm** and finish the container creation wizard.
+> - **Confirm** and finish the container creation wizard.
 
 ---
 
@@ -42,12 +42,12 @@ LXC templates allow you to quickly deploy containers with pre-installed operatin
 #### Steps to use or add LXC templates:
 
 1. **Download templates directly from the Proxmox GUI**  
-- Navigate to **Node Name → Local (storage) → Content**  
-- Click **Templates**  
-- Select and download the desired LXC template (e.g., `ubuntu-22.04-standard`)
+> - Navigate to **Node Name → Local (storage) → Content**  
+> - Click **Templates**  
+> - Select and download the desired LXC template (e.g., `ubuntu-22.04-standard`)
 
 2. **Or upload a custom `.tar.gz` template manually**  
-- Upload your custom LXC template archive to the storage’s `templates` folder, usually at:  
+> - Upload your custom LXC template archive to the storage’s `templates` folder, usually at:  
      ```
      /var/lib/vz/template/cache/
      ```

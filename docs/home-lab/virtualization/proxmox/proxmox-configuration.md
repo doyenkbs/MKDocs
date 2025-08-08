@@ -32,10 +32,10 @@ A Linux bridge is required to give your VMs and containers network access throug
 **3. Click:** `Create → Linux Bridge`
 
 **4. Configure:**
-- **Name:** `vmbr0` (default bridge name)  
-- **IPv4/CIDR:** Set if this bridge will have an IP (optional if only bridging traffic)  
-- **Gateway (IPv4):** Your network gateway (only if assigning IP)  
-- **Bridge ports:** Your physical NIC (e.g., `eno1` or `eth0`)  
+> - **Name:** `vmbr0` (default bridge name)  
+> - **IPv4/CIDR:** Set if this bridge will have an IP (optional if only bridging traffic)  
+> - **Gateway (IPv4):** Your network gateway (only if assigning IP)  
+> - **Bridge ports:** Your physical NIC (e.g., `eno1` or `eth0`)  
 
 **5. Click:** `Create`
 
