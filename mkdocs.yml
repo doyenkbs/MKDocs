@@ -27,14 +27,14 @@ theme:
     - navigation.instant.prefetch
     - navigation.instant.progress
     - navigation.instant.preview
-    - navigation.tabs
+    #- navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.path
     - navigation.indexes
     - toc.follow
-    #- navigation.top
+    - navigation.top
     - search.suggest
     - search.highlight
     - search.share
