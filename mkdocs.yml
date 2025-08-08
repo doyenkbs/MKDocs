@@ -27,7 +27,7 @@ theme:
     - navigation.instant.prefetch
     - navigation.instant.progress
     - navigation.instant.preview
-    - navigation.tabs
+    #- navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
@@ -101,17 +101,18 @@ extra:
 # Page tree
 nav:
   - Home: index.md
-  - Overview: home-lab/homelab.md 
   - Containers & Virtualization:
+       - index.md: home-lab/virtualization/index.md
        - Docker: home-lab/docker.md
-       - Proxmox VE: 
-            - Overview: home-lab/virtualization/proxmox/proxmox.md
-            - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
-            - Proxmox VE Post-Installation: home-lab/virtualization/proxmox/proxmox-configuration.md                  
-            - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
-            - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
-            - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
-       - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
+       - Virtualization:
+            - Proxmox VE: 
+                  - Overview: home-lab/virtualization/proxmox/proxmox.md
+                  - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
+                  - Proxmox VE Post-Installation: home-lab/virtualization/proxmox/proxmox-configuration.md                  
+                  - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
+                  - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
+                  - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
+            - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
 
   - Self-Hosted Applications:
         - index.md: home-lab/application/index.md
@@ -120,19 +121,20 @@ nav:
         - Authentik: home-lab/application/authentik.md
         - Bookstack: home-lab/application/bookstack.md
         - Nextcloud: home-lab/application/nextcloud.md
-        - OpenVPN: home-lab/application/openvpn.md
         - Pairdrop: home-lab/application/pairdrop.md
         - Paperless-NGX: home-lab/application/paperless.md
         - Snipe-IT: home-lab/application/snipeit.md
         - Zabbix: home-lab/application/zabbix.md
 
   - Core Services & Integrations:
+        - index.md: home-lab/services/index.md
         - Cloudflare: 
-              - Overview: home-lab/services/cloudflare/cloudflare.md
+              - index.md: home-lab/services/cloudflare/cloudflare.md
               - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
       # - DNS: home-lab/services/dns.md
         - Email: home-lab/services/email.md
         - Home Assistant: home-lab/services/homeassistant.md
+        - OpenVPN: home-lab/services/openvpn.md
   
   - About: about.md
   - Tags: tags.md

@@ -1,11 +1,17 @@
-# Self-Hosted Applications
+# **Self-Hosted Applications**
 
-This section contains self-hosted software deployed in the home lab.
+This section includes self-hosted tools and services deployed in the home lab environment. These applications provide functionality such as file sharing, document management, productivity, and system monitoring.
 
-Applications covered include:
+Included applications:
 
-- Media servers like **Audiobookshelf**
-- Productivity tools like **Bookstack**, **Nextcloud**
-- Infrastructure services like **Authentik**, **Zabbix**, and **Snipe-IT**
+- **Audiobookshelf** – manage and stream audiobooks
+- **Authentik** – identity provider for SSO and access control
+- **Bookstack** – documentation/wiki platform
+- **Nextcloud** – private cloud storage and collaboration suite
+- **OpenVPN** – secure remote access to your network
+- **Pairdrop** – local file sharing alternative to AirDrop
+- **Paperless-NGX** – document management and OCR automation
+- **Snipe-IT** – IT asset management system
+- **Zabbix** – infrastructure and service monitoring
 
-Each guide includes setup instructions, configurations, and tips.
+Explore deployment methods, configuration, and integration options for each tool.
