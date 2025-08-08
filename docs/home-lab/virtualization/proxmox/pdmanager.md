@@ -10,17 +10,16 @@
 
 1. **Install PDM** either:
 
-   - **Via the ISO installer** (similar to Proxmox VE)
+- **Via the ISO installer** (similar to Proxmox VE)
 
-   - **Community Script Installer**:
-     You can also install Proxmox Datacenter Manager using a community-maintained script:
+- **Community Script Installer**: You can also install Proxmox Datacenter Manager using a community-maintained script:
      ```bash
      curl -sSL https://community-scripts.github.io/ProxmoxVE/install-pdm.sh | bash
      ```
 !!! note
-  This method automates repository setup and package installation, making setup quicker and simpler.
+    This method automates repository setup and package installation, making setup quicker and simpler.
 
-   - **Or on Debian Bookworm by adding the PDM repository and installing packages**:  
+- **Or on Debian Bookworm by adding the PDM repository and installing packages**:  
      ```bash
      echo 'deb http://download.proxmox.com/debian/pdm bookworm pdm‑test' >/etc/apt/sources.list.d/pdm-test.list
      wget https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bookworm.gpg
@@ -34,10 +33,10 @@
      Login as `root@pam`.
 
 2. **Add Proxmox VE Remotes**:
-   - Use the “Remote” or “Dashboard” wizard  
-   - Input the node or cluster address and fingerprint (found in the PVE SSL certificate)  
-   - Authenticate using root credentials or API tokens  
-   - After connection, the nodes and guests appear in your dashboard with real-time status.
+- Use the “Remote” or “Dashboard” wizard  
+- Input the node or cluster address and fingerprint (found in the PVE SSL certificate)  
+- Authenticate using root credentials or API tokens  
+- After connection, the nodes and guests appear in your dashboard with real-time status.
 
 ---
 

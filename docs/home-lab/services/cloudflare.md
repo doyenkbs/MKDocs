@@ -45,9 +45,9 @@ Run BookStack in your home lab and access it remotely via `https://wiki.example.
 3. Select the **Free Plan** (recommended for home lab use) or another plan if you need additional features.
 
 4. Cloudflare will automatically scan and import your existing DNS records:  
-   * **Review the imported DNS records** carefully.
-   * Ensure they match your current DNS provider's records.
-   * Click **Continue to activation**
+* **Review the imported DNS records** carefully.
+* Ensure they match your current DNS provider's records.
+* Click **Continue to activation**
 
 5. Cloudflare will provide **two new nameservers** (e.g., `abby.ns.cloudflare.com` and `damon.ns.cloudflare.com`).
 

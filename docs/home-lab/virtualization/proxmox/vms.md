@@ -6,21 +6,21 @@
 
 2. Go to **Create VM** in the Proxmox Web GUI.  
 
-   - **General:** - **Name:** e.g.:`ubuntu-server`
+- **General:** - **Name:** e.g.:`ubuntu-server`
 
-   - **OS:** - Select the uploaded ISO image
+- **OS:** - Select the uploaded ISO image
 
-   - **System:** - Use default (`UEFI` or `BIOS`)
+- **System:** - Use default (`UEFI` or `BIOS`)
 
-   - **Hard Disk:**
-   :   - Choose `local-lvm`  
-         - Set desired disk size
+- **Hard Disk:**
+1. Choose `local-lvm`  
+2. Set desired disk size
 
-   - **CPU & Memory:** - e.g.: `2 cores`, `4GB RAM`
+- **CPU & Memory:** - e.g.: `2 cores`, `4GB RAM`
 
-   - **Network:** - Select `vmbr0` (bridge to LAN)
+- **Network:** - Select `vmbr0` (bridge to LAN)
 
-   - **Confirm** and finish the VM creation wizard.
+- **Confirm** and finish the VM creation wizard.
 
 ---
 
@@ -50,15 +50,15 @@ Creating VM templates allows you to rapidly deploy new virtual machines based on
 #### **Steps to create a VM template:**
 
 1. **Create and configure a VM**  
-   - Install the desired OS (e.g., Ubuntu minimal)  
-   - Configure the VM settings, install software, and perform updates as needed
+- Install the desired OS (e.g., Ubuntu minimal)  
+- Configure the VM settings, install software, and perform updates as needed
 
 2. **Shutdown the VM**  
-   - Ensure the VM is powered off before proceeding
+- Ensure the VM is powered off before proceeding
 
 3. **Convert the VM to a template**  
-   - In the Proxmox Web GUI, right-click the VM  
-   - Select **Convert to Template**
+- In the Proxmox Web GUI, right-click the VM  
+- Select **Convert to Template**
    
 !!! note
     You can also use Proxmox Shell to comvert a VM to a template:

@@ -40,11 +40,11 @@ sudo dd if=proxmox-ve.iso of=/dev/sdX bs=4M status=progress && sync
 ### **3. Boot and Install Proxmox VE**
 1. Boot your system from the USB drive.  
 2. Follow the installation wizard:  
-   - Accept the EULA  
-   - Select the target disk (_use ZFS if you want snapshots or have multiple disks_)  
-   - Set your country, time zone, and keyboard layout  
-   - Create the **root password** and enter your email address  
-   - Assign a static IP, hostname (e.g., `proxmox.local`), and gateway  
+- Accept the EULA  
+- Select the target disk (_use ZFS if you want snapshots or have multiple disks_)  
+- Set your country, time zone, and keyboard layout  
+- Create the **root password** and enter your email address  
+- Assign a static IP, hostname (e.g., `proxmox.local`), and gateway  
 
 ---
 
