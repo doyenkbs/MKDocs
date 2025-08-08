@@ -128,7 +128,9 @@ nav:
 
   - Core Services & Integrations:
         - index.md: home-lab/services/index.md
-        - Cloudflare: home-lab/services/cloudflare.md
+        - Cloudflare: 
+            - Overview: home-lab/services/cloudflare.md
+            - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
       # - DNS: home-lab/services/dns.md
         - Email: home-lab/services/email.md
         - Home Assistant: home-lab/services/homeassistant.md
