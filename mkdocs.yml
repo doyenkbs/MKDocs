@@ -101,40 +101,38 @@ extra:
 # Page tree
 nav:
   - Home: index.md
-  - Home Lab:
-      - Overview: home-lab/homelab.md
-      - Docker: home-lab/docker.md
+  - Overview: home-lab/homelab.md 
+  - Containers & Virtualization:
+       - Docker: home-lab/docker.md
+       - Proxmox VE: 
+            - Overview: home-lab/virtualization/proxmox/proxmox.md
+            - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
+            - Proxmox VE Post-Installation: home-lab/virtualization/proxmox/proxmox-configuration.md                  
+            - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
+            - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
+            - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
+       - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
 
-      - Virtualization:
-            - Proxmox VE: 
-                 - Overview: home-lab/virtualization/proxmox/proxmox.md
-                 - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
-                 - Proxmox VE Post-Installation: home-lab/virtualization/proxmox/proxmox-configuration.md                  
-                 - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
-                 - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
-                 - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
-            - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
+  - Self-Hosted Applications:
+        - index.md: home-lab/application/index.md
+        - Overview: home-lab/application/self-hosted.md
+        - Audiobookshelf: home-lab/application/audiobookshelf.md
+        - Authentik: home-lab/application/authentik.md
+        - Bookstack: home-lab/application/bookstack.md
+        - Nextcloud: home-lab/application/nextcloud.md
+        - OpenVPN: home-lab/application/openvpn.md
+        - Pairdrop: home-lab/application/pairdrop.md
+        - Paperless-NGX: home-lab/application/paperless.md
+        - Snipe-IT: home-lab/application/snipeit.md
+        - Zabbix: home-lab/application/zabbix.md
 
-      - Self-Hosted Applications:
-            - index.md: home-lab/application/index.md
-            - Overview: home-lab/application/self-hosted.md
-            - Audiobookshelf: home-lab/application/audiobookshelf.md
-            - Authentik: home-lab/application/authentik.md
-            - Bookstack: home-lab/application/bookstack.md
-            - Nextcloud: home-lab/application/nextcloud.md
-            - OpenVPN: home-lab/application/openvpn.md
-            - Pairdrop: home-lab/application/pairdrop.md
-            - Paperless-NGX: home-lab/application/paperless.md
-            - Snipe-IT: home-lab/application/snipeit.md
-            - Zabbix: home-lab/application/zabbix.md
-
-      - Core Services & Integrations:
-            - Cloudflare: 
-                  - Overview: home-lab/services/cloudflare/cloudflare.md
-                  - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
-            # - DNS: home-lab/services/dns.md
-            - Email: home-lab/services/email.md
-            - Home Assistant: home-lab/services/homeassistant.md
+  - Core Services & Integrations:
+        - Cloudflare: 
+              - Overview: home-lab/services/cloudflare/cloudflare.md
+              - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
+      # - DNS: home-lab/services/dns.md
+        - Email: home-lab/services/email.md
+       - Home Assistant: home-lab/services/homeassistant.md
   
   - About: about.md
   - Tags: tags.md
