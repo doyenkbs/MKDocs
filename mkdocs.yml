@@ -34,7 +34,7 @@ theme:
     - navigation.path
     - navigation.indexes
     - toc.follow
-    - navigation.top
+    #- navigation.top
     - search.suggest
     - search.highlight
     - search.share
@@ -128,9 +128,8 @@ nav:
 
   - Core Services & Integrations:
         - index.md: home-lab/services/index.md
-        - Cloudflare:
-            - Cloudflare: 
-                - index.md: home-lab/services/cloudflare.md
+        - Cloudflare: 
+                - Overview: home-lab/services/cloudflare.md
                 - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
       # - DNS: home-lab/services/dns.md
         - Email: home-lab/services/email.md
