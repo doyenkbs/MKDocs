@@ -132,7 +132,7 @@ nav:
               - Cloudflare Tunnel: home-lab/services/cloudflare/cloudflaretunnel.md
       # - DNS: home-lab/services/dns.md
         - Email: home-lab/services/email.md
-       - Home Assistant: home-lab/services/homeassistant.md
+        - Home Assistant: home-lab/services/homeassistant.md
   
   - About: about.md
   - Tags: tags.md
