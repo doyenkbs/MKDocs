@@ -13,22 +13,24 @@
    Select your domain.
 
 2. **Access Zero Trust:**  
-   - Click **Zero Trust** in the left-hand menu.  
-   - If this is your first time, set up a Zero Trust account (choose the **free plan** for home lab).
+   * Click **Zero Trust** in the left-hand menu.  
+   * If this is your first time, set up a Zero Trust account (choose the **free plan** for home lab).
+
 !!! note
    You will need to enter a payment method, but you will not be charged.
 
 3. **Create a Tunnel:**  
-   - In Zero Trust dashboard, go to **Networks → Tunnels**. 
-   - Click **Create a tunnel**, then **Cloudflared** and give it a name (e.g., `HomeLabTunnel`).  
-   - Click **Save tunnel**.
+   * In Zero Trust dashboard, go to **Networks → Tunnels**. 
+   * Click **Create a tunnel**, then **Cloudflared** and give it a name (e.g., `HomeLabTunnel`).  
+   * Click **Save tunnel**.
 
 4. **Install and Run Cloudflared Connectors:**  
-   - Choose your environment from the options provided (Windows, Mac, Debian, etc.) and select your system's architecture (64-bit or 32-bit).
-   - Download the cloudflared installer from the link provided on the page or follow the instructions.
-   - Run the installer on your home server or VM running your service.
-   - Copy the **install token** from the text box on the page.
-   - Run it on your server. This command includes a unique token that connects your server to the Cloudflare tunnel.
+   * Choose your environment from the options provided (Windows, Mac, Debian, etc.) and select your system's architecture (64-bit or 32-bit).
+   * Download the cloudflared installer from the link provided on the page or follow the instructions.
+   * Run the installer on your home server or VM running your service.
+   * Copy the **install token** from the text box on the page.
+   * Run it on your server. This command includes a unique token that connects your server to the Cloudflare tunnel.
+
 !!! warning "Store your token carefully!"
    The command you copy contains a sensitive token. Anyone with access to this token will be able to run the tunnel. Do not share it publicly.
 
@@ -40,8 +42,8 @@
 2. Go to the **Public hostnames** tab, click **Add a public hostname**.
 
 3. Fill in the following details:
-   - **Hostname:** Enter the subdomain or path you want to use (e.g., `wiki.example.com`)
-   - **Service:** Select **HTTP** and enter the local URL of your service, including the port number (e.g., `http://192.168.1.100:8080`)
+   * **Hostname:** Enter the subdomain or path you want to use (e.g., `wiki.example.com`)
+   * **Service:** Select **HTTP** and enter the local URL of your service, including the port number (e.g., `http://192.168.1.100:8080`)
 
 3. Click **Save**.
 !!! note
