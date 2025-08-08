@@ -116,7 +116,6 @@ nav:
 
   - Self-Hosted Applications:
         - index.md: home-lab/application/index.md
-        - Overview: home-lab/application/self-hosted.md
         - Audiobookshelf: home-lab/application/audiobookshelf.md
         - Authentik: home-lab/application/authentik.md
         - Bookstack: home-lab/application/bookstack.md
