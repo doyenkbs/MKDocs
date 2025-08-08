@@ -15,7 +15,7 @@
 2. **Access Zero Trust:**  
    - Click **Zero Trust** in the left-hand menu.  
    - If this is your first time, set up a Zero Trust account (choose the **free plan** for home lab).
-!!!note
+!!! note
    You will need to enter a payment method, but you will not be charged.
 
 3. **Create a Tunnel:**  
@@ -29,7 +29,7 @@
    - Run the installer on your home server or VM running your service.
    - Copy the **install token** from the text box on the page.
    - Run it on your server. This command includes a unique token that connects your server to the Cloudflare tunnel.
-!!!warning "Store your token carefully!"
+!!! warning "Store your token carefully!"
    The command you copy contains a sensitive token. Anyone with access to this token will be able to run the tunnel. Do not share it publicly.
 
 ---
