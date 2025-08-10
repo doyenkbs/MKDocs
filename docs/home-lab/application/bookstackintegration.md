@@ -18,14 +18,13 @@ This guide will walk you through integrating **Bookstack** with **Authentik** to
 3. Select **OAuth2/OpenID Provider**, then click **Next**.  
 4. Fill in the following:
 
-   - **Name:** `Bookstack OIDC` (or your preferred name)
-   - **Authorization flow:** `default-provider-authorization-explicit-consent` 
-   - **Protocol settings → Client type:** `Confidential`  
-   - **Redirect URIs/Origins:** `Add entry` 
+   > - **Name:** `Bookstack OIDC` (or your preferred name)
+   > - **Protocol settings → Client type:** `Confidential`  
+   > - **Redirect URIs/Origins:** `Add entry` 
      ```
      https://<your-bookstack-URL>/oidc/callback
      ```
-   - **Signing Key:** `authentic Self-signed Certificate`
+   > - **Signing Key:** `authentic Self-signed Certificate`
 
 5. Click **Finish**.
 
@@ -37,11 +36,11 @@ This guide will walk you through integrating **Bookstack** with **Authentik** to
    **Applications → Applications → Create**.  
 2. Fill in the following:
 
-   - **Name:** `Bookstack` (or your preferred name)  
-   - **Slug:** same as the name (`bookstack`)  
-   - **Provider:** Select the provider created in the previous step (e.g., `Bookstack OIDC`)  
-   - **Policy engine mode:** `Any`  
-   - **UI Settings → Launch URL:** Your BookStack login URL (e.g., `https://wiki.example.com`)
+   > - **Name:** `Bookstack` (or your preferred name)  
+   > - **Slug:** same as the name (`bookstack`)  
+   > - **Provider:** Select the provider created in the previous step (e.g., `Bookstack OIDC`)  
+   > - **Policy engine mode:** `Any`  
+   > - **UI Settings → Launch URL:** Your BookStack login URL (e.g., `https://wiki.example.com`)
 
 3. Click **Create**.
 
@@ -114,7 +113,7 @@ OIDC_ISSUER_DISCOVER=true
     - **OIDC_ISSUER:**
     In Authentik Admin → Applications → Providers → Click your BookStack provider → Copy “OpenID Configuration Issuer” and paste into `.env` as `OIDC_ISSUER`.
 
-Save the .env file and restart BookStack if necessary.
+Save the `.env` file and restart BookStack if necessary.
 
 ## **4. Test Login**
 
@@ -127,5 +126,5 @@ Save the .env file and restart BookStack if necessary.
 
 ---
 
-**For more details:**
+### **For more details:**
 - See the [BookStack Documentation: OpenID Connect Authentication](https://www.bookstackapp.com/docs/admin/oidc-auth/)

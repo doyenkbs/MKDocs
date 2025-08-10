@@ -27,23 +27,23 @@ This guide will walk you through integrating **Audiobookshelf** with **Authentik
 2. Go to **Applications > Providers** and click **Create**.
 3. Select **OAuth2/OpenID Provider** and click **Next**.
 4. Fill in:
-   - **Name:** Audiobookshelf OIDC (or anything you prefer)
-   - **Authorization flow:** `default-provider-authorization-implicit-consent`
-   - **Client Type:** Confidential
-   - **Redirect URIs:**
+   > - **Name:** Audiobookshelf OIDC (or anything you prefer)
+   > - **Authorization flow:** `default-provider-authorization-implicit-consent`
+   > - **Client Type:** Confidential
+   > - **Redirect URIs:**
      ```
      https://<your-audiobookshelf-URL>/auth/openid/callback
      https://<your-audiobookshelf-URL>/auth/openid/mobile-redirect
      ```
-   - **Signing Key:** Self-signed or your chosen key.
+   > - **Signing Key:** Self-signed or your chosen key.
 5. Click **Finish**.
 
 6. Navigate to **Applications > Applications** and click **Create**.
-   - **Name:** Audiobookshelf (or anything you prefer)
-   - **Slug:** audiobookshelf (keeps things simple)
-   - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
-   - **Policy Engine Mode:** Any
-   - **Launch URL:** Your Audiobookshelf login page (e.g., `https://abs.yoursite.com`)
+   > - **Name:** Audiobookshelf (or anything you prefer)
+   > - **Slug:** audiobookshelf (keeps things simple)
+   > - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
+   > - **Policy Engine Mode:** Any
+   > - **Launch URL:** Your Audiobookshelf login page (e.g., `https://abs.yoursite.com`)
 
 7. **Save** the application.
 
@@ -53,9 +53,9 @@ This guide will walk you through integrating **Audiobookshelf** with **Authentik
 
 - In Authentik, go to the **Provider** you created for Audiobookshelf.
 - Locate and copy the following values:
-  - **Client ID**
-  - **Client Secret**
-  - **OpenID Configuration Issuer URL** (or the discovery URL) — e.g.  
+  > - **Client ID**
+  > - **Client Secret**
+  > - **OpenID Configuration Issuer URL** (or the discovery URL) — e.g.  
      ```
      https://auth.example.com/application/o/audiobookshelf/
      ```
@@ -74,20 +74,20 @@ Copy these; you’ll paste them into Audiobookshelf.
 3. Enable **OpenID Connect Authentication**.
 
 4. **Use Auto-populate (optional):**
-   - In **Issuer URL** paste your Authentik issuer/discovery URL (see step 2) and click **Auto-populate** — Audiobookshelf will fill Authorization, Token, UserInfo and JWKS URLs automatically.
+   > - In **Issuer URL** paste your Authentik issuer/discovery URL (see step 2) and click **Auto-populate** — Audiobookshelf will fill Authorization, Token, UserInfo and JWKS URLs automatically.
 
 5. **Fill any remaining fields:**
 
-   - **Client ID:** (from Authentik)
-   - **Client Secret:** (from Authentik)
-   - **Signing Algorithm:** `RS256`
-   - **Button Text:** (e.g., "Login with SSO" or "Sign in with Authentik")
-   - **Allowed Mobile Redirect URIs:**
+   > - **Client ID:** (from Authentik)
+   > - **Client Secret:** (from Authentik)
+   > - **Signing Algorithm:** `RS256`
+   > - **Button Text:** (e.g., "Login with SSO" or "Sign in with Authentik")
+   > - **Allowed Mobile Redirect URIs:**
      ```
      audiobookshelf://oauth
      ```
-   - **Auto Launch:** Enable for auto-redirect, disable to show button.
-   - **Auto Register:** Enable if you want new users created on login.
+   > - **Auto Launch:** Enable for auto-redirect, disable to show button.
+   > - **Auto Register:** Enable if you want new users created on login.
 
 Save settings.
 
@@ -102,7 +102,9 @@ Save settings.
 
 !!! tip 
     If you misconfigure SSO and are locked out, visit  
-    > `https://<your-audiobookshelf-url>/login/?autoLaunch=0` to force show the local login form.
+    ```text
+    https://<your-audiobookshelf-url>/login/?autoLaunch=0
+    ``` to force show the local login form.
 
 
 !!! note
@@ -111,7 +113,7 @@ Save settings.
     - **Mobile App:** Ensure the extra mobile redirect URI is also added in the provider's allowed redirect URIs.
 
 ---
-**For more details:**
+### **For more details:**
 - See the [Audiobookshelf OIDC guide](https://www.audiobookshelf.org/guides/oidc_authentication/)
 - For advanced Authentik configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
 
