@@ -118,9 +118,13 @@ nav:
 
   - Self-Hosted Applications:
         - index.md: home-lab/application/index.md
-        - Audiobookshelf: home-lab/application/audiobookshelf.md
+        - Audiobookshelf: 
+            - Audiobookshelf Installation: home-lab/application/audiobookshelf.md
+            - Audiobookshelf Integrations: home-lab/application/audiobookshelfintegration.md
         - Authentik: home-lab/application/authentik.md
-        - Bookstack: home-lab/application/bookstack.md
+        - Bookstack: 
+            - Bookstack Installation: home-lab/application/bookstack.md
+            - Bookstack Integrations: home-lab/application/bookstackintegration.md
         - Nextcloud: home-lab/application/nextcloud.md
         - Pairdrop: home-lab/application/pairdrop.md
         - Paperless-NGX: home-lab/application/paperless.md
