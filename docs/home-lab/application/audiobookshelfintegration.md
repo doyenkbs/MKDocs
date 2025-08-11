@@ -102,7 +102,7 @@ Save settings.
 
 !!! tip 
     If you misconfigure SSO and are locked out, visit  
-    ```text
+    ```
     https://<your-audiobookshelf-url>/login/?autoLaunch=0
     ``` to force show the local login form.
 

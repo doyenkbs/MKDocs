@@ -77,7 +77,30 @@ sudo service docker start
 ```
 
 ---
+
+# **Linux Post-Installation Steps for Docker**
+
+These **optional** steps help configure your Linux system for easier Docker usage.
+
+## Run Docker Without `sudo`
+
+By default, Docker requires `sudo` because the Docker daemon runs as `root` and listens on a Unix socket owned by `root`.
+
+To allow your user to run Docker without `sudo`:
+
+```bash
+# 1. Create the docker group (skip if it already exists)
+sudo groupadd docker
+
+# 2. Add your user to the docker group
+sudo usermod -aG docker $USER
+
+# 3. Apply changes
+newgrp docker
+```
+
+---
 ### ***References***
-- [Docker Documentation](https://docs.docker.com/get-started/get-docker)
-- [Docker Compose Documentation](https://docs.docker.com/compose)
+- [Docker Documentation](https://docs.docker.com/get-started)
+- [Install Docker Engine](https://docs.docker.com/engine/install/)
 - [What is Docker Compose?](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel

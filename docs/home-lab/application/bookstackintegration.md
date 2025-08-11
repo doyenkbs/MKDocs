@@ -121,8 +121,8 @@ Save the `.env` file and restart BookStack if necessary.
 - Click **Login with SSO**
 
 !!! note
-    > "The Authentik user must exist prior to login."  
-    > "You may also create the same user in Authentik and BookStack (with identical credentials) to bypass BookStack's registration."
+    - **Users:** Each user must exist in Authentik. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
+    - **Groups:** If you wish to sync user groups, map claims accordingly in Authentik and verify `groups` claim handling in Audiobookshelf.
 
 ---
 
