@@ -78,11 +78,11 @@ sudo service docker start
 
 ---
 
-# **Linux Post-Installation Steps for Docker**
+### **Linux Post-Installation Steps for Docker**
 
 These **optional** steps help configure your Linux system for easier Docker usage.
 
-## Run Docker Without `sudo`
+### **Run Docker Without `sudo`**
 
 By default, Docker requires `sudo` because the Docker daemon runs as `root` and listens on a Unix socket owned by `root`.
 
