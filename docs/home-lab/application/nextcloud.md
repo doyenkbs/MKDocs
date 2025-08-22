@@ -207,6 +207,7 @@ sudo chmod +x /var/www/<your-domain>/occ
 sudo /var/www/<your-domain>/occ db:add-missing-indices
 sudo chmod -x /var/www/<your-domain>/occ
 ```
+
 ---
 
 ## **9. Obtain a TLS Certificate (Let's Encrypt)**
@@ -272,6 +273,7 @@ sudo systemctl restart apache2
 Your Nextcloud server is ready!
 Visit:
 > `https://<your-domain>`
+
 Follow the installer to create your admin account and connect to the database.
 
 ---
@@ -339,9 +341,9 @@ Add your domain to the trusted list:
 
 ---
 ## ***Reference***
-[*Nextcloud Documentation*](https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html)
-[*Learn Linux TV: Complete Walkthrough for Installing Nextcloud on Ubuntu 24.04*](https://www.learnlinux.tv/complete-walkthrough-for-installing-nextcloud-on-ubuntu-24-04/)
-[*Certbot Instructions*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal)
+> [*Nextcloud Documentation*](https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html)
+> [*Learn Linux TV: Complete Walkthrough for Installing Nextcloud on Ubuntu 24.04*](https://www.learnlinux.tv/complete-walkthrough-for-installing-nextcloud-on-ubuntu-24-04/)
+> [*Certbot Instructions*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal)
 
 
 

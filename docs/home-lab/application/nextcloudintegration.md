@@ -16,7 +16,7 @@ This guide describes how to integrate Nextcloud with Authentik for Single Sign-O
 ## **Step 1: Install Nextcloud OIDC App**
 
 - Log into **Nextcloud** as an admin.
-- Go to **Apps** → **Your apps**.  (top right menu).
+- Go to **Apps** → **Your apps**.  (`top right menu`).
 - Search for **OpenID Connect user backend**.
 - Click **Install and Enable**.
 
@@ -28,14 +28,15 @@ This guide describes how to integrate Nextcloud with Authentik for Single Sign-O
 2. Navigate to **Applications** → **Providers**.
 3. Click **Create** and select **OAuth2 / OpenID Connect Provider**.
 4. Set the following values:
-    > - **Name:** Nextcloud OIDC
-    > - **Authorization Flow:** `default-provider-authorization-implicit-consent` (or your custom flow) 
-    > - **Client type:** Confidential
+
+    > - **Name:** `Nextcloud OIDC`
+    > - **Authorization Flow:** `default-provider-authorization-implicit-consent` `(or your custom flow)`
+    > - **Client type:** `Confidential`
     >- **Redirect URIs:** 
       `https://nextcloud.example.com/index.php/apps/user_oidc/code`
-    > - **Signing Key:** Select your existing key or create one.
-    > - **Scopes:** openid, profile, email
-    > - **Subject mode:** Based on the User's username.
+    > - **Signing Key:** `Select your existing key or create one.`
+    > - **Scopes:** `openid, profile, email`
+    > - **Subject mode:** `Based on the User's username.`
 5. Save the provider.
 
 ---
@@ -44,11 +45,12 @@ This guide describes how to integrate Nextcloud with Authentik for Single Sign-O
 
 1. Go to **Applications → Create**
 2. Set the following values:
-    > - **Name:** Nextcloud
-    > - **Slug:** nextcloud
-    > - **Provider:** Select the Nextcloud OIDC provider you created.
+
+    > - **Name:** `Nextcloud`
+    > - **Slug:** `nextcloud`
+    > - **Provider:** `Select the Nextcloud OIDC provider you created.`
     > - **Launch URL:**  
-     `https://nextcloud.example.com` or leave empty
+     `https://nextcloud.example.com` `or leave empty`
     > - Assign appropriate **groups/users** to the application if needed.
 3. Save the application.
 
@@ -58,6 +60,7 @@ This guide describes how to integrate Nextcloud with Authentik for Single Sign-O
 
 1. Open your Nextcloud OIDC provider in Authentik.
 2. Copy the following values:
+
     > - **Client ID**
     > - **Client Secret**
     > - **OpenID Configuration Issuer:**  
@@ -70,11 +73,11 @@ This guide describes how to integrate Nextcloud with Authentik for Single Sign-O
 1. In Nextcloud, go to **Settings** → **Administration** → **OpenID Connect user backend**.
 2. Fill in the fields as follows:
 
-    > - **Identifier (max 128 characters):** e.g: `Authentik` or `SSO`
-    > - **Discovery endpoint:** *(Use the Provider URL (Issuer) from Authentik OIDC provider)*  
+    > - **Identifier (max 128 characters):** `e.g: Authentik or SSO`
+    > - **Discovery endpoint:** `*(Use the Provider URL (Issuer) from Authentik OIDC provider)*`  
       `https://authentik.example.com/application/o/nextcloud/`
-    > - **Client ID:** *(from Authentik OIDC provider)*
-    > - **Client Secret:** *(from Authentik OIDC provider)*
+    > - **Client ID:** `*(from Authentik OIDC provider)*`
+    > - **Client Secret:** `*(from Authentik OIDC provider)*`
     > - **Authorization endpoint:**  
       `https://authentik.example.com/application/o/authorize/`
     > - **Scopes:** `openid profile email`
@@ -102,9 +105,9 @@ With this setup, Nextcloud is fully integrated into your centralized **Authentik
 
 ---
 
-# **OpenID Connect Provider Setup via Command Line**
+## **OpenID Connect Provider Setup via Command Line**
 
-# Disable Other Login Methods and Manage OpenID Connect Providers in Nextcloud
+## Disable Other Login Methods and Manage OpenID Connect Providers in Nextcloud
 
 This guide explains how to make OpenID Connect (OIDC) the default and only login method in your Nextcloud instance, as well as how to manage OIDC provider entries via the command line.
 
@@ -123,9 +126,9 @@ To make the OIDC provider the sole login method, run:
 sudo -u www-data php /var/www/nextcloud/occ config:app:set --value=0 user_oidc allow_multiple_user_backends
 ```
 !!! note
-    *- `--value=0`: Disables multiple user backends (OIDC becomes default and exclusive)*
-    *- `--value=1`: Enables multiple user backends (users can choose between available login methods)*
-    *-`/var/www/nextcloud`: Replace this with the actual path to your Nextcloud installation directory*
+    > *- `--value=0`: Disables multiple user backends (OIDC becomes default and exclusive)*
+    > *- `--value=1`: Enables multiple user backends (users can choose between available login methods)*
+    > *-`/var/www/nextcloud`: Replace this with the actual path to your Nextcloud installation directory*
 
 ## **Provider Entries Management**
 
