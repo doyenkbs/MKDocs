@@ -176,7 +176,7 @@ sudo -u www-data php /var/www/nextcloud/occ user_oidc:provider:delete PROVIDER_I
 
 ## ***References***
 
-- [*Nextcloud OIDC Documentation*](https://github.com/nextcloud/user_oidc)
-- [*Authentik Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
+> - [*Nextcloud OIDC Documentation*](https://github.com/nextcloud/user_oidc)
+> - [*Authentik Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
 
 

@@ -341,9 +341,9 @@ Add your domain to the trusted list:
 
 ---
 ## ***Reference***
-> [*Nextcloud Documentation*](https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html)
-> [*Learn Linux TV: Complete Walkthrough for Installing Nextcloud on Ubuntu 24.04*](https://www.learnlinux.tv/complete-walkthrough-for-installing-nextcloud-on-ubuntu-24-04/)
-> [*Certbot Instructions*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal)
+> - [*Nextcloud Documentation*](https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html)
+> - [*Learn Linux TV: Complete Walkthrough for Installing Nextcloud on Ubuntu 24.04*](https://www.learnlinux.tv/complete-walkthrough-for-installing-nextcloud-on-ubuntu-24-04/)
+> - [*Certbot Instructions*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal)
 
 
 
