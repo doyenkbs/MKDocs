@@ -15,7 +15,6 @@ Before starting, make sure you have:
 - A clean **Ubuntu 24.04 LTS** server  
 - Root access or a **sudo-enabled user**  
 - A valid **domain name** (optional, but required for HTTPS)  
-- Reliable **Internet access**
 
 ---
 
@@ -28,7 +27,6 @@ Begin by creating a non-root user and updating your system packages to ensure yo
 adduser <username>
 usermod -aG sudo <username>
 ```
-
 Log in as your new user after setup.
 
 ### **Update System Packages**
@@ -46,6 +44,7 @@ sudo nano /etc/hostname
 sudo nano /etc/hosts
 ```
 > *Enter your server's hostname and domain name as needed.*
+
 Reboot to apply changes:
 ``` bash
 sudo reboot
@@ -95,6 +94,8 @@ GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost' IDENTIFIED BY 'my
 FLUSH PRIVILEGES;
 EXIT;
 ```
+!!! note
+    *Replace `mypassword` with a strong and unique password of your choice.*
 ---
 
 ## **4. Install Apache, PHP, and Required Modules**
@@ -149,7 +150,7 @@ Paste and edit:
 </VirtualHost>
 ```
 !!! note
-    Replace <your-domain> with your nextcloud domain, e.g. `nextcloud.example.com`
+    Replace `<your-domain>` with your nextcloud domain (e.g. `nextcloud.example.com`)
 
 Enable the site:
 ``` bash
@@ -166,17 +167,17 @@ Tune PHP settings for optimal performance and stability with Nextcloud.
 sudo nano /etc/php/8.3/apache2/php.ini
 ```
 Update these values:
-> `memory_limit = 512M`
-> `upload_max_filesize = 200M`
-> `max_execution_time = 360`
-> `post_max_size = 200M`
-> `date.timezone = Your/Timezone` `(e.g. America/Detroit)`
-> `opcache.enable=1`
-> `opcache.interned_strings_buffer=16`
-> `opcache.max_accelerated_files=10000`
-> `opcache.memory_consumption=128`
-> `opcache.save_comments=1`
-> `opcache.revalidate_freq=1`
+> - `memory_limit = 512M`
+> - `upload_max_filesize = 200M`
+> - `max_execution_time = 360`
+> - `post_max_size = 200M`
+> - `date.timezone = Your/Timezone` `(e.g. America/Detroit)`
+> - `opcache.enable=1`
+> - `opcache.interned_strings_buffer=16`
+> - `opcache.max_accelerated_files=10000`
+> - `opcache.memory_consumption=128`
+> - `opcache.save_comments=1`
+> - `opcache.revalidate_freq=1`
 
 Enable important modules:
 ``` bash
