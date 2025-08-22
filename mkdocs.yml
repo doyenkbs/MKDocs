@@ -125,7 +125,9 @@ nav:
         - Bookstack: 
             - Bookstack Installation: home-lab/application/bookstack.md
             - Bookstack Integrations: home-lab/application/bookstackintegration.md
-        - Nextcloud: home-lab/application/nextcloud.md
+        - Nextcloud: 
+            - Nextcloud Installation: home-lab/application/nextcloud.md
+            - Nextcloud Integrations: home-lab/application/nextcloudintegration.md
         - Pairdrop: home-lab/application/pairdrop.md
         - Paperless-NGX: home-lab/application/paperless.md
         - Snipe-IT: home-lab/application/snipeit.md
