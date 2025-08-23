@@ -1,30 +1,46 @@
-# **Mailcow Installation Guide (Ubuntu)**
+# **<span style="color:green; font-weight:bold;">Mailcow Installation Guide (Ubuntu)</span>**
 
-This guide provides a streamlined, step-by-step process to install Mailcow mail server on Ubuntu 22.04 using **Docker** and **Docker Compose**. Mailcow is a modern mail server suite designed for ease of deployment and management.
+This guide explains how to install and configure **Mailcow: dockerized** on **Ubuntu 22.04+**, with firewall setup, **SPF, DKIM, and DMARC**, and best practices for VPS self-hosting.
+
+---
+
+## **Why Use a VPS for Mailcow?**
+
+Running a mail server requires:
+- **A static, public IP address**  
+- **Correct reverse DNS (PTR record)** for your mail domain  
+- **No ISP blocking** of port 25 (many home ISPs block it)
+
+👉 Because of these requirements, hosting Mailcow on a **VPS provider** (like **Contabo, Hetzner, Linode, or DigitalOcean**) is strongly recommended.  
+
+**Reverse DNS (rDNS)**:  
+- This is a PTR record mapping your **server IP → hostname** (e.g., `1.2.3.4 → mail.example.com`).  
+- Mail servers like Gmail, Outlook, and Yahoo will **reject or spam-flag emails** if rDNS is missing or mismatched.  
+- Most VPS providers allow you to set this in their control panel.  
 
 ---
 
 ## **Prerequisites**
 
 ### **System Requirements**
-- **OS:** Ubuntu 22.04 LTS or newer  
-- **RAM:** Minimum 6 GB (+1 GB swap)  
-- **Disk:** At least 20 GB free  
+- **Server:** <span style="color:blue;">VPS with Ubuntu 22.04 or newer</span> (e.g., Contabo VPS S with 6 GB RAM) 
+- **RAM:** <span style="color:orange;">Minimum 6 GB (+1 GB swap)</span>  
+- **Disk:** <span style="color:purple;">At least 20 GB free</span>  
 - **Domain:** A fully qualified domain name (FQDN), e.g., `mail.example.com`
-- Open ports: 80, 443, 25, 465, 587 (check firewall rules)
+- **Static IP with rDNS set to match your mail domain** 
 
-### **Essential Packages**
-Update your system and install required tools:
+!!! info "Essential Packages"
+    These tools are required for cloning the repository, generating configs,  
+    and running setup scripts.
 
-```bash
-sudo apt update
-sudo apt install -y git openssl curl gawk coreutils grep jq apt-transport-https ca-certificates software-properties-common
-```
-
-👉 These tools are needed for cloning the repository, generating configs, and running setup scripts.
+    ```bash
+    sudo apt update
+    sudo apt install -y git openssl curl gawk coreutils grep jq \
+    apt-transport-https ca-certificates software-properties-common
+    ```
 
 ### **Firewall Setup**
-Open Ports with UFW.
+<span style="color:red; font-weight:bold;">Open Ports with UFW.</span>    
 Mailcow needs email and web ports open:
 
 ``` bash
@@ -104,13 +120,14 @@ Once running, log in via browser:**
 > `https://<your-domain>/admin`
 
 !!! note
-    *The first time, you may get a warning about a self-signed SSL certificate.*
+    <span style="color:blue;">*The first time, you may get a warning about a self-signed SSL certificate.*</span>
 
-Default credentials:
-- Username: `admin`
-- Password: `moohoo`
+!!! danger "Default Credentials"
+    - Username: <span style="color:blue;">`admin`</span>  
+    - Password: <span style="color:red;">`moohoo`</span>  
 
-👉 Login and immediately update the admin password under Admin UI → Configuration → Change Password.
+    ⚠️ Login and **immediately update the admin password** under  
+    *Admin UI → Configuration → Change Password*.
 
 ---
 
@@ -118,15 +135,19 @@ Default credentials:
 
 ### **Configure Base DNS Records**
 At minimum, add:
-- **A record** → `mail.example.com` → `Server IP`
-- **MX record** → `example.com` → `mail.example.com`
+!!! example "Base DNS Records"
+    - **A record** → `mail.example.com` → Server IP  
+    - **MX record** → `example.com` → `mail.example.com`
 
-👉 Without these, other mail servers won’t know where to deliver your domain’s email.
+    👉 Without these, other mail servers won’t know where to deliver your domain’s email.
 
 ### **SPF, DKIM, and DMARC Setup**
-Proper DNS authentication ensures your emails don’t end up in spam.
 
-1. **SPF Record**
+!!! tip "SPF, DKIM, and DMARC"
+    Add TXT records for SPF, DKIM, and DMARC to ensure email delivery.  
+    Without these, your mail may end up in spam.
+
+### **1. SPF Record**
 Create a TXT record:
 ``` bash
 Name: @
@@ -140,7 +161,7 @@ If you also send via Google/Microsoft (Optional), add:
 v=spf1 mx include:_spf.google.com include:spf.protection.outlook.com -all
 ```
 
-2. **DKIM Record**
+### **2. DKIM Record**
 DKIM signs outgoing emails so recipients can verify authenticity.
 
 - In Mailcow **Admin UI → Configuration → ARC/DKIM Keys**
@@ -196,15 +217,13 @@ dig TXT _dmarc.example.com
 
 ## **Troubleshooting**
 
-View Logs:
-``` bash
-sudo docker compose logs -f
-```
-Restart Stack:
-``` bash
-sudo docker compose down
-sudo docker compose up -d
-```
+??? bug "Troubleshooting"
+    ```bash
+    sudo docker compose logs -f
+    sudo docker compose down
+    sudo docker compose up -d
+    ```
+    Use these commands to debug or restart the Mailcow stack.
 
 ---
 
@@ -217,3 +236,4 @@ sudo docker compose up -d
 ---
 
 🎉 Congratulations! You now have a fully functional Mailcow mail server running on your Ubuntu system.
+
