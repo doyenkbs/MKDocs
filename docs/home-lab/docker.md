@@ -1,28 +1,28 @@
-# **What is Docker and Docker Compose?**
+# **<span style="color:#2496ED;">What is Docker and Docker Compose?</span>**
 
 ---
 ## **Docker**
 
-Docker is an open-source platform that enables you to automate the deployment, scaling, and management of applications inside lightweight, portable containers. Containers isolate your applications from the host system, making them portable and consistent across different environments. Unlike virtual machines, containers share the host OS kernel, which makes them more resource-efficient.
+<span style="color:#2496ED;">Docker</span> is an open-source platform that enables you to automate the deployment, scaling, and management of applications inside lightweight, portable containers. Containers isolate your applications from the host system, making them portable and consistent across different environments. Unlike virtual machines, containers share the host OS kernel, which makes them more resource-efficient.
 
-Docker is ideal for running single services or applications in isolated environments and provides all the necessary commands to build, run, and manage containers.
+<span style="color:#2496ED;">Docker</span> is ideal for running single services or applications in isolated environments and provides all the necessary commands to build, run, and manage containers.
 
 ---
 ## **Docker Compose**
 
-Docker Compose is a tool for defining and managing multi-container Docker applications. With Docker Compose, you define your application’s services, networks, and volumes in a single YAML file (typically called docker-compose.yml). Compose allows you to start, stop, and manage multiple containers as a single application with just one command. It is especially useful for applications consisting of several interdependent services (like a web server, database, and cache).
+<span style="color:#2496ED;">Docker Compose</span> is a tool for defining and managing multi-container Docker applications. With <span style="color:#2496ED;">Docker Compose</span>, you define your application’s services, networks, and volumes in a single YAML file (typically called docker-compose.yml). Compose allows you to start, stop, and manage multiple containers as a single application with just one command. It is especially useful for applications consisting of several interdependent services (like a web server, database, and cache).
 
 ---
 ## **Key differences:**
 
-Docker is best for running and managing single containers.
+<span style="color:#2496ED;">Docker</span> is best for running and managing single containers.
 
-Docker Compose is designed to organize and manage multiple containers together as one application stack, handling configuration and network setup automatically.
+<span style="color:#2496ED;">Docker Compose</span> is designed to organize and manage multiple containers together as one application stack, handling configuration and network setup automatically.
 
 ---
 ## **Installing Docker & Docker Compose**
 
-Below are the installation steps for Docker and Docker Compose on Debian and Ubuntu.
+Below are the installation steps for <span style="color:#2496ED;">Docker</span> and <span style="color:#2496ED;">Docker Compose</span> on Debian and Ubuntu.
 ### **Install Docker & Docker Compose on Debian**
 ```bash
 # Update package lists and install dependencies
@@ -80,13 +80,13 @@ sudo service docker start
 
 ### **Linux Post-Installation Steps for Docker**
 
-These **optional** steps help configure your Linux system for easier Docker usage.
+These **optional** steps help configure your Linux system for easier <span style="color:#2496ED;">Docker</span> usage.
 
 ### **Run Docker Without `sudo`**
 
-By default, Docker requires `sudo` because the Docker daemon runs as `root` and listens on a Unix socket owned by `root`.
+By default, <span style="color:#2496ED;">Docker</span> requires `sudo` because the <span style="color:#2496ED;">Docker</span> daemon runs as `root` and listens on a Unix socket owned by `root`.
 
-To allow your user to run Docker without `sudo`:
+To allow your user to run D<span style="color:#2496ED;">ocker</span> without `sudo`:
 
 ```bash
 # 1. Create the docker group (skip if it already exists)

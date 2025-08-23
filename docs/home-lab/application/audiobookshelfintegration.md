@@ -1,13 +1,13 @@
-# **Audiobookshelf ↔ Authentik: OIDC Integration Guide**
+# **<span style="color:#AB47BC;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**
 
-This guide will walk you through integrating **Audiobookshelf** with **Authentik** to enable Single Sign-On via OpenID Connect (OIDC).
+This guide will walk you through integrating **<span style="color:#AB47BC;">Audiobookshelf</span>** with **<span style="color:#1976D2;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
 
 ---
 
 ## **Requirements**
 
 - A running instance of **Audiobookshelf** (latest recommended)
-- A running instance of **Authentik** with admin access
+- A running instance of **<span style="color:#1976D2;">Authentik</span>** with admin access
 
 ---
 
@@ -51,7 +51,7 @@ This guide will walk you through integrating **Audiobookshelf** with **Authentik
 
 ## **Step 2: Copy client credentials & discovery info from Authentik**
 
-- In Authentik, go to the **Provider** you created for Audiobookshelf.
+- In <span style="color:#1976D2;">Authentik</span>, go to the **Provider** you created for Audiobookshelf.
 - Locate and copy the following values:
   > - **Client ID**
   > - **Client Secret**
@@ -74,7 +74,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 3. Enable **OpenID Connect Authentication**.
 
 4. **Use Auto-populate (optional):**
-   > - In **Issuer URL** paste your Authentik issuer/discovery URL (see step 2) and click **Auto-populate** — Audiobookshelf will fill Authorization, Token, UserInfo and JWKS URLs automatically.
+   > - In **Issuer URL** paste your <span style="color:#1976D2;">Authentik</span> issuer/discovery URL (see step 2) and click **Auto-populate** — Audiobookshelf will fill Authorization, Token, UserInfo and JWKS URLs automatically.
 
 5. **Fill any remaining fields:**
 
@@ -108,12 +108,12 @@ Save settings.
 
 
 !!! note
-    - **Users:** Each user must exist in Authentik. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
+    - **Users:** Each user must exist in <span style="color:#1976D2;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
     - **Groups:** If you wish to sync user groups, map claims accordingly in Authentik and verify `groups` claim handling in Audiobookshelf.
     - **Mobile App:** Ensure the extra mobile redirect URI is also added in the provider's allowed redirect URIs.
 
 ---
 ### **For more details:**
 - See the [Audiobookshelf OIDC guide](https://www.audiobookshelf.org/guides/oidc_authentication/)
-- For advanced Authentik configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
+- For advanced <span style="color:#1976D2;">Authentik</span> configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
 

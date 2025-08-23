@@ -1,4 +1,4 @@
-# Welcome to My Home Lab Documentation
+# <span style="color:#00695C;">Kabason Labs Documentation</span>
 
 Welcome to the comprehensive documentation for my Home Lab infrastructure.  
 This site provides detailed guides, installation instructions, and configuration tips to help you deploy and manage a variety of self-hosted applications, network setups, and core services.

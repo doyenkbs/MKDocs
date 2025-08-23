@@ -1,6 +1,6 @@
 # **<span style="color:green; font-weight:bold;">Mailcow Installation Guide (Ubuntu)</span>**
 
-This guide explains how to install and configure **Mailcow: dockerized** on **Ubuntu 22.04+**, with firewall setup, **SPF, DKIM, and DMARC**, and best practices for VPS self-hosting.
+This guide explains how to install and configure **<span style="color:#43A047;">Mailcow</span>: dockerized** on **Ubuntu 22.04+**, with firewall setup, **SPF, DKIM, and DMARC**, and best practices for VPS self-hosting.
 
 ---
 
@@ -11,7 +11,7 @@ Running a mail server requires:
 - **Correct reverse DNS (PTR record)** for your mail domain  
 - **No ISP blocking** of port 25 (many home ISPs block it)
 
-👉 Because of these requirements, hosting Mailcow on a **VPS provider** (like **Contabo, Hetzner, Linode, or DigitalOcean**) is strongly recommended.  
+👉 Because of these requirements, hosting <span style="color:#43A047;">Mailcow</span> on a **VPS provider** (like **Contabo, Hetzner, Linode, or DigitalOcean**) is strongly recommended.  
 
 **Reverse DNS (rDNS)**:  
 - This is a PTR record mapping your **server IP → hostname** (e.g., `1.2.3.4 → mail.example.com`).  
@@ -65,8 +65,8 @@ sudo ufw status verbose
 
 ---
 ## **Step 1: Install Docker & Docker Compose**
-Mailcow runs entirely inside Docker containers, so Docker is required.  
-To install Docker and Docker Compose, refer to the [Docker Installation Guide](https://kabason.net/home-lab/docker.html) in this documentation.
+<span style="color:#43A047;">Mailcow</span> runs entirely inside <span style="color:#2496ED;">Docker</span> containers, so <span style="color:#2496ED;">Docker</span> is required.  
+To install <span style="color:#2496ED;">Docker</span> and <span style="color:#2496ED;">Docker Compose</span>, refer to the [Docker Installation Guide](https://kabason.net/home-lab/docker.html) in this documentation.
 
 ---
 
@@ -238,5 +238,5 @@ dig TXT _dmarc.example.com
 
 ---
 
-🎉 Congratulations! You now have a fully functional Mailcow mail server running on your Ubuntu system.
+🎉 Congratulations! You now have a fully functional <span style="color:#43A047;">Mailcow</span> mail server running on your Ubuntu system.
 

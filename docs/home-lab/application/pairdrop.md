@@ -1,6 +1,6 @@
-# **PairDrop Installation via Proxmox VE Helper-Scripts**
+# **<span style="color:#F57C00;">PairDrop Installation via Proxmox VE Helper-Scripts</span>**
 
-This guide covers how to install PairDrop—a self-hosted, local file transfer solution—in an LXC container on Proxmox VE using the Proxmox VE Helper-Scripts. These community scripts make deploying new apps, like PairDrop, fast, standardized, and repeatable.
+This guide covers how to install <span style="color:#F57C00;">PairDrop</span>, local file transfer solution—in an LXC container on Proxmox VE using the Proxmox VE Helper-Scripts. These community scripts make deploying new apps, like <span style="color:#F57C00;">PairDrop</span>, fast, standardized, and repeatable.
 
 > For official script documentation, visit: [PairDrop Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
 
@@ -55,6 +55,6 @@ http://<your-static-ip>:3000
 * PairDrop works cross-browser and is accessible on your LAN unless you configure additional network access.
 
 ***References:***
-> - [PairDrop Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
+> - [<span style="color:#F57C00;">PairDrop Helper Script</span>](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
 
 

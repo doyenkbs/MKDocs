@@ -1,10 +1,10 @@
-# **Nextcloud Installation on Ubuntu 24.04 LTS**
+# **<span style="color:#009688;">Nextcloud Installation on Ubuntu 24.04 LTS</span>**
 
 ---
 
 ## **Overview**
 
-**Nextcloud** is a powerful platform for self-hosted collaboration, file synchronization, document editing, calendar, contacts, and much more. By the end of this guide, you’ll have a fully working Nextcloud server ready for personal or team use.
+**<span style="color:#009688;">Nextcloud</span>** is a powerful platform for self-hosted collaboration, file synchronization, document editing, calendar, contacts, and much more. By the end of this guide, you’ll have a fully working Nextcloud server ready for personal or team use.
 
 ---
 

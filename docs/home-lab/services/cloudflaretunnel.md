@@ -1,14 +1,14 @@
-# **Setting Up Cloudflare Tunnel via Dashboard**
+# **<span style="color:#FFB74D;">Setting Up Cloudflare Tunnel via Dashboard</span>**
 
 ### **Prerequisites**
 - A [Cloudflare account](https://dash.cloudflare.com/sign-up) 
-- A domain name managed by Cloudflare DNS
+- A domain name managed by <span style="color:#F38020;">Cloudflare</span> DNS
 - A home server or VM running your service
 
 ---
 ### **Steps**
 
-1. **Log in to Cloudflare Dashboard:** [https://dash.cloudflare.com](https://dash.cloudflare.com)  
+1. **Log in to <span style="color:#F38020;">Cloudflare</span> Dashboard:** [https://dash.cloudflare.com](https://dash.cloudflare.com)  
    Select your domain.
 
 2. **Access Zero Trust:**  

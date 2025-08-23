@@ -1,6 +1,6 @@
-# **Integrate BookStack with Authentik via OIDC**
+# **<span style="color:#26A69A;">Integrate BookStack with Authentik via OIDC</span>**
 
-This guide will walk you through integrating **Bookstack** with **Authentik** to enable Single Sign-On via OpenID Connect (OIDC).
+This guide will walk you through integrating **<span style="color:#26A69A;">Bookstack</span>** with **<span style="color:#1976D2;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
 
 ---
 
@@ -12,7 +12,7 @@ This guide will walk you through integrating **Bookstack** with **Authentik** to
 
 ## **1. Create a BookStack Provider**
 
-1. Open your **Authentik Admin Interface**.  
+1. Open your **<span style="color:#1976D2;">Authentik</span> Admin Interface**.  
 2. Navigate to:  
    **Applications → Providers → Create**.  
 3. Select **OAuth2/OpenID Provider**, then click **Next**.  
@@ -109,9 +109,9 @@ OIDC_ISSUER_DISCOVER=true
 
 !!! note
     - **Client ID and Secret:**
-    In Authentik Admin, go to Admin → Applications → Providers → Edit your BookStack provider → Copy Client ID and Secret, then update `OIDC_CLIENT_ID` and `OIDC_CLIENT_SECRET` in `.env`.
+    In <span style="color:#1976D2;">Authentik</span> Admin, go to Admin → Applications → Providers → Edit your BookStack provider → Copy Client ID and Secret, then update `OIDC_CLIENT_ID` and `OIDC_CLIENT_SECRET` in `.env`.
     - **OIDC_ISSUER:**
-    In Authentik Admin → Applications → Providers → Click your BookStack provider → Copy “OpenID Configuration Issuer” and paste into `.env` as `OIDC_ISSUER`.
+    In <span style="color:#1976D2;">Authentik</span> Admin → Applications → Providers → Click your BookStack provider → Copy “OpenID Configuration Issuer” and paste into `.env` as `OIDC_ISSUER`.
 
 Save the `.env` file and restart BookStack if necessary.
 
@@ -121,8 +121,8 @@ Save the `.env` file and restart BookStack if necessary.
 - Click **Login with SSO**
 
 !!! note
-    - **Users:** Each user must exist in Authentik. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
-    - **Groups:** If you wish to sync user groups, map claims accordingly in Authentik and verify `groups` claim handling in Audiobookshelf.
+    - **Users:** Each user must exist in <span style="color:#1976D2;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
+    - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:#1976D2;">Authentik</span> and verify `groups` claim handling in Audiobookshelf.
 
 ---
 

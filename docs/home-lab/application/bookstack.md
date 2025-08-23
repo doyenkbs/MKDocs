@@ -1,6 +1,6 @@
-# **BookStack Installation on Ubuntu 24.04**
+# **<span style="color:#00897B;">BookStack Installation on Ubuntu 24.04</span>**
 
-This page documents the complete process for installing BookStack, a self-hosted wiki and knowledge base, on a fresh Ubuntu 24.04 server. BookStack is used as my primary knowledge repository.
+This page documents the complete process for installing <span style="color:#00897B;">BookStack</span>, a self-hosted wiki and knowledge base, on a fresh Ubuntu 24.04 server. <span style="color:#00897B;">BookStack</span> is used as my primary knowledge repository.
 
 > Reference: [BookStack Official Installation Guide](https://www.bookstackapp.com/docs/admin/installation/)
 
