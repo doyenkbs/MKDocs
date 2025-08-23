@@ -86,7 +86,7 @@ These **optional** steps help configure your Linux system for easier <span style
 
 By default, <span style="color:#2496ED;">Docker</span> requires `sudo` because the <span style="color:#2496ED;">Docker</span> daemon runs as `root` and listens on a Unix socket owned by `root`.
 
-To allow your user to run D<span style="color:#2496ED;">ocker</span> without `sudo`:
+To allow your user to run <span style="color:#2496ED;">Docker</span> without `sudo`:
 
 ```bash
 # 1. Create the docker group (skip if it already exists)

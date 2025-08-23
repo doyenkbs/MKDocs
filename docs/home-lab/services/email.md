@@ -7,13 +7,15 @@ This guide explains how to install and configure **<span style="color:#43A047;">
 ## **Why Use a VPS for Mailcow?**
 
 Running a mail server requires:
+
 - **A static, public IP address**  
 - **Correct reverse DNS (PTR record)** for your mail domain  
 - **No ISP blocking** of port 25 (many home ISPs block it)
 
 👉 Because of these requirements, hosting <span style="color:#43A047;">Mailcow</span> on a **VPS provider** (like **Contabo, Hetzner, Linode, or DigitalOcean**) is strongly recommended.  
 
-**Reverse DNS (rDNS)**:  
+**Reverse DNS (rDNS)**: 
+
 - This is a PTR record mapping your **server IP → hostname** (e.g., `1.2.3.4 → mail.example.com`).  
 - Mail servers like Gmail, Outlook, and Yahoo will **reject or spam-flag emails** if rDNS is missing or mismatched.  
 - Most VPS providers allow you to set this in their control panel.  
@@ -179,7 +181,7 @@ DKIM signs outgoing emails so recipients can verify authenticity.
     ```
 👉 Once DNS propagates, Mailcow will automatically sign outgoing mail with this key.
 
-3. **DMARC Record**  
+### **3. DMARC Record**  
 
 DMARC ties SPF & DKIM together and provides reporting.
 !!! example "Add a TXT record:"
