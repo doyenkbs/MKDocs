@@ -65,7 +65,8 @@ sudo ufw status verbose
 
 ---
 ## **Step 1: Install Docker & Docker Compose**
-Mailcow runs entirely inside Docker containers, so Docker is required. To install Docker and Docker Compose, please refer to the detailed [Installation Guide](https://kabason.net/home-lab/docker.html) within this documentation.
+Mailcow runs entirely inside Docker containers, so Docker is required.  
+To install Docker and Docker Compose, refer to the [Docker Installation Guide](https://kabason.net/home-lab/docker.html) in this documentation.
 
 ---
 
@@ -88,7 +89,7 @@ Run the configuration script to create your `mailcow.conf`.
 ``` bash
 sudo ./generate_config.sh
 ```
-👉 This will ask for your mail server FQDN (e.g., mail.example.com) and create a mailcow.conf with settings.
+👉 This will ask for your mail server FQDN (e.g., mail.example.com) and create a mailcow.conf.
 
 (Optional) Edit configuration:
 ``` bash
@@ -100,7 +101,7 @@ sudo nano mailcow.conf
 
 ## **Step 4: Start Mailcow Docker Containers**
 
-Pull the latest images and start the Mailcow service containers in detached mode.
+Pull images and start Mailcow in detached mode.
 ``` bash
 sudo docker compose pull
 sudo docker compose up -d
@@ -116,7 +117,7 @@ sudo docker compose ps
 ---
 
 ## **Step 5: Access Mailcow Web Interface**
-Once running, log in via browser:**
+Once running, log in via browser:
 > `https://<your-domain>/admin`
 
 !!! note
@@ -149,17 +150,19 @@ At minimum, add:
 
 ### **1. SPF Record**
 Create a TXT record:
-``` bash
-Name: @
-Type: TXT
-Value: v=spf1 mx -all
-```
-👉 This allows only your MX servers to send mail for your domain, blocking all others.
+!!! example
+    ``` bash
+    Name: @
+    Type: TXT
+    Value: v=spf1 mx -all
+    ```
+    👉 This allows only your MX servers to send mail for your domain, blocking all others.
 
 If you also send via Google/Microsoft (Optional), add:
-``` bash
-v=spf1 mx include:_spf.google.com include:spf.protection.outlook.com -all
-```
+!!! tip
+    ``` bash
+    v=spf1 mx include:_spf.google.com include:spf.protection.outlook.com -all
+    ```
 
 ### **2. DKIM Record**
 DKIM signs outgoing emails so recipients can verify authenticity.
@@ -168,23 +171,25 @@ DKIM signs outgoing emails so recipients can verify authenticity.
 - Generate a **2048-bit DKIM key**
 - Add the provided **TXT record** in DNS
 
-Example:
-``` makefile
-Name: dkim._domainkey.example.com
-Type: TXT
-Value: v=DKIM1; k=rsa; p=MIGfMA0GCSqG...IDAQAB
-```
+!!! example
+    ``` makefile
+    Name: dkim._domainkey.example.com
+    Type: TXT
+    Value: v=DKIM1; k=rsa; p=MIGfMA0GCSqG...IDAQAB
+    ```
 👉 Once DNS propagates, Mailcow will automatically sign outgoing mail with this key.
 
-3. **DMARC Record**
+3. **DMARC Record**  
+
 DMARC ties SPF & DKIM together and provides reporting.
-Add a TXT record:
-``` makefile
-Name: _dmarc
-Type: TXT
-Value: v=DMARC1; p=quarantine; rua=mailto:dmarc-reports@example.com; ruf=mailto:dmarc-reports@example.com; sp=none; aspf=s
-```
+!!! example "Add a TXT record:"
+    ``` makefile
+    Name: _dmarc
+    Type: TXT
+    Value: v=DMARC1; p=quarantine; rua=mailto:dmarc-reports@example.com; ruf=mailto:dmarc-reports@example.com; sp=none; aspf=s
+    ```
 > *Replace `mailto:dmarc-reports@example` and `dmarc-reports@example.com` with your email.*
+
 👉 This tells other mail servers to quarantine suspicious emails and send you reports.
 
 ---
@@ -214,8 +219,6 @@ dig TXT _dmarc.example.com
 👉 If any fail, recheck DNS entries.
 
 ---
-
-## **Troubleshooting**
 
 ??? bug "Troubleshooting"
     ```bash
