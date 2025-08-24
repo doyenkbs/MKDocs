@@ -57,11 +57,10 @@ scp "/path/to/your/file" user@<container-ip>:/<media-folder>/
 !!! note
     Replace /path/to/your/file, user, 'container-ip', and 'media-folder' with the appropriate values for your environment.
 
-## **Additional Notes**
-
-* This script is designed to make deployment on Proxmox seamless and repeatable.
-* You can reference the [Proxmox Community Scripts](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf) repository for updates and more container options.
-* See the container logs in Proxmox UI if troubleshooting is needed.
+??? tip "**Additional Notes**"
+    - This script is designed to make deployment on Proxmox seamless and repeatable.
+    - You can reference the [Proxmox Community Scripts](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf) repository for updates and more container options.
+    - See the container logs in Proxmox UI if troubleshooting is needed.
 
 ***Reference:***
 > - [Audiobookshelf Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf)

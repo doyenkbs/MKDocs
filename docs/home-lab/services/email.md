@@ -151,8 +151,8 @@ At minimum, add:
     Without these, your mail may end up in spam.
 
 ### **1. SPF Record**
-Create a TXT record:
-!!! example
+
+!!! example "Create a TXT record:"
     ``` bash
     Name: @
     Type: TXT

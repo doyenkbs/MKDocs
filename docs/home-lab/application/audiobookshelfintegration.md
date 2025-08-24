@@ -2,12 +2,10 @@
 
 This guide will walk you through integrating **<span style="color:#AB47BC;">Audiobookshelf</span>** with **<span style="color:#E60012;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
 
----
 
-## **Requirements**
-
-- A running instance of **<span style="color:#AB47BC;">Audiobookshelf</span>** (latest recommended)
-- A running instance of **<span style="color:#E60012;">Authentik</span>** with admin access
+!!! info "**Requirements**"
+   - A running instance of **<span style="color:#AB47BC;">Audiobookshelf</span>** (latest recommended)
+   - A running instance of **<span style="color:#E60012;">Authentik</span>** with admin access
 
 ---
 
@@ -26,26 +24,26 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 1. **Log into your Authentik admin interface.**
 2. Go to **Applications > Providers** and click **Create**.
 3. Select **OAuth2/OpenID Provider** and click **Next**.
-4. Fill in:
-   > - **Name:** <span style="color:#AB47BC;">Audiobookshelf</span> OIDC (or anything you prefer)
-   > - **Authorization flow:** `default-provider-authorization-implicit-consent`
-   > - **Client Type:** Confidential
-   > - **Redirect URIs:**
-     ```
-     https://<your-audiobookshelf-URL>/auth/openid/callback
-     https://<your-audiobookshelf-URL>/auth/openid/mobile-redirect
-     ```
-   > - **Signing Key:** Self-signed or your chosen key.
-5. Click **Finish**.
+!!! example "Fill in:"
+   - **Name:** <span style="color:#AB47BC;">Audiobookshelf</span> OIDC (or anything you prefer)
+   - **Authorization flow:** `default-provider-authorization-implicit-consent`
+   - **Client Type:** Confidential
+   - **Redirect URIs:**
+   ```
+   https://<your-audiobookshelf-URL>/auth/openid/callback
+   https://<your-audiobookshelf-URL>/auth/openid/mobile-redirect
+   ```
+   - **Signing Key:** Self-signed or your chosen key.
+4. Click **Finish**.
 
-6. Navigate to **Applications > Applications** and click **Create**.
+5. Navigate to **Applications > Applications** and click **Create**.
    > - **Name:** Audiobookshelf (or anything you prefer)
    > - **Slug:** audiobookshelf (keeps things simple)
    > - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
    > - **Policy Engine Mode:** Any
    > - **Launch URL:** Your <span style="color:#AB47BC;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
 
-7. **Save** the application.
+6. **Save** the application.
 
 ---
 
@@ -74,7 +72,8 @@ Copy these; you’ll paste them into Audiobookshelf.
 3. Enable **OpenID Connect Authentication**.
 
 4. **Use Auto-populate (optional):**
-   > - In **Issuer URL** paste your <span style="color:#E60012;">Authentik</span> issuer/discovery URL (see step 2) and click **Auto-populate** — <span style="color:#AB47BC;">Audiobookshelf</span> will fill Authorization, Token, UserInfo and JWKS URLs automatically.
+
+   - In **Issuer URL** paste your <span style="color:#E60012;">Authentik</span> issuer/discovery URL (see step 2) and click **Auto-populate** — <span style="color:#AB47BC;">Audiobookshelf</span> will fill Authorization, Token, UserInfo and JWKS URLs automatically.
 
 5. **Fill any remaining fields:**
 
@@ -100,7 +99,7 @@ Save settings.
 3. Otherwise, click the **Login with SSO** (or your chosen button text).
 4. Authenticate via <span style="color:#E60012;">Authentik</span> and confirm access to Audiobookshelf.
 
-!!! tip 
+!!! info 
     If you misconfigure SSO and are locked out, visit  
     ```
     https://<your-audiobookshelf-url>/login/?autoLaunch=0
