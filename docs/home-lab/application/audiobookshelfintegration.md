@@ -4,8 +4,8 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 
 
 !!! info "**Requirements**"
-   - A running instance of **<span style="color:#AB47BC;">Audiobookshelf</span>** (latest recommended)
-   - A running instance of **<span style="color:#E60012;">Authentik</span>** with admin access
+    - A running instance of **<span style="color:#AB47BC;">Audiobookshelf</span>** (latest recommended)
+    - A running instance of **<span style="color:#E60012;">Authentik</span>** with admin access
 
 ---
 

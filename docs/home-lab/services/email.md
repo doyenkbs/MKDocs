@@ -234,8 +234,8 @@ dig TXT _dmarc.example.com
 
 ## ***References***
 
-- *[<span style="color:#43A047;">Mailcow</span> Documentation](https://docs.mailcow.email/getstarted/install/)*
-- *[<span style="color:#43A047;">Mailcow</span> GitHub Repository](https://github.com/mailcow/mailcow-dockerized)*
+- *[Mailcow Documentation](https://docs.mailcow.email/getstarted/install/)*
+- *[Mailcow GitHub Repository](https://github.com/mailcow/mailcow-dockerized)*
 - *[SPF, DKIM, DMARC Guide](https://docs.mailcow.email/getstarted/prerequisite-dns/)*
 
 ---
