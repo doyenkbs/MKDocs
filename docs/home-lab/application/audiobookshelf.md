@@ -1,7 +1,7 @@
 ---
 tags:
   - Audiobookshelf
- ---
+---
 
 # **<span style="color:coral;">Audiobookshelf Installation via Proxmox VE Helper Scripts</span>**
 
