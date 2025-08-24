@@ -35,7 +35,7 @@ Log in with the superuser credentials you defined during setup.
 Adapt this guide if your directory structure or environment differs. For advanced configuration (backups, environment files, custom compose options), see the official documentation.
 
 ***References***
-> - [*Paperless-ngx GitHub Repository*](https://github.com/paperless-ngx/paperless-ngx)
-> - [*Docker Installation Guide for Debian*](https://docs.docker.com/engine/install/debian)
-> - [*Official Paperless-ngx Documentation*](https://docs.paperless-ngx.com)
+- [*Paperless-ngx GitHub Repository*](https://github.com/paperless-ngx/paperless-ngx)
+- [*Docker Installation Guide for Debian*](https://docs.docker.com/engine/install/debian)
+- [*Official Paperless-ngx Documentation*](https://docs.paperless-ngx.com)
 

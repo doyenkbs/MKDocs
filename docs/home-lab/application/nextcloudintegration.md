@@ -24,7 +24,7 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
 ## **Step 2: Configure Authentik OIDC Provider**
 
-1. Log into <span style="color:#1976D2;">Aunthentik</span> (`https://authentik.example.com`) as an admin.
+1. Log into <span style="color:red;">Aunthentik</span> (`https://authentik.example.com`) as an admin.
 2. Navigate to **Applications** → **Providers**.
 3. Click **Create** and select **OAuth2 / OpenID Connect Provider**.
 !!! example "Set the following values:"
@@ -56,7 +56,7 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
 ## **Step 4: Get OIDC Credentials from Authentik**
 
-1. Open your <span style="color:#009688;">Nextcloud</span> OIDC provider in <span style="color:red;">Authentik</span>.
+1. Open your Nextcloud OIDC provider in Authentik.
 !!! note "Copy the following values:"
     - **Client ID**
     - **Client Secret**
@@ -66,7 +66,7 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
 ## **Step 5: Configure Nextcloud OIDC Settings**
 
-1. In <span style="color:#009688;">Nextcloud</span>, go to **Settings** → **Administration** → **OpenID Connect user backend**.
+1. In Nextcloud, go to **Settings** → **Administration** → **OpenID Connect user backend**.
 
 !!! example "Fill in the fields as follows:"
     - **Identifier (max 128 characters):** `e.g: Authentik or SSO`
@@ -87,11 +87,11 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 ## **Step 6: Test SSO Login**
 
 1. Navigate to `https://nextcloud.example.com`.
-2. Try logging in; you should be redirected to <span style="color:red;">Authentik</span>.
-3. After authentication, you will be sent back to <span style="color:#009688;">Nextcloud</span> and logged in automatically.
+2. Try logging in; you should be redirected to Authentik.
+3. After authentication, you will be sent back to Nextcloud and logged in automatically.
 
 ---
-With this setup, <span style="color:#009688;">Nextcloud</span> is fully integrated into your centralized **Authentik SSO & Zero Trust environment**. 
+<span style="color:#009688;">With this setup, Nextcloud is fully integrated into your centralized **Authentik SSO & Zero Trust environment**.</span>
 
 ---
 
@@ -115,7 +115,7 @@ This guide explains how to make OpenID Connect (OIDC) the default and only login
 
 ## **Disable Other Login Methods**
 
-If you only have one OpenID Connect provider configured in <span style="color:#009688;">Nextcloud</span>, you can **force it to be the default login method**. This means users will be **immediately redirected to your OIDC provider's login page**, bypassing the default <span style="color:#009688;">nextcloud</span> login form.
+If you only have one OpenID Connect provider configured in Nextcloud, you can **force it to be the default login method**. This means users will be **immediately redirected to your OIDC provider's login page**, bypassing the default nextcloud login form.
 
 - **Admins can still log in using the native login page** by appending `?direct=1` to the login URL.
   > - e.g.: `https://nextcloud.example.com/login?direct=1`

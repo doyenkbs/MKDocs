@@ -11,10 +11,10 @@ This guide will walk you through integrating **<span style="color:coral;">Audiob
 
 ## **Overview**
 
-- Create an OAuth2/OpenID *provider + application* in <span style="color:red;">Authentik</span>.  
-- Register <span style="color:coral;">Audiobookshelf</span> redirect URIs in <span style="color:red;">Authentik</span>.  
-- Copy the Client ID / Client Secret (from Authentik) into <span style="color:coral;">Audiobookshelf</span>.  
-- Configure OIDC in <span style="color:coral;">Audiobookshelf</span> (auto-populate using discovery endpoint).  
+- Create an OAuth2/OpenID *provider + application* in Authentik.  
+- Register Audiobookshelf redirect URIs in Authentik.  
+- Copy the Client ID / Client Secret (from Authentik) into Audiobookshelf.  
+- Configure OIDC in Audiobookshelf (auto-populate using discovery endpoint).  
 - Test login and troubleshoot as needed.
 
 ---
@@ -51,7 +51,7 @@ This guide will walk you through integrating **<span style="color:coral;">Audiob
 
 ## **Step 2: Copy client credentials & discovery info from Authentik**
 
-- In <span style="color:red;">Authentik</span>, go to the **Provider** you created for <span style="color:coral;">Audiobookshelf</span>.
+- In Authentik, go to the **Provider** you created for Audiobookshelf.
 !!! tip "Locate and copy the following values:"
     - **Client ID**
     - **Client Secret**
@@ -76,31 +76,30 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 4. **Use Auto-populate (optional):**
 
-   - In **Issuer URL** paste your <span style="color:red;">Authentik</span> issuer/discovery URL (see step 2) and click **Auto-populate** — <span style="color:coral;">Audiobookshelf</span> will fill Authorization, Token, UserInfo and JWKS URLs automatically.
+   - In **Issuer URL** paste your Authentik issuer/discovery URL (see step 2) and click **Auto-populate** — Audiobookshelf will fill Authorization, Token, UserInfo and JWKS URLs automatically.
 
-5. **Fill any remaining fields:**
-
-   > - **Client ID:** (from Authentik)
-   > - **Client Secret:** (from Authentik)
-   > - **Signing Algorithm:** `RS256`
-   > - **Button Text:** (e.g., "Login with SSO" or "Sign in with Authentik")
-   > - **Allowed Mobile Redirect URIs:**
+!!! example "**Fill any remaining fields:**"
+    - **Client ID:** (from Authentik)
+    - **Client Secret:** (from Authentik)
+    - **Signing Algorithm:** `RS256`
+    - **Button Text:** (e.g., "Login with SSO" or "Sign in with Authentik")
+    - **Allowed Mobile Redirect URIs:**
      ```
      audiobookshelf://oauth
      ```
-   > - **Auto Launch:** Enable for auto-redirect, disable to show button.
-   > - **Auto Register:** Enable if you want new users created on login.
+     - **Auto Launch:** Enable for auto-redirect, disable to show button.
+     - **Auto Register:** Enable if you want new users created on login.
 
-Save settings.
+5. Save settings.
 
 ---
 
 ## **Step 4: Test Your SSO Login**
 
-1. Visit your <span style="color:coral;">Audiobookshelf</span> login page.
-2. If auto-launch is enabled, you will be redirected to <span style="color:red;">Authentik</span> to log in.
+1. Visit your Audiobookshelf login page.
+2. If auto-launch is enabled, you will be redirected to Authentik to log in.
 3. Otherwise, click the **Login with SSO** (or your chosen button text).
-4. Authenticate via <span style="color:red;">Authentik</span> and confirm access to Audiobookshelf.
+4. Authenticate via Authentik and confirm access to Audiobookshelf.
 
 !!! info 
     If you misconfigure SSO and are locked out, visit  
@@ -116,6 +115,6 @@ Save settings.
 
 ---
 ### **For more details:**
-- See the [Audiobookshelf OIDC guide](https://www.audiobookshelf.org/guides/oidc_authentication/)
-- For advanced <span style="color:red;">Authentik</span> configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
+- See the [*Audiobookshelf OIDC guide*](https://www.audiobookshelf.org/guides/oidc_authentication/)
+- For advanced Authentik configuration, consult the [*Authentik documentation*](https://docs.goauthentik.io/docs).
 

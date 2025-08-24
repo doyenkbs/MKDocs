@@ -11,7 +11,7 @@ This guide will walk you through integrating **<span style="color:#26A69A;">Book
 
 ## **1. Create a BookStack Provider**
 
-1. Open your **<span style="color:red;">Authentik</span> Admin Interface**.  
+1. Open your **Authentik Admin Interface**.  
 2. Navigate to:  
    **Applications → Providers → Create**.  
 3. Select **OAuth2/OpenID Provider**, then click **Next**.  
