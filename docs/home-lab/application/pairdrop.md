@@ -46,7 +46,8 @@ After installation is complete, open your browser and go to:
 ``` text
 http://<your-static-ip>:3000
 ```
-> Replace <your-static-ip> with the IP you assigned in setup. You will now be able to use the PairDrop web UI.
+!!! note
+    Replace <your-static-ip> with the IP you assigned in setup. You will now be able to use the PairDrop web UI.
 
 ## **Additional Notes**
 
@@ -55,6 +56,6 @@ http://<your-static-ip>:3000
 * PairDrop works cross-browser and is accessible on your LAN unless you configure additional network access.
 
 ***References:***
-> - [<span style="color:#F57C00;">PairDrop Helper Script</span>](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
+> - [*PairDrop Helper Script*](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
 
 

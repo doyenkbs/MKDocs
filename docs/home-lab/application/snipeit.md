@@ -168,4 +168,4 @@ Open your web browser and visit:
 > http://your-server-ip
 Follow the web-based setup wizard to complete installation.
 
-Your <span style="color:#F44336;">Snipe-IT</span> instance should now be running. Refer to the [Snipe-IT Official documentation](https://snipe-it.readme.io/docs/installation) for advanced configuration and troubleshooting.
+Your <span style="color:#F44336;">Snipe-IT</span> instance should now be running. Refer to the [*Snipe-IT Official documentation*](https://snipe-it.readme.io/docs/installation) for advanced configuration and troubleshooting.

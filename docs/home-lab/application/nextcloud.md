@@ -8,13 +8,12 @@
 
 ---
 
-## **Prerequisites**
-
-Before starting, make sure you have:
-
-- A clean **Ubuntu 24.04 LTS** server  
-- Root access or a **sudo-enabled user**  
-- A valid **domain name** (optional, but required for HTTPS)  
+!!! info "**Prerequisites**"
+    Before starting, make sure you have:
+    
+    - A clean **Ubuntu 24.04 LTS** server 
+    - Root access or a **sudo-enabled user** 
+    - A valid **domain name** (optional, but required for HTTPS)  
 
 ---
 
@@ -339,9 +338,9 @@ Follow the installer to create your admin account and connect to the database.
 
 ---
 ## ***Reference***
-> - [*Nextcloud Documentation*](https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html)
-> - [*Learn Linux TV: Complete Walkthrough for Installing Nextcloud on Ubuntu 24.04*](https://www.learnlinux.tv/complete-walkthrough-for-installing-nextcloud-on-ubuntu-24-04/)
-> - [*Certbot Instructions*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal)
+- [*Nextcloud Documentation*](https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html)
+- [*Learn Linux TV: Complete Walkthrough for Installing Nextcloud on Ubuntu 24.04*](https://www.learnlinux.tv/complete-walkthrough-for-installing-nextcloud-on-ubuntu-24-04/)
+- [*Certbot Instructions*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal)
 
 
 

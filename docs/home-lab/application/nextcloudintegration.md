@@ -28,13 +28,13 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 2. Navigate to **Applications** → **Providers**.
 3. Click **Create** and select **OAuth2 / OpenID Connect Provider**.
 !!! example "Set the following values:"
-    > - **Name:** `Nextcloud OIDC`
-    > - **Authorization Flow:** `default-provider-authorization-implicit-consent` `(or your choice)`
-    > - **Client type:** `Confidential`
-    >- **Redirect URIs:** `https://nextcloud.example.com/index.php/apps/user_oidc/code`
-    > - **Signing Key:** `Select your existing key or create one.`
-    > - **Scopes:** `openid, profile, email`
-    > - **Subject mode:** `Based on the User's username.`
+    - **Name:** `Nextcloud OIDC`
+    - **Authorization Flow:** `default-provider-authorization-implicit-consent` `(or your choice)`
+    - **Client type:** `Confidential`
+    - **Redirect URIs:** `https://nextcloud.example.com/index.php/apps/user_oidc/code`
+    - **Signing Key:** `Select your existing key or create one.`
+    - **Scopes:** `openid, profile, email`
+    - **Subject mode:** `Based on the User's username.`
 
 4. Save the provider.
 
@@ -44,11 +44,11 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
 1. Go to **Applications → Create**
 !!! example "Set the following values:"
-    > - **Name:** `Nextcloud`
-    > - **Slug:** `nextcloud`
-    > - **Provider:** `Select the Nextcloud OIDC provider you created.`
-    > - **Launch URL:** `https://nextcloud.example.com` `or leave empty`
-    > - Assign appropriate **groups/users** to the application if needed.
+    - **Name:** `Nextcloud`
+    - **Slug:** `nextcloud`
+    - **Provider:** `Select the Nextcloud OIDC provider you created.`
+    - **Launch URL:** `https://nextcloud.example.com` `or leave empty`
+    - Assign appropriate **groups/users** to the application if needed.
 
 2. Save the application.
 
@@ -58,9 +58,9 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
 1. Open your <span style="color:#009688;">Nextcloud</span> OIDC provider in <span style="color:red;">Authentik</span>.
 !!! note "Copy the following values:"
-    > - **Client ID**
-    > - **Client Secret**
-    > - **OpenID Configuration Issuer:** `https://authentik.example.com/application/o/nextcloud/`
+    - **Client ID**
+    - **Client Secret**
+    - **OpenID Configuration Issuer:** `https://authentik.example.com/application/o/nextcloud/`
 
 ---
 
@@ -69,13 +69,13 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 1. In <span style="color:#009688;">Nextcloud</span>, go to **Settings** → **Administration** → **OpenID Connect user backend**.
 
 !!! example "Fill in the fields as follows:"
-    > - **Identifier (max 128 characters):** `e.g: Authentik or SSO`
-    > - **Discovery endpoint:** `*(Use the Provider URL (Issuer) from Authentik OIDC provider)*`  
-      e.g.: `https://authentik.example.com/application/o/nextcloud/`
-    > - **Client ID:** `*(from Authentik OIDC provider)*`
-    > - **Client Secret:** `*(from Authentik OIDC provider)*`
-    > - **Authorization endpoint:** `https://authentik.example.com/application/o/authorize/`
-    > - **Scopes:** `openid profile email`
+    - **Identifier (max 128 characters):** `e.g: Authentik or SSO`
+    - **Discovery endpoint:** `*(Use the Provider URL (Issuer) from Authentik OIDC provider)*`  
+    e.g.: `https://authentik.example.com/application/o/nextcloud/`
+    - **Client ID:** `*(from Authentik OIDC provider)*`
+    - **Client Secret:** `*(from Authentik OIDC provider)*`
+    - **Authorization endpoint:** `https://authentik.example.com/application/o/authorize/`
+    - **Scopes:** `openid profile email`
 
     !!! note
         Uncheck `Use Unique user ID` 
@@ -128,9 +128,9 @@ To make the OIDC provider the sole login method, run:
 sudo -u www-data php /var/www/nextcloud/occ config:app:set --value=0 user_oidc allow_multiple_user_backends
 ```
 !!! note
-    > - *`--value=0`: Disables multiple user backends (OIDC becomes default and exclusive)*
-    > - *`--value=1`: Enables multiple user backends (users can choose between available login methods)*
-    > - *`/var/www/nextcloud`: Replace this with the actual path to your Nextcloud installation directory*
+    - *`--value=0`: Disables multiple user backends (OIDC becomes default and exclusive)*
+    - *`--value=1`: Enables multiple user backends (users can choose between available login methods)*
+    - *`/var/www/nextcloud`: Replace this with the actual path to your Nextcloud installation directory*
 
 ---
 ## **Provider Entries Management**
@@ -180,7 +180,7 @@ sudo -u www-data php /var/www/nextcloud/occ user_oidc:provider:delete PROVIDER_I
 
 ## ***References***
 
-> - [*Nextcloud OIDC Documentation*](https://github.com/nextcloud/user_oidc)
-> - [*Authentik Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
+- [*Nextcloud OIDC Documentation*](https://github.com/nextcloud/user_oidc)
+- [*Authentik Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
 
 
