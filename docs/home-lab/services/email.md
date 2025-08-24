@@ -43,7 +43,7 @@ Running a mail server requires:
 
 ### **Firewall Setup**
 <span style="color:red; font-weight:bold;">Open Ports with UFW.</span>    
-Mailcow needs email and web ports open:
+<span style="color:#43A047;">Mailcow</span> needs email and web ports open:
 
 ``` bash
 sudo ufw allow 22/tcp    # SSH
@@ -73,14 +73,14 @@ To install <span style="color:#2496ED;">Docker</span> and <span style="color:#24
 ---
 
 ## **Step 2: Clone the Mailcow Repository**
-All Mailcow files are hosted on GitHub.
+All <span style="color:#43A047;">Mailcow</span> files are hosted on GitHub.
 
 ``` bash
 cd /opt
 sudo git clone https://github.com/mailcow/mailcow-dockerized
 cd mailcow-dockerized
 ```
-👉 This downloads Mailcow’s code into `/opt/mailcow-dockerized`.
+👉 This downloads <span style="color:#43A047;">Mailcow</span>’s code into `/opt/mailcow-dockerized`.
 
 ---
 
@@ -103,7 +103,7 @@ sudo nano mailcow.conf
 
 ## **Step 4: Start Mailcow Docker Containers**
 
-Pull images and start Mailcow in detached mode.
+Pull images and start <span style="color:#43A047;">Mailcow</span> in detached mode.
 ``` bash
 sudo docker compose pull
 sudo docker compose up -d
@@ -169,7 +169,7 @@ If you also send via Google/Microsoft (Optional), add:
 ### **2. DKIM Record**
 DKIM signs outgoing emails so recipients can verify authenticity.
 
-- In Mailcow **Admin UI → Configuration → ARC/DKIM Keys**
+- In <span style="color:#43A047;">Mailcow</span> **Admin UI → Configuration → ARC/DKIM Keys**
 - Generate a **2048-bit DKIM key**
 - Add the provided **TXT record** in DNS
 
@@ -228,14 +228,14 @@ dig TXT _dmarc.example.com
     sudo docker compose down
     sudo docker compose up -d
     ```
-    Use these commands to debug or restart the Mailcow stack.
+    Use these commands to debug or restart the <span style="color:#43A047;">Mailcow</span> stack.
 
 ---
 
 ## ***References***
 
-- *[Mailcow Documentation](https://docs.mailcow.email/getstarted/install/)*
-- *[Mailcow GitHub Repository](https://github.com/mailcow/mailcow-dockerized)*
+- *[<span style="color:#43A047;">Mailcow</span> Documentation](https://docs.mailcow.email/getstarted/install/)*
+- *[<span style="color:#43A047;">Mailcow</span> GitHub Repository](https://github.com/mailcow/mailcow-dockerized)*
 - *[SPF, DKIM, DMARC Guide](https://docs.mailcow.email/getstarted/prerequisite-dns/)*
 
 ---
