@@ -138,6 +138,7 @@ nav:
         - Cloudflare: 
                 - Overview: home-lab/services/cloudflare.md
                 - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
+                - Cloudflare Access: home-lab/services/cloudflareaccess.md
       # - DNS: home-lab/services/dns.md
         - Email: home-lab/services/email.md
         - Home Assistant: home-lab/services/homeassistant.md
