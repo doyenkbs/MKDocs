@@ -25,15 +25,16 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 2. Go to **Applications > Providers** and click **Create**.
 3. Select **OAuth2/OpenID Provider** and click **Next**.
 !!! example "Fill in:"
-   - **Name:** <span style="color:#AB47BC;">Audiobookshelf</span> OIDC (or anything you prefer)
-   - **Authorization flow:** `default-provider-authorization-implicit-consent`
-   - **Client Type:** Confidential
-   - **Redirect URIs:**
-   ```
-   https://<your-audiobookshelf-URL>/auth/openid/callback
-   https://<your-audiobookshelf-URL>/auth/openid/mobile-redirect
-   ```
-   - **Signing Key:** Self-signed or your chosen key.
+    - **Name:** <span style="color:#AB47BC;">Audiobookshelf</span> OIDC (or anything you prefer)
+    - **Authorization flow:** `default-provider-authorization-implicit-consent`
+    - **Client Type:** Confidential
+    - **Redirect URIs:**
+    ```
+    https://<your-audiobookshelf-URL>/auth/openid/callback
+    https://<your-audiobookshelf-URL>/auth/openid/mobile-redirect
+    ```
+    - **Signing Key:** Self-signed or your chosen key.
+
 4. Click **Finish**.
 
 5. Navigate to **Applications > Applications** and click **Create**.
@@ -113,6 +114,6 @@ Save settings.
 
 ---
 ### **For more details:**
-- See the [<span style="color:#AB47BC;">Audiobookshelf</span> OIDC guide](https://www.audiobookshelf.org/guides/oidc_authentication/)
+- See the [Audiobookshelf OIDC guide](https://www.audiobookshelf.org/guides/oidc_authentication/)
 - For advanced <span style="color:#E60012;">Authentik</span> configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
 
