@@ -4,12 +4,12 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
 ---
 
-## **Prerequisites**
+!!! info "**Prerequisites**"
 
-- A running <span style="color:#009688;">Nextcloud</span> instance: e.g. `https://nextcloud.example.com`
-- A running <span style="color:red;">Authentik</span> instance: e.g. `https://authentik.example.com`
-- Admin access to both <span style="color:red;">Authentik</span> and <span style="color:#009688;">Nextcloud</span>
-- Nextcloud **OpenID Connect user backend** app installed and enabled
+    - A running <span style="color:#009688;">Nextcloud</span> instance: e.g. `https://nextcloud.example.com`
+    - A running <span style="color:red;">Authentik</span> instance: e.g. `https://authentik.example.com`
+    - Admin access to both <span style="color:red;">Authentik</span> and <span style="color:#009688;">Nextcloud</span>
+    - Nextcloud **OpenID Connect user backend** app installed and enabled
 
 ---
 
@@ -27,8 +27,7 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 1. Log into <span style="color:#1976D2;">Aunthentik</span> (`https://authentik.example.com`) as an admin.
 2. Navigate to **Applications** → **Providers**.
 3. Click **Create** and select **OAuth2 / OpenID Connect Provider**.
-4. Set the following values:
-
+!!! example "Set the following values:"
     > - **Name:** `Nextcloud OIDC`
     > - **Authorization Flow:** `default-provider-authorization-implicit-consent` `(or your choice)`
     > - **Client type:** `Confidential`
@@ -37,30 +36,28 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
     > - **Scopes:** `openid, profile, email`
     > - **Subject mode:** `Based on the User's username.`
 
-5. Save the provider.
+4. Save the provider.
 
 ---
 
 ## **Step 3: Create an Application in Authentik**
 
 1. Go to **Applications → Create**
-2. Set the following values:
-
+!!! example "Set the following values:"
     > - **Name:** `Nextcloud`
     > - **Slug:** `nextcloud`
     > - **Provider:** `Select the Nextcloud OIDC provider you created.`
     > - **Launch URL:** `https://nextcloud.example.com` `or leave empty`
     > - Assign appropriate **groups/users** to the application if needed.
 
-3. Save the application.
+2. Save the application.
 
 ---
 
 ## **Step 4: Get OIDC Credentials from Authentik**
 
 1. Open your <span style="color:#009688;">Nextcloud</span> OIDC provider in <span style="color:red;">Authentik</span>.
-2. Copy the following values:
-
+!!! note "Copy the following values:"
     > - **Client ID**
     > - **Client Secret**
     > - **OpenID Configuration Issuer:** `https://authentik.example.com/application/o/nextcloud/`
@@ -70,8 +67,8 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 ## **Step 5: Configure Nextcloud OIDC Settings**
 
 1. In <span style="color:#009688;">Nextcloud</span>, go to **Settings** → **Administration** → **OpenID Connect user backend**.
-2. Fill in the fields as follows:
 
+!!! example "Fill in the fields as follows:"
     > - **Identifier (max 128 characters):** `e.g: Authentik or SSO`
     > - **Discovery endpoint:** `*(Use the Provider URL (Issuer) from Authentik OIDC provider)*`  
       e.g.: `https://authentik.example.com/application/o/nextcloud/`
@@ -82,7 +79,8 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
     !!! note
         Uncheck `Use Unique user ID` 
-3. Save settings.
+
+2. Save settings.
 
 ---
 
@@ -97,12 +95,12 @@ With this setup, <span style="color:#009688;">Nextcloud</span> is fully integrat
 
 ---
 
-## **Troubleshooting**
+??? bug "**Troubleshooting**"
 
-- Ensure domains and URLs are correct and reachable from both servers.
-- If login fails, review <span style="color:#009688;">Nextcloud</span>'s admin logs and <span style="color:red;">Authentik</span>'s provider logs.
-- Check for trailing slashes and matching Redirect URIs.
-- Make sure clocks are synced (for token validation).
+    - Ensure domains and URLs are correct and reachable from both servers.
+    - If login fails, review <span style="color:#009688;">Nextcloud</span>'s admin logs and <span style="color:red;">Authentik</span>'s provider logs.
+    - Check for trailing slashes and matching Redirect URIs.
+    - Make sure clocks are synced (for token validation).
 
 ---
 
@@ -183,6 +181,6 @@ sudo -u www-data php /var/www/nextcloud/occ user_oidc:provider:delete PROVIDER_I
 ## ***References***
 
 > - [*Nextcloud OIDC Documentation*](https://github.com/nextcloud/user_oidc)
-> - [*<span style="color:red;">Authentik</span> Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
+> - [*Authentik Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
 
 
