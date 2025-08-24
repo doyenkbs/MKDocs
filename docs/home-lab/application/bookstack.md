@@ -4,11 +4,10 @@ This page documents the complete process for installing <span style="color:#0089
 
 > Reference: [BookStack Official Installation Guide](https://www.bookstackapp.com/docs/admin/installation/)
 
-## **Prerequisites**
-
-> - Fresh Ubuntu 24.04 LTS server (minimal install, recommended as LXC or VM)
-> - Root or sudo access
-> - Static IP address
+!!! info "**Prerequisites**"
+    - Fresh Ubuntu 24.04 LTS server (minimal install, recommended as LXC or VM)
+    - Root or sudo access
+    - Static IP address
 
 ## **Ubuntu 24.04 Installation Script**
 

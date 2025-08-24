@@ -25,7 +25,7 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 2. Go to **Applications > Providers** and click **Create**.
 3. Select **OAuth2/OpenID Provider** and click **Next**.
 !!! example "Fill in:"
-    - **Name:** <span style="color:#AB47BC;">Audiobookshelf</span> OIDC (or anything you prefer)
+    - **Name:** `Audiobookshelf OIDC` (or anything you prefer)
     - **Authorization flow:** `default-provider-authorization-implicit-consent`
     - **Client Type:** Confidential
     - **Redirect URIs:**
@@ -38,11 +38,12 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 4. Click **Finish**.
 
 5. Navigate to **Applications > Applications** and click **Create**.
-   > - **Name:** Audiobookshelf (or anything you prefer)
-   > - **Slug:** audiobookshelf (keeps things simple)
-   > - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
-   > - **Policy Engine Mode:** Any
-   > - **Launch URL:** Your <span style="color:#AB47BC;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
+!!! example "Fill in:"
+    - **Name:** Audiobookshelf (or anything you prefer)
+    - **Slug:** audiobookshelf (keeps things simple)
+    - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
+    - **Policy Engine Mode:** Any
+    - **Launch URL:** Your <span style="color:#AB47BC;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
 
 6. **Save** the application.
 
@@ -51,17 +52,18 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 ## **Step 2: Copy client credentials & discovery info from Authentik**
 
 - In <span style="color:#E60012;">Authentik</span>, go to the **Provider** you created for <span style="color:#AB47BC;">Audiobookshelf</span>.
-- Locate and copy the following values:
-  > - **Client ID**
-  > - **Client Secret**
-  > - **OpenID Configuration Issuer URL** (or the discovery URL) — e.g.  
-     ```
-     https://auth.example.com/application/o/audiobookshelf/
-     ```
-     or the `.well-known` endpoint:
-     ```
-     https://auth.example.com/.well-known/openid-configuration
-     ```
+!!! tip "Locate and copy the following values:"
+    - **Client ID**
+    - **Client Secret**
+    - **OpenID Configuration Issuer URL** (or the discovery URL) — e.g.  
+    ```
+    https://auth.example.com/application/o/audiobookshelf/
+    ```
+    or the `.well-known` endpoint:
+    ```
+    https://auth.example.com/.well-known/openid-configuration
+    ```
+    
 Copy these; you’ll paste them into Audiobookshelf.
 
 ---

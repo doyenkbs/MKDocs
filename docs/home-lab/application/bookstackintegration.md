@@ -4,9 +4,8 @@ This guide will walk you through integrating **<span style="color:#26A69A;">Book
 
 ---
 
-## **Requirements**
-
-- Create a **BookStack application** and **provider** in Authentik.
+!!! info "**Requirements**"
+    Running **BookStack** and **Authentik** instances.
 
 ---
 
@@ -16,17 +15,16 @@ This guide will walk you through integrating **<span style="color:#26A69A;">Book
 2. Navigate to:  
    **Applications → Providers → Create**.  
 3. Select **OAuth2/OpenID Provider**, then click **Next**.  
-4. Fill in the following:
+!!! example "Fill in the following:"
+    - **Name:** `Bookstack OIDC` (or your preferred name)
+    - **Protocol settings → Client type:** `Confidential`  
+    - **Redirect URIs/Origins:** `Add entry` 
+    ```
+    https://<your-bookstack-URL>/oidc/callback
+    ```
+    - **Signing Key:** `authentic Self-signed Certificate`
 
-   > - **Name:** `Bookstack OIDC` (or your preferred name)
-   > - **Protocol settings → Client type:** `Confidential`  
-   > - **Redirect URIs/Origins:** `Add entry` 
-     ```
-     https://<your-bookstack-URL>/oidc/callback
-     ```
-   > - **Signing Key:** `authentic Self-signed Certificate`
-
-5. Click **Finish**.
+4. Click **Finish**.
 
 ---
 
@@ -34,15 +32,14 @@ This guide will walk you through integrating **<span style="color:#26A69A;">Book
 
 1. Navigate to:  
    **Applications → Applications → Create**.  
-2. Fill in the following:
+!!! example "Fill in the following:"
+    - **Name:** `Bookstack` (or your preferred name)  
+    - **Slug:** same as the name (`bookstack`)  
+    - **Provider:** Select the provider created in the previous step (e.g., `Bookstack OIDC`) 
+    - **Policy engine mode:** `Any`  
+    - **UI Settings → Launch URL:** Your BookStack login URL (e.g., `https://wiki.example.com`)
 
-   > - **Name:** `Bookstack` (or your preferred name)  
-   > - **Slug:** same as the name (`bookstack`)  
-   > - **Provider:** Select the provider created in the previous step (e.g., `Bookstack OIDC`)  
-   > - **Policy engine mode:** `Any`  
-   > - **UI Settings → Launch URL:** Your BookStack login URL (e.g., `https://wiki.example.com`)
-
-3. Click **Create**.
+2. Click **Create**.
 
 ---
 
@@ -120,7 +117,7 @@ Save the `.env` file and restart BookStack if necessary.
 - Go to your BookStack login page (`https://wiki.example.com/login`)
 - Click **Login with SSO**
 
-!!! note
+!!! tip
     - **Users:** Each user must exist in <span style="color:#E60012;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
     - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:#E60012;">Authentik</span> and verify `groups` claim handling in Audiobookshelf.
 
