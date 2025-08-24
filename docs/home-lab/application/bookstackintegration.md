@@ -106,9 +106,9 @@ OIDC_ISSUER_DISCOVER=true
 
 !!! note
     - **Client ID and Secret:**
-    In <span style="color:red;">Authentik</span> Admin, go to Admin → Applications → Providers → Edit your BookStack provider → Copy Client ID and Secret, then update `OIDC_CLIENT_ID` and `OIDC_CLIENT_SECRET` in `.env`.
+    In Authentik Admin, go to Admin → Applications → Providers → Edit your BookStack provider → Copy Client ID and Secret, then update `OIDC_CLIENT_ID` and `OIDC_CLIENT_SECRET` in `.env`.
     - **OIDC_ISSUER:**
-    In <span style="color:red;">Authentik</span> Admin → Applications → Providers → Click your BookStack provider → Copy “OpenID Configuration Issuer” and paste into `.env` as `OIDC_ISSUER`.
+    In Authentik Admin → Applications → Providers → Click your BookStack provider → Copy “OpenID Configuration Issuer” and paste into `.env` as `OIDC_ISSUER`.
 
 Save the `.env` file and restart BookStack if necessary.
 
@@ -118,8 +118,8 @@ Save the `.env` file and restart BookStack if necessary.
 - Click **Login with SSO**
 
 !!! tip
-    - **Users:** Each user must exist in <span style="color:red;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
-    - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:red;">Authentik</span> and verify `groups` claim handling in Audiobookshelf.
+    - **Users:** Each user must exist in Authentik. If **Auto Register** is enabled, users are created on first login in Audiobookshelf with limited permissions.
+    - **Groups:** If you wish to sync user groups, map claims accordingly in Authentik and verify `groups` claim handling in Audiobookshelf.
 
 ---
 

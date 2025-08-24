@@ -62,5 +62,6 @@ scp "/path/to/your/file" user@<container-ip>:/<media-folder>/
     - See the container logs in Proxmox UI if troubleshooting is needed.
 
 ***Reference:***
-> - [Audiobookshelf Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf)
-> - [Audiobookshelf Docs](https://www.audiobookshelf.org/docs)
+
+- [*Audiobookshelf Helper Script*](https://community-scripts.github.io/ProxmoxVE/scripts?id=audiobookshelf)
+- [*Audiobookshelf Docs*](https://www.audiobookshelf.org/docs)

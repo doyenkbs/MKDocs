@@ -11,7 +11,7 @@ This page documents the complete process for installing <span style="color:#0089
 
 ## **Ubuntu 24.04 Installation Script**
 
-A script is available to install <span style="color:#00897B;"> on a fresh Ubuntu 24.04 instance.
+A script is available to install <span style="color:#00897B;">Bookstack</span> on a fresh Ubuntu 24.04 instance.
 
 !!! warning
     This script is for a clean OS only and will install Apache, MySQL 8.0, and PHP 8.3.
@@ -34,21 +34,21 @@ The script will output a log file in your working directory for debugging. File 
 
 **1. Set Domain Name**
 
-Set up a DNS record (e.g., wiki.example.com) to point to your server’s public IP. You may use a service like Cloudflare Tunnel.
+- Set up a DNS record (e.g., wiki.example.com) to point to your server’s public IP. You may use a service like Cloudflare Tunnel.
 
 **2. Configure the BookStack ***.env*** file**
 
-Edit the environment file to use your domain name:
+- Edit the environment file to use your domain name:
 ``` bash
 sudo nano /var/www/bookstack/.env
 ```
 
-Change the following line to match your domain:
+- Change the following line to match your domain:
 ``` text
 APP_URL=https://wiki.example.com
 ```
 
-Then restart Apache:
+- Then restart Apache:
 ``` bash
 sudo systemctl restart apache2
 ```
@@ -92,7 +92,7 @@ php artisan config:clear
 ```
 
 ## First Login
-Once installation and setup are complete, access <span style="color:#00897B;"> in your browser at:
+Once installation and setup are complete, access <span style="color:#00897B;">Bookstack</span> in your browser at:
 
 > *http(s)://your-domain-or-server-ip*
 

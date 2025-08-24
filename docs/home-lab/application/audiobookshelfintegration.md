@@ -55,7 +55,7 @@ This guide will walk you through integrating **<span style="color:coral;">Audiob
 !!! tip "Locate and copy the following values:"
     - **Client ID**
     - **Client Secret**
-    - **OpenID Configuration Issuer URL** (or the discovery URL) — e.g.  
+    - **OpenID Configuration Issuer URL** (or the discovery URL)  
     ```
     https://auth.example.com/application/o/audiobookshelf/
     ```

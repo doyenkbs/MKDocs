@@ -45,5 +45,6 @@ https://<pdm-host>:8443
 PDM is a promising yet evolving tool offering centralized management for distributed Proxmox environments. It’s ideal for home labs and multi-site setups—just be cautious in production until later stable releases.
 
 ***Reference:***
-> - [*Proxmox Datacenter Manager Roadmap*](https://pve.proxmox.com/wiki/Proxmox_Datacenter_Manager_Roadmap)
-> - [*Proxmox Support Forum*](https://forum.proxmox.com/threads/proxmox-datacenter-manager-first-alpha-release.159323/)
+
+- [*Proxmox Datacenter Manager Roadmap*](https://pve.proxmox.com/wiki/Proxmox_Datacenter_Manager_Roadmap)
+- [*Proxmox Support Forum*](https://forum.proxmox.com/threads/proxmox-datacenter-manager-first-alpha-release.159323/)

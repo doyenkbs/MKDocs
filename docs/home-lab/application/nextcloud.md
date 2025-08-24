@@ -166,18 +166,18 @@ Tune PHP settings for optimal performance and stability with Nextcloud.
 ``` bash
 sudo nano /etc/php/8.3/apache2/php.ini
 ```
-Update these values:
-> - `memory_limit = 512M`
-> - `upload_max_filesize = 200M`
-> - `max_execution_time = 360`
-> - `post_max_size = 200M`
-> - `date.timezone = Your/Timezone` `(e.g. America/Detroit)`
-> - `opcache.enable=1`
-> - `opcache.interned_strings_buffer=16`
-> - `opcache.max_accelerated_files=10000`
-> - `opcache.memory_consumption=128`
-> - `opcache.save_comments=1`
-> - `opcache.revalidate_freq=1`
+!!! example "Update these values:"
+    - `memory_limit = 512M`
+    - `upload_max_filesize = 200M`
+    - `max_execution_time = 360`
+    - `post_max_size = 200M`
+    - `date.timezone = Your/Timezone` `(e.g. America/Detroit)`
+    - `opcache.enable=1`
+    - `opcache.interned_strings_buffer=16`
+    - `opcache.max_accelerated_files=10000`
+    - `opcache.memory_consumption=128`
+    - `opcache.save_comments=1`
+    - `opcache.revalidate_freq=1`
 
 Enable important modules:
 ``` bash
@@ -279,66 +279,63 @@ Follow the installer to create your admin account and connect to the database.
 
 ---
 
-## **Troubleshooting**
+??? bug "**Troubleshooting**"
 
-### **Apache shows a blank page**
-
-Ensure permissions are correct:
-``` bash
-sudo chown -R www-data:www-data /var/www/<your-domain>
-```
-Restart Apache:
-``` bash
-sudo systemctl restart apache2
-```
-
-### **Database connection errors**
-
-Double-check your database credentials in:
-``` bash
-sudo nano /var/www/<your-domain>/config/config.php
-```
-Make sure MariaDB is running:
-``` bash
-systemctl status mariadb
-```
-
-### **HTTPS certificate fails**
-
-Ensure your domain points to your server’s public IP.
-``` bash
-sudo certbot renew --dry-run
-```
-
-### **File upload too large**
-
-Increase upload limit in php.ini:
-``` ini
-upload_max_filesize = 512M
-post_max_size = 512M
-```
-
-### **Nextcloud says “memory caching not configured”**
-
-Edit config.php:
-``` php
-'memcache.local' => '\OC\Memcache\APCu',
-```
-Restart Apache.
-``` bash
-sudo systemctl restart apache2
-```
-
-### **“Trusted Domain” error**
-
-Add your domain to the trusted list:
-``` php
-'trusted_domains' =>
-  array (
-    0 => 'localhost',
-    1 => 'your-domain.com',
-  ),
-```
+    - **Apache shows a blank page**
+    Ensure permissions are correct:
+    ``` bash
+    sudo chown -R www-data:www-data /var/www/<your-domain>
+    ```
+    
+    Restart Apache:
+    ``` bash
+    sudo systemctl restart apache2
+    ```
+    
+    - **Database connection errors**
+    Double-check your database credentials in:
+    ``` bash
+    sudo nano /var/www/<your-domain>/config/config.php
+    ```
+    
+    Make sure MariaDB is running:
+    ``` bash
+    systemctl status mariadb
+    ```
+    
+    - **HTTPS certificate fails**
+    Ensure your domain points to your server’s public IP.
+    ``` bash
+    sudo certbot renew --dry-run
+    ```
+    
+    - **File upload too large**
+    Increase upload limit in php.ini:
+    ``` ini
+    upload_max_filesize = 512M
+    post_max_size = 512M
+    ```
+    
+    - **Nextcloud says “memory caching not configured”**
+    Edit config.php:
+    ``` php
+    'memcache.local' => '\OC\Memcache\APCu',
+    ```
+    
+    Restart Apache.
+    ``` bash
+    sudo systemctl restart apache2
+    ```
+    
+    - **“Trusted Domain” error**
+    Add your domain to the trusted list:
+    ``` php
+    'trusted_domains' =>
+    array (
+        0 => 'localhost',
+        1 => 'your-domain.com',
+    ),
+    ```
 
 ---
 ## ***Reference***
