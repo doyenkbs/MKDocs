@@ -115,5 +115,5 @@ Save settings.
 ---
 ### **For more details:**
 - See the [<span style="color:#AB47BC;">Audiobookshelf</span> OIDC guide](https://www.audiobookshelf.org/guides/oidc_authentication/)
-- For advanced <span style="color:#E60012;">Authentik</span> configuration, consult the [<span style="color:#E60012;">Authentik</span> documentation](https://docs.goauthentik.io/docs).
+- For advanced <span style="color:#E60012;">Authentik</span> configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
 
