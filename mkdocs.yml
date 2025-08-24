@@ -85,7 +85,8 @@ markdown_extensions:
 # Plugins
 plugins:
   - search
-  - tags
+  - tags:
+      tags_file: tags.md
   - offline
 
 copyright: Copyright &copy; 2024 - 2028 Christian Kaba
