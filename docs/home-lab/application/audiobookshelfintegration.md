@@ -1,3 +1,9 @@
+---
+tags:
+  - Audiobookshelf Integration
+  - Authentik
+---
+
 # **<span style="color:coral;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**
 
 This guide will walk you through integrating **<span style="color:coral;">Audiobookshelf</span>** with **<span style="color:red;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).

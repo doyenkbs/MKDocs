@@ -1,3 +1,9 @@
+---
+tags:
+  - Paperless-NGX
+  - Docker
+---
+
 # **<span style="color:brown;">Paperless-ngx Installation on Debian 12</span>**
 ---
 ## **Overview**

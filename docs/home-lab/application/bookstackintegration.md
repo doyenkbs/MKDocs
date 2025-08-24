@@ -1,3 +1,8 @@
+---
+tags:
+  - Bookstack Integration
+---
+
 # **<span style="color:#26A69A;">Integrate BookStack with Authentik via OIDC</span>**
 
 This guide will walk you through integrating **<span style="color:#26A69A;">Bookstack</span>** with **<span style="color:red;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).

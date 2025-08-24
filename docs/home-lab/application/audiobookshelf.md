@@ -1,3 +1,8 @@
+---
+tags:
+  - Audiobookshelf
+ ---
+
 # **<span style="color:coral;">Audiobookshelf Installation via Proxmox VE Helper Scripts</span>**
 
 <span style="color:coral;">Audiobookshelf</span> is a self-hosted audiobook and podcast server with a web user interface and apps. This guide will show you how to deploy it in an LXC container using the Proxmox VE Helper-Scripts.
