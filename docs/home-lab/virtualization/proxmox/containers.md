@@ -1,28 +1,28 @@
-### **Creating an LXC Container**
+### **<span style="color:#F38020;">Creating an LXC Container</span>**
 
-**LXC (Linux Containers)** is a lightweight virtualization method that uses containerization to run multiple isolated Linux systems (containers) on a single host. Unlike full virtual machines, LXC shares the host kernel, making it more resource-efficient and faster to start, ideal for lightweight workloads and testing environments.
+**<span style="color:#F38020;">LXC (Linux Containers)</span>** is a lightweight virtualization method that uses containerization to run multiple isolated Linux systems (containers) on a single host. Unlike full virtual machines, LXC shares the host kernel, making it more resource-efficient and faster to start, ideal for lightweight workloads and testing environments.
 
 #### **Steps:**
 
 1. **Download or upload an LXC template** to your Proxmox storage (e.g., `local`).
 
 2. Go to **Create CT** in the Proxmox Web GUI.
+!!! example "Fill in"
+    - **General:** **Hostname:** e.g., `ubuntu-container`
+    - **Template:** Select the desired LXC template (e.g., `ubuntu-22.04-standard`)
+    - **Root Disk:**
 
-> - **General:** **Hostname:** e.g., `ubuntu-container`
+3. Choose `local-lvm` or other storage  
+4. Set disk size
 
-> - **Template:** Select the desired LXC template (e.g., `ubuntu-22.04-standard`)
+!!! example "Fill in"
+    - **CPU & Memory:** Example: `1-2 cores`, `2GB RAM`
+    - **Network:**
 
-> - **Root Disk:**
-1. Choose `local-lvm` or other storage  
-2. Set disk size
+5. Select `vmbr0` (bridge to LAN)  
+6. Set IP configuration (DHCP or static IP)
 
-> - **CPU & Memory:** Example: `1-2 cores`, `2GB RAM`
-
-> - **Network:**
-1. Select `vmbr0` (bridge to LAN)  
-3. Set IP configuration (DHCP or static IP)
-
-> - **Confirm** and finish the container creation wizard.
+7. **Confirm** and finish the container creation wizard.
 
 ---
 
@@ -33,9 +33,9 @@
 * Inside the container, update packages and install necessary software:  
 
 ---
-#### **LXC Templates**
+#### **<span style="color:#F38020;">LXC Templates</span>**
 
-LXC templates allow you to quickly deploy containers with pre-installed operating systems and configurations.
+<span style="color:#F38020;">LXC templates</span> allow you to quickly deploy containers with pre-installed operating systems and configurations.
 
 #### **Creating LXC Templates**
 
@@ -52,10 +52,9 @@ LXC templates allow you to quickly deploy containers with pre-installed operatin
      /var/lib/vz/template/cache/
      ```
 
-#### **Using LXC Templates**
-
-   - When creating a new container, select the downloaded or uploaded template as the base image  
-   - Proceed with container creation as usual
+!!! note "**Using LXC Templates**"
+    - When creating a new container, select the downloaded or uploaded template as the base image  
+    - Proceed with container creation as usual
 
 ---
 

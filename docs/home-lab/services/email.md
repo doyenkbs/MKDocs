@@ -179,7 +179,7 @@ DKIM signs outgoing emails so recipients can verify authenticity.
     Type: TXT
     Value: v=DKIM1; k=rsa; p=MIGfMA0GCSqG...IDAQAB
     ```
-👉 Once DNS propagates, Mailcow will automatically sign outgoing mail with this key.
+👉 Once DNS propagates, <span style="color:#43A047;">Mailcow</span> will automatically sign outgoing mail with this key.
 
 ### **3. DMARC Record**  
 

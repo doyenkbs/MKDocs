@@ -101,6 +101,6 @@ newgrp docker
 
 ---
 ### ***References***
-- [Docker Documentation](https://docs.docker.com/get-started)
-- [Install Docker Engine](https://docs.docker.com/engine/install/)
-- [What is Docker Compose?](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel
+- [*Docker Documentation*](https://docs.docker.com/get-started)
+- [*Install Docker Engine*](https://docs.docker.com/engine/install/)
+- [*What is Docker Compose?*](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel

@@ -1,8 +1,8 @@
-# **Proxmox Datacenter Manager (PDM)**
+# **<span style="color:#F38020;">Proxmox Datacenter Manager (PDM)</span>**
 
-**Proxmox Datacenter Manager** (PDM) is an open-source centralized management platform for overseeing multiple Proxmox VE nodes and clusters. It offers foundational control, visibility, and orchestration through a modern, Rust-powered user interface. This tool is currently in **alpha stage**.
+**<span style="color:#F38020;">Proxmox Datacenter Manager</span>** <span style="color:#F38020;">(PDM)</span> is an open-source centralized management platform for overseeing multiple <span style="color:#F38020;">Proxmox VE</span> nodes and clusters. It offers foundational control, visibility, and orchestration through a modern, Rust-powered user interface. This tool is currently in **alpha stage**.
 
- **Centralized Overview:** Monitor resource usage across all nodes and clusters, including basic operations like starting, stopping, rebooting, and migrating guests.:contentReference
+ **<span style="color:#F38020;">Centralized Overview:</span>** Monitor resource usage across all nodes and clusters, including basic operations like starting, stopping, rebooting, and migrating guests.:contentReference
 
 ---
 
@@ -32,11 +32,11 @@ https://<pdm-host>:8443
 ```  
      Login as `root@pam`.
 
-2. **Add Proxmox VE Remotes**:
-> - Use the “Remote” or “Dashboard” wizard  
-> - Input the node or cluster address and fingerprint (found in the PVE SSL certificate)  
-> - Authenticate using root credentials or API tokens  
-> - After connection, the nodes and guests appear in your dashboard with real-time status.
+!!! info "**Add Proxmox VE Remotes:**"
+     - Use the “Remote” or “Dashboard” wizard  
+     - Input the node or cluster address and fingerprint (found in the PVE SSL certificate)  
+     - Authenticate using root credentials or API tokens  
+     - After connection, the nodes and guests appear in your dashboard with real-time status.
 
 ---
 
@@ -45,5 +45,5 @@ https://<pdm-host>:8443
 PDM is a promising yet evolving tool offering centralized management for distributed Proxmox environments. It’s ideal for home labs and multi-site setups—just be cautious in production until later stable releases.
 
 ***Reference:***
-> - [Proxmox Datacenter Manager Roadmap](https://pve.proxmox.com/wiki/Proxmox_Datacenter_Manager_Roadmap)
-> - [Proxmox Support Forum](https://forum.proxmox.com/threads/proxmox-datacenter-manager-first-alpha-release.159323/)
+> - [*Proxmox Datacenter Manager Roadmap*](https://pve.proxmox.com/wiki/Proxmox_Datacenter_Manager_Roadmap)
+> - [*Proxmox Support Forum*](https://forum.proxmox.com/threads/proxmox-datacenter-manager-first-alpha-release.159323/)

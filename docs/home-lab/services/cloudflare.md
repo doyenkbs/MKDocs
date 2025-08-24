@@ -4,16 +4,16 @@
 
 In the context of a **home lab**, <span style="color:#F38020;">Cloudflare</span> offers a variety of free tools, including:
 
-- **DNS Management** – Host and manage your domain’s DNS records with fast propagation and built-in security.
-- **DDoS Protection** – Protects your services from denial-of-service attacks.
-- **Cloudflare Tunnels** (formerly *Argo Tunnel*) – Securely connect your local services to the internet without exposing your public IP.
-- **Zero Trust Access** – Control and secure access to applications using identity-based authentication and policy enforcement.
+- **<span style="color:#43A047;">DNS Management** – Host and manage your domain’s DNS records with fast propagation and built-in security.
+- **<span style="color:#43A047;">DDoS Protection** – Protects your services from denial-of-service attacks.
+- **<span style="color:#43A047;">Cloudflare Tunnels** (formerly *Argo Tunnel*) – Securely connect your local services to the internet without exposing your public IP.
+- **<span style="color:#43A047;">Zero Trust Access** – Control and secure access to applications using identity-based authentication and policy enforcement.
 
 ---
 
 ### **Why Use Cloudflare Tunnel in a Home Lab?**
 
-With **Cloudflare Tunnel**, you can securely expose your local services (such as Home Assistant, <span style="color:#00897B;">BookStack</span>, <span style="color:#009688;">Nextcloud</span>, etc.) to the internet:
+With **<span style="color:#FFB74D;">Cloudflare Tunnel**, you can securely expose your local services (such as Home Assistant, <span style="color:#00897B;">BookStack</span>, <span style="color:#009688;">Nextcloud</span>, etc.) to the internet:
 
 - No need for **port forwarding**
 - Your **public IP remains hidden**

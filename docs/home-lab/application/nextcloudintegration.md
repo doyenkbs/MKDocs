@@ -1,14 +1,14 @@
 # **<span style="color:#4DB6AC;">Nextcloud Integration with Authentik via OpenID Connect (OIDC)</span>**
 
-This guide describes how to integrate <span style="color:#009688;">Nextcloud</span> with <span style="color:#E60012;">Authentik</span> for Single Sign-On (SSO) and centralized identity managemen using the OpenID Connect (OIDC) protocol. This setup enables secure authentication for users, eliminating local Nextcloud accounts and centralizing identity management with Authentik.
+This guide describes how to integrate <span style="color:#009688;">Nextcloud</span> with <span style="color:red;">Authentik</span> for Single Sign-On (SSO) and centralized identity managemen using the OpenID Connect (OIDC) protocol. This setup enables secure authentication for users, eliminating local Nextcloud accounts and centralizing identity management with Authentik.
 
 ---
 
 ## **Prerequisites**
 
 - A running <span style="color:#009688;">Nextcloud</span> instance: e.g. `https://nextcloud.example.com`
-- A running <span style="color:#E60012;">Authentik</span> instance: e.g. `https://authentik.example.com`
-- Admin access to both <span style="color:#E60012;">Authentik</span> and <span style="color:#009688;">Nextcloud</span>
+- A running <span style="color:red;">Authentik</span> instance: e.g. `https://authentik.example.com`
+- Admin access to both <span style="color:red;">Authentik</span> and <span style="color:#009688;">Nextcloud</span>
 - Nextcloud **OpenID Connect user backend** app installed and enabled
 
 ---
@@ -58,7 +58,7 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 
 ## **Step 4: Get OIDC Credentials from Authentik**
 
-1. Open your <span style="color:#009688;">Nextcloud</span> OIDC provider in <span style="color:#E60012;">Authentik</span>.
+1. Open your <span style="color:#009688;">Nextcloud</span> OIDC provider in <span style="color:red;">Authentik</span>.
 2. Copy the following values:
 
     > - **Client ID**
@@ -89,7 +89,7 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 ## **Step 6: Test SSO Login**
 
 1. Navigate to `https://nextcloud.example.com`.
-2. Try logging in; you should be redirected to <span style="color:#E60012;">Authentik</span>.
+2. Try logging in; you should be redirected to <span style="color:red;">Authentik</span>.
 3. After authentication, you will be sent back to <span style="color:#009688;">Nextcloud</span> and logged in automatically.
 
 ---
@@ -100,7 +100,7 @@ With this setup, <span style="color:#009688;">Nextcloud</span> is fully integrat
 ## **Troubleshooting**
 
 - Ensure domains and URLs are correct and reachable from both servers.
-- If login fails, review <span style="color:#009688;">Nextcloud</span>'s admin logs and <span style="color:#E60012;">Authentik</span>'s provider logs.
+- If login fails, review <span style="color:#009688;">Nextcloud</span>'s admin logs and <span style="color:red;">Authentik</span>'s provider logs.
 - Check for trailing slashes and matching Redirect URIs.
 - Make sure clocks are synced (for token validation).
 
@@ -183,6 +183,6 @@ sudo -u www-data php /var/www/nextcloud/occ user_oidc:provider:delete PROVIDER_I
 ## ***References***
 
 > - [*Nextcloud OIDC Documentation*](https://github.com/nextcloud/user_oidc)
-> - [*<span style="color:#E60012;">Authentik</span> Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
+> - [*<span style="color:red;">Authentik</span> Integration - Nextcloud*](https://integrations.goauthentik.io/chat-communication-collaboration/nextcloud/)
 
 

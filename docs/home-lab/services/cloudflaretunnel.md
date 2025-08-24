@@ -1,9 +1,9 @@
 # **<span style="color:#FFB74D;">Setting Up Cloudflare Tunnel via Dashboard</span>**
 
-### **Prerequisites**
-- A [Cloudflare account](https://dash.cloudflare.com/sign-up) 
-- A domain name managed by <span style="color:#F38020;">Cloudflare</span> DNS
-- A home server or VM running your service
+!!! info "**Prerequisites**"
+    - A [Cloudflare account](https://dash.cloudflare.com/sign-up) 
+    - A domain name managed by <span style="color:#F38020;">Cloudflare</span> DNS
+    - A home server or VM running your service
 
 ---
 ### **Steps**
@@ -55,4 +55,5 @@
 - Your traffic is now securely routed through Cloudflare without exposing your public IP or opening firewall ports.
 
 ---
-📖 **Tip:** For enhanced security, consider enabling **Zero Trust Access** to add a layer of user authentication for your services.
+!!! tip
+    For enhanced security, consider enabling **Zero Trust Access** to add a layer of user authentication for your services.

@@ -1,4 +1,4 @@
-## **Initial Configuration**
+## **<span style="color:#F38020;">Initial Configuration</span>**
 
 **Update system:**
 ```bash
@@ -31,14 +31,14 @@ A Linux bridge is required to give your VMs and containers network access throug
 
 **3. Click:** `Create → Linux Bridge`
 
-**4. Configure:**
-> - **Name:** `vmbr0` (default bridge name)  
-> - **IPv4/CIDR:** Set if this bridge will have an IP (optional if only bridging traffic)  
-> - **Gateway (IPv4):** Your network gateway (only if assigning IP)  
-> - **Bridge ports:** Your physical NIC (e.g., `eno1` or `eth0`)  
+!!! example "**Configure:**"
+    - **Name:** `vmbr0` (default bridge name)  
+    - **IPv4/CIDR:** Set if this bridge will have an IP (optional if only bridging traffic)  
+    - **Gateway (IPv4):** Your network gateway (only if assigning IP)  
+    - **Bridge ports:** Your physical NIC (e.g., `eno1` or `eth0`)  
 
-**5. Click:** `Create`
+**4. Click:** `Create`
 
-**6. Apply changes:** Click **Apply Configuration** and confirm.
+**5. Apply changes:** Click **Apply Configuration** and confirm.
 
-**7. (Optional):** Edit your VM or LXC container’s network settings to use `vmbr0` as the bridge.
+**6. (Optional):** Edit your VM or LXC container’s network settings to use `vmbr0` as the bridge.

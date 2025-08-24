@@ -1,6 +1,6 @@
-# **<span style="color:#AB47BC;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**
+# **<span style="color:coral;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**
 
-This guide will walk you through integrating **<span style="color:#AB47BC;">Audiobookshelf</span>** with **<span style="color:#E60012;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
+This guide will walk you through integrating **<span style="color:coral;">Audiobookshelf</span>** with **<span style="color:red;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
 
 
 !!! info "**Requirements**"
@@ -11,10 +11,10 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 
 ## **Overview**
 
-- Create an OAuth2/OpenID *provider + application* in <span style="color:#E60012;">Authentik</span>.  
-- Register <span style="color:#AB47BC;">Audiobookshelf</span> redirect URIs in <span style="color:#E60012;">Authentik</span>.  
-- Copy the Client ID / Client Secret (from Authentik) into <span style="color:#AB47BC;">Audiobookshelf</span>.  
-- Configure OIDC in <span style="color:#AB47BC;">Audiobookshelf</span> (auto-populate using discovery endpoint).  
+- Create an OAuth2/OpenID *provider + application* in <span style="color:red;">Authentik</span>.  
+- Register <span style="color:coral;">Audiobookshelf</span> redirect URIs in <span style="color:red;">Authentik</span>.  
+- Copy the Client ID / Client Secret (from Authentik) into <span style="color:coral;">Audiobookshelf</span>.  
+- Configure OIDC in <span style="color:coral;">Audiobookshelf</span> (auto-populate using discovery endpoint).  
 - Test login and troubleshoot as needed.
 
 ---
@@ -43,7 +43,7 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
     - **Slug:** audiobookshelf (keeps things simple)
     - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
     - **Policy Engine Mode:** Any
-    - **Launch URL:** Your <span style="color:#AB47BC;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
+    - **Launch URL:** Your <span style="color:coral;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
 
 6. **Save** the application.
 
@@ -51,7 +51,7 @@ This guide will walk you through integrating **<span style="color:#AB47BC;">Audi
 
 ## **Step 2: Copy client credentials & discovery info from Authentik**
 
-- In <span style="color:#E60012;">Authentik</span>, go to the **Provider** you created for <span style="color:#AB47BC;">Audiobookshelf</span>.
+- In <span style="color:red;">Authentik</span>, go to the **Provider** you created for <span style="color:coral;">Audiobookshelf</span>.
 !!! tip "Locate and copy the following values:"
     - **Client ID**
     - **Client Secret**
@@ -76,7 +76,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 4. **Use Auto-populate (optional):**
 
-   - In **Issuer URL** paste your <span style="color:#E60012;">Authentik</span> issuer/discovery URL (see step 2) and click **Auto-populate** — <span style="color:#AB47BC;">Audiobookshelf</span> will fill Authorization, Token, UserInfo and JWKS URLs automatically.
+   - In **Issuer URL** paste your <span style="color:red;">Authentik</span> issuer/discovery URL (see step 2) and click **Auto-populate** — <span style="color:coral;">Audiobookshelf</span> will fill Authorization, Token, UserInfo and JWKS URLs automatically.
 
 5. **Fill any remaining fields:**
 
@@ -97,10 +97,10 @@ Save settings.
 
 ## **Step 4: Test Your SSO Login**
 
-1. Visit your <span style="color:#AB47BC;">Audiobookshelf</span> login page.
-2. If auto-launch is enabled, you will be redirected to <span style="color:#E60012;">Authentik</span> to log in.
+1. Visit your <span style="color:coral;">Audiobookshelf</span> login page.
+2. If auto-launch is enabled, you will be redirected to <span style="color:red;">Authentik</span> to log in.
 3. Otherwise, click the **Login with SSO** (or your chosen button text).
-4. Authenticate via <span style="color:#E60012;">Authentik</span> and confirm access to Audiobookshelf.
+4. Authenticate via <span style="color:red;">Authentik</span> and confirm access to Audiobookshelf.
 
 !!! info 
     If you misconfigure SSO and are locked out, visit  
@@ -110,12 +110,12 @@ Save settings.
 
 
 !!! note
-    - **Users:** Each user must exist in <span style="color:#E60012;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in <span style="color:#AB47BC;">Audiobookshelf</span> with limited permissions.
-    - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:#E60012;">Authentik</span> and verify `groups` claim handling in <span style="color:#AB47BC;">Audiobookshelf</span>.
+    - **Users:** Each user must exist in <span style="color:red;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in <span style="color:coral;">Audiobookshelf</span> with limited permissions.
+    - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:red;">Authentik</span> and verify `groups` claim handling in <span style="color:coral;">Audiobookshelf</span>.
     - **Mobile App:** Ensure the extra mobile redirect URI is also added in the provider's allowed redirect URIs.
 
 ---
 ### **For more details:**
 - See the [Audiobookshelf OIDC guide](https://www.audiobookshelf.org/guides/oidc_authentication/)
-- For advanced <span style="color:#E60012;">Authentik</span> configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
+- For advanced <span style="color:red;">Authentik</span> configuration, consult the [Authentik documentation](https://docs.goauthentik.io/docs).
 
