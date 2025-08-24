@@ -20,7 +20,7 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
   logo: assets/logo.png
-  favicon: assets/images/favicon.png
+  favicon: assets/favicon.png
   
   features:
     - navigation.instant
