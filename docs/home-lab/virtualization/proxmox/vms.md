@@ -1,3 +1,8 @@
+---
+tags:
+  - Virtual Machine
+---
+
 ### **<span style="color:#F38020;">Creating a Virtual Machine (VM)</span>**
 
 #### **Steps:**

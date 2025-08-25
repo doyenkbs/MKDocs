@@ -1,6 +1,6 @@
 ---
 tags:
-  - Bookstack Integration
+  - Authentik
 ---
 
 # **<span style="color:#26A69A;">Integrate BookStack with Authentik via OIDC</span>**

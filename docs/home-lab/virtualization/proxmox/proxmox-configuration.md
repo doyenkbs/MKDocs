@@ -1,3 +1,8 @@
+---
+tags:
+  - Proxmox
+---
+
 ## **<span style="color:#F38020;">Initial Configuration</span>**
 
 **Update system:**

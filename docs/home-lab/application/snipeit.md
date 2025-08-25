@@ -1,3 +1,8 @@
+---
+tags:
+  - Snipe-IT
+---
+
 # **<span style="color:#F44336;">Snipe-IT Installation on Ubuntu 24.04</span>**
 
 This guide explains how to install <span style="color:#F44336;">Snipe-IT</span>, a self-hosted IT asset management system, on Ubuntu 24.04 using Nginx, MariaDB, and PHP 8.3.

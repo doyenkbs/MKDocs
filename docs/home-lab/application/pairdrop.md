@@ -1,3 +1,8 @@
+---
+tags:
+  - Pairdrop
+---
+
 # **<span style="color:#F57C00;">PairDrop Installation via Proxmox VE Helper-Scripts</span>**
 
 This guide covers how to install <span style="color:#F57C00;">PairDrop</span>, local file transfer solution—in an LXC container on Proxmox VE using the Proxmox VE Helper-Scripts. These community scripts make deploying new apps, like <span style="color:#F57C00;">PairDrop</span>, fast, standardized, and repeatable.

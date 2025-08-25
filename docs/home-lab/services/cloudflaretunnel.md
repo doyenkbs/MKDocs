@@ -1,3 +1,8 @@
+---
+tags:
+  - Cloudflare Tunnel
+---
+
 # **<span style="color:#FFB74D;">Setting Up Cloudflare Tunnel via Dashboard</span>**
 
 !!! info "**Prerequisites**"

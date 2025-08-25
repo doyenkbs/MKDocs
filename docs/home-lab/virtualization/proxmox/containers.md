@@ -1,3 +1,8 @@
+---
+tags:
+  - LXC
+---
+
 ### **<span style="color:#F38020;">Creating an LXC Container</span>**
 
 **<span style="color:#F38020;">LXC (Linux Containers)</span>** is a lightweight virtualization method that uses containerization to run multiple isolated Linux systems (containers) on a single host. Unlike full virtual machines, LXC shares the host kernel, making it more resource-efficient and faster to start, ideal for lightweight workloads and testing environments.

@@ -1,6 +1,14 @@
+---
+tags:
+  - Mailcow
+  - SPF
+  - DKIM
+  - DMARC
+---
+
 # **<span style="color:green; font-weight:bold;">Mailcow Installation Guide (Ubuntu)</span>**
 
-This guide explains how to install and configure **<span style="color:#43A047;">Mailcow</span>: dockerized** on **Ubuntu 22.04+**, with firewall setup, **SPF, DKIM, and DMARC**, and best practices for VPS self-hosting.
+This guide explains how to install and configure **<span style="color:#43A047;">Mailcow: dockerized</span>** on **<span style="color:#43A047;">Ubuntu 22.04+</span>**, with firewall setup, **<span style="color:#43A047;">SPF, DKIM, and DMARC</span>**, and best practices for **VPS self-hosting**.
 
 ---
 
@@ -25,7 +33,7 @@ Running a mail server requires:
 ## **Prerequisites**
 
 ### **System Requirements**
-- **Server:** <span style="color:blue;">VPS with Ubuntu 22.04 or newer</span> (e.g., Contabo VPS S with 6 GB RAM) 
+- **Server:** <span style="color:teal">VPS with Ubuntu 22.04 or newer</span> (e.g., Contabo VPS S with 6 GB RAM) 
 - **RAM:** <span style="color:orange;">Minimum 6 GB (+1 GB swap)</span>  
 - **Disk:** <span style="color:purple;">At least 20 GB free</span>  
 - **Domain:** A fully qualified domain name (FQDN), e.g., `mail.example.com`
@@ -123,10 +131,10 @@ Once running, log in via browser:
 > `https://<your-domain>/admin`
 
 !!! note
-    <span style="color:blue;">*The first time, you may get a warning about a self-signed SSL certificate.*</span>
+    <span style="color:teal">*The first time, you may get a warning about a self-signed SSL certificate.*</span>
 
 !!! danger "Default Credentials"
-    - Username: <span style="color:blue;">`admin`</span>  
+    - Username: <span style="color:teal">`admin`</span>  
     - Password: <span style="color:red;">`moohoo`</span>  
 
     ⚠️ Login and **immediately update the admin password** under  

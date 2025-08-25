@@ -1,3 +1,8 @@
+---
+tags:
+  - Nextcloud
+---
+
 # **<span style="color:#009688;">Nextcloud Installation on Ubuntu 24.04 LTS</span>**
 
 ---

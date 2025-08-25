@@ -1,6 +1,11 @@
+---
+tags:
+  - Cloudflare Access
+---
+
 # **<span style="color:#F38020;">Cloudflare Access + Authentik (OIDC) Integration</span>**
 
-This guide walks you through integrating **<span style="color:#F38020;">Cloudflare Access</span>** with **Authentik** using **OpenID Connect (OIDC)** so your Cloudflare-protected apps use Authentik for SSO/MFA.
+This guide walks you through integrating **<span style="color:#F38020;">Cloudflare Access</span>** with **<span style="color:red;">Authentik</span>** using **OpenID Connect (OIDC)** so your Cloudflare-protected apps use Authentik for SSO/MFA.
 
 ---
 ## **Overview**

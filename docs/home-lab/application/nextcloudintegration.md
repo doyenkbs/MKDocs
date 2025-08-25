@@ -1,3 +1,8 @@
+---
+tags:
+  - Authentik
+---
+
 # **<span style="color:#4DB6AC;">Nextcloud Integration with Authentik via OpenID Connect (OIDC)</span>**
 
 This guide describes how to integrate <span style="color:#009688;">Nextcloud</span> with <span style="color:red;">Authentik</span> for Single Sign-On (SSO) and centralized identity managemen using the OpenID Connect (OIDC) protocol. This setup enables secure authentication for users, eliminating local Nextcloud accounts and centralizing identity management with Authentik.

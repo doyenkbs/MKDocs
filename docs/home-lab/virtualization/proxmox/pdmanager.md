@@ -1,3 +1,8 @@
+---
+tags:
+  - Proxmox Datacenter Manager
+---
+
 # **<span style="color:#F38020;">Proxmox Datacenter Manager (PDM)</span>**
 
 **<span style="color:#F38020;">Proxmox Datacenter Manager</span>** <span style="color:#F38020;">(PDM)</span> is an open-source centralized management platform for overseeing multiple <span style="color:#F38020;">Proxmox VE</span> nodes and clusters. It offers foundational control, visibility, and orchestration through a modern, Rust-powered user interface. This tool is currently in **alpha stage**.
