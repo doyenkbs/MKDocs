@@ -1,9 +1,7 @@
 ---
 tags:
   - Mailcow
-  - SPF
-  - DKIM
-  - DMARC
+  
 ---
 
 # **<span style="color:green; font-weight:bold;">Mailcow Installation Guide (Ubuntu)</span>**

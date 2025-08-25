@@ -1,3 +1,8 @@
+---
+tags:
+  - Proxmox
+---
+
 # **<span style="color:#F38020;">Proxmox VE Installation</span>**
 
 !!! info "**Requirements**"

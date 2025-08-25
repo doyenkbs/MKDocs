@@ -1,6 +1,6 @@
 ---
 tags:
-    - Authentik
+    - Integration
 ---
 
 # **<span style="color:coral;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**

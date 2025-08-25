@@ -1,6 +1,6 @@
 ---
 tags:
-  - Authentik
+  - Integration
 ---
 
 # **<span style="color:#4DB6AC;">Nextcloud Integration with Authentik via OpenID Connect (OIDC)</span>**
