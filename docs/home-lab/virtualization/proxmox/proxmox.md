@@ -1,3 +1,8 @@
+---
+tags:
+  - Proxmox
+---
+
 # <span style="color:#F38020;">**Virtualization: Proxmox VE</span>**
 
 **<span style="color:#F38020;">Proxmox Virtual Environment (Proxmox VE)** is an open-source server virtualization platform that integrates KVM hypervisor and LXC containers with powerful web-based management. It supports clustering, high availability, and a wide range of storage solutions, making it ideal for home labs and enterprise environments alike.

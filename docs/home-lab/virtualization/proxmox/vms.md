@@ -1,6 +1,6 @@
 ---
 tags:
-  - Virtual Machine
+  - Proxmox
 ---
 
 ### **<span style="color:#F38020;">Creating a Virtual Machine (VM)</span>**

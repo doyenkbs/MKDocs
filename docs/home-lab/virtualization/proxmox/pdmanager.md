@@ -1,6 +1,6 @@
 ---
 tags:
-  - Proxmox Datacenter Manager
+  - Proxmox
 ---
 
 # **<span style="color:#F38020;">Proxmox Datacenter Manager (PDM)</span>**

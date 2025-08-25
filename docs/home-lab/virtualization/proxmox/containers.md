@@ -1,6 +1,6 @@
 ---
 tags:
-  - LXC
+  - Proxmox
 ---
 
 ### **<span style="color:#F38020;">Creating an LXC Container</span>**
