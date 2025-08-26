@@ -83,7 +83,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
    - In **Issuer URL** paste your Authentik issuer/discovery URL (see step 2) and click **Auto-populate** — Audiobookshelf will fill Authorization, Token, UserInfo and JWKS URLs automatically.
 
-!!! example "**Fill any remaining fields:**"
+!!! example inline end "**Fill any remaining fields:**"
     - **Client ID:** (from Authentik)
     - **Client Secret:** (from Authentik)
     - **Signing Algorithm:** `RS256`
