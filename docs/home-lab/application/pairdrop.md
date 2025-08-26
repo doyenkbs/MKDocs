@@ -54,11 +54,11 @@ http://<your-static-ip>:3000
 !!! note
     Replace <your-static-ip> with the IP you assigned in setup. You will now be able to use the PairDrop web UI.
 
-## **Additional Notes**
+!!! note ""
 
-* You can review or update your container’s configuration from the Proxmox web UI.
-* For container management and updates, check the official helper scripts and project repository.
-* PairDrop works cross-browser and is accessible on your LAN unless you configure additional network access.
+    * You can review or update your container’s configuration from the Proxmox web UI.
+    * For container management and updates, check the official helper scripts and project repository.
+    * PairDrop works cross-browser and is accessible on your LAN unless you configure additional network access.
 
 ***References:***
 > - [*PairDrop Helper Script*](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)

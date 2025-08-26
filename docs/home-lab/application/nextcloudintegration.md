@@ -112,7 +112,7 @@ This guide describes how to integrate <span style="color:#009688;">Nextcloud</sp
 ## **OpenID Connect Provider Setup via Command Line**
 ---
 
-## Disable Other Login Methods and Manage OpenID Connect Providers in Nextcloud
+## **Disable Other Login Methods and Manage OpenID Connect Providers in Nextcloud**
 
 This guide explains how to make OpenID Connect (OIDC) the default and only login method in your Nextcloud instance, as well as how to manage OIDC provider entries via the command line.
 
@@ -120,10 +120,14 @@ This guide explains how to make OpenID Connect (OIDC) the default and only login
 
 ## **Disable Other Login Methods**
 
+{==
+
 If you only have one OpenID Connect provider configured in Nextcloud, you can **force it to be the default login method**. This means users will be **immediately redirected to your OIDC provider's login page**, bypassing the default nextcloud login form.
 
 - **Admins can still log in using the native login page** by appending `?direct=1` to the login URL.
   > - e.g.: `https://nextcloud.example.com/login?direct=1`
+
+==}
 
 ### **Disable Multiple User Backends**
 

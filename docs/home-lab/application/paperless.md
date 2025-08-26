@@ -14,7 +14,11 @@ tags:
 
 ## **1. Install Docker & Docker Compose**
 
+{==
+
 Before proceeding, ensure that Docker and Docker Compose are installed on your Debian 12 system. Please follow the detailed [Docker Installation Guide](https://kabason.net/home-lab/docker.html) in this documentation to set up Docker and Docker Compose correctly.
+
+==}
 
 ## **2. Run the Official Paperless-ngx Installation Script**
 
@@ -38,7 +42,11 @@ Once the script finishes, open your browser and visit:
 
 Log in with the superuser credentials you defined during setup.
 
+{==
+
 Adapt this guide if your directory structure or environment differs. For advanced configuration (backups, environment files, custom compose options), see the official documentation.
+
+==}
 
 ***References***
 - [*Paperless-ngx GitHub Repository*](https://github.com/paperless-ngx/paperless-ngx)
