@@ -81,15 +81,3 @@ Install the latest **Windows ADK** version (`e.g., ADK 10.1.26100.X or newer`) a
 ## **6. WinPE Boot Environment**
 Install the **WinPE** add-on as part of ADK if you haven't already—this is required for SCCM's OS deployment boot images.
 
----
-
-## **Visual Workflow**
-
-```mermaid
-flowchart TD
-    A[Windows Feature Installation] --> B[SQL Server (DB Engine)]
-    B --> C[SSMS Configuration (Memory Mgmt)]
-    C --> D[SQL Reporting Services (SSRS)]
-    D --> E[Windows ADK + WinPE]
-    E --> F[Ready for SCCM/MECM Installation]
-```

@@ -38,7 +38,7 @@ System Management
 !!! warning
     Case sensitive – type exactly as shown.
 
--Follow the prompts to complete.
+- Follow the prompts to complete.
 
 ---
 
@@ -48,8 +48,10 @@ System Management
 - Navigate to the `System Management` container.
 - Right-click `System Management` → Delegate Control.
 - Add the SCCM server computer account (e.g., `SCCMSRV`).
+
     > - Click Add → Object Types → select Computers.
     > - Enter the SCCM server name.
+    
 - Select Create a custom task to delegate.
 - Grant Full Control permissions.
 
