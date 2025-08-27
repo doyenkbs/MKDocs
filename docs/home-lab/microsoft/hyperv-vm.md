@@ -71,17 +71,3 @@ These practices ensure a consistent and reliable lab environment for future setu
    - Set to **Manual**.  
    - Prevents unwanted reboots or patching during lab sessions.  
 
----
-
-## **VM Setup Workflow (Diagram)**
-
-``` mermaid
-flowchart TD
-    A[Create New VM] --> B[Install OS]
-    B --> C[Open Server Manager → Local Server]
-    C --> D[Disable IPv6]
-    D --> E[Rename Server]
-    E --> F[Disable IE ESC]
-    F --> G[Disable Windows Updates (sconfig)]
-    G --> H[VM Ready for Domain Join & Role Installation]
-```
