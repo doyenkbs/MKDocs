@@ -80,6 +80,9 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.tilde
+  - pymdownx.magiclink
+  - pymdownx.arithmatex
+  - pymdownx.betterem
 
 
 # Plugins
