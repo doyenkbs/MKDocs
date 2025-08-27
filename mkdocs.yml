@@ -155,6 +155,7 @@ nav:
                   - Virtual Switch: home-lab/microsoft/hyper-v.md
                   - Virtual Machine: home-lab/microsoft/hyperv-vm.md
               - Domain Controller Setup: home-lab/microsoft/dc.md
+              - Active Directory Configuration: home-lab/microsoft/ad.md
               - Firewall Configuration: home-lab/microsoft/firewall.md
               - SCCM/MECM Prerequisites: home-lab/microsoft/sccm-prerequisites.md
               - SCCM/MECM Installation: home-lab/microsoft/sccm-installation.md

@@ -36,18 +36,15 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 ---
 
 ### **Firewall Predefined Rules**
-{==
+
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Inbound Rules==**  
   > - Right-click → **New Rule** → **Predefined** → Select **`File and Printer Sharing`** → Follow prompts  
-==}
 
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Inbound Rules==**  
   > - Right-click → **New Rule** → **Predefined** → Select **`Windows Management Instrumentation (WMI)`** → Follow prompts  
 
-{==
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Outbound Rules==**  
   > - Right-click → **New Rule** → **Predefined** → Select **`File and Printer Sharing`** → Choose **Allow the connection**  
-==}
 
 ``` mermaid
 graph TD
