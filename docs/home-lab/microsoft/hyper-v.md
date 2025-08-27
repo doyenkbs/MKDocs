@@ -1,4 +1,4 @@
-# Create a Virtual Internal VS with NAT Network in Hyper-V
+# **Create a Virtual Internal VS with NAT Network in Hyper-V**
 
 A **Hyper-V Virtual Switch (VS)** is a software-based network switch that allows virtual machines (VMs) to communicate with each other, the host system, and external networks.  
 It provides the foundation for networking in Hyper-V environments and supports three main types: **External**, **Internal**, and **Private**.  
@@ -17,7 +17,7 @@ By combining an internal switch with NAT, VMs can remain isolated from the produ
 
 
 !!! warning "Run PowerShell as Administrator"
-    All commands below require elevated privileges.
+    All commands below require elevated privileges.  
     Ensure that PowerShell is opened **with Administrator privileges**, otherwise the commands will fail.
 ---
 

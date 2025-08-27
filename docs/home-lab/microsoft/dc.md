@@ -9,16 +9,16 @@ This guide covers the installation and configuration of a **Domain Controller (D
 1. Open **Server Manager** → **Manage** → **Add Roles and Features**  
    
 2. Select and install the following roles:
-   - **Active Directory Domain Services (AD DS)**  
-   - **DNS Server**
+   > - **Active Directory Domain Services (AD DS)**  
+   > - **DNS Server**
 
 ---
 
 ## **2. Promote the Server to a Domain Controller**
 
-- After installation, in **Server Manager**, click **Promote this server to a domain controller**.  
-- Choose **Add a new forest** and provide a root domain name (e.g., `lab.com`).  
-- Complete the wizard and restart the server once promotion is finished.  
+> - After installation, in **Server Manager**, click **Promote this server to a domain controller**.  
+> - Choose **Add a new forest** and provide a root domain name (e.g., `lab.com`).  
+> - Complete the wizard and restart the server once promotion is finished.  
 
 ---
 
@@ -39,7 +39,7 @@ If using **Hyper-V** with a NAT-enabled Internal Switch (e.g., `LabSwitch`), con
 
 ---
 
-## **3.1 Network Layout Diagram**
+## **Network Layout Diagram**
 
 ```mermaid
 flowchart TD
@@ -62,9 +62,9 @@ flowchart TD
 ## **4. Join All Machines to the Domain**
 
 1. On each server or client VM:  
-   - Open **System Properties** (`sysdm.cpl`).  
-   - Under **Computer Name**, click **Change**.  
-   - Select **Domain**, enter the domain name (e.g., `lab.com`), and provide credentials.  
+   > - Open **System Properties** (`sysdm.cpl`).  
+   > - Under **Computer Name**, click **Change**.  
+   > - Select **Domain**, enter the domain name (e.g., `lab.com`), and provide credentials.  
 
 2. Restart each machine after joining the domain.  
 
