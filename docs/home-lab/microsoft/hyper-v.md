@@ -97,11 +97,11 @@ New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
 ``` mermaid
 flowchart TD
     Host[Host Machine] --- LabSwitch["LabSwitch (Internal Virtual Switch)"]
-    LabSwitch --- VM1[VM1 - 10.0.0.10]
-    LabSwitch --- VM2[VM2 - 10.0.0.11]
-    LabSwitch --- VM3[VM3 - 10.0.0.12]
+    LabSwitch --- VM1[🖥️ VM1 - 10.0.0.10]
+    LabSwitch --- VM2[🖥️ VM2 - 10.0.0.11]
+    LabSwitch --- VM3[🖥️ VM3 - 10.0.0.12]
 
-    LabSwitch --> Gateway["NAT Gateway (10.0.0.1)"]
+    LabSwitch --> Gateway["🌐 NAT Gateway (10.0.0.1)"]
     Gateway --> Internet((🌐 Internet))
 ```
 
