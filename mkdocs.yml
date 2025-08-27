@@ -145,9 +145,9 @@ nav:
         - Home Assistant: home-lab/services/homeassistant.md
         - OpenVPN: home-lab/services/openvpn.md
 
-  - Microsoft Lab:
-        - index.md: home-lab/microsoft/index.md
+  - Microsoft Lab:  
         - SCCM/MECM Lab Setup Guide: 
+              - index.md: home-lab/microsoft/index.md
               - Virtualization: home-lab/microsoft/hyper-v.md
               - Domain Controller Setup: home-lab/microsoft/dc.md
               - Firewall Configuration: home-lab/microsoft/firewall.md
