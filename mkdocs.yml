@@ -144,6 +144,17 @@ nav:
         - Email: home-lab/services/email.md
         - Home Assistant: home-lab/services/homeassistant.md
         - OpenVPN: home-lab/services/openvpn.md
-  
+
+  - Microsoft Lab:
+        - index.md: home-lab/microsoft/index.md
+        - SCCM/MECM Lab Setup Guide: 
+              - Virtualization: home-lab/microsoft/hyper-v.md
+              - Domain Controller Setup: home-lab/microsoft/dc.md
+              - Firewall Configuration: home-lab/microsoft/firewall.md
+              - SCCM/MECM Prerequisites: home-lab/microsoft/sccm-prerequisites.md
+              - SCCM/MECM Installation: home-lab/microsoft/sccm-installation.md
+              - SCCM/MECM Post-Installation: home-lab/microsoft/sccm-post-installation.md
+              - SCCM/MECM Configuration: home-lab/microsoft/sccm-configuration.md
+
   - About: about.md
   - Tags: tags.md
