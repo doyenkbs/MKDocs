@@ -1,9 +1,5 @@
 # Create a Virtual Internal VS with NAT Network in Hyper-V
 
----
-
-# **Hyper-V Virtual Switch (VS)**
-
 A **Hyper-V Virtual Switch (VS)** is a software-based network switch that allows virtual machines (VMs) to communicate with each other, the host system, and external networks.  
 It provides the foundation for networking in Hyper-V environments and supports three main types: **External**, **Internal**, and **Private**.  
 
@@ -21,6 +17,7 @@ By combining an internal switch with NAT, VMs can remain isolated from the produ
 
 
 !!! warning "Run PowerShell as Administrator"
+    All commands below require elevated privileges.
     Ensure that PowerShell is opened **with Administrator privileges**, otherwise the commands will fail.
 ---
 
@@ -95,6 +92,8 @@ New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
 
 ---
 
+### **🔎 Network Diagram**
+
 ``` mermaid
 flowchart TD
     Host[Host Machine] --- LabSwitch["LabSwitch (Internal Virtual Switch)"]
@@ -106,39 +105,7 @@ flowchart TD
     Gateway --> Internet((🌐 Internet))
 ```
 
-### **🔎 Network Diagram**
-
-                    +-------------------+
-                    |   Host Machine    |
-                    +---------+---------+
-                            |
-                            |
-                    +-------+-------+
-                    |   LabSwitch   |  (Internal Virtual Switch)
-                    +---+---+---+---+
-                        |   |   |
-                        |   |   |
-            +-----------+   |   +-----------+
-            |               |               |
-        +-----+-----+   +-----+-----+   +-----+-----+
-        |   VM1     |   |   VM2     |   |   VM3     |
-        | 10.0.0.10 |   | 10.0.0.11 |   | 10.0.0.12 |
-        +-----------+   +-----------+   +-----------+
-
-                        |
-                        v
-                +-------------------+
-                |  NAT Gateway      |
-                |   10.0.0.1        |
-                +---------+---------+
-                        |
-                        v
-                    +-------------+
-                    |   Internet  |
-                    +-------------+
-
-
-!!! info "Both diagrams show:"
+!!! info "The above diagram shows:"
 
     - Host + VMs connected to `LabSwitch`
     - NAT Gateway (`10.0.0.1`) providing internet access

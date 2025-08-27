@@ -47,20 +47,19 @@ These practices ensure a consistent and reliable lab environment for future setu
    Use the dashboard to quickly configure system properties.  
 
 2. **Disable IPv6**  
-
-   - Go to: *Network Adapter Properties* → Uncheck **Internet Protocol Version 6 (TCP/IPv6)**.  
-   - Helps avoid unwanted conflicts when using IPv4 in lab setups.  
+   * Go to: *Network Adapter Properties* → Uncheck **Internet Protocol Version 6 (TCP/IPv6)**.  
+   * Helps avoid unwanted conflicts when using IPv4 in lab setups.  
 
 3. **Rename the Server**  
 
-   - Open *System Properties* → Change Computer Name.  
-   - Use meaningful names for easy identification.  
+   * Open *System Properties* → Change Computer Name.  
+   * Use meaningful names for easy identification.  
 
 4. **Disable IE Enhanced Security Configuration (ESC)** 
 
-   - Open *Server Manager*.  
-   - Under *Local Server*, click **IE Enhanced Security Configuration** → Set both Admin & User to **Off**.  
-   - Makes downloading files easier in lab/test environments.  
+   * Open *Server Manager*.  
+   * Under *Local Server*, click **IE Enhanced Security Configuration** → Set both Admin & User to **Off**.  
+   * Makes downloading files easier in lab/test environments.  
 
 5. **Disable Automatic Windows Updates** 
 
@@ -76,7 +75,7 @@ These practices ensure a consistent and reliable lab environment for future setu
 
 ## **VM Setup Workflow (Diagram)**
 
-```mermaid
+``` mermaid
 flowchart TD
     A[Create New VM] --> B[Install OS]
     B --> C[Open Server Manager → Local Server]
@@ -85,3 +84,4 @@ flowchart TD
     E --> F[Disable IE ESC]
     F --> G[Disable Windows Updates (sconfig)]
     G --> H[VM Ready for Domain Join & Role Installation]
+```
