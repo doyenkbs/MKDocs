@@ -151,7 +151,9 @@ nav:
   - Microsoft Lab:  
         - SCCM/MECM Lab Setup Guide: 
               - index.md: home-lab/microsoft/index.md
-              - Virtualization: home-lab/microsoft/hyper-v.md
+              - Virtualization: 
+                  - Virtual Switch: home-lab/microsoft/hyper-v.md
+                  - Virtual Machine: home-lab/microsoft/hyperv-vm.md
               - Domain Controller Setup: home-lab/microsoft/dc.md
               - Firewall Configuration: home-lab/microsoft/firewall.md
               - SCCM/MECM Prerequisites: home-lab/microsoft/sccm-prerequisites.md

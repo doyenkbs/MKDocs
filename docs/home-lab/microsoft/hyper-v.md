@@ -1,18 +1,30 @@
 # Create a Virtual Internal VS with NAT Network in Hyper-V
 
-This guide walks you through creating a **Hyper-V Internal Virtual Switch with NAT support** for use in labs or test environments — useful for setting up isolated virtual networks.
+---
+
+# **Hyper-V Virtual Switch (VS)**
+
+A **Hyper-V Virtual Switch (VS)** is a software-based network switch that allows virtual machines (VMs) to communicate with each other, the host system, and external networks.  
+It provides the foundation for networking in Hyper-V environments and supports three main types: **External**, **Internal**, and **Private**.  
+
+- **External**: Connects VMs to the physical network through the host’s network adapter.  
+- **Internal**: Allows communication between VMs and the host only (no direct internet access).  
+- **Private**: Enables communication only between VMs (no host or external connectivity).  
+
+This guide focuses on creating an **Internal Virtual Switch with NAT (Network Address Translation)**, which is especially useful for **lab or test environments**.  
+By combining an internal switch with NAT, VMs can remain isolated from the production network while still having controlled internet access through the host system.  
+
 
 ---
 
-## **Step-by-Step Instructions**
+## **🔧 Step-by-Step Instructions**
 
-### **🔧 1. Open PowerShell as Administrator**
 
-!!! warning "Run as Administrator"
+!!! warning "Run PowerShell as Administrator"
     Ensure that PowerShell is opened **with Administrator privileges**, otherwise the commands will fail.
 ---
 
-### **🌐 2. Create a New Virtual Switch (Internal)**
+### **🌐 1. Create a New Virtual Switch (Internal)**
 
 ```powershell
 New-VMSwitch -SwitchName "LabSwitch" -SwitchType Internal
@@ -27,7 +39,7 @@ New-VMSwitch -SwitchName "LabSwitch" -SwitchType Internal
 
 ---
 
-### **🔍 3. Get the Interface Index of the New Adapter**
+**Get the Interface Index of the New Adapter**
 ``` powershell
 Get-NetAdapter
 ```
@@ -39,7 +51,7 @@ Get-NetAdapter
 
 ---
 
-### **📡 4. Assign a Static IP Address to LabSwitch**
+**Assign a Static IP Address to LabSwitch**
 ``` powershell
 New-NetIPAddress -IPAddress 10.0.0.1 -PrefixLength 24 -InterfaceIndex 49
 ```
@@ -48,7 +60,7 @@ New-NetIPAddress -IPAddress 10.0.0.1 -PrefixLength 24 -InterfaceIndex 49
     - You can use any private IP subnet (`e.g., 192.168.100.1/24, 172.16.0.1/24, etc.`).
 
 ---
-### **🌐 5. Create a NAT Network**
+### **🌐 2. Create a NAT Network**
 
 ``` powershell
 New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
@@ -83,6 +95,7 @@ New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
 
 ---
 
+``` mermaid
 flowchart TD
     Host[Host Machine] --- LabSwitch["LabSwitch (Internal Virtual Switch)"]
     LabSwitch --- VM1[VM1 - 10.0.0.10]
@@ -91,38 +104,38 @@ flowchart TD
 
     LabSwitch --> Gateway["NAT Gateway (10.0.0.1)"]
     Gateway --> Internet((🌐 Internet))
-
+```
 
 ### **🔎 Network Diagram**
 
-            +-------------------+
-            |   Host Machine    |
-            +---------+---------+
-                      |
-                      |
-              +-------+-------+
-              |   LabSwitch   |  (Internal Virtual Switch)
-              +---+---+---+---+
-                  |   |   |
-                  |   |   |
-      +-----------+   |   +-----------+
-      |               |               |
-+-----+-----+   +-----+-----+   +-----+-----+
-|   VM1     |   |   VM2     |   |   VM3     |
-| 10.0.0.10 |   | 10.0.0.11 |   | 10.0.0.12 |
-+-----------+   +-----------+   +-----------+
+                    +-------------------+
+                    |   Host Machine    |
+                    +---------+---------+
+                            |
+                            |
+                    +-------+-------+
+                    |   LabSwitch   |  (Internal Virtual Switch)
+                    +---+---+---+---+
+                        |   |   |
+                        |   |   |
+            +-----------+   |   +-----------+
+            |               |               |
+        +-----+-----+   +-----+-----+   +-----+-----+
+        |   VM1     |   |   VM2     |   |   VM3     |
+        | 10.0.0.10 |   | 10.0.0.11 |   | 10.0.0.12 |
+        +-----------+   +-----------+   +-----------+
 
-                  |
-                  v
-         +-------------------+
-         |  NAT Gateway      |
-         |   10.0.0.1        |
-         +---------+---------+
-                   |
-                   v
-             +-------------+
-             |   Internet  |
-             +-------------+
+                        |
+                        v
+                +-------------------+
+                |  NAT Gateway      |
+                |   10.0.0.1        |
+                +---------+---------+
+                        |
+                        v
+                    +-------------+
+                    |   Internet  |
+                    +-------------+
 
 
 !!! info "Both diagrams show:"
