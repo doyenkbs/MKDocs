@@ -1,5 +1,7 @@
 # **SCCM Admin Console Installation**
 
+---
+
 The **SCCM (System Center Configuration Manager) Admin Console** is a management interface that allows administrators to connect to and manage an existing SCCM site from a workstation.  
 Installing the console on a separate machine provides flexibility, enabling day-to-day administration without requiring direct login to the SCCM site server.  
 

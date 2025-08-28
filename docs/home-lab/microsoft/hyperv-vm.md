@@ -1,5 +1,7 @@
 # **Virtual Machine Creation & Initial Configuration**
 
+---
+
 This guide walks you through the **creation of Virtual Machines (VMs)** and the **initial configuration steps** after installation.  
 These practices ensure a consistent and reliable lab environment for future setup.  
 

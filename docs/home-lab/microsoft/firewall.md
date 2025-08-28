@@ -1,5 +1,7 @@
 # **Firewall Configuration via GPO**
 
+---
+
 This section explains how to configure firewall rules via **Group Policy (GPO)** on the **Domain Controller**.
 
 ---

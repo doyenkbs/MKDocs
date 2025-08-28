@@ -1,5 +1,7 @@
 # **Domain Controller Setup**
 
+---
+
 This guide covers the installation and configuration of a **Domain Controller (DC)** with **Active Directory Domain Services (AD DS)** and **DNS**, as well as basic network settings for a Hyper-V lab environment.
 
 Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/intune/configmgr/core/get-started/set-up-your-lab) for detailed setup instructions and access to all necessary download links for the lab.

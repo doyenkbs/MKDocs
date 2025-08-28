@@ -1,5 +1,7 @@
 # **Install SCCM Admin Console on a Workstation**
 
+---
+
 This guide explains how to install the **SCCM (Configuration Manager) Admin Console** on an administrator workstation. This is useful when you want to manage Configuration Manager without logging directly into the site server.
 
 ---

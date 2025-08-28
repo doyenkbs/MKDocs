@@ -1,5 +1,7 @@
 # **Create a Virtual Internal VS with NAT Network in Hyper-V**
 
+---
+
 A **Hyper-V Virtual Switch (VS)** is a software-based network switch that allows virtual machines (VMs) to communicate with each other, the host system, and external networks.  
 It provides the foundation for networking in Hyper-V environments and supports three main types: **External**, **Internal**, and **Private**.  
 
