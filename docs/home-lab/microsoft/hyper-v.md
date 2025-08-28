@@ -81,6 +81,12 @@ New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
     Remove-NetNat -Name "NatSwitch"
     ```
 
+    - Removes all the NAT objects on the current computer
+    ``` powershell
+    Get-NetNat
+    Remove-NetNat
+    ```
+
     !!! warning "Cleanup Tip"
         Removing the NAT or switch will break VM connectivity.
         Only run these if you are decommissioning your lab network.

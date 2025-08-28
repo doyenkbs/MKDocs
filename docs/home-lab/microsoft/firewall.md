@@ -46,6 +46,26 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Outbound Rules==**  
   > - Right-click → **New Rule** → **Predefined** → Select **`File and Printer Sharing`** → Choose **Allow the connection**  
 
+
+---
+
+## **Firewall Rules Summary**
+
+| Port  | Protocol | Service / Purpose            |
+|-------|----------|------------------------------|
+| 80    | TCP      | HTTP (Web / SCCM / WSUS)     |
+| 443   | TCP      | HTTPS (Secure Web)           |
+| 1433  | TCP      | SQL Server                   |
+| 4022  | TCP      | SQL Service Broker           |
+| 8530  | TCP      | WSUS (HTTP)                  |
+| 8531  | TCP      | WSUS (HTTPS)                 |
+| 3389  | TCP      | Remote Desktop (RDP)         |
+
+**Predefined Rules**
+
+- **File and Printer Sharing** (Inbound & Outbound)  
+- **Windows Management Instrumentation (WMI)**  
+
 ``` mermaid
 graph TD
     A["Computer Configuration"] --> B["Policies"]
@@ -71,26 +91,9 @@ graph TD
 
 ---
 
-## **Firewall Rules Summary**
-
-| Port  | Protocol | Service / Purpose            |
-|-------|----------|------------------------------|
-| 80    | TCP      | HTTP (Web / SCCM / WSUS)     |
-| 443   | TCP      | HTTPS (Secure Web)           |
-| 1433  | TCP      | SQL Server                   |
-| 4022  | TCP      | SQL Service Broker           |
-| 8530  | TCP      | WSUS (HTTP)                  |
-| 8531  | TCP      | WSUS (HTTPS)                 |
-| 3389  | TCP      | Remote Desktop (RDP)         |
-
-**Predefined Rules**
-
-- **File and Printer Sharing** (Inbound & Outbound)  
-- **Windows Management Instrumentation (WMI)**  
-
----
-
+<!--
 ## **GPO Firewall Policy Flow**
+
 
 ``` mermaid
 flowchart TD
@@ -98,8 +101,8 @@ flowchart TD
     GPO["📜 Group Policy Object\n(Firewall Rules)"]
     Clients["💻 Domain-Joined Clients"]
 
-    DC --> GPO
-    GPO --> Clients
+    DC --<> GPO
+    GPO --<> Clients
 
     subgraph Rules["Firewall Rules Applied via GPO"]
         RDP["🔓 Allow RDP (3389)"]
@@ -111,8 +114,8 @@ flowchart TD
         WMI["📊 Windows Management Instrumentation (WMI)"]
     end
 
-    GPO --> Rules
+    GPO --<> Rules
 ```
-
+-->
 
 ✅ At this point, all firewall rules are centrally managed by GPO and applied automatically to all domain-joined machines.

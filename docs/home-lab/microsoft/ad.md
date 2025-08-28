@@ -57,18 +57,21 @@ System Management
 
 --- 
 
+<!-- 
+
 ### **Visual Workflow**
 
 ``` mermaid
 flowchart TD
-    A["📂 Active Directory Schema"] --> B["⚙️ Run extadsch.exe\n(Extend Schema)"]
-    B --> C["📜 C:\\extadsch.log\n(Verify Success)"]
+    A["📂 Active Directory Schema"] -- B["⚙️ Run extadsch.exe\n(Extend Schema)"]
+    B -- C["📜 C:\\extadsch.log\n(Verify Success)"]
 
-    A --> D["🗂️ CN=System Container"]
-    D --> E["📦 Create 'System Management' Container\n(Case Sensitive)"]
+    A -- D["🗂️ CN=System Container"]
+    D -- E["📦 Create 'System Management' Container\n(Case Sensitive)"]
 
-    E --> F["👤 Delegate Control via ADUC\n(Advanced Features Enabled)"]
-    F --> G["🖥️ SCCM Server (e.g., SCCMSRV)\nGranted Full Control"]
+    E -- F["👤 Delegate Control via ADUC\n(Advanced Features Enabled)"]
+    F -- G["🖥️ SCCM Server (e.g., SCCMSRV)\nGranted Full Control"]
 ```
+-->
 
-✅ At this point, Active Directory is prepared for SCCM publishing and the SCCM server can publish site information to AD.
+✅ At this point, Active Directory is prepared for SCCM publishing and the SCCM server can publish site information to AD. 
