@@ -162,5 +162,30 @@ nav:
               - SCCM/MECM Post-Installation: home-lab/microsoft/sccm-post-installation.md
               - SCCM/MECM Configuration: home-lab/microsoft/sccm-configuration.md
 
+  - Tanium:
+    - Overview: home-lab/tanium/overview.md
+    - Core Modules:
+        - Interact: home-lab/tanium/interact.md
+        - Asset: home-lab/home-lab/tanium/asset.md
+        - Discover: home-lab/home-lab/tanium/discover.md
+        - Comply: home-lab/tanium/comply.md
+        - Deploy: home-lab/tanium/deploy.md
+        - Patch: home-lab/tanium/patch.md
+        - Connect: home-lab/tanium/connect.md
+        - Provision: home-lab/tanium/provision.md
+    - Administration:
+        - Overview: home-lab/tanium/administration.md
+        - Actions: home-lab/tanium/actions.md
+        - Content: home-lab/tanium/content.md
+        - Permissions: home-lab/tanium/permissions.md
+        - Configuration: home-lab/tanium/configuration.md
+    - Shared Services:
+        - Overview: home-lab/tanium/shared-services.md
+        - Client Management: home-lab/tanium/client-management.md
+        - Direct Connect: home-lab/tanium/direct-connect.md
+        - End-User Notifications: home-lab/tanium/end-user-notifications.md
+        - Endpoint Configuration: home-lab/tanium/endpoint-configuration.md
+    - FAQ: home-lab/tanium/faq.md
+
   - About: about.md
   - Tags: tags.md

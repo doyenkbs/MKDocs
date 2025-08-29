@@ -14,10 +14,10 @@ This guide walks through the prerequisites, download sources, and installation s
 Before installing the SCCM Admin Console, ensure the following are in place:
 
 - **Windows ADK (Assessment and Deployment Kit)**  
-    !!! note "Install only:"
 
-        - **Deployment Tools**  
-        - **User State Migration Tool (USMT)**  
+!!! note "Install only:"
+    - **Deployment Tools**  
+    - **User State Migration Tool (USMT)**  
 
 - **Windows PE Addon for ADK**  
   > - Required for OS deployment scenarios.
@@ -28,7 +28,8 @@ Before installing the SCCM Admin Console, ensure the following are in place:
 - **Active Directory Domain Services (AD DS)**  
   > - Domain Controller configured.  
 
-📖 See Microsoft docs for prerequisites:  
+📖 See Microsoft docs for prerequisites: 
+
 - [*Prepare to install sites*](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/install/prepare-to-install-sites)  
 
 - [*Prerequisites for installing sites*](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/install/prerequisites-for-installing-sites)
@@ -55,14 +56,14 @@ Reference: [*Setup Wizard for Primary Site*](https://learn.microsoft.com/en-us/i
 | Wizard Step | Selection / Input |
 |-------------|------------------|
 | **Step 4 – Product Key** | Select **Evaluation** |
-| **Step 7 – Prerequisite Downloads** | Select **Download required files** and specify your predefined location |
-| **Step 10 – Site and Installation Settings** | - **Site code**: e.g. `LAB`<br>- **Site name**: e.g. `MyLab`<br>- **Installation folder**: predefined location |
+| **Step 7 – Prerequisite Downloads** | Select **Download required files** and specify your predefined location. <br>(e.g., Create a folder to use as a download location) |
+| **Step 10 – Site and Installation Settings** | - **Site code**: e.g. `LAB`<br>- **Site name**: e.g. `MyLab`<br>- **Installation folder**: specify your predefined location. |
 | **Step 11 – Primary Site Installation** | Select **Install the primary site as a stand-alone site**, then click **Next** |
-| **Step 12 – Database Installation** | - **SQL Server FQDN**: input your SQL Server hostname (e.g., `sql.lab.local`)<br>- **Instance name**: leave blank (use default)<br>- **Service Broker Port**: leave as default (`4022`) |
+| **Step 12 – Database Installation** | - **SQL Server FQDN**: input your SQL Server hostname (e.g., `SCCMSRV.local`)<br>- **Instance name**: leave blank (use default)<br>- **Service Broker Port**: leave as default (`4022`) |
 | **Step 13 – Database Installation (continued)** | Accept defaults |
 | **Step 14 – SMS Provider** | Accept defaults |
 | **Step 15 – Client Communication Settings** | Ensure **“All site system roles accept only HTTPS communication from clients”** is **not selected** |
-| **Step 16 – Site System Roles** | Enter your **FQDN**, confirm HTTPS-only setting is still **deselected** |
+| **Step 16 – Site System Roles** | Enter your **FQDN** (e.g., `SCCMSRV`), confirm HTTPS-only setting is still **deselected** |
 
 ---
 
