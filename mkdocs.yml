@@ -123,6 +123,12 @@ nav:
   - Self-Hosted Applications:
         - index.md: home-lab/application/index.md
         - Audiobookshelf: home-lab/application/audiobookshelf.md
+        - Bookstack: home-lab/application/bookstack.md
+        - Nextcloud: home-lab/application/nextcloud.md
+        - Pairdrop: home-lab/application/pairdrop.md
+        - Paperless-NGX: home-lab/application/paperless.md
+        - Snipe-IT: home-lab/application/snipeit.md
+        - Zabbix: home-lab/application/zabbix.md
         - Authentik: 
             - Authentik Overview: home-lab/application/authentik.md
             - Authentik Integrations:
@@ -131,13 +137,6 @@ nav:
                 - Cloudflare Integration: home-lab/application/cloudflareaccess.md
                 - Nextcloud Integration: home-lab/application/nextcloudintegration.md
                 - Paperless-NGX Integration: home-lab/application/paperlessintegration.md
-        - Bookstack: home-lab/application/bookstack.md
-        - Nextcloud: home-lab/application/nextcloud.md
-        - Pairdrop: home-lab/application/pairdrop.md
-        - Paperless-NGX: home-lab/application/paperless.md
-        - Snipe-IT: home-lab/application/snipeit.md
-        - Zabbix: home-lab/application/zabbix.md
-
   - Core Services & Integrations:
         - index.md: home-lab/services/index.md
         - Cloudflare: 
