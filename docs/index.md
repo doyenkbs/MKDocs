@@ -17,7 +17,7 @@ hide:
   background-position: center;
 ">
 
-# <span style="font-size: 3em; font-weight: 700;">Kabason Labs Documentation</span>
+<span style="font-size: 3em; font-weight: 700;">Kabason Labs Documentation</span>
 
 <p style="font-size: 1.4em; margin-top: 1.5rem; line-height: 1.6; max-width: 900px; margin-left: auto; margin-right: auto;">
 Welcome to the comprehensive documentation for my <strong>Home Lab infrastructure</strong>.  
