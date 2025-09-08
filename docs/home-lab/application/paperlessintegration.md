@@ -1,8 +1,8 @@
-# **Paperless-ngx + authentik (OIDC) Integration**
+# **<span style="color:#26A69A;">Paperless-ngx + authentik (OIDC) Integration</span>**
 
 ---
 
-This page shows how to integrate **Paperless-ngx** with **authentik** using **OpenID Connect (OIDC)**. It also covers optional settings to disable local logins and auto-redirect users to SSO, plus a “Remote-User header” alternative.
+This page shows how to integrate **<span style="color:#26A69A;">Paperless-ngx** with **<span style="color:red;">authentik** using **OpenID Connect (OIDC)**. It also covers optional settings to disable local logins and auto-redirect users to SSO, plus a “Remote-User header” alternative.
 
 **Prerequisites**
 
