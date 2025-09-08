@@ -120,7 +120,7 @@ nav:
                   - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
             - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
 
-  - Self-Hosted Applications:
+  - Applications & Integrations:
         - index.md: home-lab/application/index.md
         - Audiobookshelf: home-lab/application/audiobookshelf.md
         - Bookstack: home-lab/application/bookstack.md
@@ -137,7 +137,7 @@ nav:
                 - Cloudflare Integration: home-lab/application/cloudflareaccess.md
                 - Nextcloud Integration: home-lab/application/nextcloudintegration.md
                 - Paperless-NGX Integration: home-lab/application/paperlessintegration.md
-  - Core Services & Integrations:
+  - Core Services:
         - index.md: home-lab/services/index.md
         - Cloudflare: 
                 - Overview: home-lab/services/cloudflare.md
