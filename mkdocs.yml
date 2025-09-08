@@ -122,16 +122,17 @@ nav:
 
   - Self-Hosted Applications:
         - index.md: home-lab/application/index.md
-        - Audiobookshelf: 
-            - Audiobookshelf Installation: home-lab/application/audiobookshelf.md
-            - Audiobookshelf Integrations: home-lab/application/audiobookshelfintegration.md
-        - Authentik: home-lab/application/authentik.md
-        - Bookstack: 
-            - Bookstack Installation: home-lab/application/bookstack.md
-            - Bookstack Integrations: home-lab/application/bookstackintegration.md
-        - Nextcloud: 
-            - Nextcloud Installation: home-lab/application/nextcloud.md
-            - Nextcloud Integrations: home-lab/application/nextcloudintegration.md
+        - Audiobookshelf: home-lab/application/audiobookshelf.md
+        - Authentik: 
+            - Authentik Overview: home-lab/application/authentik.md
+            - Authentik Integrations:
+                - Audiobookshelf Integrations: home-lab/application/audiobookshelfintegration.md
+                - Bookstack Integrations: home-lab/application/bookstackintegration.md
+                - Cloudflare Integrations: home-lab/services/cloudflareaccess.md
+                - Nextcloud Integrations: home-lab/application/nextcloudintegration.md
+                - Paperless-NGX Integrations: home-lab/application/paperlessintegration.md
+        - Bookstack: home-lab/application/bookstack.md
+        - Nextcloud: home-lab/application/nextcloud.md
         - Pairdrop: home-lab/application/pairdrop.md
         - Paperless-NGX: home-lab/application/paperless.md
         - Snipe-IT: home-lab/application/snipeit.md
