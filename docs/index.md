@@ -5,17 +5,31 @@ hide:
   - toc
 ---
 
-<div style="
-  width: 100%;
-  padding: 6rem 2rem;
-  margin: 0;
-  text-align: center;
-  color: white;
+<style>
+/* Full-page background only on the homepage */
+body[data-md-name="index"] {
   background: linear-gradient(135deg, rgba(0,128,128,0.95), rgba(32,178,170,0.95)),
               url('/images/hero-pattern.svg');
   background-size: cover;
   background-position: center;
-">
+  color: white;
+}
+
+/* Hero block styling */
+body[data-md-name="index"] .hero {
+  width: 100%;
+  padding: 6rem 2rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Fix button spacing */
+body[data-md-name="index"] .hero .md-button {
+  margin: 1rem 0.5rem;
+}
+</style>
+
+<div class="hero">
 
 # <span style="font-size: 3em; font-weight: 700;">Kabason Labs Documentation</span>
 
