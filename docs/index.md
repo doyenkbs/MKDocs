@@ -5,31 +5,32 @@ hide:
   - toc
 ---
 
+
 <style>
-/* Full-page background only on the homepage */
+/* Apply background to the entire homepage */
 body[data-md-name="index"] {
   background: linear-gradient(135deg, rgba(0,128,128,0.95), rgba(32,178,170,0.95)),
               url('/images/hero-pattern.svg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* optional: makes background stay while scrolling */
   color: white;
-}
-
-/* Hero block styling */
-body[data-md-name="index"] .hero {
-  width: 100%;
-  padding: 6rem 2rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* Fix button spacing */
-body[data-md-name="index"] .hero .md-button {
-  margin: 1rem 0.5rem;
 }
 </style>
 
-<div class="hero">
+<!-- Hero block, keep your inline style -->
+<div style="
+  width: 100%;
+  padding: 6rem 2rem;
+  margin: 0;
+  text-align: center;
+  color: white;
+  background: linear-gradient(135deg, rgba(0,128,128,0.95), rgba(32,178,170,0.95)),
+              url('/images/hero-pattern.svg');
+  background-size: cover;
+  background-position: center;
+">
 
 # <span style="font-size: 3em; font-weight: 700;">Kabason Labs Documentation</span>
 
@@ -40,7 +41,7 @@ Explore detailed guides, installation instructions, and configuration tips to he
 
 <br/>
 
-[🚀 Get Started](home-lab/docker.md){ .md-button .md-button--primary }
+[Get Started](home-lab/docker.md){ .md-button .md-button--primary }
 
 
 </div>
