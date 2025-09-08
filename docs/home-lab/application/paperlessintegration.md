@@ -99,13 +99,15 @@ Restart:
 docker compose down && docker compose up -d
 ```
 ==If you run Paperless-ngx without Docker, add to `paperless.conf`:==
-``` ini`
+
+``` ini
 PAPERLESS_ENABLE_ALLAUTH=true
 PAPERLESS_APPS=allauth.socialaccount.providers.openid_connect
 PAPERLESS_SOCIALACCOUNT_PROVIDERS={"openid_connect":{"OAUTH_PKCE_ENABLED":true,"APPS":[{"provider_id":"authentik","name":"authentik","client_id":"<CLIENT_ID>","secret":"<CLIENT_SECRET>","settings":{"server_url":"https://<authentik.fqdn>/application/o/<APPLICATION_SLUG>/.well-known/openid-configuration","claims":{"username":"email"}}}]}}
 PAPERLESS_AUTO_CREATE=true
 PAPERLESS_AUTO_LOGIN=true
 ```
+
 Then restart Paperless services (example):
 ``` bash
 sudo systemctl restart paperless-*
