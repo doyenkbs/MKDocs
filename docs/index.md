@@ -5,21 +5,6 @@ hide:
   - toc
 ---
 
-
-<style>
-/* Apply background to the entire homepage */
-body[data-md-name="index"] {
-  background: linear-gradient(135deg, rgba(0,128,128,0.95), rgba(32,178,170,0.95)),
-              url('/images/hero-pattern.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* optional: makes background stay while scrolling */
-  color: white;
-}
-</style>
-
-<!-- Hero block, keep your inline style -->
 <div style="
   width: 100%;
   padding: 6rem 2rem;
@@ -41,10 +26,11 @@ Explore detailed guides, installation instructions, and configuration tips to he
 
 <br/>
 
-[Get Started](home-lab/docker.md){ .md-button .md-button--primary }
-
 
 </div>
+
+---
+[Get Started](home-lab/docker.md){ .md-button .md-button--primary }
 
 ---
 
