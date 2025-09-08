@@ -31,13 +31,14 @@ In authentik (Admin UI):
 3. Note the Client ID, Client Secret, and the Application slug. You'll reference them in the next step.
 
 4. Set Redirect URI (Strict) to:
-``` perl
+```
 https://paperless.example.com/accounts/oidc/authentik/login/callback/
 ```
 5. Under Advanced protocol settings → Selected Scopes, confirm or add:
-   > `authentik default OAuth Mapping: OpenID 'openid'`
-   > `authentik default OAuth Mapping: OpenID 'email'`
-   > `authentik default OAuth Mapping: OpenID 'profile'`
+
+   > - `authentik default OAuth Mapping: OpenID 'openid'`
+   > - `authentik default OAuth Mapping: OpenID 'email'`
+   > - `authentik default OAuth Mapping: OpenID 'profile'`
 
 Save. 
 
@@ -50,7 +51,7 @@ Save.
 
 Paperless-ngx uses django-allauth to add social/OIDC providers. For authentik, you’ll enable the OpenID Connect provider and supply the provider configuration as JSON.
 
----If you have Paperless-ngx setup in Docker, add the following environment variables to your Paperless-ngx compose file:---
+==If you have Paperless-ngx setup in Docker, add the following environment variables to your Paperless-ngx compose file:==
 ``` yaml
 environment:
   # Enable allauth + OIDC (authentik)
@@ -85,9 +86,9 @@ environment:
 ??? tip "(Optional) Disable local login & auto-redirect to SSO**"
     Once OIDC is working, you can remove the local username/password form and send users straight to authentik:
     ``` ini
-    # In Docker env or paperless.conf
-    PAPERLESS_DISABLE_REGULAR_LOGIN=true
-    PAPERLESS_REDIRECT_LOGIN_TO_SSO=true
+    # In Docker env uncomment the following or add to paperless.conf 
+    PAPERLESS_DISABLE_REGULAR_LOGIN: true
+    PAPERLESS_REDIRECT_LOGIN_TO_SSO: true
     ```
     !!! note
         These settings hide the local login and redirect to SSO. Keep local login enabled until you’ve verified SSO works.
@@ -97,8 +98,8 @@ Restart:
 ``` bash
 docker compose down && docker compose up -d
 ```
----If you run Paperless-ngx without Docker, add to `paperless.conf`:---
-``` ini
+==If you run Paperless-ngx without Docker, add to `paperless.conf`:==
+``` ini`
 PAPERLESS_ENABLE_ALLAUTH=true
 PAPERLESS_APPS=allauth.socialaccount.providers.openid_connect
 PAPERLESS_SOCIALACCOUNT_PROVIDERS={"openid_connect":{"OAUTH_PKCE_ENABLED":true,"APPS":[{"provider_id":"authentik","name":"authentik","client_id":"<CLIENT_ID>","secret":"<CLIENT_SECRET>","settings":{"server_url":"https://<authentik.fqdn>/application/o/<APPLICATION_SLUG>/.well-known/openid-configuration","claims":{"username":"email"}}}]}}
