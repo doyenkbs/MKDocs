@@ -126,11 +126,11 @@ nav:
         - Authentik: 
             - Authentik Overview: home-lab/application/authentik.md
             - Authentik Integrations:
-                - Audiobookshelf Integrations: home-lab/application/audiobookshelfintegration.md
-                - Bookstack Integrations: home-lab/application/bookstackintegration.md
-                - Cloudflare Integrations: home-lab/application/cloudflareaccess.md
-                - Nextcloud Integrations: home-lab/application/nextcloudintegration.md
-                - Paperless-NGX Integrations: home-lab/application/paperlessintegration.md
+                - Audiobookshelf Integration: home-lab/application/audiobookshelfintegration.md
+                - Bookstack Integration: home-lab/application/bookstackintegration.md
+                - Cloudflare Integration: home-lab/application/cloudflareaccess.md
+                - Nextcloud Integration: home-lab/application/nextcloudintegration.md
+                - Paperless-NGX Integration: home-lab/application/paperlessintegration.md
         - Bookstack: home-lab/application/bookstack.md
         - Nextcloud: home-lab/application/nextcloud.md
         - Pairdrop: home-lab/application/pairdrop.md
