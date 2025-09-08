@@ -9,6 +9,7 @@ site_description: >-
 theme:
   name: material
   palette: 
+    - accent: teal
     # Palette toggle for light mode
     - scheme: default
       toggle:
