@@ -23,7 +23,7 @@ SCCM resource discovery enables management of computers, users, and groups withi
 </br>
 Open the SCCM console and navigate to:
 
-**`Administration → Hierarchy Configuration → Discovery Methods`**  
+{== **`Administration → Hierarchy Configuration → Discovery Methods`** ==}  
 (Enable all that start with **Active Directory**)
 
 - **AD Forest Discovery**  
@@ -67,7 +67,7 @@ Open the SCCM console and navigate to:
 Boundaries help define network locations and resources, using four creation methods: IPv4 range, IPv6, AD site, and IP Subnet.
 
 **Example:**  
-**`Administration → Boundaries → Right-click Create`**
+{== **`Administration → Boundaries → Right-click Create`** ==}
 
 - **Description:** `Lab PC Boundary`  
 - **Type:** IP Address Range (or other type)  
@@ -78,7 +78,7 @@ Boundaries help define network locations and resources, using four creation meth
 Used to assign a site.
 
 **Example:**  
-**`Administration → Boundary Groups → Right-click Create`**  
+{== **`Administration → Boundary Groups → Right-click Create`** ==}  
 
 - **Name:** `Site Server Assignment for Lab PC`  
 - **Add:** Select the IP range  
@@ -97,8 +97,10 @@ Configure SCCM to deploy clients automatically to new or existing devices.
 
 ### **Client Push Setup:**  
 
+{== 
 **`Administration → Site Configuration → Sites`**  
 Right-click your **`Primary Site → Client Installation Settings → Client Push Installation`**
+==}
 
 - Check **Enable automatic site-wide client push installation**  
 - Ensure servers, workstations, and configuration manager are checked  
@@ -124,7 +126,7 @@ For existing PCs: select → Right-click → **Install Client**.
 
 ## **<span style="color:#009688;">D. Create a Client Setting**
 
-**`Administration → Client Settings → Right-click Create Custom Client Device Settings`**
+{== **`Administration → Client Settings → Right-click Create Custom Client Device Settings`** ==}
 
 - Name: `Client Settings for LAB`
 
@@ -182,7 +184,7 @@ Helps organize/manage user and device groups.
 
 ### Example 1: Device Collection (Direct Rule)
 
-1. `Assets and Compliance → Device Collection → Right-click Create Collection`  
+1. {== `Assets and Compliance → Device Collection → Right-click Create Collection` ==}  
 2. Name it  
 3. Choose target collection  
 4. Add Rule → **Direct Rule**  
@@ -190,7 +192,7 @@ Helps organize/manage user and device groups.
 
 ### Example 2: Device Collection (Query Rule)
 
-1. `Assets and Compliance → Device Collection → Right-click Create Collection`  
+1. {== `Assets and Compliance → Device Collection → Right-click Create Collection` ==}  
 2. Name it  
 3. Choose target collection  
 4. Add Rule → **Query Rule**  
