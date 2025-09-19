@@ -1,4 +1,4 @@
-# **Create a Virtual Internal VS with NAT Network in Hyper-V**
+# **<span style="color:#009688;">Create a Virtual Internal VS with NAT Network in Hyper-V**
 
 ---
 
@@ -15,15 +15,16 @@ By combining an internal switch with NAT, VMs can remain isolated from the produ
 
 ---
 
-## **🔧 Step-by-Step Instructions**
+## **<span style="color:#009688;">🔧 Step-by-Step Instructions**
 
 
 !!! warning "Run PowerShell as Administrator"
     All commands below require elevated privileges.  
     Ensure that PowerShell is opened **with Administrator privileges**, otherwise the commands will fail.
+
 ---
 
-### **🌐 1. Create a New Virtual Switch (Internal)**
+### **<span style="color:#009688;">🌐 1. Create a New Virtual Switch (Internal)**
 
 ```powershell
 New-VMSwitch -SwitchName "LabSwitch" -SwitchType Internal
@@ -36,7 +37,6 @@ New-VMSwitch -SwitchName "LabSwitch" -SwitchType Internal
     - They do not provide internet connectivity directly.
     - You can rename `LabSwitch` to anything you prefer.
 
----
 
 **Get the Interface Index of the New Adapter**
 ``` powershell
@@ -48,7 +48,6 @@ Get-NetAdapter
     - Note the InterfaceIndex assigned to it (`e.g., 49`).
     - You’ll need this value in the next step.
 
----
 
 **Assign a Static IP Address to LabSwitch**
 ``` powershell
@@ -59,7 +58,8 @@ New-NetIPAddress -IPAddress 10.0.0.1 -PrefixLength 24 -InterfaceIndex 49
     - You can use any private IP subnet (`e.g., 192.168.100.1/24, 172.16.0.1/24, etc.`).
 
 ---
-### **🌐 2. Create a NAT Network**
+
+### **<span style="color:#009688;">🌐 2. Create a NAT Network**
 
 ``` powershell
 New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
@@ -100,7 +100,7 @@ New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
 
 ---
 
-### **🔎 Network Diagram**
+### **<span style="color:#009688;">🔎 Network Diagram**
 
 ``` mermaid
 flowchart TD

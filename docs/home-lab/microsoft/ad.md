@@ -1,4 +1,4 @@
-# **Prepare AD for SCCM Publishing**
+# **<span style="color:#009688;">Prepare AD for SCCM Publishing**
 
 ---
 

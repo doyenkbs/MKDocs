@@ -1,4 +1,4 @@
-# **Virtual Machine Creation & Initial Configuration**
+# **<span style="color:#009688;">Virtual Machine Creation & Initial Configuration**
 
 ---
 
@@ -7,7 +7,7 @@ These practices ensure a consistent and reliable lab environment for future setu
 
 ---
 
-## **🖥️ 1. Create a Virtual Machine**
+## **<span style="color:#009688;">🖥️ 1. Create a Virtual Machine**
 
 1. **Open Hyper-V Manager (or Proxmox/VMware/VirtualBox depending on your setup).**  
 2. **Create a new VM:** 
@@ -30,7 +30,7 @@ These practices ensure a consistent and reliable lab environment for future setu
 
 ---
 
-## **🔧 2. Initial Configuration After Installation**
+## **<span style="color:#009688;">🔧 2. Initial Configuration After Installation**
 
 ### **Rename All Virtual Machines**
 > - Rename each virtual machine to match your lab naming convention.  

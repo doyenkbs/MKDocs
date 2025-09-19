@@ -1,4 +1,4 @@
-# **SCCM / MECM Server Setup – Prerequisites & Tools**
+# **<span style="color:#009688;">SCCM / MECM Server Setup – Prerequisites & Tools**
 
 
 This guide walks you through preparing your **SCCM (Configuration Manager)** or **MECM** server by installing required Windows features, setting up SQL Server and Reporting Services, installing ADK/WinPE, and ensuring you’re ready to deploy OS images and manage software updates.
@@ -7,7 +7,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **Prerequisite Windows Features**
+## **<span style="color:#009688;">Prerequisite Windows Features**
 Ensure the following roles and features are installed on the SCCM/MECM server:
 
 - **Web Server (IIS)**  
@@ -26,12 +26,12 @@ Ensure the following roles and features are installed on the SCCM/MECM server:
 
 ---
 
-## **1. Install Required Roles and Features**
+## **<span style="color:#009688;">1. Install Required Roles and Features**
 Install all of the above items through **Server Manager → Add Roles and Features**, and if prompted, use the alternate source path to the `SXS` folder from the installation ISO.
 
 ---
 
-## **2. SQL Server Installation**
+## **<span style="color:#009688;">2. SQL Server Installation**
 Install a **new SQL Server Stand-Alone** instance (e.g., Evaluation Edition):
 
 - **Instance Features**: Select only *`Database Engine Services`*  
@@ -42,7 +42,7 @@ Install a **new SQL Server Stand-Alone** instance (e.g., Evaluation Edition):
 
 ---
 
-## **3. Install SQL Server Management Studio (SSMS)**
+## **<span style="color:#009688;">3. Install SQL Server Management Studio (SSMS)**
 1. Install **SSMS** on the SCCM/MECM server.  
 2. Grant full SQL permissions to your server system account (e.g., `SCCMSRV`):
    > - Open **Computer Management (`lusrmgr.msc`) → Local Users and Groups → Groups → Administrators**
@@ -55,7 +55,7 @@ Install a **new SQL Server Stand-Alone** instance (e.g., Evaluation Edition):
 
 ---
 
-## **4. Install SQL Reporting Services (SSRS)**
+## **<span style="color:#009688;">4. Install SQL Reporting Services (SSRS)**
 Run the **SQLServerReportingServices.exe** installer:
 
 1. Select **Install Reporting Services** → choose *Evaluation* or *Developer* edition → **Next**  
@@ -69,7 +69,7 @@ Run the **SQLServerReportingServices.exe** installer:
 
 ---
 
-## **5. Install Windows ADK & WinPE Add-on**
+## **<span style="color:#009688;">5. Install Windows ADK & WinPE Add-on**
 Install the latest **Windows ADK** version (`e.g., ADK 10.1.26100.X or newer`) along with the **WinPE add-on** 
 
 - Select only **Deployment Tools** and **User State Migration Tool (USMT)** during ADK setup 
@@ -78,6 +78,6 @@ Install the latest **Windows ADK** version (`e.g., ADK 10.1.26100.X or newer`) a
 
 ---
 
-## **6. WinPE Boot Environment**
+## **<span style="color:#009688;">6. WinPE Boot Environment**
 Install the **WinPE** add-on as part of ADK if you haven't already—this is required for SCCM's OS deployment boot images.
 

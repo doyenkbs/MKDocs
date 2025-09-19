@@ -1,4 +1,4 @@
-# **Firewall Configuration via GPO**
+# **<span style="color:#009688;">Firewall Configuration via GPO**
 
 ---
 

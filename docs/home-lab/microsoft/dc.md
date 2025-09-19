@@ -1,4 +1,4 @@
-# **Domain Controller Setup**
+# **<span style="color:#009688;">Domain Controller Setup**
 
 ---
 
@@ -8,7 +8,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **1. Install AD DS and DNS**
+## **<span style="color:#009688;">1. Install AD DS and DNS**
 
 1. Open **Server Manager** → **Manage** → **Add Roles and Features**  
    
@@ -18,7 +18,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **2. Promote the Server to a Domain Controller**
+## **<span style="color:#009688;">2. Promote the Server to a Domain Controller**
 
 > - After installation, in **Server Manager**, click **Promote this server to a domain controller**.  
 > - Choose **Add a new forest** and provide a root domain name (e.g., `lab.com`).  
@@ -26,7 +26,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **3. (Optional) Network Configuration for All VMs**
+## **<span style="color:#009688;">3. (Optional) Network Configuration for All VMs**
 If using **Hyper-V** with a NAT-enabled Internal Switch (e.g., `LabSwitch`), configure network settings for all VMs:
 
 ### **Steps:**
@@ -43,7 +43,7 @@ If using **Hyper-V** with a NAT-enabled Internal Switch (e.g., `LabSwitch`), con
 
 ---
 
-## **Network Layout Diagram**
+## **<span style="color:#009688;">Network Layout Diagram**
 
 ```mermaid
 flowchart TD
@@ -63,7 +63,7 @@ flowchart TD
 
 ---
 
-## **4. Join All Machines to the Domain**
+## **<span style="color:#009688;">4. Join All Machines to the Domain**
 
 1. On each server or client VM:  
    > - Open **System Properties** (`sysdm.cpl`).  
