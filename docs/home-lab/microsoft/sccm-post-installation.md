@@ -11,13 +11,13 @@ summary: Step-by-step guide to configuring SCCM after installation, including re
 ---
 
 
-# **SCCM Post Installation Guide**
+# **<span style="color:#009688;">SCCM Post Installation Guide</span>**
 
 This guide walks through essential SCCM configuration after installation, focusing on Active Directory resource discovery, boundaries, client installation, client settings, and collections.
 
 ---
 
-## **A. Discover Resources**
+## **<span style="color:#009688;">A. Discover Resources**
 
 SCCM resource discovery enables management of computers, users, and groups within a domain.
 </br>
@@ -38,8 +38,7 @@ Open the SCCM console and navigate to:
   Right-click → Properties → Check **Enable**.  
   Under **AD Containers**, click the orange button → Browse → Expand your domain.  
   > - Select **Computers** container → OK  
-  > - Repeat → Select **Domain Controllers** container → OK 
-
+  > - Repeat → Select **Domain Controllers** container → OK </br>
   *(This discovers all devices in Computers and Domain Controllers.)*
 
 - **AD User Discovery**  
@@ -61,7 +60,7 @@ Open the SCCM console and navigate to:
 
 ---
 
-## **B. Boundary and Boundary Group**
+## **<span style="color:#009688;">B. Boundary and Boundary Group**
 
 ### **Boundary**  
 
@@ -92,7 +91,7 @@ Used to assign a site.
 
 ---
 
-## **C. Configure Client Push Install and Client Installation**
+## **<span style="color:#009688;">C. Configure Client Push Install and Client Installation**
 
 Configure SCCM to deploy clients automatically to new or existing devices.
 
@@ -123,7 +122,7 @@ For existing PCs: select → Right-click → **Install Client**.
 
 ---
 
-## **D. Create a Client Setting**
+## **<span style="color:#009688;">D. Create a Client Setting**
 
 **`Administration → Client Settings → Right-click Create Custom Client Device Settings`**
 
@@ -131,21 +130,25 @@ For existing PCs: select → Right-click → **Install Client**.
 
 Select and configure:
 
-- **Client Cache**  
+- **Client Cache**
+  
   - Enable  
   - Size: `10240 MB` (allows downloads >5GB)
 
 - **Client Policy**  
+
   - Reporting interval: every 3 minutes (lab)
 
-- **Computer Agent**  
+- **Computer Agent** 
+
   - Org Display: Company name  
   - Install Permission: All Users  
   - PowerShell Execution Policy: Bypass
 
 - **PC Restart** → Yes
 
-- **Hardware Inventory**  
+- **Hardware Inventory**
+
   - Schedule: every 1 hour (lab)  
   - Classes:  
     - Asset Intelligence → Select all  
@@ -155,7 +158,8 @@ Select and configure:
 
 - **Software Center** → Enabled (customize UI)
 
-- **Software Inventory**  
+- **Software Inventory**
+
   - Add file types: `*.exe, *.msi, *.xml, *.mp4, *.mp3` (etc.)
 
 - **Software Update** → Enable (manage Office 365)
@@ -172,7 +176,7 @@ Right-click the new setting → **Deploy** → Choose target collection.
 
 ---
 
-## E. Collections
+## **<span style="color:#009688;">E. Collections**
 
 Helps organize/manage user and device groups.
 
@@ -191,7 +195,8 @@ Helps organize/manage user and device groups.
 3. Choose target collection  
 4. Add Rule → **Query Rule**  
 5. Enter a name → Edit Query Statement  
-6. Criteria tab → New  
+6. Criteria tab → New
+
    - Attribute Class: `Operating System`  
    - Attribute: `Caption`  
    - Value: Choose desired OS  
