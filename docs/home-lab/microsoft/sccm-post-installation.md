@@ -133,36 +133,31 @@ For existing PCs: select → Right-click → **Install Client**.
 Select and configure:
 
 - **Client Cache**
-  
-  - Enable  
-  - Size: `10240 MB` (allows downloads >5GB)
+  > - Enable  
+  > - Size: `10240 MB` (allows downloads >5GB)
 
 - **Client Policy**  
-
-  - Reporting interval: every 3 minutes (lab)
+  > - Reporting interval: every 3 minutes (lab)
 
 - **Computer Agent** 
-
-  - Org Display: Company name  
-  - Install Permission: All Users  
-  - PowerShell Execution Policy: Bypass
+  > - Org Display: Company name  
+  > - Install Permission: All Users  
+  > - PowerShell Execution Policy: Bypass
 
 - **PC Restart** → Yes
 
 - **Hardware Inventory**
-
-  - Schedule: every 1 hour (lab)  
-  - Classes:  
-    - Asset Intelligence → Select all  
-    - Windows client/server classes → Select useful items (e.g., Autostart, Boot config, Network login profile, Battery, etc.)
+  > - Schedule: every 1 hour (lab)  
+  > - Classes:  
+        - Asset Intelligence → Select all  
+        - Windows client/server classes → Select useful items (e.g., Autostart, Boot config, Network login profile, Battery, etc.)
 
 - **Remote Tools** → Configure + assign allowed admin groups
 
 - **Software Center** → Enabled (customize UI)
 
 - **Software Inventory**
-
-  - Add file types: `*.exe, *.msi, *.xml, *.mp4, *.mp3` (etc.)
+  > - Add file types: `*.exe, *.msi, *.xml, *.mp4, *.mp3` (etc.)
 
 - **Software Update** → Enable (manage Office 365)
 
@@ -198,12 +193,10 @@ Helps organize/manage user and device groups.
 4. Add Rule → **Query Rule**  
 5. Enter a name → Edit Query Statement  
 6. Criteria tab → New
-
-   - Attribute Class: `Operating System`  
-   - Attribute: `Caption`  
-   - Value: Choose desired OS  
-7. Enable **Use incremental update for this rule**  
-   *(Auto-discovers new devices)*
+   > - Attribute Class: `Operating System`  
+   > - Attribute: `Caption`  
+   > - Value: Choose desired OS  
+7. Enable **Use incremental update** for auto-discovery of new devices.  
 
 !!! note
     **Direct Rule** = manually add devices  
