@@ -16,7 +16,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 3. Edit the GPO and configure the following:
 
 ---
-### **Remote Desktop Settings**
+### **<span style="color:#009688;">Remote Desktop Settings**
 - **Computer Configuration → Policies → Administrative Templates → Windows Components → Remote Desktop Services → RD Session Host → Connections**  
   > - **`Allow users to connect remotely`** → **`Enable`**  
 
@@ -25,7 +25,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 
 ---
 
-### **Firewall Inbound Rules (Custom Ports)**
+### **<span style="color:#009688;">Firewall Inbound Rules (Custom Ports)**
 
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Inbound Rules==**  
   > - Right-click → **New Rule** → **Port**  
@@ -37,7 +37,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 
 ---
 
-### **Firewall Predefined Rules**
+### **<span style="color:#009688;">Firewall Predefined Rules**
 
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Inbound Rules==**  
   > - Right-click → **New Rule** → **Predefined** → Select **`File and Printer Sharing`** → Follow prompts  
@@ -51,7 +51,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 
 ---
 
-## **Firewall Rules Summary**
+## **<span style="color:#009688;">Firewall Rules Summary**
 
 | Port  | Protocol | Service / Purpose            |
 |-------|----------|------------------------------|
