@@ -1,4 +1,14 @@
-# **<span style="color:#009688;">Create a Virtual Internal VS with NAT Network in Hyper-V**
+---
+title: Create an Internal Virtual Switch with NAT Network in Hyper-V
+tags:
+  - Virtual Switch
+  - Virtualization
+  - Microsoft
+  - Hyper-V
+summary: This guide focuses on creating an Internal Virtual Switch with NAT (Network Address Translation)
+---
+
+# **<span style="color:#009688;">Create an Internal Virtual Switch with NAT Network in Hyper-V**
 
 ---
 

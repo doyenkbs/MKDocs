@@ -1,3 +1,13 @@
+---
+title: Virtual Machine Creation & Initial Configuration
+tags:
+  - Virtual Machine
+  - Virtualization
+  - Microsoft
+  - Hyper-V
+summary: This guide walks you through the creation of Virtual Machines (VMs) and the initial configuration steps after installation.
+---
+
 # **<span style="color:#009688;">Virtual Machine Creation & Initial Configuration**
 
 ---

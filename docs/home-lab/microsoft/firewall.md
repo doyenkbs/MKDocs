@@ -1,3 +1,15 @@
+---
+title: Firewall Configuration via GPO
+tags:
+  - SCCM
+  - Configuration Manager
+  - Microsoft
+  - Systems Management
+  - Firewall
+  - GPO
+summary: This section explains how to configure firewall rules via **Group Policy (GPO) on the Domain Controller.
+---
+
 # **<span style="color:#009688;">Firewall Configuration via GPO**
 
 ---

@@ -1,3 +1,12 @@
+---
+title: SCCM Lab Setup Guide
+tags:
+  - SCCM
+  - Configuration Manager
+  - Microsoft
+  - Systems Management
+---
+
 # **<span style="color:#009688;">SCCM Lab Setup Guide</span>**
 
 ---

@@ -1,3 +1,14 @@
+---
+title: Domain Controller Setup
+tags:
+  - SCCM
+  - Configuration Manager
+  - Microsoft
+  - Systems Management
+  - DC
+summary: This guide covers the installation and configuration of a Domain Controller (DC)
+---
+
 # **<span style="color:#009688;">Domain Controller Setup**
 
 ---

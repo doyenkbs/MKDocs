@@ -6,7 +6,6 @@ tags:
   - Microsoft
   - Systems Management
   - Post Installation
-  - Lab Setup
 summary: Step-by-step guide to configuring SCCM after installation, including resource discovery, boundaries, client push, client settings, and collections.
 ---
 

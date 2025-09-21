@@ -1,3 +1,14 @@
+---
+title: SCCM / MECM Server Setup – Prerequisites & Tools
+tags:
+  - SCCM
+  - Configuration Manager
+  - Microsoft
+  - Systems Management
+  - SCCM Prerequisites
+summary: This guide walks you through preparing your SCCM (Configuration Manager) or MECM prerequisites.
+---
+
 # **<span style="color:#009688;">SCCM / MECM Server Setup – Prerequisites & Tools**
 
 

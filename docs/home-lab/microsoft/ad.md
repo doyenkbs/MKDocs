@@ -1,3 +1,14 @@
+---
+title: Prepare AD for SCCM Publishing
+tags:
+  - SCCM
+  - Configuration Manager
+  - Microsoft
+  - Systems Management
+  - AD 
+summary: This section explains how to configure firewall rules via **Group Policy (GPO) on the Domain Controller.
+---
+
 # **<span style="color:#009688;">Prepare AD for SCCM Publishing**
 
 ---
@@ -12,7 +23,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-### **1. Extend the AD Schema**
+### **<span style="color:#009688;">1. Extend the AD Schema**
 
 - Run the schema extension tool:  
   ``` powershell
@@ -27,7 +38,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-### **2. Create the System Management Container**
+### **<span style="color:#009688;">2. Create the System Management Container**
 
 - Open Server Manager → Tools → ADSI Edit and Active Directory Users and Computers (ADUC).
 - In ADSI Edit, right-click ADSI Edit → Connect.
@@ -44,7 +55,7 @@ System Management
 
 ---
 
-### **3. Delegate Permissions to SCCM Server**
+### **<span style="color:#009688;">3. Delegate Permissions to SCCM Server**
 
 - Open Active Directory Users and Computers (ADUC) → Enable `Advanced View`.
 - Navigate to the `System Management` container.
