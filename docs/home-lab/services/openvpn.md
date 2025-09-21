@@ -5,7 +5,6 @@ tags:
   - VPN
   - Networking
   - Security
-  - Self-Hosting
 summary: Step-by-step guide to install and configure OpenVPN using the community installation script, including server setup, client configuration, and router port forwarding.
 ---
 
@@ -18,7 +17,6 @@ This guide walks you through installing and configuring an OpenVPN server using 
 ## **<span style="color:#43A047;">1. Download the Installation Script**
 
 Run the following command to download the OpenVPN installer script:
-
 ```bash
 wget https://git.io/vpn -O openvpn-install.sh
 ```
@@ -40,7 +38,7 @@ sudo bash openvpn-install.sh
 ```
 
 Accept the default settings when prompted.</br>
-Provide a name for your first client (e.g., Client1).
+Provide a name for your first client (e.g., `Client1`).
 
 !!! tip "Manage Additional Clients"
     To create additional clients, simply rerun the script:
@@ -81,7 +79,7 @@ sudo cp /root/Client1.ovpn ~
 
 ## **<span style="color:#43A047;">6. Import Client Configuration**
 
-- Install the OpenVPN client on your device (Windows, macOS, Linux, iOS, or Android) from {openvpn.net/client}(htpps://openvpn.net/client).
+- Install the OpenVPN client on your device (Windows, macOS, Linux, iOS, or Android) from [openvpn.net/client](https://openvpn.net/client).
 
 - Import the .ovpn file you generated.
 
