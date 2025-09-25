@@ -18,8 +18,8 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **<span style="color:#009688;">Prerequisite Windows Features**
-Ensure the following roles and features are installed on the SCCM/MECM server:
+## **<span style="color:#009688;">1. Prerequisite Windows Features**
+On the SCCM/MECM server, install the roles and features through **Server Manager → Add Roles and Features**, and if prompted, use the alternate source path to the `SXS` folder from the installation ISO.
 
 - **Web Server (IIS)**  
 - **.NET Framework 3.5** 
@@ -33,12 +33,7 @@ Ensure the following roles and features are installed on the SCCM/MECM server:
 - **IIS Management Scripts and Tools**
 
 !!! tip 
-    During installation, use **Specify an alternate source path** to point to the `sources\SXS` directory on the Windows Server installation ISO to load .NET 3.5 properly.
-
----
-
-## **<span style="color:#009688;">1. Install Required Roles and Features**
-Install all of the above items through **Server Manager → Add Roles and Features**, and if prompted, use the alternate source path to the `SXS` folder from the installation ISO.
+    During installation, use **Specify an alternate source path** to point to the `sources\SXS` directory on the Windows Server installation ISO to load .NET 3.5 
 
 ---
 

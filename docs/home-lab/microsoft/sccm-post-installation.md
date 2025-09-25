@@ -90,7 +90,58 @@ Used to assign a site.
 
 ---
 
-## **<span style="color:#009688;">C. Configure Client Push Install and Client Installation**
+## **<span style="color:#009688;">C. Create a Client Setting**
+
+{== **`Administration → Client Settings → Right-click Create Custom Client Device Settings`** ==}
+
+- Name: `Client Settings for LAB`
+
+Select and configure:
+
+- **Client Cache**
+  > - Enable  
+  > - Size: `10240 MB` (allows downloads of files >5GB)
+
+- **Client Policy**  
+  > - Reporting interval: every 3 minutes (lab)
+
+- **Computer Agent** 
+  > - Org Display: Company name  
+  > - Install Permission: All Users  
+  > - PowerShell Execution Policy: Bypass
+
+- **PC Restart** → Yes
+
+- **Hardware Inventory**
+  > - Schedule: every 1 hour (lab)  
+  > - Classes: (Filter by category)  
+        - Asset Intelligence → Select all  
+        - Windows client/server classes → Select useful items (e.g., AppV Client Applicaton, Autostart, Boot config, Network login profile, Battery, etc.)
+
+- **Remote Tools** 
+    > - Configure Settings (Enable and Select : Domain, Private, and Public)
+    > - Set Viewers (Admin or any groups allowed to remote in)
+
+- **Software Center** → Yes (customize UI)
+
+- **Software Inventory**
+  > - Set types: `*.exe, *.msi, *.xml, *.mp4, *.mp3` (etc.)
+
+- **Software Update** → Enable (manageement of the Office 365 Client Agent)
+
+- **Software Metering** → Every 3 minutes (lab)
+
+- **User and Device Affinity** → As preferred
+
+**Deployment:**  
+Right-click the new setting → **Deploy** → Choose target collection.  
+
+!!! tip "To force a policy refresh:"  
+    **`Assets and Compliance → Device Collection → Right-click collection → Client Notification → Download Device Policy`**
+
+---
+
+## **<span style="color:#009688;">D. Configure Client Push Install and Client Installation**
 
 Configure SCCM to deploy clients automatically to new or existing devices.
 
@@ -123,55 +174,6 @@ For existing PCs: select → Right-click → **Install Client**.
 
 ---
 
-## **<span style="color:#009688;">D. Create a Client Setting**
-
-{== **`Administration → Client Settings → Right-click Create Custom Client Device Settings`** ==}
-
-- Name: `Client Settings for LAB`
-
-Select and configure:
-
-- **Client Cache**
-  > - Enable  
-  > - Size: `10240 MB` (allows downloads >5GB)
-
-- **Client Policy**  
-  > - Reporting interval: every 3 minutes (lab)
-
-- **Computer Agent** 
-  > - Org Display: Company name  
-  > - Install Permission: All Users  
-  > - PowerShell Execution Policy: Bypass
-
-- **PC Restart** → Yes
-
-- **Hardware Inventory**
-  > - Schedule: every 1 hour (lab)  
-  > - Classes:  
-        - Asset Intelligence → Select all  
-        - Windows client/server classes → Select useful items (e.g., Autostart, Boot config, Network login profile, Battery, etc.)
-
-- **Remote Tools** → Configure + assign allowed admin groups
-
-- **Software Center** → Enabled (customize UI)
-
-- **Software Inventory**
-  > - Add file types: `*.exe, *.msi, *.xml, *.mp4, *.mp3` (etc.)
-
-- **Software Update** → Enable (manage Office 365)
-
-- **Software Metering** → Every 3 minutes (lab)
-
-- **User and Device Affinity** → As preferred
-
-**Deployment:**  
-Right-click the new setting → **Deploy** → Choose target collection.  
-
-!!! tip "To force a policy refresh:"  
-    **`Assets and Compliance → Device Collection → Right-click collection → Client Notification → Download Device Policy`**
-
----
-
 ## **<span style="color:#009688;">E. Collections**
 
 Helps organize/manage user and device groups.
@@ -191,7 +193,7 @@ Helps organize/manage user and device groups.
 3. Choose target collection  
 4. Add Rule → **Query Rule**  
 5. Enter a name → Edit Query Statement  
-6. Criteria tab → New
+6. Criteria tab → New (`Select...`)
    > - Attribute Class: `Operating System`  
    > - Attribute: `Caption`  
    > - Value: Choose desired OS  
