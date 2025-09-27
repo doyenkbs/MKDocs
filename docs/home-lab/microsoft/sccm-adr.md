@@ -45,14 +45,14 @@ An ADR automates the software update lifecycle by:
 2. Click **Create Automatic Deployment Rule**.  
 3. Provide a **name and description**.  
 4. Define **update criteria**:  
-   - Products (e.g., Windows 10, Office 365)  
-   - Classifications (e.g., Security, Critical Updates)  
-   - Languages  
+   > - Products (e.g., Windows 10, Office 365)  
+   > - Classifications (e.g., Security, Critical Updates)  
+   > - Languages  
 5. Configure the **schedule** (e.g., run every 2nd Tuesday of the month at 2:00 AM).  
 6. Choose deployment settings:  
-   - Target **collections** (e.g., *All Workstations*)  
-   - Deployment type (**Required** or **Available**)  
-   - Deadlines and restart behavior  
+   > - Target **collections** (e.g., *All Workstations*)  
+   > - Deployment type (**Required** or **Available**)  
+   > - Deadlines and restart behavior  
 7. Configure **content download** to distribution points.  
 8. Finish the wizard and allow ADR to automatically create/update the deployment.  
 

@@ -163,8 +163,8 @@ This guide walks through planning, configuring, and maintaining software updates
 
 
 !!! note "**Automatic Deployment Rules (ADR) and Third-Party Updates**"
-    - Use [Automatic Deployment Rules (ADR)](./sccm-adr.md) for recuring updates (e.g., Patch Tuesday).
-    - For [Third-Party Updates](./sccm-3rdpartyipdate.md), ensure appropriate catalogs and publishing are configured in SUP settings.
+    - Use 🔗 [***Automatic Deployment Rules (ADR)***](./sccm-adr.md) for recuring updates (e.g., Patch Tuesday).
+    - For 🔗 [***Third-Party Updates***](./sccm-3rdpartyipdate.md), ensure appropriate catalogs and publishing are configured in SUP settings.
 
 ---
 

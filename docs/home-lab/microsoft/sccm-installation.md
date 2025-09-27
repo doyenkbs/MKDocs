@@ -108,7 +108,7 @@ Once the **primary site installation** completes:
 
 Once your SCCM Primary Site is installed and running, you may want to install the **SCCM Admin Console** on your administrator workstation.  
 
-📖 [*Install SCCM Admin Console on a Workstation*](./admin-console.md)
+🔗 [***Install SCCM Admin Console on a Workstation***](./admin-console.md)
 
 ---
 
