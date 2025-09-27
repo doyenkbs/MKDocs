@@ -13,6 +13,22 @@ summary: This guide walks through a straightforward process to enable and deploy
 This guide walks through planning, configuring, and maintaining software updates in Microsoft Endpoint Configuration Manager (MECM).
 
 ---
+## Table of Contents 
+- [Quick overview](#quick-overview) 
+- [Prerequisites](#prerequisites-quick-checklist) 
+- [1 — Planning the SUP infrastructure](#1--planning-the-sup-infrastructure) 
+- [2 — Prepare the WSUS server(s)](#2--prepare-the-wsus-servers) 
+- [3 — Install the Software Update Point (SUP) role](#3--install-the-software-update-point-sup-role-in-configmgr) 
+- [4 — First synchronization and verification](#4--first-synchronization-and-verification) 
+- [5 — Create update groups, deployment packages, and distribute content](#5--create-update-groups-deployment-packages-and-distribute-content) 
+- [6 — Client configuration & policies](#6--client-configuration--policies) 
+- [7 — Maintenance & best practices](#7--maintenance--best-practices) 
+- [8 — Third-party updates (optional)](#8--third-party-updates-optional) 
+- [9 — Troubleshooting checklist](#9--troubleshooting-checklist-quick) 
+- [Appendix — Useful console locations & logs](#appendix--useful-console-locations--logs) 
+- [References / further reading](#references--further-reading)
+
+---
 ## **Quick overview**
 1. **Plan** where your Software Update Point(s) (SUP) and WSUS servers will live (top-level site first).  
 2. **Prepare** servers (WSUS/IIS/.NET/BITS/etc.) and accounts.  
