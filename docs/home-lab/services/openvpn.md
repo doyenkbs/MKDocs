@@ -112,4 +112,49 @@ sudo cp /root/Client1.ovpn ~
 [Nyr’s OpenVPN Install Script (GitHub)](https://github.com/Nyr/openvpn-install)
 
 
+## Installing and Using the OpenVPN Client
+
+Follow the steps below to install the OpenVPN client and upload your configuration file on different devices.
+
+---
+
+### Android
+1. Open the **Google Play Store**.  
+2. Search for **OpenVPN Connect** and install it.  
+3. Open the app and allow the requested permissions.  
+4. Tap **OVPN Profile → Import Profile from File**.  
+5. Select the `.ovpn` configuration file from your phone (Downloads or email).  
+6. Tap **Add** → then tap **Connect**.  
+
+---
+
+### Windows
+1. Go to [OpenVPN Client Downloads](https://openvpn.net/client/).  
+2. Download the **OpenVPN Connect for Windows** installer.  
+3. Run the installer and complete the setup wizard.  
+4. Launch **OpenVPN Connect**.  
+5. On the main screen, click **Upload File** under *Have a configuration file instead (.ovpn)?*.  
+   ![OpenVPN Windows Upload File](img/openvpn-windows-upload.png)  
+6. Browse and select your `.ovpn` configuration file.  
+7. Once imported, the profile will appear in the client. Click **Connect** to start the VPN.  
+
+---
+
+### macOS
+1. Go to [OpenVPN Client Downloads](https://openvpn.net/client/).  
+2. Download the **OpenVPN Connect for macOS** installer.  
+3. Open the `.dmg` file and drag the OpenVPN Connect app into your Applications folder.  
+4. Launch **OpenVPN Connect**.  
+5. Click **File → Import Profile** and select your `.ovpn` configuration file.  
+6. Click **Connect**.  
+
+---
+
+### iPhone (iOS)
+1. Open the **App Store** on your iPhone.  
+2. Search for **OpenVPN Connect** and install it.  
+3. Email or AirDrop your `.ovpn` configuration file to your iPhone.  
+4. Tap the `.ovpn` file → choose **Open in OpenVPN**.  
+5. In the OpenVPN Connect app, tap **Add** to import the profile.  
+6. Tap **Connect** to start the VPN.  
 

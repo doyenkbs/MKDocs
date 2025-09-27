@@ -161,6 +161,7 @@ nav:
               - SCCM/MECM Installation: home-lab/microsoft/sccm-installation.md
               - SCCM/MECM Post-Installation: home-lab/microsoft/sccm-post-installation.md
               - SCCM/MECM Configuration: home-lab/microsoft/sccm-configuration.md
+              - SCCM/MECM Software Updates: home-lab/microsoft/sccm-sup-setup.md
 
   - Tanium:
     - Overview: home-lab/tanium/overview.md
