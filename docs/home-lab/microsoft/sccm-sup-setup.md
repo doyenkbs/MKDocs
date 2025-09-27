@@ -15,19 +15,19 @@ This guide walks through planning, configuring, and maintaining software updates
 ---
 ## Table of Contents 
 - [Quick overview](#quick-overview) 
-- [Prerequisites](#prerequisites-quick-checklist) 
+- [Prerequisites](#prerequisites) 
 - [Planning the SUP infrastructure](#planning-the-sup-infrastructure) 
 - [Prepare the WSUS server(s)](#prepare-the-wsus-servers) 
 - [Install and Configure the Software Update Point (SUP)](#install-and-configure-the-software-update-point-sup)
 - [Download Update Content and Distribute](#download-update-content-and-distribute) 
 - [Deploy Updates](#deploy-updates) 
 - [Monitor Deployment](#monitor-deployment) 
-- [Client configuration & policies](#client-configuration--policies) 
-- [Maintenance & best practices](#maintenance--best-practices) 
+- [Client configuration & policies](#client-configuration-&-policies) 
+- [Maintenance & best practices](#maintenance-&-best-practices) 
 - [Third-party updates (optional)](#third-party-updates-optional) 
 - [Troubleshooting checklist](#troubleshooting-checklist-quick) 
-- [Appendix — Useful console locations & logs](#appendix--useful-console-locations--logs) 
-- [References / further reading](#references--further-reading)
+- [Appendix — Useful console locations & logs](#appendix--useful-console-locations-&-logs) 
+- [References](#references)
 
 ---
 ## **Quick overview**
@@ -147,9 +147,9 @@ This guide walks through planning, configuring, and maintaining software updates
 
 ---
 
-## **Third-party updates (optional)**
-- Use **third-party catalogs** with ConfigMgr (or SCUP legacy).  
-- Manage distribution and deployment like Microsoft updates.  
+!!! note "**Automatic Deployment Rules (ADR) and Third-Party Updates**"
+    - Considering [Automatic Deployment Rules (ADR)](./sccm-adr.md) for recuring updates (e.g., Patch Tuesday).
+    - For [Third-Party Updates](./sccm-3rdpartyipdate.md), ensure appropriate catalogs and publishing are configured in SUP settings.
 
 ---
 
