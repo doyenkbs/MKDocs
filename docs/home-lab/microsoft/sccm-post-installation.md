@@ -16,81 +16,7 @@ This guide walks through essential SCCM configuration after installation, focusi
 
 ---
 
-## **<span style="color:#009688;">A. Discover Resources**
-
-SCCM resource discovery enables management of computers, users, and groups within a domain.
-</br>
-Open the SCCM console and navigate to:
-
-{== **`Administration → Hierarchy Configuration → Discovery Methods`** ==}  
-(Enable all that start with **Active Directory**)
-
-- **AD Forest Discovery**  
-  Right-click → Properties → Check **Enable**. (Setup schedule is optional)
-
-- **AD Group Discovery**  
-  Right-click → Properties → Check **Enable**.  
-  Add → Locations → Name it for example `Groups` → Browse → Select your domain → OK → Apply → OK.  
-  *(This discovers all groups from your domain controller.)*
-
-- **AD System Discovery**  
-  Right-click → Properties → Check **Enable**.  
-  Under **AD Containers**, click the orange button → Browse → Expand your domain.  
-  > - Select **Computers** container → OK  
-  > - Repeat → Select **Domain Controllers** container → OK </br>
-  *(This discovers all devices in Computers and Domain Controllers.)*
-
-- **AD User Discovery**  
-  Right-click → Properties → Check **Enable**.  
-  Add containers → Browse → Expand your domain → Select the **Users** container.  
-  *(This discovers all AD users.)*
-
-- **Heartbeat Discovery**  
-  Enabled by default for PCs not in the domain but with SCCM client/agent installed.
-
-- **Network Discovery**  
-  Disabled by default (SCCM does not manage routers, modems, etc.).
-
-!!! note "**Log Locations:**"
-    ```
-    C:\Program Files\Microsoft Configuration Manager\Logs
-    C:\Program Files\SMS_CCM\Logs
-    ```
-
----
-
-## **<span style="color:#009688;">B. Boundary and Boundary Group**
-
-### **Boundary**  
-
-Boundaries help define network locations and resources, using four creation methods: IPv4 range, IPv6, AD site, and IP Subnet.
-
-**Example:**  
-{== **`Administration → Boundaries → Right-click Create`** ==}
-
-- **Description:** `Lab PC Boundary`  
-- **Type:** IP Address Range (or other type)  
-- Enter Starting IP and Ending IP → Apply → OK
-
-### **Boundary Group**  
-
-Used to assign a site.
-
-**Example:**  
-{== **`Administration → Boundary Groups → Right-click Create`** ==}  
-
-- **Name:** `Site Server Assignment for Lab PC`  
-- **Add:** Select the IP range  
-- **Preferences tab:** Check **`Use this boundary group for site assignment`**  
-- **Add:** Choose your site from the list → OK → Apply → OK
-
-!!! tip
-    Boundaries define **where resources live**.</br> 
-    Boundary groups define **how they are assigned** to a site.
-
----
-
-## **<span style="color:#009688;">C. Create a Client Setting**
+## **<span style="color:#009688;">A. Create a Client Setting**
 
 {== **`Administration → Client Settings → Right-click Create Custom Client Device Settings`** ==}
 
@@ -141,7 +67,7 @@ Right-click the new setting → **Deploy** → Choose target collection.
 
 ---
 
-## **<span style="color:#009688;">D. Configure Client Push Install and Client Installation**
+## **<span style="color:#009688;">B. Configure Client Push Install and Client Installation**
 
 Configure SCCM to deploy clients automatically to new or existing devices.
 
@@ -173,6 +99,82 @@ For existing PCs: select → Right-click → **Install Client**.
     Most install issues are caused by account permissions or boundary misconfiguration.
 
 ---
+
+
+## **<span style="color:#009688;">C. Discover Resources**
+
+SCCM resource discovery enables management of computers, users, and groups within a domain.
+</br>
+Open the SCCM console and navigate to:
+
+{== **`Administration → Hierarchy Configuration → Discovery Methods`** ==}  
+(Enable all that start with **Active Directory**)
+
+- **AD Forest Discovery**  
+  Right-click → Properties → Check **Enable**. (Setup schedule is optional)
+
+- **AD Group Discovery**  
+  Right-click → Properties → Check **Enable**.  
+  Add → Locations → Name it for example `Groups` → Browse → Select your domain → OK → Apply → OK.  
+  *(This discovers all groups from your domain controller.)*
+
+- **AD System Discovery**  
+  Right-click → Properties → Check **Enable**.  
+  Under **AD Containers**, click the orange button → Browse → Expand your domain.  
+  > - Select **Computers** container → OK  
+  > - Repeat → Select **Domain Controllers** container → OK </br>
+  *(This discovers all devices in Computers and Domain Controllers.)*
+
+- **AD User Discovery**  
+  Right-click → Properties → Check **Enable**.  
+  Add containers → Browse → Expand your domain → Select the **Users** container.  
+  *(This discovers all AD users.)*
+
+- **Heartbeat Discovery**  
+  Enabled by default for PCs not in the domain but with SCCM client/agent installed.
+
+- **Network Discovery**  
+  Disabled by default (SCCM does not manage routers, modems, etc.).
+
+!!! note "**Log Locations:**"
+    ```
+    C:\Program Files\Microsoft Configuration Manager\Logs
+    C:\Program Files\SMS_CCM\Logs
+    ```
+
+---
+
+## **<span style="color:#009688;">D. Boundary and Boundary Group**
+
+### **Boundary**  
+
+Boundaries help define network locations and resources, using four creation methods: IPv4 range, IPv6, AD site, and IP Subnet.
+
+**Example:**  
+{== **`Administration → Boundaries → Right-click Create`** ==}
+
+- **Description:** `Lab PC Boundary`  
+- **Type:** IP Address Range (or other type)  
+- Enter Starting IP and Ending IP → Apply → OK
+
+### **Boundary Group**  
+
+Used to assign a site.
+
+**Example:**  
+{== **`Administration → Boundary Groups → Right-click Create`** ==}  
+
+- **Name:** `Site Server Assignment for Lab PC`  
+- **Add:** Select the IP range  
+- **Preferences tab:** Check **`Use this boundary group for site assignment`**  
+- **Add:** Choose your site from the list → OK → Apply → OK
+
+!!! tip
+    Boundaries define **where resources live**.</br> 
+    Boundary groups define **how they are assigned** to a site.
+
+---
+
 
 ## **<span style="color:#009688;">E. Collections**
 
