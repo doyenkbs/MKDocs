@@ -186,7 +186,7 @@ Helps organize/manage user and device groups.
 2. Name it  
 3. Choose target collection  
 4. Add Rule → **Direct Rule**  
-5. Under Value: `%` → Next → Select devices → Finish
+5. Under **Value**, type: `%` → Next → Select devices → Finish
 
 ### Example 2: Device Collection (Query Rule)
 
