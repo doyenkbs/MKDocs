@@ -3,9 +3,9 @@ tags:
   - Audiobookshelf
 ---
 
-# **<span style="color:coral;">Audiobookshelf Installation via Proxmox VE Helper Scripts</span>**
+# **<span style="color:#009688;">Audiobookshelf Installation via Proxmox VE Helper Scripts</span>**
 
-<span style="color:coral;">Audiobookshelf</span> is a self-hosted audiobook and podcast server with a web user interface and apps. This guide will show you how to deploy it in an LXC container using the Proxmox VE Helper-Scripts.
+<span style="color:#009688;">Audiobookshelf</span> is a self-hosted audiobook and podcast server with a web user interface and apps. This guide will show you how to deploy it in an LXC container using the Proxmox VE Helper-Scripts.
 
 
 ## **Step-by-Step Instructions**
@@ -16,7 +16,7 @@ Open the Proxmox VE Shell on your desired node and run:
 ``` bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/audiobookshelf.sh)"
 ```
-    * This will start an interactive wizard to deploy <span style="color:coral;">Audiobookshelf</span>.
+    * This will start an interactive wizard to deploy <span style="color:#009688;">Audiobookshelf</span>.
     * The script will download and set up everything needed automatically.
 
 **2. Fill in the Prompts**

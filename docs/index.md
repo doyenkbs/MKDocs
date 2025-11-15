@@ -31,7 +31,7 @@ Explore detailed guides, installation instructions, and configuration tips to he
 
 ---
 
-## 🌟 Why a Home Lab?
+## 🌟 <span style="color:#009688;">Why a Home Lab?</span>
 
 A **Home Lab** is a personal environment where you can test, learn, and run your own IT services and infrastructure.  
 It provides **full control over your data**, enhances **privacy**, and allows experimentation with **new technologies**.

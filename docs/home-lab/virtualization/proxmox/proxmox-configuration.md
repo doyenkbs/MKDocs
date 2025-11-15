@@ -3,7 +3,7 @@ tags:
   - Proxmox
 ---
 
-## **<span style="color:#F38020;">Initial Configuration</span>**
+## **<span style="color:#009688;">Initial Configuration</span>**
 
 **Update system:**
 ```bash

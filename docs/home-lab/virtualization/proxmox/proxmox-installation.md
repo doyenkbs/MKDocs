@@ -3,7 +3,7 @@ tags:
   - Proxmox
 ---
 
-# **<span style="color:#F38020;">Proxmox VE Installation</span>**
+# **<span style="color:#009688;">Proxmox VE Installation</span>**
 
 !!! info "**Requirements**"
     Before starting, make sure you have:
@@ -20,7 +20,7 @@ tags:
 
 ## **Installation Steps**
 ### **1. Download the Latest ISO**
-Get the latest <span style="color:#F38020;">Proxmox VE</span> ISO from the official site:  
+Get the latest <span style="color:#009688;">Proxmox VE</span> ISO from the official site:  
 ➡️ [**Proxmox Downloads**](https://www.proxmox.com/en/downloads)  
 
 ![Proxmox Download Page](/assets/images/proxmox.png)

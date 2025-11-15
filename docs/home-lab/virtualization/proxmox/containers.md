@@ -3,9 +3,9 @@ tags:
   - Proxmox
 ---
 
-### **<span style="color:#F38020;">Creating an LXC Container</span>**
+### **<span style="color:#009688;">Creating an LXC Container</span>**
 
-**<span style="color:#F38020;">LXC (Linux Containers)</span>** is a lightweight virtualization method that uses containerization to run multiple isolated Linux systems (containers) on a single host. Unlike full virtual machines, LXC shares the host kernel, making it more resource-efficient and faster to start, ideal for lightweight workloads and testing environments.
+**<span style="color:#009688;">LXC (Linux Containers)</span>** is a lightweight virtualization method that uses containerization to run multiple isolated Linux systems (containers) on a single host. Unlike full virtual machines, LXC shares the host kernel, making it more resource-efficient and faster to start, ideal for lightweight workloads and testing environments.
 
 #### **Steps:**
 
@@ -38,9 +38,9 @@ tags:
 * Inside the container, update packages and install necessary software:  
 
 ---
-#### **<span style="color:#F38020;">LXC Templates</span>**
+#### **<span style="color:#009688;">LXC Templates</span>**
 
-<span style="color:#F38020;">LXC templates</span> allow you to quickly deploy containers with pre-installed operating systems and configurations.
+<span style="color:#009688;">LXC templates</span> allow you to quickly deploy containers with pre-installed operating systems and configurations.
 
 #### **Creating LXC Templates**
 

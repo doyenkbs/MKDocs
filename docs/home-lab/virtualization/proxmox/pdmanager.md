@@ -3,11 +3,11 @@ tags:
   - Proxmox
 ---
 
-# **<span style="color:#F38020;">Proxmox Datacenter Manager (PDM)</span>**
+# **<span style="color:#009688;">Proxmox Datacenter Manager (PDM)</span>**
 
-**<span style="color:#F38020;">Proxmox Datacenter Manager</span>** <span style="color:#F38020;">(PDM)</span> is an open-source centralized management platform for overseeing multiple <span style="color:#F38020;">Proxmox VE</span> nodes and clusters. It offers foundational control, visibility, and orchestration through a modern, Rust-powered user interface. This tool is currently in **alpha stage**.
+**<span style="color:#009688;">Proxmox Datacenter Manager</span>** <span style="color:#009688;">(PDM)</span> is an open-source centralized management platform for overseeing multiple <span style="color:#009688;">Proxmox VE</span> nodes and clusters. It offers foundational control, visibility, and orchestration through a modern, Rust-powered user interface. This tool is currently in **alpha stage**.
 
- **<span style="color:#F38020;">Centralized Overview:</span>** Monitor resource usage across all nodes and clusters, including basic operations like starting, stopping, rebooting, and migrating guests.:contentReference
+ **<span style="color:#009688;">Centralized Overview:</span>** Monitor resource usage across all nodes and clusters, including basic operations like starting, stopping, rebooting, and migrating guests.:contentReference
 
 ---
 

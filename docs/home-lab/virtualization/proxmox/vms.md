@@ -3,7 +3,7 @@ tags:
   - Proxmox
 ---
 
-### **<span style="color:#F38020;">Creating a Virtual Machine (VM)</span>**
+### **<span style="color:#009688;">Creating a Virtual Machine (VM)</span>**
 
 #### **Steps:**
 
@@ -38,11 +38,11 @@ tags:
 
 ---
 
-## **<span style="color:#F38020;">VM Templates</span>**
+## **<span style="color:#009688;">VM Templates</span>**
 
 ### **Using and Creating Templates**
 
-Creating <span style="color:#F38020;">VM templates</span> allows you to rapidly deploy new virtual machines based on a pre-configured image.
+Creating <span style="color:#009688;">VM templates</span> allows you to rapidly deploy new virtual machines based on a pre-configured image.
 
 #### **Steps to create a VM template:**
 

@@ -3,9 +3,9 @@ tags:
     - Integration
 ---
 
-# **<span style="color:coral;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**
+# **<span style="color:#009688;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**
 
-This guide will walk you through integrating **<span style="color:coral;">Audiobookshelf</span>** with **<span style="color:red;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
+This guide will walk you through integrating **<span style="color:#009688;">Audiobookshelf</span>** with **<span style="color:red;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
 
 
 !!! info "**Requirements**"
@@ -48,7 +48,7 @@ This guide will walk you through integrating **<span style="color:coral;">Audiob
     - **Slug:** audiobookshelf (keeps things simple)
     - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
     - **Policy Engine Mode:** Any
-    - **Launch URL:** Your <span style="color:coral;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
+    - **Launch URL:** Your <span style="color:#009688;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
 
 6. **Save** the application.
 
@@ -114,8 +114,8 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 
 !!! note
-    - **Users:** Each user must exist in <span style="color:red;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in <span style="color:coral;">Audiobookshelf</span> with limited permissions.
-    - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:red;">Authentik</span> and verify `groups` claim handling in <span style="color:coral;">Audiobookshelf</span>.
+    - **Users:** Each user must exist in <span style="color:red;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in <span style="color:#009688;">Audiobookshelf</span> with limited permissions.
+    - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:red;">Authentik</span> and verify `groups` claim handling in <span style="color:#009688;">Audiobookshelf</span>.
     - **Mobile App:** Ensure the extra mobile redirect URI is also added in the provider's allowed redirect URIs.
 
 ---

@@ -3,9 +3,9 @@ tags:
   - Bookstack
 ---
 
-# **<span style="color:#00897B;">BookStack Installation on Ubuntu 24.04</span>**
+# **<span style="color:#009688;">BookStack Installation on Ubuntu 24.04</span>**
 
-This page documents the complete process for installing <span style="color:#00897B;">BookStack</span>, a self-hosted wiki and knowledge base, on a fresh Ubuntu 24.04 server. <span style="color:#00897B;">BookStack</span> is used as my primary knowledge repository.
+This page documents the complete process for installing <span style="color:#009688;">BookStack</span>, a self-hosted wiki and knowledge base, on a fresh Ubuntu 24.04 server. <span style="color:#009688;">BookStack</span> is used as my primary knowledge repository.
 
 > Reference: [BookStack Official Installation Guide](https://www.bookstackapp.com/docs/admin/installation/)
 
@@ -16,7 +16,7 @@ This page documents the complete process for installing <span style="color:#0089
 
 ## **Ubuntu 24.04 Installation Script**
 
-A script is available to install <span style="color:#00897B;">Bookstack</span> on a fresh Ubuntu 24.04 instance.
+A script is available to install <span style="color:#009688;">Bookstack</span> on a fresh Ubuntu 24.04 instance.
 
 !!! warning
     This script is for a clean OS only and will install Apache, MySQL 8.0, and PHP 8.3.
@@ -97,7 +97,7 @@ php artisan config:clear
 ```
 
 ## First Login
-Once installation and setup are complete, access <span style="color:#00897B;">Bookstack</span> in your browser at:
+Once installation and setup are complete, access <span style="color:#009688;">Bookstack</span> in your browser at:
 
 > *http(s)://your-domain-or-server-ip*
 

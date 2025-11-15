@@ -3,15 +3,15 @@ tags:
   - Cloudflare Access
 ---
 
-# **<span style="color:#F38020;">Cloudflare Access + Authentik (OIDC) Integration</span>**
+# **<span style="color:#009688;">Cloudflare Access + Authentik (OIDC) Integration</span>**
 
-This guide walks you through integrating **<span style="color:#F38020;">Cloudflare Access</span>** with **<span style="color:red;">Authentik</span>** using **OpenID Connect (OIDC)** so your Cloudflare-protected apps use Authentik for SSO/MFA.
+This guide walks you through integrating **<span style="color:#009688;">Cloudflare Access</span>** with **<span style="color:red;">Authentik</span>** using **OpenID Connect (OIDC)** so your Cloudflare-protected apps use Authentik for SSO/MFA.
 
 ---
 ## **Overview**
 
-**<span style="color:#F38020;">Cloudflare Access** is Cloudflare's zero-trust access solution, sitting in front of your web apps and enforcing per-user authentication and policy.  
-**Authentik** is a self-hosted identity provider that supports OIDC, SAML, LDAP, and more. By connecting Authentik and <span style="color:#F38020;">Cloudflare Access</span>, you gain:
+**<span style="color:#009688;">Cloudflare Access** is Cloudflare's zero-trust access solution, sitting in front of your web apps and enforcing per-user authentication and policy.  
+**Authentik** is a self-hosted identity provider that supports OIDC, SAML, LDAP, and more. By connecting Authentik and <span style="color:#009688;">Cloudflare Access</span>, you gain:
 
 - SSO for your protected applications via Authentik accounts
 - Policy-based user access management
@@ -19,11 +19,11 @@ This guide walks you through integrating **<span style="color:#F38020;">Cloudfla
 
 !!! info "**Prerequisites**"
     - An **Authentik** instance you manage (admin access).
-    - A **<span style="color:#F38020;">Cloudflare Zero Trust** account with your **team domain** (example: `https://<team>.cloudflareaccess.com`). You can find your team name in **Zero Trust → Settings → Custom Pages**.
+    - A **<span style="color:#009688;">Cloudflare Zero Trust** account with your **team domain** (example: `https://<team>.cloudflareaccess.com`). You can find your team name in **Zero Trust → Settings → Custom Pages**.
     - Optional but recommended: Your apps published behind **Cloudflare Tunnels**.
 
     !!! note "**Why:**" 
-        <span style="color:#F38020;">Cloudflare Access</span> sits in front of your apps. <span style="color:red;">Authentik</span> verifies users, while Cloudflare enforces access rules.
+        <span style="color:#009688;">Cloudflare Access</span> sits in front of your apps. <span style="color:red;">Authentik</span> verifies users, while Cloudflare enforces access rules.
 
 ---
 

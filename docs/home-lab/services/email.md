@@ -31,7 +31,7 @@ Running a mail server requires:
 ## **Prerequisites**
 
 ### **System Requirements**
-- **Server:** <span style="color:teal">VPS with Ubuntu 22.04 or newer</span> (e.g., Contabo VPS S with 6 GB RAM) 
+- **Server:** <span style="color:#009688;">VPS with Ubuntu 22.04 or newer</span> (e.g., Contabo VPS S with 6 GB RAM) 
 - **RAM:** <span style="color:orange;">Minimum 6 GB (+1 GB swap)</span>  
 - **Disk:** <span style="color:purple;">At least 20 GB free</span>  
 - **Domain:** A fully qualified domain name (FQDN), e.g., `mail.example.com`
@@ -129,10 +129,10 @@ Once running, log in via browser:
 > `https://<your-domain>/admin`
 
 !!! note
-    <span style="color:teal">*The first time, you may get a warning about a self-signed SSL certificate.*</span>
+    <span style="color:#009688;">*The first time, you may get a warning about a self-signed SSL certificate.*</span>
 
 !!! danger "Default Credentials"
-    - Username: <span style="color:teal">`admin`</span>  
+    - Username: <span style="color:#009688;">`admin`</span>  
     - Password: <span style="color:red;">`moohoo`</span>  
 
     ⚠️ Login and **immediately update the admin password** under  
