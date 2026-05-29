@@ -1,4 +1,192 @@
-site_name: My Docs
+site_name: Kabason Lab
+site_url: https://kabason.net/
+site_author: Christian Kaba
+site_description: >-
+  Kabason Docs is a personal knowledge base and documentation site for my home lab, projects, and interests. 
+  It serves as a resource for myself and others to learn about various technologies and applications I use.
 
+# Configuration
 theme:
   name: material
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  logo: assets/logo.png
+  favicon: assets/favicon.png
+  
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.instant.preview
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    #- navigation.expand
+    - navigation.path
+    - navigation.indexes
+    - toc.follow
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.footer
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tabs.link
+    - content.footnote.tooltips
+    
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - footnotes
+  - pymdownx.blocks.caption
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.details
+  - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.magiclink
+  - pymdownx.arithmatex
+  - pymdownx.betterem
+
+
+# Plugins
+plugins:
+  - search
+  - tags:
+      tags_file: tags.md
+  - offline
+
+copyright: Copyright &copy; 2024 - 2028 Christian Kaba
+
+# Additional configuration
+extra:
+  homepage: https://kabason.net
+  social:
+    - icon: fontawesome/brands/linkedin 
+      link: https://linkedin.com/in/christian-kaba-b8247a157
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+
+# Page tree
+nav:
+  - Home: index.md
+  - Containers & Virtualization:
+       - index.md: home-lab/virtualization/index.md
+       - Docker: home-lab/docker.md
+       - Virtualization:
+            - Proxmox VE: 
+                  - Overview: home-lab/virtualization/proxmox/proxmox.md
+                  - Proxmox VE Installation: home-lab/virtualization/proxmox/proxmox-installation.md
+                  - Proxmox VE Post-Installation: home-lab/virtualization/proxmox/proxmox-configuration.md                  
+                  - Proxmox Virtual Machines: home-lab/virtualization/proxmox/vms.md
+                  - Proxmox Containers: home-lab/virtualization/proxmox/containers.md
+                  - Proxmox Datacenter Manager: home-lab/virtualization/proxmox/pdmanager.md
+            - VMWare ESXi: home-lab/virtualization/vmware/vmware.md
+
+  - Applications & Integrations:
+        - index.md: home-lab/application/index.md
+        - Audiobookshelf: home-lab/application/audiobookshelf.md
+        - Bookstack: home-lab/application/bookstack.md
+        - Nextcloud: home-lab/application/nextcloud.md
+        - Pairdrop: home-lab/application/pairdrop.md
+        - Paperless-NGX: home-lab/application/paperless.md
+        - Snipe-IT: home-lab/application/snipeit.md
+        - Zabbix: home-lab/application/zabbix.md
+        - Authentik: 
+            - Authentik Overview: home-lab/application/authentik.md
+            - Authentik Integrations:
+                - Audiobookshelf Integration: home-lab/application/audiobookshelfintegration.md
+                - Bookstack Integration: home-lab/application/bookstackintegration.md
+                - Cloudflare Integration: home-lab/application/cloudflareaccess.md
+                - Nextcloud Integration: home-lab/application/nextcloudintegration.md
+                - Paperless-NGX Integration: home-lab/application/paperlessintegration.md
+  - Core Services:
+        - index.md: home-lab/services/index.md
+        - Cloudflare: 
+                - Overview: home-lab/services/cloudflare.md
+                - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
+                - Cloudflare Access: home-lab/services/cloudflareaccess.md
+      # - DNS: home-lab/services/dns.md
+        - Email: home-lab/services/email.md
+        - Home Assistant: home-lab/services/homeassistant.md
+        - OpenVPN: home-lab/services/openvpn.md
+
+  - Microsoft Lab:  
+        - SCCM/MECM Lab Setup Guide: 
+              - index.md: home-lab/microsoft/index.md
+              - Virtualization: 
+                  - Virtual Switch: home-lab/microsoft/hyper-v.md
+                  - Virtual Machine: home-lab/microsoft/hyperv-vm.md
+              - Domain Controller Setup: home-lab/microsoft/dc.md
+              - Active Directory Configuration: home-lab/microsoft/ad.md
+              - Firewall Configuration: home-lab/microsoft/firewall.md
+              - SCCM/MECM Prerequisites: home-lab/microsoft/sccm-prerequisites.md
+              - SCCM/MECM Installation: home-lab/microsoft/sccm-installation.md
+              - SCCM/MECM Post-Installation: home-lab/microsoft/sccm-post-installation.md
+              - SCCM/MECM Configuration: home-lab/microsoft/sccm-configuration.md
+              - SCCM/MECM Software Updates: home-lab/microsoft/sccm-sup-setup.md
+
+  - Tanium:
+    - Overview: home-lab/tanium/tanium_adminuser_removal.md
+    - Core Modules:
+        - Interact: home-lab/tanium/interact.md
+        - Asset: home-lab/home-lab/tanium/asset.md
+        - Discover: home-lab/home-lab/tanium/discover.md
+        - Comply: home-lab/tanium/comply.md
+        - Deploy: home-lab/tanium/deploy.md
+        - Patch: home-lab/tanium/patch.md
+        - Connect: home-lab/tanium/connect.md
+        - Provision: home-lab/tanium/provision.md
+    - Administration:
+        - Overview: home-lab/tanium/administration.md
+        - Actions: home-lab/tanium/actions.md
+        - Content: home-lab/tanium/content.md
+        - Permissions: home-lab/tanium/permissions.md
+        - Configuration: home-lab/tanium/configuration.md
+    - Shared Services:
+        - Overview: home-lab/tanium/shared-services.md
+        - Client Management: home-lab/tanium/client-management.md
+        - Direct Connect: home-lab/tanium/direct-connect.md
+        - End-User Notifications: home-lab/tanium/end-user-notifications.md
+        - Endpoint Configuration: home-lab/tanium/endpoint-configuration.md
+    - FAQ: home-lab/tanium/faq.md
+
+  - About: about.md
+  - Tags: tags.md
