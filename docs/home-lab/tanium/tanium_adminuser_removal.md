@@ -1,4 +1,4 @@
-# AD Admin OU — Automated Local Admin Removal via Tanium
+# Automated Local Admin Removal via Tanium
 
 ## Overview
 
@@ -6,16 +6,16 @@ This solution automatically removes domain accounts from the local Administrator
 
 | Component | Role |
 |---|---|
-| `Get-AdminOU.ps1` | Runs on the DC — queries AD, writes `InAdminOU.txt`, uploads it to Tanium, patches Package 2 |
+| `Get-AdminOU.ps1` | Runs on a remote server — queries AD, writes `InAdminOU.txt`, uploads it to Tanium Cloud, updates Package 2 |
 | `Remove-AdminOUUsers.ps1` | Runs on each endpoint via Tanium — reads `InAdminOU.txt` and removes listed accounts from local Administrators |
-| **Package 1** | Calls `Get-AdminOU.ps1` on the DC (scheduled or on-demand) |
+| **Package 1** | Calls `Get-AdminOU.ps1` from a remote server (scheduled or on-demand) |
 | **Package 2** | Delivers `InAdminOU.txt` + `Remove-AdminOUUsers.ps1` to endpoints and executes the removal |
 
 ---
 
 ## Prerequisites
 
-### On the Domain Controller
+### On a remote server
 
 - PowerShell 5.1+
 - RSAT ActiveDirectory module
@@ -34,8 +34,8 @@ Install-WindowsFeature -Name RSAT-AD-PowerShell
 
 ### Tanium
 
-- API service account with permissions to upload files and PATCH packages
-- Package 2 (`LabTest - Remove Admin`) already created in the Tanium console before running `Get-AdminOU.ps1` for the first time — note its numeric Package ID
+- API service account with permissions to upload files and update **package 2**
+- **Package 2** (`LabTest - Remove Admin` for example) already created in the Tanium console before running `Get-AdminOU.ps1` for the first time — note its numeric Package ID (`148603` for example)
 
 ---
 
@@ -56,10 +56,10 @@ Test-Path 'C:\path\to\scripts\tanium_api_cred.bin'
 # Returns: True
 ```
 
-!!! warning
+<!-- !!! warning
     The `.bin` file must be created by the same Windows user account that will run `Get-AdminOU.ps1`. DPAPI encryption is tied to the user and machine — copying the file to another machine or running as a different user will fail to decrypt.
 
----
+--- -->
 
 ## Step 2 — Configure Get-AdminOU.ps1
 
@@ -72,9 +72,9 @@ $Package2Id   = 148603                            # Numeric ID of Package 2
 $Package2Name = 'LabTest - Remove Admin'          # Display name of Package 2
 
 $AdminOUs = @(
-    'OU=KBSUsers,DC=yourdomain,DC=local'
+    'OU=Users,DC=yourdomain,DC=local'             # Replace with your OU
     # Add more OUs as needed:
-    # 'OU=ServiceAccounts,OU=KBSUsers,DC=yourdomain,DC=local',
+    # 'OU=ServiceAccounts,OU=Users,DC=yourdomain,DC=local',
     # 'OU=PrivilegedUsers,DC=yourdomain,DC=local'
 )
 ```
@@ -136,14 +136,14 @@ $OutputFile  = Join-Path $ScriptDir 'InAdminOU.txt'
 $LogFile     = Join-Path $ScriptDir 'Get-AdminOU.log'
 $CredFile    = Join-Path $ScriptDir 'tanium_api_cred.bin'
 
-$TaniumUrl    = 'https://tanium.yourdomain.com'
-$TaniumUser   = 'api-service-account'
-$Package2Id   = 148603
-$Package2Name = 'LabTest - Remove Admin'
+$TaniumUrl    = 'https://tanium.yourdomain.com'   # Your Tanium URL
+$TaniumUser   = 'api-service-account'             # Tanium API username
+$Package2Id   = 148603                            # Package ID of package2
+$Package2Name = 'LabTest - Remove Admin'          # Display name of package2
 
 $AdminOUs = @(
-    'OU=KBSUsers,DC=yourdomain,DC=local'
-    # 'OU=ServiceAccounts,OU=KBSUsers,DC=yourdomain,DC=local',
+    'OU=Users,DC=yourdomain,DC=local'             # Replace with OU
+    # 'OU=ServiceAccounts,OU=SUsers,DC=yourdomain,DC=local',
     # 'OU=PrivilegedUsers,DC=yourdomain,DC=local'
 )
 
@@ -245,7 +245,7 @@ catch {
     exit 1
 }
 
-# --- PHASE 4: PATCH Package 2 ---------------------------------------------
+# --- PHASE 4: Update Package 2 ---------------------------------------------
 try {
     Write-Log "=== Phase 4: Patch Package 2 (id $Package2Id) ==="
 
@@ -288,11 +288,11 @@ Write-Log "=== All phases complete ==="
 exit 0
 ```
 
-### Expected output
+### Manual Test - Expected output
 
 ```
 [INFO] === Phase 1: AD Query ===
-[INFO] Querying: OU=KBSUsers,DC=yourdomain,DC=local
+[INFO] Querying: OU=Users,DC=yourdomain,DC=local
 [INFO]   Found 19 accounts
 [INFO] Wrote 19 accounts to C:\...\InAdminOU.txt
 [INFO] === Phase 2: Tanium Authentication ===
@@ -328,20 +328,20 @@ In the Tanium console, go to **Content → Packages → New Package**:
 
 | Field | Value |
 |---|---|
-| Package Name | `AD - Query Admin OU Users` |
+| Package Name | `AD - Query Admin OU Users` (for example) |
 | Command | `cmd.exe /d /c %SystemRoot%\sysnative\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -NonInteractive -NoProfile -File "F:\path\to\scripts\Get-AdminOU.ps1"` |
-| Command Timeout | `90 minutes` |
+| Command Timeout | `10 minutes` |
 | Files | *(none — all files are pre-existing on the runner server)* |
 
 Replace `F:\path\to\scripts\` with the actual path on your runner server.
 
 Because `$PSScriptRoot` in the script resolves to `F:\path\to\scripts\`, both `tanium_api_cred.bin` and `InAdminOU.txt` are automatically found in the same directory — no hardcoded paths needed inside the script.
 
-!!! warning
+<!-- !!! warning
     `tanium_api_cred.bin` is DPAPI-encrypted and bound to the Windows user account and machine it was created on. The Tanium client service on the runner server must execute as the same user account that ran the credential generation command in Step 1 — otherwise decryption fails and Phase 2 returns `Forbidden`.
 
 !!! note
-    Target Package 1 only at the designated runner server using a Tanium targeting filter on computer name or subnet — not at all endpoints.
+    Target Package 1 only at the designated runner server using a Tanium targeting filter on computer name or subnet — not at all endpoints. -->
 
 ---
 
@@ -353,7 +353,7 @@ In the Tanium console, go to **Content → Packages → New Package**:
 
 | Field | Value |
 |---|---|
-| Package Name | `LabTest - Remove Admin` |
+| Package Name | `LabTest - Remove Admin` (for example) |
 | Command | `/d /c %SystemRoot%\sysnative\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -NonInteractive -NoProfile -File Remove-AdminOUUsers.ps1 0` |
 | Command Timeout | `1 minute` |
 | Download Timeout | `10 minutes` |
@@ -361,13 +361,13 @@ In the Tanium console, go to **Content → Packages → New Package**:
 
 Note the **Package ID** (visible in the URL when editing the package) and set `$Package2Id` in `Get-AdminOU.ps1` accordingly.
 
-### Audit mode
+<!-- ### Audit mode
 
 To run in audit mode (no changes, just logs what would be removed), change the trailing `0` to `1` in the command:
 
 ```
 ... -File Remove-AdminOUUsers.ps1 1
-```
+``` -->
 
 ---
 
@@ -528,13 +528,13 @@ catch {
 }
 ```
 
----
+<!-- ---
 
 ## Step 7 — Run the Full Flow
 
 ### Manual run (testing)
 
-Run `Get-AdminOU.ps1` from PowerShell on the DC:
+Run `Get-AdminOU.ps1` from PowerShell on the runner server:
 
 ```powershell
 C:\path\to\scripts\Get-AdminOU.ps1
@@ -546,7 +546,7 @@ Then deploy Package 2 from the Tanium console to your target endpoints.
 
 Create a Windows Scheduled Task on the DC to call `Get-AdminOU.ps1` on your desired cadence (e.g. daily at 02:00), then trigger Package 2 deployment via a Tanium Scheduled Action targeting all managed Windows endpoints.
 
----
+--- -->
 
 ## Log Locations
 
@@ -561,8 +561,8 @@ Create a Windows Scheduled Task on the DC to call `Get-AdminOU.ps1` on your desi
 [2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Starting - InAdminOU.txt: C:\...\InAdminOU.txt
 [2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Parsed 19 accounts from InAdminOU.txt
 [2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Current local Administrators (3 members): Administrator, jsmith, bjones
-[2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Removed DOYENKABA\jsmith from local Administrators
-[2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Removed DOYENKABA\bjones from local Administrators
+[2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Removed DOMAIN\jsmith from local Administrators
+[2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Removed DOMAIN\bjones from local Administrators
 [2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] --- Summary ---
 [2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Removed   : 2 - jsmith, bjones
 [2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Not found : 17 - ...
@@ -580,6 +580,5 @@ Create a Windows Scheduled Task on the DC to call `Get-AdminOU.ps1` on your desi
 | `ScriptRequiresMissingModules: ActiveDirectory` | RSAT not installed | Run `Add-WindowsCapability -Online -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0` |
 | `Could not establish trust relationship for SSL/TLS` | Connecting to IP instead of hostname, or untrusted cert | Use the FQDN (`https://tanium.yourdomain.com`) and set `$BypassSslErrors = $true` for lab |
 | `{"text":"Forbidden"}` on login | Wrong username or password, or account lacks API permissions | Re-create `.bin` file; verify user has API role in Tanium console |
-| `File Name` blank entry appears in package | File uploaded without a `name` field in a previous run | Manually delete the blank entry in Tanium; fixed in current script version |
 | `InAdminOU.txt not found` on endpoint | Package 2 deployed before `Get-AdminOU.ps1` ran | Run Package 1 first, confirm upload success, then deploy Package 2 |
 | `Removal would leave 0 local Administrators` | All local admins are in the OU list | Review `InAdminOU.txt` — ensure at least one permanent admin is excluded |
