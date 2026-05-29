@@ -67,8 +67,8 @@ Edit the config block at the top of the script to match your environment:
 
 ```powershell
 $TaniumUrl    = 'https://tanium.yourdomain.com'   # Your Tanium URL
-$TaniumUser   = 'api-service-account'             # Tanium API username
-$Package2Id   = 148603                            # Numeric ID of Package 2
+$TaniumUser   = 'api-service-account'             # Your Tanium API username
+$Package2Id   = 148603                            # Package ID of Package 2
 $Package2Name = 'LabTest - Remove Admin'          # Display name of Package 2
 
 $AdminOUs = @(
@@ -137,7 +137,7 @@ $LogFile     = Join-Path $ScriptDir 'Get-AdminOU.log'
 $CredFile    = Join-Path $ScriptDir 'tanium_api_cred.bin'
 
 $TaniumUrl    = 'https://tanium.yourdomain.com'   # Your Tanium URL
-$TaniumUser   = 'api-service-account'             # Tanium API username
+$TaniumUser   = 'api-service-account'             # Your Tanium API username
 $Package2Id   = 148603                            # Package ID of package2
 $Package2Name = 'LabTest - Remove Admin'          # Display name of package2
 
