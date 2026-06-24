@@ -167,8 +167,8 @@ nav:
     - Overview: home-lab/tanium/tanium_adminuser_removal.md
     - Core Modules:
         - Interact: home-lab/tanium/interact.md
-        - Asset: home-lab/home-lab/tanium/asset.md
-        - Discover: home-lab/home-lab/tanium/discover.md
+        - Asset: home-lab/tanium/asset.md
+        - Discover: home-lab/tanium/discover.md
         - Comply: home-lab/tanium/comply.md
         - Deploy: home-lab/tanium/deploy.md
         - Patch: home-lab/tanium/patch.md
@@ -180,6 +180,7 @@ nav:
         - Content: home-lab/tanium/content.md
         - Permissions: home-lab/tanium/permissions.md
         - Configuration: home-lab/tanium/configuration.md
+        - Packaging: home-lab/tanium/local_user_removal.md
     - Shared Services:
         - Overview: home-lab/tanium/shared-services.md
         - Client Management: home-lab/tanium/client-management.md
