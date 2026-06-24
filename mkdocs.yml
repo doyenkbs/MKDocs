@@ -164,7 +164,7 @@ nav:
               - SCCM/MECM Software Updates: home-lab/microsoft/sccm-sup-setup.md
 
   - Tanium:
-    - Overview: home-lab/tanium/tanium_adminuser_removal.md
+    - Overview: home-lab/tanium/local_user_removal.md
     - Core Modules:
         - Interact: home-lab/tanium/interact.md
         - Asset: home-lab/tanium/asset.md
