@@ -94,8 +94,10 @@ $Package2Id   = 698130                              # Numeric ID of Package 2
 $Package2Name = 'Local Admin Removal - TEST'        # Display name of Package 2
 
 $AdminOUs = @(
-    'OU=Users,OU=Accounts,OU=ADMod,DC=yourdomain,DC=local'
+    'OU=Users,DC=company,DC=local'
     # Add more OUs as needed:
+    # 'OU=ServiceAccounts,OU=Users,DC=company,DC=local',
+    # 'OU=PrivilegedUsers,DC=company,DC=local'
     # 'OU=ServiceAccounts,OU=Accounts,DC=yourdomain,DC=local'
 )
 
