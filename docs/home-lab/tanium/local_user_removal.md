@@ -204,12 +204,14 @@ $ScriptDir = if ($PSScriptRoot) {
 
 $outputFile   = Join-Path $ScriptDir 'UsersInOU.txt'
 $logFile      = Join-Path $ScriptDir 'Get-AdminOU.log'
+
+#Token files
 $keyFile      = Join-Path $ScriptDir 'data_restore.txt'
 $tokenFile    = Join-Path $ScriptDir 'data.txt'
 
 # On-premise Tanium server — format: https://<tanium-server-hostname-or-ip>
 $TaniumUrl    = 'https://tanium.yourdomain.local'
-$Package2Id   = 698130
+$Package2Id   = 858174
 $Package2Name = 'Local Admin Removal - TEST'
 
 # SSL toggle — set $true if Tanium uses a self-signed or internal CA certificate
@@ -345,10 +347,10 @@ try {
     $keptFiles = @(
         $pkgResp.data.files |
             Where-Object { $_.name -and $_.name -ne 'UsersInOU.txt' } |
-            ForEach-Object { @{ id = $_.id; name = $_.name } }
+            ForEach-Object { @{ id = $_.id; name = $_.name; size = $_.size; hash = $_.hash } }
     )
 
-    $updatedFiles = $keptFiles + @{ hash = $newHash; name = 'UsersInOU.txt' }
+    $updatedFiles = $keptFiles + @{ hash = $newHash; name = 'UsersInOU.txt'; size = $fileBytes.Length }
 
     $patchBody = @{
         files = $updatedFiles
