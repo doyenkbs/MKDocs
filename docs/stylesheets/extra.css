@@ -1,0 +1,53 @@
+/* ---------------------------------------------------
+   Kabason Lab — Landing page hero background
+   Place this file at: docs/stylesheets/extra.css
+--------------------------------------------------- */
+
+/* Gradient hero band behind the homepage title + intro.
+   Only targets the homepage by matching the body data attribute
+   MkDocs Material sets for the index page. */
+body[data-md-color-scheme] .md-content__inner:first-child > h1:first-child {
+  position: relative;
+}
+
+/* Apply the hero only on the homepage template */
+.md-content[data-md-component="content"] {
+  --hero-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+}
+
+/* Homepage-only hero block — wrap your intro in <div class="hero-banner"> in index.md */
+.hero-banner {
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-banner h1 {
+  color: #ffffff !important;
+  margin-top: 0;
+}
+
+.hero-banner p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.1rem;
+}
+
+/* Optional: subtle accent color on card hover for the grid cards
+   you added to the homepage */
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--md-accent-fg-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Optional: soften card corners + add transition sitewide */
+.md-typeset .grid.cards > ul > li {
+  border-radius: 0.5rem;
+  transition: transform 0.15s ease;
+}
+
+.md-typeset .grid.cards > ul > li:hover {
+  transform: translateY(-2px);
+}

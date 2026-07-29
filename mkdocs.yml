@@ -44,7 +44,11 @@ theme:
     - content.code.select
     - content.tabs.link
     - content.footnote.tooltips
-    
+
+# Hero
+extra_css:
+  - stylesheets/extra.css
+
 # Extensions
 markdown_extensions:
   - abbr
@@ -92,7 +96,7 @@ plugins:
       tags_file: tags.md
   - offline
 
-copyright: Copyright &copy; 2024 - 2028 Christian Kaba
+copyright: Copyright &copy; 2026 Christian Kaba
 
 # Additional configuration
 extra:

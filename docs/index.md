@@ -1,5 +1,6 @@
 # Home
 
+<div class="hero-banner" markdown>
 # Kabason Labs Documentation
 
 Guides, configs, and troubleshooting notes from my self-hosted home lab — covering
@@ -9,6 +10,7 @@ administration, and the core services that tie it all together.
 This site exists as a living reference: written as I build, break, and fix things,
 so it's as much a record for future-me as it is a resource for anyone else running
 a similar stack.
+</div>
 
 ---
 
