@@ -51,3 +51,8 @@ body[data-md-color-scheme] .md-content__inner:first-child > h1:first-child {
 .md-typeset .grid.cards > ul > li:hover {
   transform: translateY(-2px);
 }
+
+/* Widen the content area sitewide */
+.md-grid {
+  max-width: 75rem; /* try 70–90rem and see what feels right */
+}
