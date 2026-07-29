@@ -1,37 +1,82 @@
+# Home
+
+# Kabason Labs Documentation
+
+Guides, configs, and troubleshooting notes from my self-hosted home lab — covering
+Proxmox virtualization, SSO with Authentik, Microsoft SCCM/MECM lab builds, Tanium
+administration, and the core services that tie it all together.
+
+This site exists as a living reference: written as I build, break, and fix things,
+so it's as much a record for future-me as it is a resource for anyone else running
+a similar stack.
+
 ---
-title: Kabason Labs Documentation
-hide:
-  - navigation
-  - toc
+
+## 🖥️ Lab at a Glance
+
+| | |
+|---|---|
+| **Hypervisor** | Proxmox VE on a Dell Precision 3450 SFF |
+| **Identity** | Authentik SSO across most services |
+| **Networking** | Cloudflare Tunnels, Pangolin, Technitium DNS |
+| **Notable services** | Nextcloud, Gitea, Wazuh, Open WebUI / Ollama, Mailcow, Nginx Proxy Manager |
+| **Enterprise lab** | Microsoft SCCM/MECM environment, Tanium |
+
 ---
 
-<div style="
-  width: 100%;
-  padding: 6rem 2rem;
-  margin: 0;
-  text-align: center;
-  color: white;
-  background: linear-gradient(135deg, rgba(0,128,128,0.95), rgba(32,178,170,0.95)),
-              url('/images/hero-pattern.svg');
-  background-size: cover;
-  background-position: center;
-">
+## 📚 Explore the Docs
 
-<span style="font-size: 3em; font-weight: 700;">Kabason Labs Documentation</span>
+<div class="grid cards" markdown>
 
-<p style="font-size: 1.4em; margin-top: 1.5rem; line-height: 1.6; max-width: 900px; margin-left: auto; margin-right: auto;">
-Welcome to the comprehensive documentation for my <strong>Home Lab infrastructure</strong>.  
-Explore detailed guides, installation instructions, and configuration tips to help you deploy and manage self-hosted applications, network setups, and core services.
-</p>
+-   :material-server-network:{ .lg .middle } **Containers & Virtualization**
+
+    ---
+
+    Docker, Proxmox VE setup and post-install, VMs, containers, and VMware ESXi.
+
+    [:octicons-arrow-right-24: Start here](home-lab/virtualization/index.md)
+
+-   :material-apps:{ .lg .middle } **Applications & Integrations**
+
+    ---
+
+    Self-hosted apps like Nextcloud, Bookstack, Paperless-NGX, and Authentik SSO integrations.
+
+    [:octicons-arrow-right-24: Start here](home-lab/application/index.md)
+
+-   :material-cloud-outline:{ .lg .middle } **Core Services**
+
+    ---
+
+    Cloudflare Tunnel/Access, Home Assistant, OpenVPN, and email setup.
+
+    [:octicons-arrow-right-24: Start here](home-lab/services/index.md)
+
+-   :material-microsoft-windows:{ .lg .middle } **Microsoft Lab**
+
+    ---
+
+    A full SCCM/MECM lab build: Hyper-V, Active Directory, and software update deployment.
+
+    [:octicons-arrow-right-24: Start here](home-lab/microsoft/index.md)
+
+-   :material-shield-search:{ .lg .middle } **Tanium**
+
+    ---
+
+    Administration guides and packaging notes from hands-on Tanium work.
+
+    [:octicons-arrow-right-24: Start here](home-lab/tanium/local_user_removal.md)
 
 </div>
 
-
-[Get Started](home-lab/docker.md){ .md-button .md-button--primary }
-
 ---
 
-## 🌟 <span style="color:#009688;">Why a Home Lab?</span>
+## 🌟 Why a Home Lab?
 
-A **Home Lab** is a personal environment where you can test, learn, and run your own IT services and infrastructure.  
-It provides **full control over your data**, enhances **privacy**, and allows experimentation with **new technologies**.
+A **home lab** is a personal environment for testing, learning, and running your own
+IT infrastructure — full control over your data, more privacy, and room to
+experiment with new technologies without production risk.
+
+[About this site](about.md){ .md-button }
+[Tags](tags.md){ .md-button }
