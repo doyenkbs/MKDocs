@@ -54,5 +54,5 @@ body[data-md-color-scheme] .md-content__inner:first-child > h1:first-child {
 
 /* Widen the content area sitewide */
 .md-grid {
-  max-width: 75rem; /* try 70–90rem and see what feels right */
+  max-width: 90rem; /* try 70–90rem and see what feels right */
 }
