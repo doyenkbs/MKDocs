@@ -152,9 +152,11 @@ nav:
                 - Overview: home-lab/services/cloudflare.md
                 - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
                 - Cloudflare Access: home-lab/services/cloudflareaccess.md
-      # - DNS: home-lab/services/dns.md
-        - Email: home-lab/services/email.md
-        - Home Assistant: home-lab/services/homeassistant.md
+      # - Technitium DNS: home-lab/services/dns.md
+        - Mailcow: 
+            - Overview: home-lab/services/email.md
+            - Mailcow Troubleshooting:
+                - Mailcow Postfix DNS: home-lab/services/mailcow-postfix-dns.md
         - OpenVPN: home-lab/services/openvpn.md
 
   - Microsoft Lab:  
