@@ -137,13 +137,13 @@ nav:
         - Pairdrop: home-lab/application/pairdrop.md
         - Paperless-NGX: home-lab/application/paperless.md
         - Snipe-IT: home-lab/application/snipeit.md
-        - Zabbix: home-lab/application/zabbix.md
+       # - Zabbix: home-lab/application/zabbix.md
         - Authentik: 
             - Authentik Overview: home-lab/application/authentik.md
             - Authentik Integrations:
                 - Audiobookshelf Integration: home-lab/application/audiobookshelfintegration.md
                 - Bookstack Integration: home-lab/application/bookstackintegration.md
-                - Cloudflare Integration: home-lab/application/cloudflareaccess.md
+                - Cloudflare Integration: home-lab/application/cloudflareIntegration.md
                 - Nextcloud Integration: home-lab/application/nextcloudintegration.md
                 - Paperless-NGX Integration: home-lab/application/paperlessintegration.md
   - Core Services:
@@ -156,7 +156,7 @@ nav:
         - Cloudflare: 
                 - Overview: home-lab/services/cloudflare.md
                 - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
-                - Cloudflare Access: home-lab/services/cloudflareaccess.md
+               # - Cloudflare Access: home-lab/services/cloudflareaccess.md
       # - Technitium DNS: home-lab/services/dns.md
         - Mailcow: 
             - Overview: home-lab/services/email.md
