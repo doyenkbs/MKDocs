@@ -1,12 +1,47 @@
-# **<span style="color:#009688;">Core Services & Integrations</span>**
+# Core Services & Integrations
 
-This section includes critical integrations and services that power your home lab.
+Foundational infrastructure that powers the rest of the lab — automation, secure remote access, email, and tunneling. If **Containers & Virtualization** is the compute layer and **Applications** are what runs on top of it, this section is the plumbing that ties everything together and keeps it reachable, patched, and secure.
 
-Topics include:
+## What's Covered
 
-- **<span style="color:#009688;">Cloudflare** and secure tunnel setups
-- **<span style="color:#009688;">Email services** for alerts and authentication
-- **<span style="color:#009688;">Home Assistant** for automation and device control
-- **<span style="color:#009688;">OpenVPN** for remote and secure access to your home lab
+<div class="grid cards" markdown>
 
-These are foundational components for networking, security, and control.
+-   :material-robot-outline: **Automation Playbooks**
+
+    ---
+
+    Ansible-based patch automation for the Linux stack — inventory setup, playbooks, scheduling, and troubleshooting.
+
+    [:octicons-arrow-right-24: Ansible Patch Automation](ansible-patch.md)
+
+-   :simple-cloudflare: **Cloudflare**
+
+    ---
+
+    Zero-trust tunneling and access control for exposing self-hosted services securely, without opening inbound ports.
+
+    [:octicons-arrow-right-24: Start here](cloudflare.md)
+
+-   :material-email-outline: **Mailcow**
+
+    ---
+
+    Self-hosted mail server powering alerts, notifications, and authentication email for the lab.
+
+    [:octicons-arrow-right-24: Start here](email.md)
+
+-   :material-vpn: **OpenVPN**
+
+    ---
+
+    Remote, encrypted access into the home network for managing the lab from anywhere.
+
+    [:octicons-arrow-right-24: Start here](openvpn.md)
+
+</div>
+
+## Why This Section Exists
+
+Every other part of the lab — the containers, the self-hosted apps, the Microsoft and Tanium environments — depends on these services being solid. Automation keeps systems patched without manual effort, Cloudflare and OpenVPN control how (and whether) anything is reachable from outside the network, and Mailcow makes sure alerts and account notifications actually land somewhere.
+
+If it's not a specific app and not a hypervisor concern, it probably belongs here.
