@@ -148,8 +148,11 @@ nav:
                 - Paperless-NGX Integration: home-lab/application/paperlessintegration.md
   - Core Services:
         - index.md: home-lab/services/index.md
-        - Automation Playbooks: 
-            - Ansible Patch Automation: home-lab/services/ansible-patch.md          
+        - Automation Playbooks:
+            - Overview: home-lab/services/ansible-lifecycle-overview.md 
+            - Ansible Patch Automation: home-lab/services/ansible-patch.md
+            - Ansible Config Backup: home-lab/services/ansible-config-backup.md
+            - Ansible LXC Bootstrap: home-lab/services/ansible-lxc-bootstrap.md          
         - Cloudflare: 
                 - Overview: home-lab/services/cloudflare.md
                 - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md

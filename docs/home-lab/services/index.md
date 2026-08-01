@@ -10,9 +10,9 @@ Foundational infrastructure that powers the rest of the lab — automation, secu
 
     ---
 
-    Ansible-based patch automation for the Linux stack — inventory setup, playbooks, scheduling, and troubleshooting.
+    Ansible-based lifecycle automation for the Linux stack — bootstrap, patching, and config backup, tied together with scheduling and recovery guidance.
 
-    [:octicons-arrow-right-24: Ansible Patch Automation](ansible-patch.md)
+    [:octicons-arrow-right-24: Start here](ansible-lifecycle-overview.md)
 
 -   :simple-cloudflare: **Cloudflare**
 
