@@ -1,8 +1,8 @@
-# Self-Hosted Applications
+# **<span style="color:#009688;">Self-Hosted Applications</span>**
 
 This section covers the self-hosted applications running in the home lab — file sharing, document management, media, monitoring, and asset tracking — along with **Authentik**, the identity provider tying most of them together under single sign-on.
 
-## Applications
+## **<span style="color:#009688;">Applications</span>**
 
 <div class="grid cards" markdown>
 
@@ -66,7 +66,7 @@ This section covers the self-hosted applications running in the home lab — fil
 
 ---
 
-## Identity: Authentik
+## **<span style="color:#009688;">Identity: Authentik</span>**
 
 <div class="grid cards" markdown>
 
@@ -80,7 +80,7 @@ This section covers the self-hosted applications running in the home lab — fil
 
 </div>
 
-### Authentik Integrations
+### **<span style="color:#009688;">Authentik Integrations</span>**
 
 Once Authentik is running, each of these walks through connecting a specific app to it for SSO:
 
@@ -94,7 +94,7 @@ Once Authentik is running, each of these walks through connecting a specific app
 
 ---
 
-## Why Authentik Ties This Section Together
+## **<span style="color:#009688;">Why Authentik Ties This Section Together</span>**
 
 Most of the apps above support external authentication, and rather than managing separate logins (and separate MFA setups) per service, this lab routes them all through Authentik as a single identity provider:
 

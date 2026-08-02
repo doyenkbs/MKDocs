@@ -1,6 +1,6 @@
-# Automating Linux Patching with Ansible
+# **<span style="color:#009688;">Automating Linux Patching with Ansible</span>**
 
-## Overview
+## <span style="color:#009688;">Overview</span>
 
 Keeping a fleet of Linux servers patched by hand doesn't scale — logging into each box, running `apt update && apt upgrade`, checking for reboots, and repeating it weekly gets tedious and error-prone fast.
 
@@ -19,7 +19,7 @@ This guide walks through setting up Ansible from zero: preparing your servers, c
 
 ---
 
-## Key Concepts (Read This First)
+## <span style="color:#009688;">Key Concepts (Read This First)</span>
 
 If you're new to Ansible, these four terms will come up constantly:
 
@@ -34,7 +34,7 @@ Ansible connects to managed nodes over SSH using key-based authentication — no
 
 ---
 
-## Step 1: Choose and Prepare Your Control Node
+## <span style="color:#009688;">Step 1: Choose and Prepare Your Control Node</span>
 
 Pick one machine to act as your control node. It can be a small VM, a container, or even your own workstation — it just needs network access to every server you want to patch.
 
@@ -66,7 +66,7 @@ You should see version info, the config file path, and the Python interpreter be
 
 ---
 
-## Step 2: Create a Dedicated Service Account on Each Server
+## <span style="color:#009688;">Step 2: Create a Dedicated Service Account on Each Server</span>
 
 Instead of connecting as `root` or your personal user, create a dedicated `ansible` account on every server you plan to manage. This keeps access scoped, auditable, and easy to revoke later if needed.
 
@@ -89,7 +89,7 @@ sudo chmod 440 /etc/sudoers.d/ansible
 
 ---
 
-## Step 3: Generate an SSH Key on the Control Node
+## <span style="color:#009688;">Step 3: Generate an SSH Key on the Control Node</span>
 
 Back on your **control node**, generate a dedicated SSH keypair just for Ansible (don't reuse your personal SSH key — keeping this separate makes it easy to rotate or revoke later without affecting your own access).
 
@@ -102,7 +102,7 @@ ssh-keygen -t ed25519 -C "ansible-automation" -f ~/.ssh/ansible_key
 
 ---
 
-## Step 4: Upload the SSH Key to Every Managed Server
+## <span style="color:#009688;">Step 4: Upload the SSH Key to Every Managed Server</span>
 
 Now copy the **public** key to each server so the `ansible` account can log in without a password.
 
@@ -123,7 +123,7 @@ You'll be prompted for the `ansible` account's password one final time — after
 
 Repeat this step for **every server** you plan to manage.
 
-### Verify key-based login works
+### **Verify key-based login works**
 
 ```bash
 ssh -i ~/.ssh/ansible_key ansible@<server-ip> "hostname"
@@ -133,7 +133,7 @@ If this returns the server's hostname with no password prompt, you're good. If y
 
 ---
 
-## Step 5: Build Your Inventory File
+## <span style="color:#009688;">Step 5: Build Your Inventory File</span>
 
 The inventory tells Ansible which servers exist and how to reach them. Create a project folder and an inventory file:
 
@@ -163,7 +163,7 @@ You can organize servers into multiple groups (e.g. `[web_servers]`, `[db_server
 
 ---
 
-## Step 6: Test Connectivity
+## <span style="color:#009688;">Step 6: Test Connectivity</span>
 
 Before writing any automation, confirm Ansible can actually reach every server:
 
@@ -191,7 +191,7 @@ If a host fails here, fix that connection issue **before** moving on — nothing
 
 ---
 
-## Step 7: Write the Patch Playbook
+## <span style="color:#009688;">Step 7: Write the Patch Playbook</span>
 
 Create the playbook that will actually perform the updates:
 
@@ -266,7 +266,7 @@ nano update_lab.yml
 
 ---
 
-## Step 8: Dry-Run Before Trusting It
+## <span style="color:#009688;">Step 8: Dry-Run Before Trusting It</span>
 
 Before letting this touch real servers, run it in check mode — Ansible will report what *would* change without actually changing anything:
 
@@ -288,7 +288,7 @@ ansible-playbook -i hosts.ini update_lab.yml
 
 ---
 
-## Step 9: Automate It with Cron
+## <span style="color:#009688;">Step 9: Automate It with Cron</span>
 
 Once you trust the playbook, schedule it to run on its own. Edit root's crontab (or the crontab of whichever user runs Ansible):
 
@@ -322,7 +322,7 @@ Add a line like this to run every Sunday at 3:00 AM:
 
 ---
 
-## Step 10: Review Logs Regularly
+## <span style="color:#009688;">Step 10: Review Logs Regularly</span>
 
 After each scheduled run, check the log to confirm everything succeeded:
 
@@ -348,7 +348,7 @@ web02  : ok=4  changed=1  unreachable=0  failed=0  skipped=1
 
 ---
 
-## Troubleshooting Common Issues
+## <span style="color:#009688;">Troubleshooting Common Issues</span>
 
 | Symptom | Likely Cause | Fix |
 |---|---|---|
@@ -360,7 +360,7 @@ web02  : ok=4  changed=1  unreachable=0  failed=0  skipped=1
 
 ---
 
-## Next Steps
+## <span style="color:#009688;">Next Steps</span>
 
 Once basic patch automation is stable, consider building on it:
 
@@ -372,7 +372,7 @@ Once basic patch automation is stable, consider building on it:
 
 ---
 
-## Quick Reference
+## <span style="color:#009688;">Quick Reference</span>
 
 ```bash
 # Test connectivity to all hosts

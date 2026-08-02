@@ -1,4 +1,4 @@
-# Cloudflare Overview
+# **<span style="color:#009688;">Cloudflare Overview</span>**
 
 **Cloudflare** is a global network that provides security, performance, and reliability services to websites, APIs, and internet applications.
 
@@ -11,7 +11,7 @@ In the context of a **home lab**, Cloudflare offers a variety of free tools used
 
 ---
 
-## In This Section
+## <span style="color:#009688;">In This Section</span>
 
 <div class="grid cards" markdown>
 
@@ -41,7 +41,7 @@ In the context of a **home lab**, Cloudflare offers a variety of free tools used
 
 ---
 
-## Why Use Cloudflare Tunnel in a Home Lab?
+## <span style="color:#009688;">Why Use Cloudflare Tunnel in a Home Lab?</span>
 
 With **Cloudflare Tunnel**, you can securely expose local services — like Nextcloud, Bookstack, or Audiobookshelf — to the internet:
 
@@ -57,7 +57,7 @@ Run Bookstack in the home lab and access it remotely via `https://wiki.example.c
 
 ---
 
-## Pairing With Authentik
+## <span style="color:#009688;">Pairing With Authentik</span>
 
 Cloudflare Tunnel handles *reachability* — getting a request from the internet to a local service safely. It doesn't handle *who's allowed in*. That's where [Cloudflare Access](cloudflareaccess.md) comes in, paired with [Authentik](../application/authentik.md) as the identity provider:
 
@@ -69,7 +69,7 @@ This is the pattern used across most of the self-hosted apps in this lab: **Tunn
 
 ---
 
-## Create a Cloudflare Account
+## <span style="color:#009688;">Create a Cloudflare Account</span>
 
 1. Go to <https://dash.cloudflare.com/sign-up>
 2. Enter your **email address** and create a **password**.
@@ -78,7 +78,7 @@ This is the pattern used across most of the self-hosted apps in this lab: **Tunn
 
 ---
 
-## Add Your Domain and Transfer DNS to Cloudflare
+## <span style="color:#009688;">Add Your Domain and Transfer DNS to Cloudflare</span>
 
 1. In the Cloudflare dashboard, click **Onboard a domain**.
 
@@ -106,7 +106,7 @@ This is the pattern used across most of the self-hosted apps in this lab: **Tunn
 
 ---
 
-## Next Steps
+## <span style="color:#009688;">Next Steps</span>
 
 Once your domain is on Cloudflare:
 

@@ -15,20 +15,20 @@ This guide explains how to install <span style="color:#009688;">Snipe-IT</span>,
 sudo apt update && sudo apt upgrade -y
 ```
 
-## **2. Install Required Packages**
+## **<span style="color:#009688;">2. Install Required Packages**
 
 Install Nginx, MariaDB server, PHP 8.3, and all required PHP extensions.
 ``` bash
 sudo apt install nginx mariadb-server php-bcmath php-common php-ctype php-curl php-fileinfo php-fpm php-gd php-iconv php-intl php-mbstring php-mysql php-soap php-xml php-xsl php-zip git -y
 ```
 
-## **3. Install Composer**
+## **<span style="color:#009688;">3. Install Composer**
 
 ``` bash
 sudo apt install composer -y
 ```
 
-## **4. Create the Snipe-IT Database**
+## **<span style="color:#009688;">4. Create the Snipe-IT Database**
 
 Start the MariaDB shell:
 ```bash
@@ -45,7 +45,7 @@ EXIT;
 !!! note 
     Replace 'yourStrongPassword' with a strong password of your choice.
 
-## **5. Download Snipe-IT**
+## **<span style="color:#009688;">5. Download Snipe-IT**
 
 ```bash linenums="1"
 cd /var/www/html
@@ -53,7 +53,7 @@ sudo git clone https://github.com/snipe/snipe-it
 cd snipe-it
 ```
 
-## **6. Create and Configure the Environment File**
+## **<span style="color:#009688;">6. Create and Configure the Environment File**
 
 Copy the example environment file and edit it:
 ```bash
@@ -71,21 +71,21 @@ DB_PASSWORD=yourStrongPassword
 !!! note
     Replace your-server-ip and yourStrongPassword as appropriate.
 
-## **7. Set Permissions**
+## **<span style="color:#009688;">7. Set Permissions**
 
 ``` bash
 sudo chown -R www-data: /var/www/html/snipe-it
 sudo chmod -R 755 /var/www/html/snipe-it
 ```
 
-## **8. Install Dependencies with Composer**
+## **<span style="color:#009688;">8. Install Dependencies with Composer**
 
 ``` bash
 sudo composer update --no-plugins --no-scripts
 sudo composer install --no-dev --prefer-source --no-plugins --no-scripts
 ```
 
-## **9. Generate the Application Key**
+## **<span style="color:#009688;">9. Generate the Application Key**
 
 ``` bash
 sudo php artisan key:generate
@@ -93,7 +93,7 @@ sudo php artisan key:generate
 !!! warning 
     Save a copy of your APP_KEY in a secure location. It is required to decrypt any encrypted fields in the database.
 
-## **10. Check PHP-FPM Version**
+## **<span style="color:#009688;">10. Check PHP-FPM Version**
 
 ``` bash
 sudo systemctl list-units --type=service | grep php
@@ -101,14 +101,14 @@ sudo systemctl list-units --type=service | grep php
 !!! note
     Ensure that PHP 8.3 (or your current version) is installed and running.
 
-## **11. Enable PHP-FPM**
+## **<span style="color:#009688;">11. Enable PHP-FPM**
 
 ``` bash
 sudo systemctl start php8.3-fpm
 sudo systemctl enable php8.3-fpm
 ```
 
-## **12. Create Nginx Configuration for Snipe-IT**
+## **<span style="color:#009688;">12. Create Nginx Configuration for Snipe-IT**
 
 Create the site configuration file:
 
@@ -142,14 +142,14 @@ server {
 !!! note
     Replace your-server-ip with your server's IP address if needed. Adjust PHP socket path/version if you are using a different PHP release.
 
-## **13. Enable the Site**
+## **<span style="color:#009688;">13. Enable the Site**
 
 Create a symlink to enable the site:
 ``` bash
 sudo ln -s /etc/nginx/conf.d/snipeit.conf /etc/nginx/sites-enabled/snipeit.conf
 ```
 
-## **14. Update Nginx Main Config**
+## **<span style="color:#009688;">14. Update Nginx Main Config**
 
 Edit Nginx's main configuration file:
 ``` bash
@@ -166,7 +166,7 @@ server_names_hash_bucket_size 64;
 sudo systemctl restart nginx
 ```
 
-## **16. Access the Snipe-IT Web Interface**
+## **<span style="color:#009688;">16. Access the Snipe-IT Web Interface**
 
 Open your web browser and visit:
 

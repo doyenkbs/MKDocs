@@ -1,8 +1,8 @@
-# Containers & Virtualization
+# **<span style="color:#009688;">Containers & Virtualization**
 
 The compute layer of the home lab — the hypervisors and containerization platform that everything else in this site (self-hosted apps, core services, the Microsoft and Tanium labs) actually runs on top of.
 
-## What's Covered
+## <span style="color:#009688;">What's Covered
 
 <div class="grid cards" markdown>
 
@@ -34,7 +34,7 @@ The compute layer of the home lab — the hypervisors and containerization platf
 
 ---
 
-## Proxmox VE: Section Breakdown
+## <span style="color:#009688;">Proxmox VE: Section Breakdown
 
 Proxmox is the primary hypervisor for this lab, so its section is the deepest:
 
@@ -49,7 +49,7 @@ Proxmox is the primary hypervisor for this lab, so its section is the deepest:
 
 ---
 
-## How This Section Fits the Rest of the Lab
+## <span style="color:#009688;">How This Section Fits the Rest of the Lab
 
 Almost everything documented elsewhere on this site runs *on top of* what's covered here:
 
@@ -61,7 +61,7 @@ If you're setting up a new service anywhere else in this documentation, this is 
 
 ---
 
-## Choosing Between a VM and an LXC Container
+## <span style="color:#009688;">Choosing Between a VM and an LXC Container
 
 A quick rule of thumb used throughout this lab:
 
@@ -72,6 +72,6 @@ See [Proxmox Virtual Machines](proxmox/vms.md) and [Proxmox Containers](proxmox/
 
 ---
 
-## Related: New LXC Bootstrap Automation
+## <span style="color:#009688;">Related: New LXC Bootstrap Automation
 
 Once a new LXC is created here, the [Ansible LXC Bootstrap playbook](../services/ansible-lxc-bootstrap.md) in Core Services takes over — creating the automation service account, hardening SSH, and installing baseline packages — so it's ready for the [patch](../services/ansible-patch.md) and [backup](../services/ansible-config-backup.md) automation from day one.

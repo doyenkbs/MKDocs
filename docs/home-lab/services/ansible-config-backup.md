@@ -1,6 +1,6 @@
-# Ansible Config Backup Playbook
+# **<span style="color:#009688;">Ansible Config Backup Playbook</span>**
 
-## Overview
+## <span style="color:#009688;">Overview</span>
 
 Patching keeps systems current, but it doesn't protect against the other way things break: a bad manual edit, a failed upgrade that corrupts a config file, or a container that just needs to be rebuilt from scratch. This playbook automates pulling critical configuration files off every managed host and storing them centrally, so a broken service is a restore away instead of a rebuild-from-memory situation.
 
@@ -15,7 +15,7 @@ Unlike full disk/VM backups (handled separately at the Proxmox layer), this play
 
 ---
 
-## Why Config Backups Matter More Than They Seem To
+## <span style="color:#009688;">Why Config Backups Matter More Than They Seem To</span>
 
 A full VM/LXC snapshot answers "how do I restore this whole container." A config backup answers a narrower but more common question: "what exactly did I change in this file three weeks ago, and can I get it back without restoring an entire container." It also protects you in scenarios snapshots don't cover well — e.g. you want the *current* Authentik SSO provider settings but don't want to roll the whole container back in time and lose other unrelated changes made since.
 
@@ -32,7 +32,7 @@ Good candidates for this playbook in a typical self-hosted lab:
 
 ---
 
-## Inventory Considerations
+## <span style="color:#009688;">Inventory Considerations</span>
 
 Config backup targets vary a lot more per-host than patch targets do — every host has different config paths worth saving. Use `host_vars` to define what each host needs backed up, rather than one global list.
 
@@ -60,7 +60,7 @@ If a host has no `backup_paths` defined, the playbook should skip it gracefully 
 
 ---
 
-## The Playbook
+## <span style="color:#009688;">The Playbook</span>
 
 ```yaml title="backup_configs.yml"
 ---
@@ -131,7 +131,7 @@ If a host has no `backup_paths` defined, the playbook should skip it gracefully 
 
 ---
 
-## Retention: Pruning Old Backups
+## <span style="color:#009688;">Retention: Pruning Old Backups</span>
 
 Without cleanup, this grows forever. Add a retention task on the control node side (run separately, not per-host):
 
@@ -163,7 +163,7 @@ Adjust `retention_days` based on how far back you realistically need to roll bac
 
 ---
 
-## Scheduling
+## <span style="color:#009688;">Scheduling</span>
 
 Run this on a separate, offset schedule from patching — daily is reasonable for config backups since they're lightweight, compared to weekly for full patch cycles:
 
@@ -177,7 +177,7 @@ Run this on a separate, offset schedule from patching — daily is reasonable fo
 
 ---
 
-## Restoring From a Backup
+## <span style="color:#009688;">Restoring From a Backup</span>
 
 Restoring is manual by design — automating a *restore* carries real risk of overwriting good data if run against the wrong host, so this playbook intentionally only handles the backup direction.
 
@@ -196,7 +196,7 @@ Always restore into a temporary location first and review before overwriting a l
 
 ---
 
-## Next Steps
+## <span style="color:#009688;">Next Steps</span>
 
 - Consider syncing the `backup_root_local` directory itself off the control node (e.g. to Nextcloud, a separate VPS, or Cloudflare R2) — a local-only backup doesn't protect against the control node itself failing.
 - Encrypt sensitive config backups (e.g. anything containing secrets or API tokens) using Ansible Vault or simple `gpg` encryption before long-term storage.
@@ -204,7 +204,7 @@ Always restore into a temporary location first and review before overwriting a l
 
 ---
 
-## Quick Reference
+## <span style="color:#009688;">Quick Reference</span>
 
 ```bash
 # Run a backup manually

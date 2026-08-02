@@ -5,13 +5,13 @@ tags:
 
 # **<span style="color:#009688;">Proxmox Datacenter Manager (PDM)</span>**
 
-**<span style="color:#009688;">Proxmox Datacenter Manager</span>** <span style="color:#009688;">(PDM)</span> is an open-source centralized management platform for overseeing multiple <span style="color:#009688;">Proxmox VE</span> nodes and clusters. It offers foundational control, visibility, and orchestration through a modern, Rust-powered user interface. This tool is currently in **alpha stage**.
+**<span style="color:#009688;">Proxmox Datacenter Manager</span>** <span style="color:#009688;">(PDM)</span> is an open-source centralized management platform for overseeing multiple Proxmox VE nodes and clusters. It offers foundational control, visibility, and orchestration through a modern, Rust-powered user interface. This tool is currently in **alpha stage**.
 
  **<span style="color:#009688;">Centralized Overview:</span>** Monitor resource usage across all nodes and clusters, including basic operations like starting, stopping, rebooting, and migrating guests.:contentReference
 
 ---
 
-##  **Installation & Initial Setup**
+##  **<span style="color:#009688;">Installation & Initial Setup**
 
 1. **Install PDM** either:
 
@@ -45,7 +45,7 @@ https://<pdm-host>:8443
 
 ---
 
-##  **Summary**
+##  **<span style="color:#009688;">Summary**
 
 PDM is a promising yet evolving tool offering centralized management for distributed Proxmox environments. It’s ideal for home labs and multi-site setups—just be cautious in production until later stable releases.
 

@@ -7,7 +7,7 @@ tags:
 
 ---
 
-## **Overview**
+## **<span style="color:#009688;">Overview</span>**
 
 **<span style="color:#009688;">Nextcloud</span>** is a powerful platform for self-hosted collaboration, file synchronization, document editing, calendar, contacts, and much more. By the end of this guide, you’ll have a fully working Nextcloud server ready for personal or team use.
 
@@ -22,7 +22,7 @@ tags:
 
 ---
 
-## **1. Initial Server Setup**
+## **<span style="color:#009688;">1. Initial Server Setup</span>**
 Begin by creating a non-root user and updating your system packages to ensure you have the latest security updates and software.
 
 ### **Create a New User**
@@ -58,7 +58,7 @@ sudo reboot
 
 ---
 
-## **2. Download and Unpack Nextcloud**
+## **<span style="color:#009688;">2. Download and Unpack Nextcloud</span>**
 
 Get the latest Nextcloud release from the official source, and unzip it to prepare for installation.
 ``` bash
@@ -69,7 +69,7 @@ unzip latest.zip
 
 ---
 
-## **3. Install and Configure MariaDB**
+## **<span style="color:#009688;">3. Install and Configure MariaDB</span>**
 MariaDB will serve as the backend database. Install it, secure the installation, and create a database and user for Nextcloud.
 
 ### **Install MariaDB Server**
@@ -102,7 +102,7 @@ EXIT;
     *Replace `mypassword` with a strong and unique password of your choice.*
 ---
 
-## **4. Install Apache, PHP, and Required Modules**
+## **<span style="color:#009688;">4. Install Apache, PHP, and Required Modules</span>**
 These are the web server and PHP modules required by Nextcloud for full functionality.
 ➡ These modules give Nextcloud its features (file uploads, encryption, images, etc.).
 ``` bash
@@ -115,7 +115,7 @@ sudo phpenmod apcu bcmath gmp imagick intl
 
 ---
 
-## **5. Move Nextcloud Files and Set Permissions**
+## **<span style="color:#009688;">5. Move Nextcloud Files and Set Permissions</span>**
 Move the Nextcloud files you extracted in step 2 into the web server’s root directory, then set the appropriate ownership and permissions.
 ➡ This ensures Apache can serve Nextcloud securely and disables the default page.
 
@@ -128,7 +128,7 @@ sudo a2dissite 000-default.conf   #disable the default web page that ships with 
 
 ---
 
-## **6. Configure Apache**
+## **<span style="color:#009688;">6. Configure Apache</span>**
 Set up your Apache virtual host to serve Nextcloud instance, enabling URL rewriting and access control.
 
 ### **Create a Virtual Host File**
@@ -164,7 +164,7 @@ sudo a2ensite <your-domain>.conf
 
 ---
 
-## **7. PHP Configuration**
+## **<span style="color:#009688;">7. PHP Configuration</span>**
 Tune PHP settings for optimal performance and stability with Nextcloud.
 
 ``` bash
@@ -202,7 +202,7 @@ sudo systemctl restart apache2
 
 ---
 
-## **8. Final Database and Security Tweaks**
+## **<span style="color:#009688;">8. Final Database and Security Tweaks</span>**
 
 ### **Tune Nextcloud Database**
 Add missing database indices using Nextcloud’s command line tool to improve database performance.
@@ -215,7 +215,7 @@ sudo chmod -x /var/www/<your-domain>/occ
 
 ---
 
-## **9. Obtain a TLS Certificate (Let's Encrypt)**
+## **<span style="color:#009688;">9. Obtain a TLS Certificate (Let's Encrypt)</span>**
 Set up free, trusted [SSL certificates](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal) to encrypt your site’s traffic.
 ➡ This encrypts traffic so your files and logins are secure.
 
@@ -230,7 +230,7 @@ Follow prompts carefully to secure your installation.
 
 ---
 
-## **10. Miscellaneous Adjustments**
+## **<span style="color:#009688;">10. Miscellaneous Adjustments</span>**
 
 ### **Protect config.php**
 Limit access to critical config files for security.

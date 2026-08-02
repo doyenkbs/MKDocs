@@ -3,11 +3,11 @@ tags:
   - Cloudflare Tunnel
 ---
 
-# **<span style="color:#FFB74D;">Setting Up Cloudflare Tunnel via Dashboard</span>**
+# **<span style="color:#009688;">Setting Up Cloudflare Tunnel via Dashboard</span>**
 
 !!! info "**Prerequisites**"
     - A [Cloudflare account](https://dash.cloudflare.com/sign-up) 
-    - A domain name managed by <span style="color:#009688;">Cloudflare</span> DNS
+    - A domain name managed by Cloudflare DNS
     - A home server or VM running your service
 
 ---
@@ -40,7 +40,7 @@ tags:
 
 ---
 
-### **Configure Public Hostnames**
+### **<span style="color:#009688;">Configure Public Hostnames</span>**
 1. Once your Cloudflared connector shows as **HEALTHY** in the dashboard, navigate to your newly created tunnel (e.g., `HomeLabTunnel`) and click **Configure**.
 
 2. Go to the **Public hostnames** tab, click **Add a public hostname**.
@@ -55,7 +55,7 @@ tags:
 
 ---
 
-### **Test Access**
+### **<span style="color:#009688;">Test Access</span>**
 - Open a browser and go to your public hostname (e.g., `https://wiki.example.com`).
 - Your traffic is now securely routed through Cloudflare without exposing your public IP or opening firewall ports.
 

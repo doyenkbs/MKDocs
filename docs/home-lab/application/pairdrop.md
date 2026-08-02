@@ -9,7 +9,7 @@ This guide covers how to install <span style="color:#009688;">PairDrop</span>, l
 
 > For official script documentation, visit: [PairDrop Helper Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=pairdrop)
 
-## **Step-by-Step Instructions**
+## **<span style="color:#009688;">Step-by-Step Instructions</span>**
 
 **1. Launch the Installation Script**
 

@@ -112,7 +112,7 @@ sudo cp /root/Client1.ovpn ~
 [Nyr’s OpenVPN Install Script (GitHub)](https://github.com/Nyr/openvpn-install)
 
 
-## Installing and Using the OpenVPN Client
+## **<span style="color:#009688;">Installing and Using the OpenVPN Client**
 
 Follow the steps below to install the OpenVPN client and upload your configuration file on different devices.
 

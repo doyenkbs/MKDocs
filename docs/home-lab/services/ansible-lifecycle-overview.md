@@ -1,6 +1,6 @@
-# Ansible Automation: The Full Lifecycle
+# **<span style="color:#009688;">Ansible Automation: The Full Lifecycle</span>**
 
-## Overview
+## <span style="color:#009688;">Overview</span>
 
 The three playbooks in this section aren't independent scripts — they're stages of one system that manages a Linux host from the moment it's created to the moment something goes wrong and needs to be restored. This page ties them together and explains how they hand off to each other.
 
@@ -19,7 +19,7 @@ flowchart LR
 
 ---
 
-## Stage 1 — Bootstrap (Day 0)
+## <span style="color:#009688;">Stage 1 — Bootstrap (Day 0)</span>
 
 **[Ansible LXC Bootstrap](ansible-lxc-bootstrap.md)**
 
@@ -34,7 +34,7 @@ Once this playbook finishes, the host graduates from a one-off `bootstrap_hosts.
 
 ---
 
-## Stage 2 — Ongoing Maintenance (Every Week / Every Day)
+## <span style="color:#009688;">Stage 2 — Ongoing Maintenance (Every Week / Every Day)</span>
 
 Two playbooks run continuously in the background once a host is onboarded, on independent, offset schedules:
 
@@ -60,7 +60,7 @@ Both playbooks target the **same inventory** (`hosts.ini`) — a host only needs
 
 ---
 
-## Stage 3 — Recovery (When Something Breaks)
+## <span style="color:#009688;">Stage 3 — Recovery (When Something Breaks)</span>
 
 This is the payoff for maintaining Stage 2 consistently. When a service breaks — a bad config edit, a corrupted upgrade, a container that needs rebuilding — the recovery path is:
 
@@ -71,7 +71,7 @@ Either path returns the host to Stage 2 — back under normal patch and backup c
 
 ---
 
-## Why This Order Matters
+## <span style="color:#009688;">Why This Order Matters</span>
 
 Each stage depends on the one before it actually happening:
 
@@ -82,7 +82,7 @@ The lesson from building this out: automation is only as good as its weakest, mo
 
 ---
 
-## One Inventory, Two Purposes
+## <span style="color:#009688;">One Inventory, Two Purposes</span>
 
 Worth calling out explicitly: `bootstrap_hosts.ini` and `hosts.ini` are **not** the same file, and that's intentional:
 
@@ -93,7 +93,7 @@ A host should only ever exist in one of these at a time. If a host is still list
 
 ---
 
-## At a Glance
+## <span style="color:#009688;">At a Glance</span>
 
 | Stage | Playbook | Trigger | Auth Method |
 |---|---|---|---|
@@ -104,7 +104,7 @@ A host should only ever exist in one of these at a time. If a host is still list
 
 ---
 
-## What's Next
+## <span style="color:#009688;">What's Next</span>
 
 This covers the lifecycle for general-purpose Linux hosts. Natural extensions from here:
 

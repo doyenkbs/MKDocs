@@ -1,7 +1,7 @@
-# Home
+# **<span style="color:#009688;">Home**
 
 <div class="hero-banner" markdown>
-# Kabason Labs Documentation
+# <span style="color:#009688;">Kabason Labs Documentation</span>
 
 Guides, configs, and troubleshooting notes from my self-hosted home lab — covering
 Proxmox virtualization, SSO with Authentik, Microsoft SCCM/MECM lab builds, Tanium
@@ -14,7 +14,7 @@ a similar stack.
 
 ---
 
-## 🖥️ Lab at a Glance
+## 🖥️ <span style="color:#009688;">Lab at a Glance
 
 | | |
 |---|---|
@@ -26,7 +26,7 @@ a similar stack.
 
 ---
 
-## 📚 Explore the Docs
+## 📚 <span style="color:#009688;">Explore the Docs
 
 <div class="grid cards" markdown>
 
@@ -74,7 +74,7 @@ a similar stack.
 
 ---
 
-## 🌟 Why a Home Lab?
+## 🌟 <span style="color:#009688;">Why a Home Lab?
 
 A **home lab** is a personal environment for testing, learning, and running your own
 IT infrastructure — full control over your data, more privacy, and room to

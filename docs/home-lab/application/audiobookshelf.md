@@ -8,9 +8,9 @@ tags:
 <span style="color:#009688;">Audiobookshelf</span> is a self-hosted audiobook and podcast server with a web user interface and apps. This guide will show you how to deploy it in an LXC container using the Proxmox VE Helper-Scripts.
 
 
-## **Step-by-Step Instructions**
+## **<span style="color:#009688;">Step-by-Step Instructions</span>**
 
-**1. Launch the Installer Script**
+**<span style="color:#009688;">1. Launch the Installer Script</span>**
 
 Open the Proxmox VE Shell on your desired node and run:
 ``` bash
@@ -19,7 +19,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/Proxmo
     * This will start an interactive wizard to deploy <span style="color:#009688;">Audiobookshelf</span>.
     * The script will download and set up everything needed automatically.
 
-**2. Fill in the Prompts**
+**<span style="color:#009688;">2. Fill in the Prompts</span>**
 
 During installation, you'll be prompted for the following settings:
 
@@ -36,14 +36,14 @@ During installation, you'll be prompted for the following settings:
 
 Adjust these to match your local network and storage configuration.
 
-**3. Configuration File Location**
+**<span style="color:#009688;">3. Configuration File Location</span>**
 
 After installation, the config file is located at:
 ``` text
 /usr/share/audiobookshelf/config
 ```
 
-**4. Accessing Audiobookshelf**
+**<span style="color:#009688;">4. Accessing Audiobookshelf</span>**
 
 Once setup is complete, open:
 ``` text
@@ -51,7 +51,7 @@ http://<your-static-ip>:13378
 ```
 > Replace 'your-static-ip' with the IP you assigned to the container.
 
-**5. Transferring Media Files**
+**<span style="color:#009688;">5. Transferring Media Files</span>**
 
 To transfer files from your main system to the Audiobookshelf container, you can use scp. For example:
 ``` bash

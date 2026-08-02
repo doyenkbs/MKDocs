@@ -14,7 +14,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Audi
 
 ---
 
-## **Overview**
+## **<span style="color:#009688;">Overview</span>**
 
 - Create an OAuth2/OpenID *provider + application* in Authentik.  
 - Register Audiobookshelf redirect URIs in Authentik.  
@@ -24,7 +24,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Audi
 
 ---
 
-## **Step 1: Create an Application & Provider in Authentik**
+## **<span style="color:#009688;">Step 1: Create an Application & Provider in Authentik</span>**
 
 1. **Log into your Authentik admin interface.**
 2. Go to **Applications > Providers** and click **Create**.
@@ -54,7 +54,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Audi
 
 ---
 
-## **Step 2: Copy client credentials & discovery info from Authentik**
+## **<span style="color:#009688;">Step 2: Copy client credentials & discovery info from Authentik</span>**
 
 - In Authentik, go to the **Provider** you created for Audiobookshelf.
 !!! tip "Locate and copy the following values:"
@@ -73,7 +73,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 ---
 
-## **Step 3: Configure Audiobookshelf for OIDC**
+## **<span style="color:#009688;">Step 3: Configure Audiobookshelf for OIDC</span>**
 
 1. **Access Audiobookshelf** as an admin.
 2. Navigate to **Settings > Authentication**.
@@ -99,7 +99,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 ---
 
-## **Step 4: Test Your SSO Login**
+## **<span style="color:#009688;">Step 4: Test Your SSO Login</span>**
 
 1. Visit your Audiobookshelf login page.
 2. If auto-launch is enabled, you will be redirected to Authentik to log in.
