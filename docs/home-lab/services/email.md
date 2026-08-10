@@ -4,13 +4,13 @@ tags:
   
 ---
 
-# **<span style="color:#009688;">Mailcow Installation Guide (Ubuntu)</span>**
+# Mailcow Installation Guide (Ubuntu)
 
-This guide explains how to install and configure **<span style="color:#43A047;">Mailcow: dockerized</span>** on **<span style="color:#43A047;">Ubuntu 22.04+</span>**, with firewall setup, **<span style="color:#43A047;">SPF, DKIM, and DMARC</span>**, and best practices for **VPS self-hosting**.
+This guide explains how to install and configure **<span class="prod-app">Mailcow: dockerized</span>** on **Ubuntu 22.04+**, with firewall setup, **SPF, DKIM, and DMARC**, and best practices for **VPS self-hosting**.
 
 ---
 
-## **<span style="color:#009688;">Why Use a VPS for Mailcow?**
+## Why Use a VPS for Mailcow?
 
 Running a mail server requires:
 
@@ -28,12 +28,12 @@ Running a mail server requires:
 
 ---
 
-## **<span style="color:#009688;">Prerequisites</span>**
+## Prerequisites
 
-### **System Requirements**
-- **Server:** <span style="color:#009688;">VPS with Ubuntu 22.04 or newer</span> (e.g., Contabo VPS S with 6 GB RAM) 
-- **RAM:** <span style="color:orange;">Minimum 6 GB (+1 GB swap)</span>  
-- **Disk:** <span style="color:purple;">At least 20 GB free</span>  
+### System Requirements
+- **Server:** VPS with Ubuntu 22.04 or newer (e.g., Contabo VPS S with 6 GB RAM) 
+- **RAM:** Minimum 6 GB (+1 GB swap)  
+- **Disk:** At least 20 GB free  
 - **Domain:** A fully qualified domain name (FQDN), e.g., `mail.example.com`
 - **Static IP with rDNS set to match your mail domain** 
 
@@ -47,8 +47,8 @@ Running a mail server requires:
     apt-transport-https ca-certificates software-properties-common
     ```
 
-### **<span style="color:#009688;">Firewall Setup</span>**
-<span style="color:red; font-weight:bold;">Open Ports with UFW.</span>    
+### Firewall Setup
+Open Ports with UFW.    
 Mailcow needs email and web ports open:
 
 ``` bash
@@ -72,13 +72,13 @@ sudo ufw status verbose
 👉 This ensures only essential services are exposed.
 
 ---
-## **<span style="color:#009688;">Step 1: Install Docker & Docker Compose**
+## Step 1: Install Docker & Docker Compose
 Mailcow runs entirely inside Docker containers, so Docker is required.  
 To install Docker and Docker Compose, refer to the [Docker Installation Guide](https://kabason.net/home-lab/docker.html) in this documentation.
 
 ---
 
-## **<span style="color:#009688;">Step 2: Clone the Mailcow Repository**
+## Step 2: Clone the Mailcow Repository
 All Mailcow files are hosted on GitHub.
 
 ``` bash
@@ -90,7 +90,7 @@ cd mailcow-dockerized
 
 ---
 
-## **<span style="color:#009688;">Step 3: Generate Mailcow Configuration**
+## Step 3: Generate Mailcow Configuration
 
 Run the configuration script to create your `mailcow.conf`.
 
@@ -107,7 +107,7 @@ sudo nano mailcow.conf
 
 ---
 
-## **<span style="color:#009688;">Step 4: Start Mailcow Docker Containers**
+## Step 4: Start Mailcow Docker Containers
 
 Pull images and start Mailcow in detached mode.
 ``` bash
@@ -116,7 +116,7 @@ sudo docker compose up -d
 ```
 👉 This downloads all required containers (Postfix, Dovecot, Nginx, etc.) and runs them in the background.
 
-### **Verify Mailcow Status**
+### Verify Mailcow Status
 Check if all containers are running:
 ``` bash
 sudo docker compose ps
@@ -124,25 +124,25 @@ sudo docker compose ps
 
 ---
 
-## **<span style="color:#009688;">Step 5: Access Mailcow Web Interface**
+## Step 5: Access Mailcow Web Interface
 Once running, log in via browser:
 > `https://<your-domain>/admin`
 
 !!! note
-    <span style="color:#009688;">*The first time, you may get a warning about a self-signed SSL certificate.*</span>
+    *The first time, you may get a warning about a self-signed SSL certificate.*
 
 !!! danger "Default Credentials"
-    - Username: <span style="color:#009688;">`admin`</span>  
-    - Password: <span style="color:red;">`moohoo`</span>  
+    - Username: `admin`  
+    - Password: `moohoo`  
 
     ⚠️ Login and **immediately update the admin password** under  
     *Admin UI → Configuration → Change Password*.
 
 ---
 
-## **<span style="color:#009688;">Step 6: Configure DNS Records**
+## Step 6: Configure DNS Records
 
-### **Configure Base DNS Records**
+### Configure Base DNS Records
 At minimum, add:
 !!! example "Base DNS Records"
     - **A record** → `mail.example.com` → Server IP  
@@ -150,13 +150,13 @@ At minimum, add:
 
     👉 Without these, other mail servers won’t know where to deliver your domain’s email.
 
-### **SPF, DKIM, and DMARC Setup**
+### SPF, DKIM, and DMARC Setup
 
 !!! tip "SPF, DKIM, and DMARC"
     Add TXT records for SPF, DKIM, and DMARC to ensure email delivery.  
     Without these, your mail may end up in spam.
 
-### **1. SPF Record**
+### 1. SPF Record
 
 !!! example "Create a TXT record:"
     ``` bash
@@ -172,7 +172,7 @@ If you also send via Google/Microsoft (Optional), add:
     v=spf1 mx include:_spf.google.com include:spf.protection.outlook.com -all
     ```
 
-### **2. DKIM Record**
+### 2. DKIM Record
 DKIM signs outgoing emails so recipients can verify authenticity.
 
 - In Mailcow **Admin UI → Configuration → ARC/DKIM Keys**
@@ -187,7 +187,7 @@ DKIM signs outgoing emails so recipients can verify authenticity.
     ```
 👉 Once DNS propagates, Mailcow will automatically sign outgoing mail with this key.
 
-### **3. DMARC Record**  
+### 3. DMARC Record
 
 DMARC ties SPF & DKIM together and provides reporting.
 !!! example "Add a TXT record:"
@@ -202,9 +202,9 @@ DMARC ties SPF & DKIM together and provides reporting.
 
 ---
 
-## **<span style="color:#009688;">Step 7: Verify Setup**
+## Step 7: Verify Setup
 
-### **Check DNS Records**
+### Check DNS Records
 Run:
 ``` bash
 dig TXT example.com
@@ -213,7 +213,7 @@ dig TXT _dmarc.example.com
 ```
 👉 Ensure SPF, DKIM, and DMARC show correctly.
 
-### **Testing Tools (optional) **
+### Testing Tools (optional)
 
 - [mail-tester](https://www.mail-tester.com/) (DKIM, DMARC, SPF)
 - [MX Toolbox](https://mxtoolbox.com/SuperTool.aspx) (DNS, SMTP, RBL)
@@ -238,7 +238,7 @@ dig TXT _dmarc.example.com
 
 ---
 
-## ***References***
+## *References*
 
 - *[Mailcow Documentation](https://docs.mailcow.email/getstarted/install/)*
 - *[Mailcow GitHub Repository](https://github.com/mailcow/mailcow-dockerized)*
@@ -246,5 +246,5 @@ dig TXT _dmarc.example.com
 
 ---
 
-🎉 Congratulations! You now have a fully functional <span style="color:#43A047;">Mailcow</span> mail server running on your Ubuntu system.
+🎉 Congratulations! You now have a fully functional <span class="prod-app">Mailcow</span> mail server running on your Ubuntu system.
 

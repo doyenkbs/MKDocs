@@ -1,6 +1,6 @@
-# **<span style="color:#009688;">Ansible LXC Bootstrap Playbook</span>**
+# Ansible LXC Bootstrap Playbook
 
-## <span style="color:#009688;">Overview</span>
+## Overview
 
 Every new LXC starts the same way: create a user, drop in an SSH key, install the same baseline packages, harden a few defaults, and only then start actually configuring whatever service the container is for. Done by hand, that's 10–15 minutes of repetitive setup per container — and it's easy to skip a step under time pressure (a missed `ufw` rule, a forgotten SSH key) that only surfaces later as a problem.
 
@@ -17,7 +17,7 @@ This playbook turns that checklist into a single command: point it at a freshly 
 
 ---
 
-## <span style="color:#009688;">Prerequisites</span>
+## Prerequisites
 
 Since this playbook's whole job is to set up passwordless SSH access, it can't rely on that access existing yet. The **first connection** has to happen with a password (or an existing key you already have — e.g. the LXC's default root access from Proxmox).
 
@@ -30,7 +30,7 @@ Run this playbook using `--ask-pass` (or an existing root/admin key) the first t
 
 ---
 
-## <span style="color:#009688;">The Playbook</span>
+## The Playbook
 
 ```yaml title="bootstrap_lxc.yml"
 ---
@@ -143,7 +143,7 @@ Run this playbook using `--ask-pass` (or an existing root/admin key) the first t
         state: restarted
 ```
 
-**<span style="color:#009688;">What each part is doing:</span>**
+**What each part is doing:**
 
 - **`password: "!"`** — locks password login for the `ansible` account entirely; it's key-only from the moment it's created.
 - **`validate: "visudo -cf %s"`** — syntax-checks the sudoers file before it's written, so a typo can't lock out sudo access on the host.
@@ -161,7 +161,7 @@ Run this playbook using `--ask-pass` (or an existing root/admin key) the first t
 
 ---
 
-## <span style="color:#009688;">Running It</span>
+## Running It
 
 ```bash
 ansible-playbook -i bootstrap_hosts.ini bootstrap_lxc.yml --ask-pass
@@ -173,7 +173,7 @@ For containers created via Proxmox with SSH key access already configured (no pa
 
 ---
 
-## <span style="color:#009688;">Promoting the Host to the Main Inventory</span>
+## Promoting the Host to the Main Inventory
 
 Once bootstrap completes, move the host from `bootstrap_hosts.ini` into your main `hosts.ini`, using the `ansible` account and automation key like every other managed host:
 
@@ -199,7 +199,7 @@ From here, the host is fully onboarded — the [patch automation](ansible-patch.
 
 ---
 
-## <span style="color:#009688;">Extending This Playbook</span>
+## Extending This Playbook
 
 A few natural next additions, depending on what the container is for:
 
@@ -209,7 +209,7 @@ A few natural next additions, depending on what the container is for:
 
 ---
 
-## <span style="color:#009688;">Quick Reference</span>
+## Quick Reference
 
 ```bash
 # First-time bootstrap (password auth)

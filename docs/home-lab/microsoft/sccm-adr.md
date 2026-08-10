@@ -8,13 +8,13 @@ tags:
   - ADR
 ---
 
-# **<span style="color:#009688;">Automatic Deployment Rules (ADR)**
+# Automatic Deployment Rules (ADR)
 
 **Automatic Deployment Rules (ADR)** in SCCM/MECM allow you to automatically create, download, and deploy software updates on a defined schedule. This is especially useful for recurring updates such as **Patch Tuesday** releases.
 
 ---
 
-##  **<span style="color:#009688;">Table of Contents**
+##  Table of Contents
 - [Overview](#overview)
 - [Benefits of ADR](#benefits-of-adr)
 - [Steps to Create an ADR](#steps-to-create-an-adr)
@@ -22,7 +22,7 @@ tags:
 
 ---
 
-##  **<span style="color:#009688;">Overview**
+##  Overview
 An ADR automates the software update lifecycle by:  
 - Synchronizing new updates that match defined criteria.  
 - Creating **Software Update Groups** automatically.  
@@ -31,7 +31,7 @@ An ADR automates the software update lifecycle by:
 
 ---
 
-##  **<span style="color:#009688;">Benefits of ADR**
+##  Benefits of ADR
 - Reduces manual effort for monthly updates.  
 - Ensures updates are applied consistently across devices.  
 - Improves compliance reporting.  
@@ -39,7 +39,7 @@ An ADR automates the software update lifecycle by:
 
 ---
 
-##  **<span style="color:#009688;">Steps to Create an ADR**
+##  Steps to Create an ADR
 
 1. In the SCCM console, go to **Software Library → Software Updates → Automatic Deployment Rules**.  
 2. Click **Create Automatic Deployment Rule**.  
@@ -58,7 +58,7 @@ An ADR automates the software update lifecycle by:
 
 ---
 
-##  **<span style="color:#009688;">Best Practices**
+##  Best Practices
 - Start with **pilot collections** before broad deployment.  
 - Use **maintenance windows** to control install timing.  
 - Regularly review and refine ADR criteria.  

@@ -10,7 +10,7 @@ tags:
 summary: This section explains how to configure firewall rules via **Group Policy (GPO) on the Domain Controller.
 ---
 
-# **<span style="color:#009688;">Firewall Configuration via GPO**
+# Firewall Configuration via GPO
 
 ---
 
@@ -18,7 +18,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 
 ---
 
-## **Steps**
+## Steps
 
 1. Open **Group Policy Management**  
 
@@ -28,7 +28,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 3. Edit the GPO and configure the following:
 
 ---
-### **<span style="color:#009688;">Remote Desktop Settings**
+### Remote Desktop Settings
 - **Computer Configuration → Policies → Administrative Templates → Windows Components → Remote Desktop Services → RD Session Host → Connections**  
   > - **`Allow users to connect remotely`** → **`Enable`**  
 
@@ -37,7 +37,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 
 ---
 
-### **<span style="color:#009688;">Firewall Inbound Rules (Custom Ports)**
+### Firewall Inbound Rules (Custom Ports)
 
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Inbound Rules==**  
   > - Right-click → **New Rule** → **Port**  
@@ -49,7 +49,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 
 ---
 
-### **<span style="color:#009688;">Firewall Predefined Rules**
+### Firewall Predefined Rules
 
 - **Computer Configuration → Windows Settings → Security Settings → Windows Defender Firewall → Windows Defender → ==Inbound Rules==**  
   > - Right-click → **New Rule** → **Predefined** → Select **`File and Printer Sharing`** → Follow prompts  
@@ -63,7 +63,7 @@ This section explains how to configure firewall rules via **Group Policy (GPO)**
 
 ---
 
-## **<span style="color:#009688;">Firewall Rules Summary**
+## Firewall Rules Summary
 
 | Port  | Protocol | Service / Purpose            |
 |-------|----------|------------------------------|
@@ -106,7 +106,7 @@ graph TD
 ---
 
 <!--
-## **GPO Firewall Policy Flow**
+## GPO Firewall Policy Flow
 
 
 ``` mermaid

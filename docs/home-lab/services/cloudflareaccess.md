@@ -3,12 +3,12 @@ tags:
   - Cloudflare Access
 ---
 
-# **<span style="color:#009688;">Cloudflare Access + Authentik (OIDC) Integration</span>**
+# Cloudflare Access + Authentik (OIDC) Integration
 
-This guide walks you through integrating **<span style="color:#009688;">Cloudflare Access</span>** with **<span style="color:red;">Authentik</span>** using **OpenID Connect (OIDC)** so your Cloudflare-protected apps use Authentik for SSO/MFA.
+This guide walks you through integrating **<span class="prod-app">Cloudflare Access</span>** with **<span class="prod-idp">Authentik</span>** using **OpenID Connect (OIDC)** so your Cloudflare-protected apps use Authentik for SSO/MFA.
 
 ---
-## **<span style="color:#009688;">Overview</span>**
+## Overview
 
 **Cloudflare Access** is Cloudflare's zero-trust access solution, sitting in front of your web apps and enforcing per-user authentication and policy.  
 **Authentik** is a self-hosted identity provider that supports OIDC, SAML, LDAP, and more. By connecting Authentik and Cloudflare Access, you gain:
@@ -23,13 +23,13 @@ This guide walks you through integrating **<span style="color:#009688;">Cloudfla
     - Optional but recommended: Your apps published behind **Cloudflare Tunnels**.
 
     !!! note "**Why:**" 
-        <span style="color:#009688;">Cloudflare Access</span> sits in front of your apps. <span style="color:red;">Authentik</span> verifies users, while Cloudflare enforces access rules.
+        <span class="prod-app">Cloudflare Access</span> sits in front of your apps. <span class="prod-idp">Authentik</span> verifies users, while Cloudflare enforces access rules.
 
 ---
 
-## **<span style="color:#009688;">Step 1 — Create an OIDC Provider in Authentik</span>**
+## Step 1 — Create an OIDC Provider in Authentik
 
-1. In **<span style="color:red;">Authentik</span>**, go to **Applications → Providers → Create → OAuth2/OIDC**.  
+1. In **<span class="prod-idp">Authentik</span>**, go to **Applications → Providers → Create → OAuth2/OIDC**.  
 2. Set a clear **Name** and a unique **Slug** (ex: `cloudflare`).  
 3. Choose a **Signing Key** (recommended).  
 4. Under **Redirect URIs**, add (strict): `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`
@@ -46,7 +46,7 @@ This guide walks you through integrating **<span style="color:#009688;">Cloudfla
 
 ---
 
-## <span style="color:#009688;">Step 2 — Add Authentik as a Login Method in Cloudflare</span>
+## Step 2 — Add Authentik as a Login Method in Cloudflare
 
 1. In Zero Trust, go to **Settings → Authentication → Login methods → Add → OpenID Connect**.  
 
@@ -65,7 +65,7 @@ This guide walks you through integrating **<span style="color:#009688;">Cloudfla
 
 ---
 
-## **<span style="color:#009688;">Step 3 — Protect an Application with Cloudflare Access</span>**
+## Step 3 — Protect an Application with Cloudflare Access
 
 1. In Zero Trust, go to **Access → Applications → Add an application → Self-hosted**.  
 2. Set the **Application domain** (the URL users will visit, e.g., `https://app.example.com`).  
@@ -78,7 +78,7 @@ This guide walks you through integrating **<span style="color:#009688;">Cloudfla
 
 ---
 
-## **<span style="color:#009688;">Step 4 — (Optional) Publish the App with Cloudflare Tunnel</span>**
+## Step 4 — (Optional) Publish the App with Cloudflare Tunnel
 If the app runs privately (home lab, VPC), publish it through a Tunnel:
 
 1. Create a **Cloudflare Tunnel** and connect **cloudflared** on your host.  
@@ -90,9 +90,9 @@ If the app runs privately (home lab, VPC), publish it through a Tunnel:
 
 ---
 
-## **<span style="color:#009688;">Step 5 — Enable MFA and Policies in Authentik</span>**
+## Step 5 — Enable MFA and Policies in Authentik
 
-- Configure MFA (TOTP or WebAuthn) in **<span style="color:red;">Authentik</span>** and bind it to the login flow used by your OIDC provider.  
+- Configure MFA (TOTP or WebAuthn) in **<span class="prod-idp">Authentik</span>** and bind it to the login flow used by your OIDC provider.  
 - Because Cloudflare delegates auth to Authentik, MFA policy applies to **all Cloudflare-protected apps** automatically.
 
 !!! note "**Why:**"
@@ -100,7 +100,7 @@ If the app runs privately (home lab, VPC), publish it through a Tunnel:
 
 ---
 
-## **<span style="color:#009688;">Step 6 — Validate Claims and Headers (Optional, for Admins)</span>**
+## Step 6 — Validate Claims and Headers (Optional, for Admins)
 
 - After authenticating to an Access-protected app, visit:
 ``` bash
@@ -121,13 +121,13 @@ https://app.example.com/cdn-cgi/access/get-identity
     - **Missing claims** → Make sure scopes include `email` and `profile` (plus `groups` if needed).
     - For detailed logs, check Authentik’s and Cloudflare’s dashboards.
 
-## **<span style="color:#009688;">Summary</span>**
+## Summary
 
-With this integration in place, all protected applications behind Cloudflare Access will accept <span style="color:red;">Authentik</span> credentials, empowering your organization with centralized, secure, and auditable authentication.
+With this integration in place, all protected applications behind Cloudflare Access will accept <span class="prod-idp">Authentik</span> credentials, empowering your organization with centralized, secure, and auditable authentication.
 
 ---
 
-## ***Reference***
+## *Reference*
 
 - [*Authentik*](https://integrations.goauthentik.io/networking/cloudflare-access/): Cloudflare Access Integration
 - [*Cloudflare Zero Trust*](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/generic-oidc/): Generic OIDC, adding login methods, Access apps & policies, locating your team domain, and Tunnels

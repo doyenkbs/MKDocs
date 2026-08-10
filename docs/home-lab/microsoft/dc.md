@@ -9,7 +9,7 @@ tags:
 summary: This guide covers the installation and configuration of a Domain Controller (DC)
 ---
 
-# **<span style="color:#009688;">Domain Controller Setup**
+# Domain Controller Setup
 
 ---
 
@@ -19,7 +19,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **<span style="color:#009688;">1. Install AD DS and DNS**
+## 1. Install AD DS and DNS
 
 1. Open **Server Manager** → **Manage** → **Add Roles and Features**  
    
@@ -29,7 +29,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **<span style="color:#009688;">2. Promote the Server to a Domain Controller**
+## 2. Promote the Server to a Domain Controller
 
 > - After installation, in **Server Manager**, click **Promote this server to a domain controller**.  
 > - Choose **Add a new forest** and provide a root domain name (e.g., `lab.com`).  
@@ -37,10 +37,10 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 
 ---
 
-## **<span style="color:#009688;">3. (Optional) Network Configuration for All VMs**
+## 3. (Optional) Network Configuration for All VMs
 If using **Hyper-V** with a NAT-enabled Internal Switch (e.g., `LabSwitch`), configure network settings for all VMs:
 
-### **Steps:**
+### Steps:
 
 1. Attach each VM’s network adapter to the **LabSwitch** virtual switch.  
 2. Assign static IP addresses on each VM:  
@@ -54,7 +54,7 @@ If using **Hyper-V** with a NAT-enabled Internal Switch (e.g., `LabSwitch`), con
 
 ---
 
-## **<span style="color:#009688;">Network Layout Diagram**
+## Network Layout Diagram
 
 ```mermaid
 flowchart TD
@@ -74,7 +74,7 @@ flowchart TD
 
 ---
 
-## **<span style="color:#009688;">4. Join All Machines to the Domain**
+## 4. Join All Machines to the Domain
 
 1. On each server or client VM:  
    > - Open **System Properties** (`sysdm.cpl`).  

@@ -1,8 +1,8 @@
-# **<span style="color:#009688;">Paperless-ngx + authentik (OIDC) Integration</span>**
+# Paperless-ngx + authentik (OIDC) Integration
 
 ---
 
-This page shows how to integrate **<span style="color:#009688;">Paperless-ngx** with **<span style="color:red;">authentik** using **OpenID Connect (OIDC)**. It also covers optional settings to disable local logins and auto-redirect users to SSO, plus a “Remote-User header” alternative.
+This page shows how to integrate **<span class="prod-app">Paperless-ngx</span>** with **<span class="prod-idp">authentik</span>** using **OpenID Connect (OIDC)**. It also covers optional settings to disable local logins and auto-redirect users to SSO, plus a “Remote-User header” alternative.
 
 **Prerequisites**
 
@@ -20,7 +20,7 @@ This page shows how to integrate **<span style="color:#009688;">Paperless-ngx** 
 
 ---
 
-## **<span style="color:#009688;">Step 1 — Create the OIDC Provider in authentik</span?**
+## Step 1 — Create the OIDC Provider in authentik
 
 In authentik (Admin UI):
 
@@ -47,7 +47,7 @@ Save.
 
 ---
 
-## **<span style="color:#009688;">Step 2 — Configure Paperless-ngx (OIDC / allauth)</span>**
+## Step 2 — Configure Paperless-ngx (OIDC / allauth)
 
 Paperless-ngx uses django-allauth to add social/OIDC providers. For authentik, you’ll enable the OpenID Connect provider and supply the provider configuration as JSON.
 
@@ -122,7 +122,7 @@ sudo systemctl restart paperless-*
 
 ---
 
-## **<span style="color:#009688;">Testing checklist</span>**
+## Testing checklist
 
 - Visit `https://paperless.example.com/accounts/login/`.
 - You should see an authentik login button (and, if not yet disabled, the local form).
@@ -157,7 +157,7 @@ sudo systemctl restart paperless-*
 
 ---
 
-## ***Reference***
+## *Reference*
 
 - [Paperless-ngx docs — SSO & third-party auth (allauth OIDC, disable regular login).](https://docs.paperless-ngx.com/configuration/#PAPERLESS_DISABLE_REGULAR_LOGIN) 
 

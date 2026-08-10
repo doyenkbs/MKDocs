@@ -3,23 +3,23 @@ tags:
   - Audiobookshelf
 ---
 
-# **<span style="color:#009688;">Audiobookshelf Installation via Proxmox VE Helper Scripts</span>**
+# Audiobookshelf Installation via Proxmox VE Helper Scripts
 
-<span style="color:#009688;">Audiobookshelf</span> is a self-hosted audiobook and podcast server with a web user interface and apps. This guide will show you how to deploy it in an LXC container using the Proxmox VE Helper-Scripts.
+<span class="prod-app">Audiobookshelf</span> is a self-hosted audiobook and podcast server with a web user interface and apps. This guide will show you how to deploy it in an LXC container using the Proxmox VE Helper-Scripts.
 
 
-## **<span style="color:#009688;">Step-by-Step Instructions</span>**
+## Step-by-Step Instructions
 
-**<span style="color:#009688;">1. Launch the Installer Script</span>**
+**1. Launch the Installer Script**
 
 Open the Proxmox VE Shell on your desired node and run:
 ``` bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/audiobookshelf.sh)"
 ```
-    * This will start an interactive wizard to deploy <span style="color:#009688;">Audiobookshelf</span>.
+    * This will start an interactive wizard to deploy <span class="prod-app">Audiobookshelf</span>.
     * The script will download and set up everything needed automatically.
 
-**<span style="color:#009688;">2. Fill in the Prompts</span>**
+**2. Fill in the Prompts**
 
 During installation, you'll be prompted for the following settings:
 
@@ -36,14 +36,14 @@ During installation, you'll be prompted for the following settings:
 
 Adjust these to match your local network and storage configuration.
 
-**<span style="color:#009688;">3. Configuration File Location</span>**
+**3. Configuration File Location**
 
 After installation, the config file is located at:
 ``` text
 /usr/share/audiobookshelf/config
 ```
 
-**<span style="color:#009688;">4. Accessing Audiobookshelf</span>**
+**4. Accessing Audiobookshelf**
 
 Once setup is complete, open:
 ``` text
@@ -51,7 +51,7 @@ http://<your-static-ip>:13378
 ```
 > Replace 'your-static-ip' with the IP you assigned to the container.
 
-**<span style="color:#009688;">5. Transferring Media Files</span>**
+**5. Transferring Media Files**
 
 To transfer files from your main system to the Audiobookshelf container, you can use scp. For example:
 ``` bash

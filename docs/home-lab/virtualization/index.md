@@ -1,40 +1,37 @@
-# **<span style="color:#009688;">Containers & Virtualization**
+# Containers & Virtualization
 
 The compute layer of the home lab — the hypervisors and containerization platform that everything else in this site (self-hosted apps, core services, the Microsoft and Tanium labs) actually runs on top of.
 
-## <span style="color:#009688;">What's Covered
+## What's Covered
 
-<div class="grid cards" markdown>
+<div class="k-rack" markdown>
 
--   :simple-proxmox: **Proxmox VE**
+-   [
+    <span class="k-rack-code">Hyp</span>
+    <span class="k-rack-title">Proxmox VE</span>
+    <span class="k-rack-desc">Primary hypervisor for the lab: VMs, LXC containers, and datacenter-wide management.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](proxmox/proxmox.md){ .k-rack-row }
 
-    ---
+-   [
+    <span class="k-rack-code">Esxi</span>
+    <span class="k-rack-title">VMware ESXi</span>
+    <span class="k-rack-desc">Enterprise-grade hypervisor used alongside Proxmox for select workloads.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](vmware/vmware.md){ .k-rack-row }
 
-    Primary hypervisor for the lab — VMs, LXC containers, and datacenter-wide management.
-
-    [:octicons-arrow-right-24: Start here](proxmox/proxmox.md)
-
--   :simple-vmware: **VMware ESXi**
-
-    ---
-
-    Enterprise-grade hypervisor used alongside Proxmox for select workloads.
-
-    [:octicons-arrow-right-24: Start here](vmware/vmware.md)
-
--   :material-docker: **Docker**
-
-    ---
-
-    Containerization platform for lightweight, portable service deployment — used throughout the Applications & Core Services sections.
-
-    [:octicons-arrow-right-24: Start here](../docker.md)
+-   [
+    <span class="k-rack-code">Ctr</span>
+    <span class="k-rack-title">Docker</span>
+    <span class="k-rack-desc">Containerization platform used throughout the Applications and Core Services sections.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](../docker.md){ .k-rack-row }
 
 </div>
 
 ---
 
-## <span style="color:#009688;">Proxmox VE: Section Breakdown
+## Proxmox VE: Section Breakdown
 
 Proxmox is the primary hypervisor for this lab, so its section is the deepest:
 
@@ -49,7 +46,7 @@ Proxmox is the primary hypervisor for this lab, so its section is the deepest:
 
 ---
 
-## <span style="color:#009688;">How This Section Fits the Rest of the Lab
+## How This Section Fits the Rest of the Lab
 
 Almost everything documented elsewhere on this site runs *on top of* what's covered here:
 
@@ -61,7 +58,7 @@ If you're setting up a new service anywhere else in this documentation, this is 
 
 ---
 
-## <span style="color:#009688;">Choosing Between a VM and an LXC Container
+## Choosing Between a VM and an LXC Container
 
 A quick rule of thumb used throughout this lab:
 
@@ -72,6 +69,6 @@ See [Proxmox Virtual Machines](proxmox/vms.md) and [Proxmox Containers](proxmox/
 
 ---
 
-## <span style="color:#009688;">Related: New LXC Bootstrap Automation
+## Related: New LXC Bootstrap Automation
 
 Once a new LXC is created here, the [Ansible LXC Bootstrap playbook](../services/ansible-lxc-bootstrap.md) in Core Services takes over — creating the automation service account, hardening SSH, and installing baseline packages — so it's ready for the [patch](../services/ansible-patch.md) and [backup](../services/ansible-config-backup.md) automation from day one.

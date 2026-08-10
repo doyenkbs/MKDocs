@@ -8,7 +8,7 @@ tags:
 summary: This guide focuses on creating an Internal Virtual Switch with NAT (Network Address Translation)
 ---
 
-# **<span style="color:#009688;">Create an Internal Virtual Switch with NAT Network in Hyper-V**
+# Create an Internal Virtual Switch with NAT Network in Hyper-V
 
 ---
 
@@ -25,7 +25,7 @@ By combining an internal switch with NAT, VMs can remain isolated from the produ
 
 ---
 
-## **<span style="color:#009688;">🔧 Step-by-Step Instructions**
+## 🔧 Step-by-Step Instructions
 
 
 !!! warning "Run PowerShell as Administrator"
@@ -34,7 +34,7 @@ By combining an internal switch with NAT, VMs can remain isolated from the produ
 
 ---
 
-### **<span style="color:#009688;">🌐 1. Create a New Virtual Switch (Internal)**
+### 🌐 1. Create a New Virtual Switch (Internal)
 
 ```powershell
 New-VMSwitch -SwitchName "LabSwitch" -SwitchType Internal
@@ -69,7 +69,7 @@ New-NetIPAddress -IPAddress 10.0.0.1 -PrefixLength 24 -InterfaceIndex 49
 
 ---
 
-### **<span style="color:#009688;">🌐 2. Create a NAT Network**
+### 🌐 2. Create a NAT Network
 
 ``` powershell
 New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
@@ -110,7 +110,7 @@ New-NetNat -Name "NatSwitch" -InternalIPInterfaceAddressPrefix 10.0.0.0/24
 
 ---
 
-### **<span style="color:#009688;">🔎 Network Diagram**
+### 🔎 Network Diagram
 
 ``` mermaid
 flowchart TD

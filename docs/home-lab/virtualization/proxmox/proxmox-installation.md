@@ -3,7 +3,7 @@ tags:
   - Proxmox
 ---
 
-# **<span style="color:#009688;">Proxmox VE Installation</span>**
+# Proxmox VE Installation
 
 !!! info "**Requirements**"
     Before starting, make sure you have:
@@ -18,16 +18,16 @@ tags:
 
 ---
 
-## **Installation Steps**
-### **1. Download the Latest ISO**
-Get the latest <span style="color:#009688;">Proxmox VE</span> ISO from the official site:  
+## Installation Steps
+### 1. Download the Latest ISO
+Get the latest <span class="prod-app">Proxmox VE</span> ISO from the official site:  
 ➡️ [**Proxmox Downloads**](https://www.proxmox.com/en/downloads)  
 
 ![Proxmox Download Page](/assets/images/proxmox.png)
 
 ---
 
-### **2. Create a Bootable USB Drive**
+### 2. Create a Bootable USB Drive
 You can use **Rufus** (Windows) or the `dd` command (Linux/macOS).  
 
 ??? info "**Windows (Rufus):**"
@@ -45,7 +45,7 @@ You can use **Rufus** (Windows) or the `dd` command (Linux/macOS).
 
 ---
 
-### **3. Boot and Install Proxmox VE**
+### 3. Boot and Install Proxmox VE
 1. Boot your system from the USB drive.  
 !!! example "Follow the installation wizard:"
     - Accept the EULA  
@@ -56,7 +56,7 @@ You can use **Rufus** (Windows) or the `dd` command (Linux/macOS).
 
 ---
 
-### **4. Reboot and Access the Web GUI**
+### 4. Reboot and Access the Web GUI
 After installation, reboot your server and open the web interface in your browser:  
 
 `https://<proxmox-ip>:8006`

@@ -1,0 +1,443 @@
+/* ============================================================================
+   Kabason Lab — typography and content components
+
+   Section rhythm is set once here rather than per component, so that
+   `.md-typeset` and element selectors do not cancel each other out.
+   ========================================================================= */
+
+body,
+input,
+.md-typeset {
+  font-family: var(--k-body);
+}
+
+code,
+kbd,
+pre,
+.md-typeset code,
+.md-typeset kbd,
+.md-typeset pre {
+  font-family: var(--k-mono);
+}
+
+/* ------------------------------------------------------------ headings -- */
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-family: var(--k-display);
+  color: var(--k-ink);
+}
+
+.md-typeset h1 {
+  font-variation-settings: "wdth" 108, "wght" 700;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.14;
+  letter-spacing: -.016em;
+  margin-bottom: 1.4rem;
+}
+
+.md-typeset h2 {
+  font-variation-settings: "wdth" 100, "wght" 600;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  margin-top: 2.6em;
+  padding-top: .9rem;
+  border-top: 1px solid var(--k-rule);
+}
+
+.md-typeset h3 {
+  font-variation-settings: "wdth" 100, "wght" 600;
+  font-weight: 600;
+  font-size: 1.08rem;
+  letter-spacing: -.004em;
+  margin-top: 2em;
+}
+
+.md-typeset h4 {
+  font-variation-settings: "wdth" 100, "wght" 600;
+  font-weight: 600;
+  font-size: .95rem;
+}
+
+/* the first heading on a page has nothing to divide it from */
+.md-typeset h1 + h2,
+.md-typeset > h2:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* Many pages already write `---` before a `##`. The heading now carries its
+   own rule, so drop the duplicate rather than stacking two lines. */
+.md-typeset hr + h2 {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 1.6em;
+}
+
+/* --------------------------------------------------------------- measure -- */
+/* The grid stays wide so tables and code can use it, but running text is
+   capped: 90rem of unbroken prose is unreadable. */
+
+.md-typeset p,
+.md-typeset ul,
+.md-typeset ol,
+.md-typeset blockquote,
+.md-typeset dl {
+  max-width: var(--k-measure);
+}
+
+.md-typeset .k-rack p,
+.md-typeset .k-rack ul,
+.md-typeset .grid p,
+.md-typeset .grid ul,
+.md-typeset .admonition p,
+.md-typeset .admonition ul,
+.md-typeset details p,
+.md-typeset details ul,
+.md-typeset td p,
+.md-typeset td ul {
+  max-width: none;
+}
+
+/* ------------------------------------------------------- product tokens -- */
+/* The docs colour-code which console a step belongs to: the application being
+   configured, and the identity provider. This used to be inline hex on a
+   <span>; tools/normalize_spans.py turned it into these two classes. */
+
+.md-typeset .prod-app,
+.md-typeset .prod-idp {
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: .5px;
+}
+
+.md-typeset .prod-app { color: var(--k-cyan); }
+.md-typeset .prod-idp { color: var(--k-orange); }
+
+/* inside a link or heading the colour would fight, so stand down */
+.md-typeset a .prod-app,
+.md-typeset a .prod-idp,
+.md-typeset h1 .prod-app,
+.md-typeset h1 .prod-idp,
+.md-typeset h2 .prod-app,
+.md-typeset h2 .prod-idp,
+.md-typeset h3 .prod-app,
+.md-typeset h3 .prod-idp {
+  color: inherit;
+  border-bottom: 0;
+}
+
+/* ---------------------------------------------------------------- links -- */
+
+.md-typeset a {
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: .15em;
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus {
+  color: var(--k-orange);
+  text-decoration-color: currentColor;
+}
+
+/* ----------------------------------------------------------------- code -- */
+
+.md-typeset code {
+  background: color-mix(in srgb, var(--k-cyan) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--k-cyan) 18%, transparent);
+  border-radius: 2px;
+  padding: .08em .34em;
+  font-size: .84em;
+}
+
+.md-typeset pre > code {
+  border: 0;
+  background: transparent;
+  padding: .7rem 1rem;
+  font-size: .78rem;
+  line-height: 1.7;
+}
+
+.md-typeset .highlight,
+.md-typeset pre {
+  border-radius: 2px;
+}
+
+.md-typeset .highlight > pre > code,
+.md-typeset > pre > code {
+  background: var(--k-chassis);
+  color: var(--k-chassis-ink);
+}
+
+.md-typeset .highlight [data-linenos]::before {
+  background: transparent;
+  color: var(--k-chassis-mute);
+}
+
+.md-typeset .md-clipboard { color: var(--k-chassis-mute); }
+.md-typeset .md-clipboard:hover { color: var(--k-led-orange); }
+
+/* code block filename/language caption */
+.md-typeset .highlight span.filename {
+  font-family: var(--k-mono);
+  font-size: .6rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: var(--k-chassis);
+  color: var(--k-chassis-mute);
+  border-bottom: 1px solid var(--k-chassis-rule);
+  border-radius: 2px 2px 0 0;
+}
+
+/* --------------------------------------------------------------- tables -- */
+/* Wide tables scroll inside their own container; the page never does. */
+
+.md-typeset__table { width: 100%; }
+.md-typeset table:not([class]) {
+  border: 0;
+  border-radius: 0;
+  font-size: .74rem;
+}
+
+.md-typeset table:not([class]) th {
+  font-family: var(--k-mono);
+  font-size: .6rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--k-muted);
+  background: transparent;
+  border-bottom: 1px solid var(--k-ink);
+  white-space: nowrap;
+}
+
+.md-typeset table:not([class]) td {
+  border-bottom: 1px solid var(--k-rule);
+  vertical-align: top;
+}
+
+.md-typeset table:not([class]) tr:hover {
+  background: var(--k-surface);
+}
+
+/* ---------------------------------------------------------- admonitions -- */
+/* Squared left edge, mono uppercase title, mapped to the palette. There are
+   130+ of these across the docs, so they carry a lot of the visual weight. */
+
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: .76rem;
+  border: 1px solid var(--k-rule);
+  border-left: 3px solid var(--k-muted);
+  border-radius: 0 2px 2px 0;
+  background: var(--k-surface);
+  box-shadow: none;
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-family: var(--k-mono);
+  font-size: .64rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  background: transparent;
+  border-bottom: 1px solid var(--k-rule);
+  padding: .6rem .8rem .6rem 2.2rem;
+  margin: 0;
+}
+
+.md-typeset .admonition-title::before,
+.md-typeset summary::before {
+  top: .55rem;
+  left: .7rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.md-typeset .admonition-title::after,
+.md-typeset summary::after {
+  top: .55rem;
+}
+
+/* note / info — cyan */
+.md-typeset .admonition.note,
+.md-typeset details.note,
+.md-typeset .admonition.info,
+.md-typeset details.info,
+.md-typeset .admonition.abstract,
+.md-typeset details.abstract { border-left-color: var(--k-cyan); }
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary,
+.md-typeset .info > .admonition-title,
+.md-typeset .info > summary,
+.md-typeset .abstract > .admonition-title,
+.md-typeset .abstract > summary {
+  color: var(--k-cyan);
+  background: color-mix(in srgb, var(--k-cyan) 7%, transparent);
+}
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before,
+.md-typeset .info > .admonition-title::before,
+.md-typeset .info > summary::before,
+.md-typeset .abstract > .admonition-title::before,
+.md-typeset .abstract > summary::before { background-color: var(--k-cyan); }
+
+/* tip / success — green, the one place green is allowed besides the rack */
+.md-typeset .admonition.tip,
+.md-typeset details.tip,
+.md-typeset .admonition.success,
+.md-typeset details.success { border-left-color: var(--k-green); }
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary,
+.md-typeset .success > .admonition-title,
+.md-typeset .success > summary {
+  color: var(--k-green);
+  background: color-mix(in srgb, var(--k-green) 8%, transparent);
+}
+.md-typeset .tip > .admonition-title::before,
+.md-typeset .tip > summary::before,
+.md-typeset .success > .admonition-title::before,
+.md-typeset .success > summary::before { background-color: var(--k-green); }
+
+/* warning / question — orange */
+.md-typeset .admonition.warning,
+.md-typeset details.warning,
+.md-typeset .admonition.question,
+.md-typeset details.question { border-left-color: var(--k-orange); }
+.md-typeset .warning > .admonition-title,
+.md-typeset .warning > summary,
+.md-typeset .question > .admonition-title,
+.md-typeset .question > summary {
+  color: var(--k-orange);
+  background: color-mix(in srgb, var(--k-orange) 8%, transparent);
+}
+.md-typeset .warning > .admonition-title::before,
+.md-typeset .warning > summary::before,
+.md-typeset .question > .admonition-title::before,
+.md-typeset .question > summary::before { background-color: var(--k-orange); }
+
+/* danger / bug / failure — deep red, kept off the brand palette on purpose */
+.md-typeset .admonition.danger,
+.md-typeset details.danger,
+.md-typeset .admonition.bug,
+.md-typeset details.bug,
+.md-typeset .admonition.failure,
+.md-typeset details.failure { border-left-color: #C0341B; }
+.md-typeset .danger > .admonition-title,
+.md-typeset .danger > summary,
+.md-typeset .bug > .admonition-title,
+.md-typeset .bug > summary,
+.md-typeset .failure > .admonition-title,
+.md-typeset .failure > summary {
+  color: #C0341B;
+  background: rgba(192, 52, 27, .08);
+}
+.md-typeset .danger > .admonition-title::before,
+.md-typeset .danger > summary::before,
+.md-typeset .bug > .admonition-title::before,
+.md-typeset .bug > summary::before,
+.md-typeset .failure > .admonition-title::before,
+.md-typeset .failure > summary::before { background-color: #C0341B; }
+
+/* example / quote — navy */
+.md-typeset .admonition.example,
+.md-typeset details.example,
+.md-typeset .admonition.quote,
+.md-typeset details.quote { border-left-color: var(--k-navy); }
+.md-typeset .example > .admonition-title,
+.md-typeset .example > summary,
+.md-typeset .quote > .admonition-title,
+.md-typeset .quote > summary {
+  color: var(--k-navy);
+  background: color-mix(in srgb, var(--k-navy) 7%, transparent);
+}
+.md-typeset .example > .admonition-title::before,
+.md-typeset .example > summary::before,
+.md-typeset .quote > .admonition-title::before,
+.md-typeset .quote > summary::before { background-color: var(--k-navy); }
+
+[data-md-color-scheme="slate"] .md-typeset .example > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .example > summary,
+[data-md-color-scheme="slate"] .md-typeset .quote > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .quote > summary { color: #6FB6E8; }
+[data-md-color-scheme="slate"] .md-typeset .admonition.example,
+[data-md-color-scheme="slate"] .md-typeset details.example,
+[data-md-color-scheme="slate"] .md-typeset .admonition.quote,
+[data-md-color-scheme="slate"] .md-typeset details.quote { border-left-color: #6FB6E8; }
+
+/* ---------------------------------------------------------------- chrome -- */
+
+.md-grid { max-width: 84rem; }
+
+.md-header { box-shadow: none; border-bottom: 1px solid rgba(1, 174, 240, .28); }
+.md-header__title { font-family: var(--k-display); font-variation-settings: "wdth" 108, "wght" 600; }
+
+.md-tabs { border-bottom: 0; }
+.md-tabs__link {
+  font-family: var(--k-mono);
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  opacity: .78;
+}
+.md-tabs__link:hover { opacity: 1; }
+.md-tabs__item--active .md-tabs__link { opacity: 1; font-weight: 600; }
+
+.md-nav__title { font-family: var(--k-mono); font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; }
+.md-nav { font-size: .68rem; }
+.md-nav__link--active { font-weight: 600; }
+
+.md-search__form { border-radius: 2px; }
+.md-search__input { font-family: var(--k-body); }
+
+.md-typeset .md-button {
+  font-family: var(--k-mono);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border-width: 1px;
+  padding: .7rem 1.2rem;
+}
+.md-typeset .md-button--primary {
+  background: var(--k-cyan);
+  border-color: var(--k-cyan);
+  color: #fff;
+}
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus {
+  background: var(--k-orange);
+  border-color: var(--k-orange);
+  color: #fff;
+}
+
+.md-footer-meta { background: #002B4C; }
+.md-footer__inner { font-family: var(--k-mono); font-size: .62rem; letter-spacing: .08em; }
+
+/* footnotes, captions and other small print */
+.md-typeset figcaption,
+.md-typeset .footnote {
+  font-family: var(--k-mono);
+  font-size: .62rem;
+  letter-spacing: .04em;
+  color: var(--k-muted);
+}
+
+/* visible keyboard focus everywhere */
+.md-typeset a:focus-visible,
+.md-nav__link:focus-visible,
+.md-tabs__link:focus-visible,
+.md-typeset .md-button:focus-visible {
+  outline: 2px solid var(--k-cyan);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

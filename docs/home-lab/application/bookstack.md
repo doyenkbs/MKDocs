@@ -3,9 +3,9 @@ tags:
   - Bookstack
 ---
 
-# **<span style="color:#009688;">BookStack Installation on Ubuntu 24.04</span>**
+# BookStack Installation on Ubuntu 24.04
 
-This page documents the complete process for installing <span style="color:#009688;">BookStack</span>, a self-hosted wiki and knowledge base, on a fresh Ubuntu 24.04 server. <span style="color:#009688;">BookStack</span> is used as my primary knowledge repository.
+This page documents the complete process for installing <span class="prod-app">BookStack</span>, a self-hosted wiki and knowledge base, on a fresh Ubuntu 24.04 server. <span class="prod-app">BookStack</span> is used as my primary knowledge repository.
 
 > Reference: [BookStack Official Installation Guide](https://www.bookstackapp.com/docs/admin/installation/)
 
@@ -14,15 +14,15 @@ This page documents the complete process for installing <span style="color:#0096
     - Root or sudo access
     - Static IP address
 
-## **Ubuntu 24.04 Installation Script**
+## Ubuntu 24.04 Installation Script
 
-A script is available to install <span style="color:#009688;">Bookstack</span> on a fresh Ubuntu 24.04 instance.
+A script is available to install <span class="prod-app">Bookstack</span> on a fresh Ubuntu 24.04 instance.
 
 !!! warning
     This script is for a clean OS only and will install Apache, MySQL 8.0, and PHP 8.3.
     It may overwrite existing web setup and does not configure mail or server security. You are responsible for those steps separately.
 
-### **Running the Script**
+### Running the Script
 ``` bash
 # Download the installation script
 wget https://codeberg.org/bookstack/devops/raw/branch/main/scripts/installation-ubuntu-24.04.sh
@@ -35,7 +35,7 @@ sudo ./installation-ubuntu-24.04.sh
 ```
 The script will output a log file in your working directory for debugging. File and directory permissions will be set based on the user running the script.
 
-## **Change BookStack Instance URL**
+## Change BookStack Instance URL
 
 **1. Set Domain Name**
 
@@ -58,7 +58,7 @@ APP_URL=https://wiki.example.com
 sudo systemctl restart apache2
 ```
 
-## **Set Up HTTPS with Let’s Encrypt (Optional but Recommended)**
+## Set Up HTTPS with Let’s Encrypt (Optional but Recommended)
 
 Install Certbot and request a certificate for your domain:
 ``` bash
@@ -67,7 +67,7 @@ sudo certbot --apache -d wiki.example.com
 ```
 Certbot will handle obtaining and installing your SSL certificate.
 
-## **Mail Setup (Recommended)**
+## Mail Setup (Recommended)
 
 **1. Edit ***.env*** for Mail Settings**
 Open your environment config:
@@ -97,7 +97,7 @@ php artisan config:clear
 ```
 
 ## First Login
-Once installation and setup are complete, access <span style="color:#009688;">Bookstack</span> in your browser at:
+Once installation and setup are complete, access <span class="prod-app">Bookstack</span> in your browser at:
 
 > *http(s)://your-domain-or-server-ip*
 

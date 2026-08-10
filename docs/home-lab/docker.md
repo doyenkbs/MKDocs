@@ -5,33 +5,33 @@ tags:
 ---
 
 
-# **<span style="color:#009688;">What is Docker and Docker Compose?</span>**
+# What is Docker and Docker Compose?
 
 ---
-## **<span style="color:#009688;">Docker**
+## Docker
 
-<span style="color:#009688;">Docker</span> is an open-source platform that enables you to automate the deployment, scaling, and management of applications inside lightweight, portable containers. Containers isolate your applications from the host system, making them portable and consistent across different environments. Unlike virtual machines, containers share the host OS kernel, which makes them more resource-efficient.
+<span class="prod-app">Docker</span> is an open-source platform that enables you to automate the deployment, scaling, and management of applications inside lightweight, portable containers. Containers isolate your applications from the host system, making them portable and consistent across different environments. Unlike virtual machines, containers share the host OS kernel, which makes them more resource-efficient.
 
 Docker is ideal for running single services or applications in isolated environments and provides all the necessary commands to build, run, and manage containers.
 
 ---
-## **<span style="color:#009688;">Docker Compose**
+## Docker Compose
 
-<span style="color:#009688;">Docker Compose</span> is a tool for defining and managing multi-container Docker applications. With Docker Compose, you define your application’s services, networks, and volumes in a single YAML file (typically called docker-compose.yml). Compose allows you to start, stop, and manage multiple containers as a single application with just one command. It is especially useful for applications consisting of several interdependent services (like a web server, database, and cache).
-
----
-## **<span style="color:#009688;">Key differences:**
-
-<span style="color:#009688;">Docker</span> is best for running and managing single containers.
-
-<span style="color:#009688;">Docker Compose</span> is designed to organize and manage multiple containers together as one application stack, handling configuration and network setup automatically.
+<span class="prod-app">Docker Compose</span> is a tool for defining and managing multi-container Docker applications. With Docker Compose, you define your application’s services, networks, and volumes in a single YAML file (typically called docker-compose.yml). Compose allows you to start, stop, and manage multiple containers as a single application with just one command. It is especially useful for applications consisting of several interdependent services (like a web server, database, and cache).
 
 ---
-## **<span style="color:#009688;">Installing Docker & Docker Compose**
+## Key differences:
+
+<span class="prod-app">Docker</span> is best for running and managing single containers.
+
+<span class="prod-app">Docker Compose</span> is designed to organize and manage multiple containers together as one application stack, handling configuration and network setup automatically.
+
+---
+## Installing Docker & Docker Compose
 
 Below are the installation steps for Docker and Docker Compose on Debian and Ubuntu.
 
-### **Install Docker & Docker Compose on Debian**
+### Install Docker & Docker Compose on Debian
 ```bash
 # Update package lists and install dependencies
 sudo apt-get update
@@ -58,7 +58,7 @@ sudo service docker start
 ```
 
 ---
-### **Install Docker & Docker Compose on Ubuntu**
+### Install Docker & Docker Compose on Ubuntu
 ```bash
 # Update package lists and install dependencies
 sudo apt-get update
@@ -86,11 +86,11 @@ sudo service docker start
 
 ---
 
-### **Linux Post-Installation Steps for Docker**
+### Linux Post-Installation Steps for Docker
 
 These **optional** steps help configure your Linux system for easier Docker usage.
 
-### **Run Docker Without `sudo`**
+### Run Docker Without `sudo`
 
 By default, Docker requires `sudo` because the Docker daemon runs as `root` and listens on a Unix socket owned by `root`.
 
@@ -108,7 +108,7 @@ newgrp docker
 ```
 
 ---
-### ***References***
+### *References*
 - [*Docker Documentation*](https://docs.docker.com/get-started)
 - [*Install Docker Engine*](https://docs.docker.com/engine/install/)
 - [*What is Docker Compose?*](https://cyberpanel.net/blog/docker-compose-vs-docker) - CyberPanel

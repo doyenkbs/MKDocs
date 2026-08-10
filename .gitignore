@@ -1,4 +1,11 @@
 .cache
 
+# mkdocs build output — Cloudflare runs `mkdocs build` itself
+site/
+
+# local preview environment
+.venv/
+__pycache__/
+
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md

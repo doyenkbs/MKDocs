@@ -3,9 +3,9 @@ tags:
     - Integration
 ---
 
-# **<span style="color:#009688;">Audiobookshelf ↔ Authentik: OIDC Integration Guide</span>**
+# Audiobookshelf ↔ Authentik: OIDC Integration Guide
 
-This guide will walk you through integrating **<span style="color:#009688;">Audiobookshelf</span>** with **<span style="color:red;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
+This guide will walk you through integrating **<span class="prod-app">Audiobookshelf</span>** with **<span class="prod-idp">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
 
 
 !!! info "**Requirements**"
@@ -14,7 +14,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Audi
 
 ---
 
-## **<span style="color:#009688;">Overview</span>**
+## Overview
 
 - Create an OAuth2/OpenID *provider + application* in Authentik.  
 - Register Audiobookshelf redirect URIs in Authentik.  
@@ -24,7 +24,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Audi
 
 ---
 
-## **<span style="color:#009688;">Step 1: Create an Application & Provider in Authentik</span>**
+## Step 1: Create an Application & Provider in Authentik
 
 1. **Log into your Authentik admin interface.**
 2. Go to **Applications > Providers** and click **Create**.
@@ -48,13 +48,13 @@ This guide will walk you through integrating **<span style="color:#009688;">Audi
     - **Slug:** audiobookshelf (keeps things simple)
     - **Provider:** Select the provider created above (`Audiobookshelf OIDC`)
     - **Policy Engine Mode:** Any
-    - **Launch URL:** Your <span style="color:#009688;">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
+    - **Launch URL:** Your <span class="prod-app">Audiobookshelf</span> login page (e.g., `https://abs.yoursite.com`)
 
 6. **Save** the application.
 
 ---
 
-## **<span style="color:#009688;">Step 2: Copy client credentials & discovery info from Authentik</span>**
+## Step 2: Copy client credentials & discovery info from Authentik
 
 - In Authentik, go to the **Provider** you created for Audiobookshelf.
 !!! tip "Locate and copy the following values:"
@@ -73,7 +73,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 ---
 
-## **<span style="color:#009688;">Step 3: Configure Audiobookshelf for OIDC</span>**
+## Step 3: Configure Audiobookshelf for OIDC
 
 1. **Access Audiobookshelf** as an admin.
 2. Navigate to **Settings > Authentication**.
@@ -99,7 +99,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 ---
 
-## **<span style="color:#009688;">Step 4: Test Your SSO Login</span>**
+## Step 4: Test Your SSO Login
 
 1. Visit your Audiobookshelf login page.
 2. If auto-launch is enabled, you will be redirected to Authentik to log in.
@@ -114,12 +114,12 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 
 !!! note
-    - **Users:** Each user must exist in <span style="color:red;">Authentik</span>. If **Auto Register** is enabled, users are created on first login in <span style="color:#009688;">Audiobookshelf</span> with limited permissions.
-    - **Groups:** If you wish to sync user groups, map claims accordingly in <span style="color:red;">Authentik</span> and verify `groups` claim handling in <span style="color:#009688;">Audiobookshelf</span>.
+    - **Users:** Each user must exist in <span class="prod-idp">Authentik</span>. If **Auto Register** is enabled, users are created on first login in <span class="prod-app">Audiobookshelf</span> with limited permissions.
+    - **Groups:** If you wish to sync user groups, map claims accordingly in <span class="prod-idp">Authentik</span> and verify `groups` claim handling in <span class="prod-app">Audiobookshelf</span>.
     - **Mobile App:** Ensure the extra mobile redirect URI is also added in the provider's allowed redirect URIs.
 
 ---
-### **For more details:**
+### For more details:
 - See the [*Audiobookshelf OIDC guide*](https://www.audiobookshelf.org/guides/oidc_authentication/)
 - For advanced Authentik configuration, consult the [*Authentik documentation*](https://docs.goauthentik.io/docs).
 

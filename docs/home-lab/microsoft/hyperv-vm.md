@@ -8,7 +8,7 @@ tags:
 summary: This guide walks you through the creation of Virtual Machines (VMs) and the initial configuration steps after installation.
 ---
 
-# **<span style="color:#009688;">Virtual Machine Creation & Initial Configuration**
+# Virtual Machine Creation & Initial Configuration
 
 ---
 
@@ -17,7 +17,7 @@ These practices ensure a consistent and reliable lab environment for future setu
 
 ---
 
-## **<span style="color:#009688;">🖥️ 1. Create a Virtual Machine**
+## 🖥️ 1. Create a Virtual Machine
 
 1. **Open Hyper-V Manager (or Proxmox/VMware/VirtualBox depending on your setup).**  
 2. **Create a new VM:** 
@@ -40,15 +40,15 @@ These practices ensure a consistent and reliable lab environment for future setu
 
 ---
 
-## **<span style="color:#009688;">🔧 2. Initial Configuration After Installation**
+## 🔧 2. Initial Configuration After Installation
 
-### **Rename All Virtual Machines**
+### Rename All Virtual Machines
 > - Rename each virtual machine to match your lab naming convention.  
 *Example: `DC01`, `SCCM01`, `CLIENT01`.*
 
 ---
 
-### **Configure Each Server**
+### Configure Each Server
 
 1. **Open Server Manager → Local Server**  
    Use the dashboard to quickly configure system properties.  

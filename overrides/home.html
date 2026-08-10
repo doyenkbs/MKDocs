@@ -1,0 +1,113 @@
+{% extends "main.html" %}
+
+{#
+  Landing page template.
+
+  The hero is injected into the `tabs` block, which sits above the content
+  wrapper and so can run full-bleed. Everything below the hero stays in
+  docs/index.md as ordinary markdown.
+
+  To add or retire a service, edit `rack` below and nothing else. `state` is
+  one of on / wip / off, and it describes how well the thing is *documented*,
+  not whether it is running:
+
+    on   documented
+    wip  in progress
+    off  planned
+#}
+
+{% set rack = [
+  { 'host': 'pve-01',     'role': 'hyp',  'desc': 'Proxmox VE',        'state': 'on',
+    'url': 'home-lab/virtualization/proxmox/proxmox/' },
+  { 'host': 'authentik',  'role': 'sso',  'desc': 'Identity provider', 'state': 'on',
+    'url': 'home-lab/application/authentik/' },
+  { 'host': 'cf-tunnel',  'role': 'net',  'desc': 'Cloudflare ingress','state': 'on',
+    'url': 'home-lab/services/cloudflaretunnel/' },
+  { 'host': 'mailcow',    'role': 'mta',  'desc': 'Mail server',       'state': 'on',
+    'url': 'home-lab/services/email/' },
+  { 'host': 'sccm-lab',   'role': 'mecm', 'desc': 'SCCM / MECM',       'state': 'on',
+    'url': 'home-lab/microsoft/' },
+  { 'host': 'ansible',    'role': 'cfg',  'desc': 'Lifecycle automation', 'state': 'on',
+    'url': 'home-lab/services/ansible-lifecycle-overview/' },
+  { 'host': 'zabbix',     'role': 'mon',  'desc': 'Monitoring',        'state': 'wip',
+    'url': 'home-lab/application/' },
+  { 'host': 'technitium', 'role': 'dns',  'desc': 'Internal DNS',      'state': 'off',
+    'url': 'home-lab/services/' }
+] %}
+
+{#
+  The wordmark below is this page's <h1>, but it lives in the `tabs` block,
+  which Material cannot see when it decides whether to inject a title heading.
+  Render the content directly so the page does not end up with two h1s.
+#}
+{% block content %}
+  {{ page.content }}
+{% endblock %}
+
+{% block tabs %}
+  {{ super() }}
+
+  <section class="k-hero">
+    <div class="k-hero-grid">
+
+      <div>
+        <p class="k-eyebrow">kabason.net <span class="tick">/</span> lab documentation</p>
+
+        <h1 class="k-wordmark">Kabason<span class="lab">Lab</span></h1>
+
+        <div class="k-hero-rule"></div>
+
+        <p class="k-lede">
+          Guides, configs, and troubleshooting notes from a self-hosted home lab,
+          written as things get built, broken, and fixed.
+        </p>
+        <p class="k-lede-sub">
+          As much a record for future-me as a resource for anyone running a
+          similar stack.
+        </p>
+
+        <p class="k-stack">
+          <b>Proxmox VE</b> &middot; <b>Authentik SSO</b> &middot;
+          <b>SCCM/MECM</b> &middot; <b>Tanium</b>
+        </p>
+
+        <div class="k-actions">
+          <a class="k-btn k-btn-solid" href="#sections">Browse the docs</a>
+          <a class="k-btn k-btn-ghost" href="{{ 'about/' | url }}">About this site</a>
+        </div>
+      </div>
+
+      <div class="k-rack-hero">
+        <div class="k-chassis">
+          <div class="k-chassis-head">
+            <span>Rack 01 &mdash; kabason-lab</span>
+            <span>{{ rack | length }} U</span>
+          </div>
+
+          <div class="k-rail" aria-hidden="true"></div>
+
+          <div class="k-slabs">
+            {% for unit in rack %}
+              <a class="k-slab" href="{{ unit.url | url }}">
+                <span class="k-led k-led-{{ unit.state }}" aria-hidden="true"></span>
+                <span class="k-host">
+                  {{ unit.host }}<small>{{ unit.desc }}</small>
+                </span>
+                <span class="k-role">{{ unit.role }}</span>
+              </a>
+            {% endfor %}
+          </div>
+
+          <div class="k-rail" aria-hidden="true"></div>
+        </div>
+
+        <p class="k-legend">
+          <span><i class="g"></i> Documented</span>
+          <span><i class="o"></i> In progress</span>
+          <span><i class="x"></i> Planned</span>
+        </p>
+      </div>
+
+    </div>
+  </section>
+{% endblock %}

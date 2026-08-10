@@ -1,6 +1,6 @@
-# **<span style="color:#009688;">Postfix "Not Allowed in State 1" / DNS Resolution Failure**
+# Postfix "Not Allowed in State 1" / DNS Resolution Failure
 
-## <span style="color:#009688;">Symptom
+## Symptom
 
 - SOGo webmail shows a red/orange full-screen error: **"not allowed in state 1"** when trying to send, receive, or otherwise interact with mail.
 - Sending and receiving both fail.
@@ -8,7 +8,7 @@
 
 This SOGo error is generic — it just means the webmail frontend lost its connection to the backend. It does not point directly at the cause; you have to look at the container stack.
 
-## <span style="color:#009688;">Diagnosis Steps
+## Diagnosis Steps
 
 **1. Check container health/uptime**
 
@@ -42,7 +42,7 @@ docker compose logs --tail=100 watchdog-mailcow | grep -i postfix
 
 Watchdog will report declining health levels for postfix / postfix-tlspol when the container can't be reached properly — this is a symptom of the same root cause, not a separate issue.
 
-## <span style="color:#009688;">Root Cause Chain (what actually happened)
+## Root Cause Chain (what actually happened)
 
 1. A host-level **Postfix** (preinstalled by the VPS provider, e.g. Contabo) was bound to port 25, blocking the mailcow `postfix-mailcow` container from rebinding after a restart:
    ```
@@ -53,7 +53,7 @@ Watchdog will report declining health levels for postfix / postfix-tlspol when t
 2. After stopping/disabling the conflicting host Postfix, the mailcow `postfix-mailcow` container still failed to start correctly — this time because it came up **completely detached from the mailcow Docker network** (confirmed via `docker inspect`, which showed `"NetworkSettings.Networks": {}` — empty).
 3. Because it had no network, it could not reach `unbound-mailcow` (mailcow's internal DNS resolver, normally at a fixed IP like `172.22.1.254`), so every internal hostname lookup (`redis-mailcow`, etc.) failed and postfix could never fully start.
 
-## <span style="color:#009688;">Fix
+## Fix
 
 **Check for a conflicting host-level mail service:**
 
@@ -99,7 +99,7 @@ docker compose up -d
 
 This forces Docker to rebuild the mailcow network and reattach every container correctly, rather than trying to patch one container's network membership by hand.
 
-## <span style="color:#009688;">Verification
+## Verification
 
 ```bash
 docker compose ps postfix-mailcow
@@ -116,7 +116,7 @@ docker compose logs --tail=30 postfix-mailcow
 
 Then confirm actual mail flow: send a test email from SOGo to an external address (e.g. Gmail), and send one back in to confirm inbound delivery too — send and receive exercise different paths (submission vs. inbound SMTP) and can fail independently.
 
-## <span style="color:#009688;">Notes / Lessons Learned
+## Notes / Lessons Learned
 
 - The SOGo "not allowed in state 1" screen is a dead end on its own — always go straight to `docker compose ps` and container logs rather than troubleshooting from the SOGo side.
 - VPS providers (Contabo included) sometimes ship a host-level Postfix preinstalled for system mail (cron notices, etc.). This silently conflicts with mailcow's own postfix container on port 25 and won't show up unless you specifically check `ss -tulnp`.

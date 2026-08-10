@@ -8,13 +8,13 @@ tags:
 summary: Step-by-step guide to install and configure OpenVPN using the community installation script, including server setup, client configuration, and router port forwarding.
 ---
 
-# **<span style="color:#009688;">OpenVPN Installation Guide**
+# OpenVPN Installation Guide
 
 This guide walks you through installing and configuring an OpenVPN server using a community script. It also covers creating client profiles and connecting from devices.
 
 ---
 
-## **<span style="color:#009688;">1. Download the Installation Script**
+## 1. Download the Installation Script
 
 Run the following command to download the OpenVPN installer script:
 ```bash
@@ -22,7 +22,7 @@ wget https://git.io/vpn -O openvpn-install.sh
 ```
 ---
 
-## **<span style="color:#009688;">2. Make the Script Executable**
+## 2. Make the Script Executable
 
 Grant execution permissions to the script:
 ```bash
@@ -30,7 +30,7 @@ sudo chmod +x openvpn-install.sh
 ```
 ---
 
-## **<span style="color:#009688;">3. Run the Installer**
+## 3. Run the Installer
 
 Execute the script to install OpenVPN and create your first client profile.
 ``` bash
@@ -53,7 +53,7 @@ Provide a name for your first client (e.g., `Client1`).
 
 ---
 
-## **<span style="color:#009688;">4. Configure Port Forwarding**
+## 4. Configure Port Forwarding
 
 Log into your router and forward the port chosen during installation (default is 1194/UDP, unless you selected TCP).
 
@@ -66,7 +66,7 @@ Log into your router and forward the port chosen during installation (default is
 
 ---
 
-## **<span style="color:#009688;">5. (Optional) Copy Client Configuration**
+## 5. (Optional) Copy Client Configuration
 
 By default, client profiles are stored in /root/.</br>
 For easier access, copy your client file to your home directory:
@@ -77,7 +77,7 @@ sudo cp /root/Client1.ovpn ~
 
 ---
 
-## **<span style="color:#009688;">6. Import Client Configuration**
+## 6. Import Client Configuration
 
 - Install the OpenVPN client on your device (Windows, macOS, Linux, iOS, or Android) from [openvpn.net/client](https://openvpn.net/client).
 
@@ -90,7 +90,7 @@ sudo cp /root/Client1.ovpn ~
 
 ---
 
-## **<span style="color:#009688;">✅ Next Steps**
+## ✅ Next Steps
 
 - Test your VPN connection from outside your home network.
 
@@ -103,7 +103,7 @@ sudo cp /root/Client1.ovpn ~
 
 ---
 
-## **<span style="color:#009688;">📚 References**
+## 📚 References
 
 [OpenVPN Community Downloads](https://openvpn.net/community-downloads/)</br>
 
@@ -112,7 +112,7 @@ sudo cp /root/Client1.ovpn ~
 [Nyr’s OpenVPN Install Script (GitHub)](https://github.com/Nyr/openvpn-install)
 
 
-## **<span style="color:#009688;">Installing and Using the OpenVPN Client**
+## Installing and Using the OpenVPN Client
 
 Follow the steps below to install the OpenVPN client and upload your configuration file on different devices.
 
@@ -134,7 +134,6 @@ Follow the steps below to install the OpenVPN client and upload your configurati
 3. Run the installer and complete the setup wizard.  
 4. Launch **OpenVPN Connect**.  
 5. On the main screen, click **Upload File** under *Have a configuration file instead (.ovpn)?*.  
-   ![OpenVPN Windows Upload File](img/openvpn-windows-upload.png)  
 6. Browse and select your `.ovpn` configuration file.  
 7. Once imported, the profile will appear in the client. Click **Connect** to start the VPN.  
 

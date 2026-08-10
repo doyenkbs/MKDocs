@@ -9,7 +9,7 @@ tags:
 summary: This guide explains how to install the SCCM (Configuration Manager) Admin Console on an administrator workstation.
 ---
 
-# **<span style="color:#009688;">Install SCCM Admin Console on a Workstation**
+# Install SCCM Admin Console on a Workstation
 
 ---
 
@@ -17,7 +17,7 @@ This guide explains how to install the **SCCM (Configuration Manager) Admin Cons
 
 ---
 
-## **<span style="color:#009688;">1. Prerequisites**
+## 1. Prerequisites
 
 Before starting, ensure:
 
@@ -29,7 +29,7 @@ Before starting, ensure:
 
 ---
 
-## **<span style="color:#009688;">2. Locate the Console Installer**
+## 2. Locate the Console Installer
 
 1. On the SCCM installation media or site server, browse to:  
 ```
@@ -44,7 +44,7 @@ C:\Program Files\Microsoft Configuration Manager\Tools\ConsoleSetup
 
 ---
 
-## **<span style="color:#009688;">3. Run the Installer**
+## 3. Run the Installer
 
 1. On the workstation, run:  
 ```
@@ -58,7 +58,7 @@ AdminConsole.msi
 
 ---
 
-## **<span style="color:#009688;">4. Verify Installation**
+## 4. Verify Installation
 
 1. After installation, launch the **Configuration Manager Console** from the Start Menu.  
 2. Confirm it connects to the site server without errors.  

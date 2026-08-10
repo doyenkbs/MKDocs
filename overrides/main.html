@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {#
+    The two faces that paint above the fold: the display face used by the
+    wordmark and h1, and the mono used by every metadata label. Preloading
+    them avoids a flash of fallback text on first paint.
+  #}
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="{{ 'assets/fonts/archivo-normal-400-900-latin.woff2' | url }}">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="{{ 'assets/fonts/ibm-plex-sans-normal-400-latin.woff2' | url }}">
+{% endblock %}

@@ -3,9 +3,9 @@ tags:
   - Integration
 ---
 
-# **<span style="color:#009688;">Integrate BookStack with Authentik via OIDC</span>**
+# Integrate BookStack with Authentik via OIDC
 
-This guide will walk you through integrating **<span style="color:#009688;">Bookstack</span>** with **<span style="color:red;">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
+This guide will walk you through integrating **<span class="prod-app">Bookstack</span>** with **<span class="prod-idp">Authentik</span>** to enable Single Sign-On via OpenID Connect (OIDC).
 
 ---
 
@@ -14,7 +14,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Book
 
 ---
 
-## **1. Create a BookStack Provider**
+## 1. Create a BookStack Provider
 
 1. Open your **Authentik Admin Interface**.  
 2. Navigate to:  
@@ -33,7 +33,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Book
 
 ---
 
-## **2. Create a BookStack Application**
+## 2. Create a BookStack Application
 
 1. Navigate to:  
    **Applications → Applications → Create**.  
@@ -48,7 +48,7 @@ This guide will walk you through integrating **<span style="color:#009688;">Book
 
 ---
 
-## **3. Modify BookStack Environment Variables**
+## 3. Modify BookStack Environment Variables
 
 On your BookStack server, edit the `.env` file.
 Run:
@@ -117,7 +117,7 @@ OIDC_ISSUER_DISCOVER=true
 
 Save the `.env` file and restart BookStack if necessary.
 
-## **4. Test Login**
+## 4. Test Login
 
 - Go to your BookStack login page (`https://wiki.example.com/login`)
 - Click **Login with SSO**
@@ -128,5 +128,5 @@ Save the `.env` file and restart BookStack if necessary.
 
 ---
 
-### **For more details:**
+### For more details:
 - See the [*BookStack Documentation: OpenID Connect Authentication*](https://www.bookstackapp.com/docs/admin/oidc-auth/)

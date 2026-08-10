@@ -4,15 +4,15 @@ tags:
   - Docker
 ---
 
-# **<span style="color:#009688;">Paperless-ngx Installation on Debian 12</span>**
+# Paperless-ngx Installation on Debian 12
 ---
-## **<span style="color:#009688;">Overview</span>**
+## Overview
 
-<span style="color:#009688;">Paperless-ngx</span> is a self-hosted document management system that indexes, OCRs, and organizes scanned documents and PDFs. This guide explains how to install <span style="color:#009688;">Paperless-ngx</span> on Debian 12 using the official installation script with Docker Compose.
+<span class="prod-app">Paperless-ngx</span> is a self-hosted document management system that indexes, OCRs, and organizes scanned documents and PDFs. This guide explains how to install <span class="prod-app">Paperless-ngx</span> on Debian 12 using the official installation script with Docker Compose.
 
-<span style="color:#009688;">Paperless-ngx</span> provides an interactive setup script that automates configuration. The script collects your preferences, generates the necessary Docker Compose files, pulls images, starts the application, and sets up your superuser account.
+<span class="prod-app">Paperless-ngx</span> provides an interactive setup script that automates configuration. The script collects your preferences, generates the necessary Docker Compose files, pulls images, starts the application, and sets up your superuser account.
 
-## **<span style="color:#009688;">1. Install Docker & Docker Compose</span>**
+## 1. Install Docker & Docker Compose
 
 {==
 
@@ -20,9 +20,9 @@ Before proceeding, ensure that Docker and Docker Compose are installed on your D
 
 ==}
 
-## **<span style="color:#009688;">2. Run the Official Paperless-ngx Installation Script</span?**
+## 2. Run the Official Paperless-ngx Installation Script
 
-Download and execute the setup script directly from the <span style="color:#009688;">Paperless-ngx</span> project:
+Download and execute the setup script directly from the <span class="prod-app">Paperless-ngx</span> project:
 
 ``` bash
 bash -c "$(curl --location --silent --show-error https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/install-paperless-ngx.sh)"
@@ -32,9 +32,9 @@ Follow the interactive prompts to complete the configuration. The script will:
 - Ask for your configuration options (e.g., installation path, admin email/password)
 - Download all required Docker images
 - Set up configuration files and environment variables
-- Start <span style="color:#009688;">Paperless-ngx</span> and perform initial setup
+- Start <span class="prod-app">Paperless-ngx</span> and perform initial setup
 
-## **<span style="color:#009688;">3. Access the Paperless-ngx Web Interface</span>**
+## 3. Access the Paperless-ngx Web Interface
 
 Once the script finishes, open your browser and visit:
 

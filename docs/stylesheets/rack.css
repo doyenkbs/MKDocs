@@ -1,0 +1,416 @@
+/* ============================================================================
+   Kabason Lab — the rack elevation and its derivatives
+
+   The landing hero is a rack of 1U service slabs. The LEDs report
+   documentation coverage, never live service status; the legend says so.
+   Section index pages reuse the same language as patch-panel rows.
+   ========================================================================= */
+
+.k-hero {
+  background: var(--k-ground);
+  padding: clamp(2.5rem, 5.5vw, 4.25rem) 0 clamp(.5rem, 1.5vw, 1.25rem);
+}
+
+.k-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 28.5rem);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+@media screen and (max-width: 62em) {
+  .k-hero-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.k-eyebrow {
+  font-family: var(--k-mono);
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--k-muted);
+  margin: 0 0 1.15rem;
+}
+
+.k-eyebrow .tick { color: var(--k-orange); }
+
+.k-wordmark {
+  font-family: var(--k-display);
+  font-variation-settings: "wdth" 112, "wght" 700;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 6.2vw, 4.4rem);
+  line-height: .94;
+  letter-spacing: -.022em;
+  text-transform: uppercase;
+  color: var(--k-ink);
+  margin: 0;
+}
+
+.k-wordmark .lab {
+  display: block;
+  color: var(--k-cyan);
+  font-variation-settings: "wdth" 112, "wght" 500;
+  font-weight: 500;
+}
+
+.k-hero-rule {
+  width: 4.5rem;
+  height: 3px;
+  background: var(--k-orange);
+  margin: 1.6rem 0 1.4rem;
+}
+
+.k-lede {
+  max-width: 34rem;
+  font-size: .88rem;
+  line-height: 1.7;
+  color: var(--k-ink);
+  margin: 0 0 .9rem;
+}
+
+.k-lede-sub {
+  max-width: 34rem;
+  font-size: .8rem;
+  line-height: 1.7;
+  color: var(--k-muted);
+  margin: 0 0 1.8rem;
+}
+
+.k-stack {
+  font-family: var(--k-mono);
+  font-size: .64rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--k-muted);
+  margin: 0 0 1.9rem;
+}
+
+.k-stack b { color: var(--k-ink); font-weight: 500; }
+
+.k-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+
+.k-btn {
+  font-family: var(--k-mono);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .8rem 1.3rem;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.k-btn-solid { background: var(--k-cyan); color: #fff; }
+.k-btn-solid:hover,
+.k-btn-solid:focus { background: var(--k-orange); color: #fff; }
+.k-btn-ghost { border-color: var(--k-rule); color: var(--k-ink); }
+.k-btn-ghost:hover,
+.k-btn-ghost:focus { border-color: var(--k-cyan); color: var(--k-cyan); }
+
+.k-btn:focus-visible {
+  outline: 2px solid var(--k-cyan);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------- the rack -- */
+
+.k-chassis {
+  background: var(--k-chassis);
+  border: 1px solid var(--k-chassis-edge);
+  border-radius: 3px;
+  box-shadow: var(--k-shadow);
+  padding: .55rem;
+  display: grid;
+  grid-template-columns: 13px minmax(0, 1fr) 13px;
+  gap: .55rem;
+}
+
+.k-chassis-head {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--k-mono);
+  font-size: .56rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--k-chassis-mute);
+  padding: .35rem .3rem .6rem;
+  border-bottom: 1px solid var(--k-chassis-rule);
+  margin-bottom: .2rem;
+}
+
+/* mounting rails: square holes on the 1U pitch (44px slab + 3px gap) */
+.k-rail {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 8px,
+    var(--k-chassis-rule) 8px 13px,
+    transparent 13px 23.5px
+  );
+  background-position: 0 2px;
+  border-radius: 2px;
+}
+
+.k-slabs { display: flex; flex-direction: column; gap: 3px; }
+
+.k-slab {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .7rem;
+  height: 44px;
+  padding: 0 .8rem 0 .65rem;
+  background: var(--k-chassis-face);
+  border: 1px solid transparent;
+  border-left: 2px solid var(--k-chassis-rule);
+  border-radius: 2px;
+  text-decoration: none;
+  transition: transform .16s ease, background .16s ease, border-color .16s ease;
+  animation: k-slab-in .45s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+.k-slab:hover {
+  background: color-mix(in srgb, var(--k-chassis-face) 82%, #01AEF0);
+  border-left-color: var(--k-led-orange);
+  transform: translateX(3px);
+}
+
+.k-slab:hover .k-role { color: #01AEF0; }
+.k-slab:focus-visible { outline: 2px solid #01AEF0; outline-offset: -2px; }
+
+.k-led {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  justify-self: center;
+  animation: k-led-on .5s ease-out both;
+}
+
+.k-led-on { background: var(--k-led-green); box-shadow: 0 0 6px 1px rgba(53, 194, 67, .55); }
+.k-led-wip { background: var(--k-led-orange); box-shadow: 0 0 6px 1px rgba(234, 109, 18, .5); }
+.k-led-off { background: transparent; border: 1px solid var(--k-led-off); }
+
+.k-host {
+  font-family: var(--k-mono);
+  font-size: .74rem;
+  font-weight: 500;
+  color: var(--k-chassis-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.k-host small {
+  display: block;
+  font-size: .56rem;
+  font-weight: 400;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--k-chassis-mute);
+  margin-top: -2px;
+}
+
+.k-role {
+  font-family: var(--k-mono);
+  font-size: .6rem;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--k-chassis-mute);
+  transition: color .16s ease;
+}
+
+.k-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  font-family: var(--k-mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--k-muted);
+  margin: .85rem 0 0;
+  padding-inline: .2rem;
+}
+
+.k-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.k-legend i { width: 7px; height: 7px; border-radius: 1px; display: inline-block; }
+.k-legend .g { background: var(--k-led-green); }
+.k-legend .o { background: var(--k-led-orange); }
+.k-legend .x { border: 1px solid var(--k-muted); }
+
+/* power-on sequence — pure CSS, so instant navigation cannot break it */
+@keyframes k-slab-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes k-led-on {
+  0% { opacity: 0; }
+  60% { opacity: .35; }
+  100% { opacity: 1; }
+}
+
+.k-slab:nth-child(1) { animation-delay: .06s; }
+.k-slab:nth-child(2) { animation-delay: .12s; }
+.k-slab:nth-child(3) { animation-delay: .18s; }
+.k-slab:nth-child(4) { animation-delay: .24s; }
+.k-slab:nth-child(5) { animation-delay: .30s; }
+.k-slab:nth-child(6) { animation-delay: .36s; }
+.k-slab:nth-child(7) { animation-delay: .42s; }
+.k-slab:nth-child(8) { animation-delay: .48s; }
+.k-slab:nth-child(1) .k-led { animation-delay: .30s; }
+.k-slab:nth-child(2) .k-led { animation-delay: .36s; }
+.k-slab:nth-child(3) .k-led { animation-delay: .42s; }
+.k-slab:nth-child(4) .k-led { animation-delay: .48s; }
+.k-slab:nth-child(5) .k-led { animation-delay: .54s; }
+.k-slab:nth-child(6) .k-led { animation-delay: .60s; }
+.k-slab:nth-child(7) .k-led { animation-delay: .66s; }
+.k-slab:nth-child(8) .k-led { animation-delay: .72s; }
+
+/* ---------------------------------------------------- patch-panel rows -- */
+/* Replaces `grid cards` on section index pages. The left column is a role
+   code, not a sequence number: these sections have no order. */
+
+.md-typeset .k-rack > ul {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--k-rule);
+}
+
+.md-typeset .k-rack > ul > li {
+  margin: 0;
+  border-bottom: 1px solid var(--k-rule);
+  padding: 0;
+}
+
+.md-typeset .k-rack > ul > li > p { margin: 0; max-width: none; }
+
+.md-typeset .k-rack-row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 14rem) minmax(0, 1fr) 1.5rem;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.25rem .6rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background .15s ease, padding-left .15s ease;
+}
+
+.md-typeset .k-rack-row:hover {
+  background: var(--k-surface);
+  padding-left: 1.1rem;
+}
+
+.md-typeset .k-rack-row:hover .k-rack-title { color: var(--k-cyan); }
+.md-typeset .k-rack-row:hover .k-rack-go { color: var(--k-orange); transform: translateX(3px); }
+
+.md-typeset .k-rack-row:focus-visible {
+  outline: 2px solid var(--k-cyan);
+  outline-offset: -2px;
+}
+
+.k-rack-code {
+  font-family: var(--k-mono);
+  font-size: .64rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--k-orange);
+}
+
+.k-rack-title {
+  font-family: var(--k-display);
+  font-variation-settings: "wdth" 100, "wght" 600;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -.008em;
+  color: var(--k-ink);
+  transition: color .15s ease;
+}
+
+.k-rack-desc { color: var(--k-muted); font-size: .78rem; line-height: 1.6; }
+
+.k-rack-go {
+  color: var(--k-muted);
+  justify-self: end;
+  transition: color .15s ease, transform .15s ease;
+}
+
+@media screen and (max-width: 55em) {
+  .md-typeset .k-rack-row {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: .3rem 1rem;
+  }
+  .k-rack-desc { grid-column: 2; }
+  .k-rack-go { display: none; }
+}
+
+/* ----------------------------------------------------------- spec strip -- */
+/* "Lab at a glance" as mono key/value. Explicit column counts: auto-fit
+   leaves empty cells that render as grey blocks. */
+
+.md-typeset .k-spec {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--k-rule);
+  border: 1px solid var(--k-rule);
+  margin: 1.4rem 0;
+  max-width: none;
+}
+
+@media screen and (max-width: 62em) {
+  .md-typeset .k-spec { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media screen and (max-width: 38em) {
+  .md-typeset .k-spec { grid-template-columns: 1fr; }
+}
+
+.md-typeset .k-spec > div {
+  background: var(--k-ground);
+  padding: 1.1rem 1.2rem;
+  margin: 0;
+}
+
+.md-typeset .k-spec dt {
+  font-family: var(--k-mono);
+  font-size: .58rem;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--k-muted);
+  margin-bottom: .4rem;
+}
+
+.md-typeset .k-spec dd {
+  margin: 0;
+  font-size: .78rem;
+  line-height: 1.6;
+  color: var(--k-ink);
+}
+
+/* ------------------------------------------------------- reduced motion -- */
+
+@media (prefers-reduced-motion: reduce) {
+  .k-slab,
+  .k-led {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .k-slab,
+  .k-rack-row,
+  .k-btn,
+  .k-role,
+  .k-rack-go,
+  .k-rack-title { transition: none; }
+}

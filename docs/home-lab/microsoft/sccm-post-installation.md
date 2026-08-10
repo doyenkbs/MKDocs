@@ -10,13 +10,13 @@ summary: Step-by-step guide to configuring SCCM after installation, including re
 ---
 
 
-# **<span style="color:#009688;">SCCM Post Installation Guide</span>**
+# SCCM Post Installation Guide
 
 This guide walks through essential SCCM configuration after installation, focusing on Active Directory resource discovery, boundaries, client installation, client settings, and collections.
 
 ---
 
-## **<span style="color:#009688;">A. Create a Client Setting**
+## A. Create a Client Setting
 
 {== **`Administration → Client Settings → Right-click Create Custom Client Device Settings`** ==}
 
@@ -67,11 +67,11 @@ Right-click the new setting → **Deploy** → Choose target collection.
 
 ---
 
-## **<span style="color:#009688;">B. Configure Client Push Install and Client Installation**
+## B. Configure Client Push Install and Client Installation
 
 Configure SCCM to deploy clients automatically to new or existing devices.
 
-### **Client Push Setup:**  
+### Client Push Setup:
 
 {== 
 **`Administration → Site Configuration → Sites`**  
@@ -86,7 +86,7 @@ Right-click your **`Primary Site → Client Installation Settings → Client Pus
 *This auto-installs the client on new devices joining the domain/SCCM.*  
 For existing PCs: select → Right-click → **Install Client**.
 
-### **Verify Client Install:**
+### Verify Client Install:
 
 - **Folder:** `C:\Windows\ccmsetup\`
 - **Log:** `C:\Program Files\SMS_CCM\Logs\ClientIDManagerStartup.log`  
@@ -101,7 +101,7 @@ For existing PCs: select → Right-click → **Install Client**.
 ---
 
 
-## **<span style="color:#009688;">C. Discover Resources**
+## C. Discover Resources
 
 SCCM resource discovery enables management of computers, users, and groups within a domain.
 </br>
@@ -144,9 +144,9 @@ Open the SCCM console and navigate to:
 
 ---
 
-## **<span style="color:#009688;">D. Boundary and Boundary Group**
+## D. Boundary and Boundary Group
 
-### **Boundary**  
+### Boundary
 
 Boundaries help define network locations and resources, using four creation methods: IPv4 range, IPv6, AD site, and IP Subnet.
 
@@ -157,7 +157,7 @@ Boundaries help define network locations and resources, using four creation meth
 - **Type:** IP Address Range (or other type)  
 - Enter Starting IP and Ending IP → Apply → OK
 
-### **Boundary Group**  
+### Boundary Group
 
 Used to assign a site.
 
@@ -176,7 +176,7 @@ Used to assign a site.
 ---
 
 
-## **<span style="color:#009688;">E. Collections**
+## E. Collections
 
 Helps organize/manage user and device groups.
 

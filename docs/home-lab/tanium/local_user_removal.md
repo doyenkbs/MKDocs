@@ -1,6 +1,6 @@
-# **<span style="color:#009688;">AD Admin OU — Automated Local Admin Removal via Tanium**
+# AD Admin OU — Automated Local Admin Removal via Tanium
 
-## <span style="color:#009688;">Overview
+## Overview
 
 This solution automatically removes domain accounts from the local Administrators group on all managed endpoints. It consists of two PowerShell scripts and two Tanium packages working together:
 
@@ -13,9 +13,9 @@ This solution automatically removes domain accounts from the local Administrator
 
 ---
 
-## <span style="color:#009688;">Prerequisites
+## Prerequisites
 
-### **On the Domain Controller**
+### On the Domain Controller
 
 - PowerShell 5.1+
 - RSAT ActiveDirectory module
@@ -32,14 +32,14 @@ Or via DISM (Server OS):
 Install-WindowsFeature -Name RSAT-AD-PowerShell
 ```
 
-### **Tanium**
+### Tanium
 
 - API service account with permissions to upload files and PATCH packages
 - Package 2 (`LabTest - Remove Admin`) already created in the Tanium console before running `Get-AdminOU.ps1` for the first time — note its numeric Package ID
 
 ---
 
-## <span style="color:#009688;">Step 1 — Create the Encrypted Token Files
+## Step 1 — Create the Encrypted Token Files
 
 This is a **one-time setup** step run interactively on the runner server. The Tanium API token is encrypted with a portable AES-256 key — unlike DPAPI, this is not bound to a specific user or machine, so the Tanium client service can decrypt it regardless of which account it runs as.
 
@@ -50,7 +50,7 @@ Two files are produced and must live in the same directory as `Get-AdminOU.ps1`:
 | `data_restore.txt` | 32-byte AES key — used to encrypt and decrypt the token |
 | `data.txt` | AES-encrypted Tanium API token |
 
-### **Generate the key and encrypt the token**
+### Generate the key and encrypt the token
 
 ```powershell
 # Step 1: Generate a 32-byte AES key and save it
@@ -83,7 +83,7 @@ Test-Path data.txt           # Returns: True
 
 ---
 
-## <span style="color:#009688;">Step 2 — Configure Get-AdminOU.ps1
+## Step 2 — Configure Get-AdminOU.ps1
 
 Edit the config block at the top of the script to match your environment:
 
@@ -109,7 +109,7 @@ if ($BypassSslErrors) {
 }
 ```
 
-### **Tanium URL format (on-premise)**
+### Tanium URL format (on-premise)
 
 On-premise Tanium is reached directly by hostname or IP — not via a cloud subdomain:
 
@@ -119,7 +119,7 @@ On-premise Tanium is reached directly by hostname or IP — not via a cloud subd
 | IP address | `https://192.168.1.50` |
 | Cloud (Tanium-as-a-Service) | `https://company-api.cloud.tanium.com` |
 
-### **SSL toggle**
+### SSL toggle
 
 The `$BypassSslErrors` flag controls whether the script validates the Tanium server certificate:
 
@@ -128,13 +128,13 @@ The `$BypassSslErrors` flag controls whether the script validates the Tanium ser
 | `$true` | On-premise with self-signed or internal CA certificate (most common) |
 | `$false` | Certificate issued by a trusted public CA |
 
-### **Token files**
+### Token files
 
 Ensure `data.txt` and `data_restore.txt` are in the same directory as the script before running. The script resolves them via `$PSScriptRoot` — no hardcoded paths needed.
 
 ---
 
-## <span style="color:#009688;">Step 3 — Get-AdminOU.ps1 (Full Script)
+## Step 3 — Get-AdminOU.ps1 (Full Script)
 
 Save this as `Get-AdminOU.ps1` in the same directory as `data.txt` and `data_restore.txt`.
 
@@ -375,7 +375,7 @@ Write-Log "== All phases complete =="
 exit 0
 ```
 
-### **Expected output**
+### Expected output
 
 ```
 [INFO] === Phase 1: AD Query ===
@@ -394,11 +394,11 @@ exit 0
 
 ---
 
-## <span style="color:#009688;">Step 4 — Create Tanium Package 1 (AD Query Package)
+## Step 4 — Create Tanium Package 1 (AD Query Package)
 
 This package runs `Get-AdminOU.ps1` on the designated runner server — this does not have to be the Domain Controller, just any domain-joined server with RSAT installed and the Tanium client running.
 
-### **Directory layout on the runner server**
+### Directory layout on the runner server
 
 All three files live at a fixed path on the runner server. `F:\` represents the volume on that server. Nothing is uploaded to Tanium — the package is a trigger only:
 
@@ -410,7 +410,7 @@ F:\path\to\scripts\
     └── InAdminOU.txt         ← written by the script on each run
 ```
 
-### **Package settings**
+### Package settings
 
 In the Tanium console, go to **Content → Packages → New Package**:
 
@@ -433,7 +433,7 @@ Because `$PSScriptRoot` in the script resolves to `F:\path\to\scripts\`, both `d
 
 ---
 
-## <span style="color:#009688;">Step 5 — Create Tanium Package 2 (Enforcement Package)
+## Step 5 — Create Tanium Package 2 (Enforcement Package)
 
 This package delivers `InAdminOU.txt` to endpoints and runs the removal.
 
@@ -449,7 +449,7 @@ In the Tanium console, go to **Content → Packages → New Package**:
 
 Note the **Package ID** (visible in the URL when editing the package) and set `$Package2Id` in `Get-AdminOU.ps1` accordingly.
 
-### **Audit mode**
+### Audit mode
 
 To run in audit mode (no changes, just logs what would be removed), change the trailing `0` to `1` in the command:
 
@@ -459,7 +459,7 @@ To run in audit mode (no changes, just logs what would be removed), change the t
 
 ---
 
-## <span style="color:#009688;">Step 6 — Remove-AdminOUUsers.ps1 (Full Script)
+## Step 6 — Remove-AdminOUUsers.ps1 (Full Script)
 
 This script is delivered by Tanium to each endpoint alongside `InAdminOU.txt`.
 
@@ -618,9 +618,9 @@ catch {
 
 ---
 
-## <span style="color:#009688;">Step 7 — Run the Full Flow
+## Step 7 — Run the Full Flow
 
-### **Manual run (testing)**
+### Manual run (testing)
 
 Run `Get-AdminOU.ps1` from PowerShell on the DC:
 
@@ -630,20 +630,20 @@ C:\path\to\scripts\Get-AdminOU.ps1
 
 Then deploy Package 2 from the Tanium console to your target endpoints.
 
-### **Automated (scheduled)**
+### Automated (scheduled)
 
 Create a Windows Scheduled Task on the DC to call `Get-AdminOU.ps1` on your desired cadence (e.g. daily at 02:00), then trigger Package 2 deployment via a Tanium Scheduled Action targeting all managed Windows endpoints.
 
 ---
 
-## <span style="color:#009688;">Log Locations
+## Log Locations
 
 | Log | Location |
 |---|---|
 | AD query + upload | Same directory as `Get-AdminOU.ps1` → `Get-AdminOU.log` |
 | Endpoint removal | `C:\Temp\Remove-AdminOUUsers.log` on each endpoint |
 
-### **Sample endpoint log**
+### Sample endpoint log
 
 ```
 [2026-05-28 18:57:52] [INFO] [ENDPOINT01] [Mode=0] Starting - InAdminOU.txt: C:\...\InAdminOU.txt
@@ -660,7 +660,7 @@ Create a Windows Scheduled Task on the DC to call `Get-AdminOU.ps1` on your desi
 
 ---
 
-## <span style="color:#009688;">Troubleshooting
+## Troubleshooting
 
 | Error | Cause | Fix |
 |---|---|---|

@@ -3,7 +3,7 @@ tags:
   - Proxmox
 ---
 
-## **<span style="color:#009688;">Initial Configuration</span>**
+## Initial Configuration
 
 **Update system:**
 ```bash
@@ -26,7 +26,7 @@ Set up storage — configure `local-lvm` or add additional disks via `ZFS` or `e
 
 ---
 
-### **Setting Up a Linux Bridge in Proxmox**
+### Setting Up a Linux Bridge in Proxmox
 
 A Linux bridge is required to give your VMs and containers network access through your host’s physical NIC.
 

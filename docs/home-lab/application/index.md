@@ -1,86 +1,76 @@
-# **<span style="color:#009688;">Self-Hosted Applications</span>**
+# Self-Hosted Applications
 
 This section covers the self-hosted applications running in the home lab — file sharing, document management, media, monitoring, and asset tracking — along with **Authentik**, the identity provider tying most of them together under single sign-on.
 
-## **<span style="color:#009688;">Applications</span>**
+## Applications
 
-<div class="grid cards" markdown>
+<div class="k-rack" markdown>
 
--   :material-headphones: **Audiobookshelf**
+-   [
+    <span class="k-rack-code">Media</span>
+    <span class="k-rack-title">Audiobookshelf</span>
+    <span class="k-rack-desc">Self-hosted audiobook and podcast server.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](audiobookshelf.md){ .k-rack-row }
 
-    ---
+-   [
+    <span class="k-rack-code">Wiki</span>
+    <span class="k-rack-title">Bookstack</span>
+    <span class="k-rack-desc">Documentation and wiki platform for organizing lab notes and guides.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](bookstack.md){ .k-rack-row }
 
-    Self-hosted audiobook and podcast server.
+-   [
+    <span class="k-rack-code">Files</span>
+    <span class="k-rack-title">Nextcloud</span>
+    <span class="k-rack-desc">Private cloud storage, file sync, and collaboration suite.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](nextcloud.md){ .k-rack-row }
 
-    [:octicons-arrow-right-24: Start here](audiobookshelf.md)
+-   [
+    <span class="k-rack-code">Xfer</span>
+    <span class="k-rack-title">Pairdrop</span>
+    <span class="k-rack-desc">Local network file sharing, a self-hosted alternative to AirDrop.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](pairdrop.md){ .k-rack-row }
 
--   :material-book-open-page-variant-outline: **Bookstack**
+-   [
+    <span class="k-rack-code">Docs</span>
+    <span class="k-rack-title">Paperless-NGX</span>
+    <span class="k-rack-desc">Document management with OCR and automated indexing.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](paperless.md){ .k-rack-row }
 
-    ---
-
-    Documentation and wiki platform for organizing lab notes and guides.
-
-    [:octicons-arrow-right-24: Start here](bookstack.md)
-
--   :material-cloud-outline: **Nextcloud**
-
-    ---
-
-    Private cloud storage, file sync, and collaboration suite.
-
-    [:octicons-arrow-right-24: Start here](nextcloud.md)
-
--   :material-transfer: **Pairdrop**
-
-    ---
-
-    Local network file sharing — a self-hosted alternative to AirDrop.
-
-    [:octicons-arrow-right-24: Start here](pairdrop.md)
-
--   :material-file-document-outline: **Paperless-NGX**
-
-    ---
-
-    Document management with OCR and automated indexing.
-
-    [:octicons-arrow-right-24: Start here](paperless.md)
-
--   :material-barcode-scan: **Snipe-IT**
-
-    ---
-
-    IT asset management and inventory tracking.
-
-    [:octicons-arrow-right-24: Start here](snipeit.md)
-
--   :material-chart-line: **Zabbix**
-
-    ---
-
-    Infrastructure and service monitoring across the lab.
-
-    [:octicons-arrow-right-24: Start here](zabbix.md)
+-   [
+    <span class="k-rack-code">Asset</span>
+    <span class="k-rack-title">Snipe-IT</span>
+    <span class="k-rack-desc">IT asset management and inventory tracking.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](snipeit.md){ .k-rack-row }
 
 </div>
+
+!!! note "Not documented yet"
+
+    Zabbix runs in the lab for infrastructure and service monitoring, but the
+    write-up is still in progress, so there is no page to link to yet.
 
 ---
 
-## **<span style="color:#009688;">Identity: Authentik</span>**
+## Identity: Authentik
 
-<div class="grid cards" markdown>
+<div class="k-rack" markdown>
 
--   :material-account-key-outline: **Authentik**
-
-    ---
-
-    Self-hosted identity provider (OIDC/SAML/LDAP) providing SSO and MFA across most services in this lab.
-
-    [:octicons-arrow-right-24: Start here](authentik.md)
+-   [
+    <span class="k-rack-code">Sso</span>
+    <span class="k-rack-title">Authentik</span>
+    <span class="k-rack-desc">Self-hosted identity provider (OIDC/SAML/LDAP) providing SSO and MFA across most services in this lab.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](authentik.md){ .k-rack-row }
 
 </div>
 
-### **<span style="color:#009688;">Authentik Integrations</span>**
+### Authentik Integrations
 
 Once Authentik is running, each of these walks through connecting a specific app to it for SSO:
 
@@ -88,13 +78,13 @@ Once Authentik is running, each of these walks through connecting a specific app
 |---|---|
 | Audiobookshelf | [Audiobookshelf Integration](audiobookshelfintegration.md) |
 | Bookstack | [Bookstack Integration](bookstackintegration.md) |
-| Cloudflare Access | [Cloudflare Integration](cloudflareaccess.md) |
+| Cloudflare Access | [Cloudflare Integration](cloudflareIntegration.md) |
 | Nextcloud | [Nextcloud Integration](nextcloudintegration.md) |
 | Paperless-NGX | [Paperless-NGX Integration](paperlessintegration.md) |
 
 ---
 
-## **<span style="color:#009688;">Why Authentik Ties This Section Together</span>**
+## Why Authentik Ties This Section Together
 
 Most of the apps above support external authentication, and rather than managing separate logins (and separate MFA setups) per service, this lab routes them all through Authentik as a single identity provider:
 

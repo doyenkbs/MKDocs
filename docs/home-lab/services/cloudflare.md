@@ -1,4 +1,4 @@
-# **<span style="color:#009688;">Cloudflare Overview</span>**
+# Cloudflare Overview
 
 **Cloudflare** is a global network that provides security, performance, and reliability services to websites, APIs, and internet applications.
 
@@ -11,37 +11,29 @@ In the context of a **home lab**, Cloudflare offers a variety of free tools used
 
 ---
 
-## <span style="color:#009688;">In This Section</span>
+## In This Section
 
-<div class="grid cards" markdown>
+<div class="k-rack" markdown>
 
--   :material-information-outline: **Overview** *(this page)*
+-   [
+    <span class="k-rack-code">Tun</span>
+    <span class="k-rack-title">Cloudflare Tunnel</span>
+    <span class="k-rack-desc">Create a tunnel, install <code>cloudflared</code>, and publish a local service publicly.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](cloudflaretunnel.md){ .k-rack-row }
 
-    ---
-
-    Account setup, domain onboarding, and why Cloudflare Tunnel fits a home lab.
-
--   :material-tunnel: **Cloudflare Tunnel**
-
-    ---
-
-    Step-by-step setup: create a tunnel, install `cloudflared`, and publish a local service publicly.
-
-    [:octicons-arrow-right-24: Start here](cloudflaretunnel.md)
-
--   :material-shield-lock-outline: **Cloudflare Access**
-
-    ---
-
-    Layer Zero Trust authentication in front of tunneled apps, integrated with Authentik SSO.
-
-    [:octicons-arrow-right-24: Start here](cloudflareaccess.md)
+-   [
+    <span class="k-rack-code">Zt</span>
+    <span class="k-rack-title">Cloudflare Access</span>
+    <span class="k-rack-desc">Layer Zero Trust authentication in front of tunneled apps, integrated with Authentik SSO.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](cloudflareaccess.md){ .k-rack-row }
 
 </div>
 
 ---
 
-## <span style="color:#009688;">Why Use Cloudflare Tunnel in a Home Lab?</span>
+## Why Use Cloudflare Tunnel in a Home Lab?
 
 With **Cloudflare Tunnel**, you can securely expose local services — like Nextcloud, Bookstack, or Audiobookshelf — to the internet:
 
@@ -57,19 +49,19 @@ Run Bookstack in the home lab and access it remotely via `https://wiki.example.c
 
 ---
 
-## <span style="color:#009688;">Pairing With Authentik</span>
+## Pairing With Authentik
 
 Cloudflare Tunnel handles *reachability* — getting a request from the internet to a local service safely. It doesn't handle *who's allowed in*. That's where [Cloudflare Access](cloudflareaccess.md) comes in, paired with [Authentik](../application/authentik.md) as the identity provider:
 
 - Authentik enforces SSO and MFA in front of every tunneled app
 - Access policy is centralized in one place instead of configured per-service
-- See the full walkthrough on the [Cloudflare Access + Authentik Integration](../application/cloudflareaccess.md) page
+- See the full walkthrough on the [Cloudflare Access + Authentik Integration](../application/cloudflareIntegration.md) page
 
 This is the pattern used across most of the self-hosted apps in this lab: **Tunnel for reachability, Access + Authentik for identity.**
 
 ---
 
-## <span style="color:#009688;">Create a Cloudflare Account</span>
+## Create a Cloudflare Account
 
 1. Go to <https://dash.cloudflare.com/sign-up>
 2. Enter your **email address** and create a **password**.
@@ -78,7 +70,7 @@ This is the pattern used across most of the self-hosted apps in this lab: **Tunn
 
 ---
 
-## <span style="color:#009688;">Add Your Domain and Transfer DNS to Cloudflare</span>
+## Add Your Domain and Transfer DNS to Cloudflare
 
 1. In the Cloudflare dashboard, click **Onboard a domain**.
 
@@ -106,7 +98,7 @@ This is the pattern used across most of the self-hosted apps in this lab: **Tunn
 
 ---
 
-## <span style="color:#009688;">Next Steps</span>
+## Next Steps
 
 Once your domain is on Cloudflare:
 

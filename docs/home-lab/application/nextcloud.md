@@ -3,13 +3,13 @@ tags:
   - Nextcloud
 ---
 
-# **<span style="color:#009688;">Nextcloud Installation on Ubuntu 24.04 LTS</span>**
+# Nextcloud Installation on Ubuntu 24.04 LTS
 
 ---
 
-## **<span style="color:#009688;">Overview</span>**
+## Overview
 
-**<span style="color:#009688;">Nextcloud</span>** is a powerful platform for self-hosted collaboration, file synchronization, document editing, calendar, contacts, and much more. By the end of this guide, you’ll have a fully working Nextcloud server ready for personal or team use.
+**<span class="prod-app">Nextcloud</span>** is a powerful platform for self-hosted collaboration, file synchronization, document editing, calendar, contacts, and much more. By the end of this guide, you’ll have a fully working Nextcloud server ready for personal or team use.
 
 ---
 
@@ -22,10 +22,10 @@ tags:
 
 ---
 
-## **<span style="color:#009688;">1. Initial Server Setup</span>**
+## 1. Initial Server Setup
 Begin by creating a non-root user and updating your system packages to ensure you have the latest security updates and software.
 
-### **Create a New User**
+### Create a New User
 ➡ This creates a new user with admin rights so you don’t need to use root directly.
 ``` bash
 adduser <username>
@@ -33,7 +33,7 @@ usermod -aG sudo <username>
 ```
 Log in as your new user after setup.
 
-### **Update System Packages**
+### Update System Packages
 ➡ Keeping your server up to date ensures security patches and latest features.
 ``` bash
 sudo apt update
@@ -41,7 +41,7 @@ sudo apt dist-upgrade
 sudo apt autoremove
 ```
 
-### **Set Hostname & Hosts File**
+### Set Hostname & Hosts File
 ➡ A proper hostname helps your server identify itself on the network. Update these system files and reboot to apply changes.
 ``` bash
 sudo nano /etc/hostname
@@ -58,7 +58,7 @@ sudo reboot
 
 ---
 
-## **<span style="color:#009688;">2. Download and Unpack Nextcloud</span>**
+## 2. Download and Unpack Nextcloud
 
 Get the latest Nextcloud release from the official source, and unzip it to prepare for installation.
 ``` bash
@@ -69,10 +69,10 @@ unzip latest.zip
 
 ---
 
-## **<span style="color:#009688;">3. Install and Configure MariaDB</span>**
+## 3. Install and Configure MariaDB
 MariaDB will serve as the backend database. Install it, secure the installation, and create a database and user for Nextcloud.
 
-### **Install MariaDB Server**
+### Install MariaDB Server
 ➡ Installs the database engine.
 ``` bash
 sudo apt install mariadb-server
@@ -81,12 +81,12 @@ Check the status of mariadb service:
 ``` bash
 systemctl status mariadb
 ```
-### **Secure MariaDB**
+### Secure MariaDB
 ➡ Runs a wizard to secure your database (set root password, remove test DB, etc.).
 ``` bash
 sudo mysql_secure_installation
 ```
-### **Create Nextcloud Database & User**
+### Create Nextcloud Database & User
 ➡ Creates a dedicated database and user account for Nextcloud.
 ``` bash
 sudo mariadb
@@ -102,7 +102,7 @@ EXIT;
     *Replace `mypassword` with a strong and unique password of your choice.*
 ---
 
-## **<span style="color:#009688;">4. Install Apache, PHP, and Required Modules</span>**
+## 4. Install Apache, PHP, and Required Modules
 These are the web server and PHP modules required by Nextcloud for full functionality.
 ➡ These modules give Nextcloud its features (file uploads, encryption, images, etc.).
 ``` bash
@@ -115,7 +115,7 @@ sudo phpenmod apcu bcmath gmp imagick intl
 
 ---
 
-## **<span style="color:#009688;">5. Move Nextcloud Files and Set Permissions</span>**
+## 5. Move Nextcloud Files and Set Permissions
 Move the Nextcloud files you extracted in step 2 into the web server’s root directory, then set the appropriate ownership and permissions.
 ➡ This ensures Apache can serve Nextcloud securely and disables the default page.
 
@@ -128,10 +128,10 @@ sudo a2dissite 000-default.conf   #disable the default web page that ships with 
 
 ---
 
-## **<span style="color:#009688;">6. Configure Apache</span>**
+## 6. Configure Apache
 Set up your Apache virtual host to serve Nextcloud instance, enabling URL rewriting and access control.
 
-### **Create a Virtual Host File**
+### Create a Virtual Host File
 ``` bash
 sudo nano /etc/apache2/sites-available/<your-domain>.conf
 ```
@@ -164,7 +164,7 @@ sudo a2ensite <your-domain>.conf
 
 ---
 
-## **<span style="color:#009688;">7. PHP Configuration</span>**
+## 7. PHP Configuration
 Tune PHP settings for optimal performance and stability with Nextcloud.
 
 ``` bash
@@ -202,9 +202,9 @@ sudo systemctl restart apache2
 
 ---
 
-## **<span style="color:#009688;">8. Final Database and Security Tweaks</span>**
+## 8. Final Database and Security Tweaks
 
-### **Tune Nextcloud Database**
+### Tune Nextcloud Database
 Add missing database indices using Nextcloud’s command line tool to improve database performance.
 
 ``` bash
@@ -215,7 +215,7 @@ sudo chmod -x /var/www/<your-domain>/occ
 
 ---
 
-## **<span style="color:#009688;">9. Obtain a TLS Certificate (Let's Encrypt)</span>**
+## 9. Obtain a TLS Certificate (Let's Encrypt)
 Set up free, trusted [SSL certificates](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal) to encrypt your site’s traffic.
 ➡ This encrypts traffic so your files and logins are secure.
 
@@ -230,9 +230,9 @@ Follow prompts carefully to secure your installation.
 
 ---
 
-## **<span style="color:#009688;">10. Miscellaneous Adjustments</span>**
+## 10. Miscellaneous Adjustments
 
-### **Protect config.php**
+### Protect config.php
 Limit access to critical config files for security.
 
 ```bash
@@ -240,7 +240,7 @@ sudo chmod 660 /var/www/<your-domain>/config/config.php
 sudo chown root:www-data /var/www/<your-domain>/config/config.php
 ```
 
-### **Enable Memory Caching**
+### Enable Memory Caching
 Improve performance by enabling APCu caching in your Nextcloud config:
 
 ``` bash
@@ -252,7 +252,7 @@ Add the following line to the bottom:
 'default_phone_region' => 'US',
 ```
 
-### **Enable Strict Transport Security**
+### Enable Strict Transport Security
 Improve security with HTTP Strict Transport Security.
 
 ``` bash
@@ -273,7 +273,7 @@ sudo systemctl restart apache2
 
 ---
 
-### **Completion 🎉**
+### Completion 🎉
 
 Your Nextcloud server is ready!
 Visit:
@@ -342,7 +342,7 @@ Follow the installer to create your admin account and connect to the database.
     ```
 
 ---
-## ***Reference***
+## *Reference*
 - [*Nextcloud Documentation*](https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html)
 - [*Learn Linux TV: Complete Walkthrough for Installing Nextcloud on Ubuntu 24.04*](https://www.learnlinux.tv/complete-walkthrough-for-installing-nextcloud-on-ubuntu-24-04/)
 - [*Certbot Instructions*](https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal)

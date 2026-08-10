@@ -1,84 +1,97 @@
-# **<span style="color:#009688;">Home**
-
-<div class="hero-banner" markdown>
-# <span style="color:#009688;">Kabason Labs Documentation</span>
-
-Guides, configs, and troubleshooting notes from my self-hosted home lab — covering
-Proxmox virtualization, SSO with Authentik, Microsoft SCCM/MECM lab builds, Tanium
-administration, and the core services that tie it all together.
-
-This site exists as a living reference: written as I build, break, and fix things,
-so it's as much a record for future-me as it is a resource for anyone else running
-a similar stack.
-</div>
-
+---
+template: home.html
+title: Home
+hide:
+  - navigation
+  - toc
 ---
 
-## 🖥️ <span style="color:#009688;">Lab at a Glance
+## Sections { #sections }
 
-| | |
-|---|---|
-| **Hypervisor** | Proxmox VE on a Dell Precision 3450 SFF |
-| **Identity** | Authentik SSO across most services |
-| **Networking** | Cloudflare Tunnels, Pangolin, Technitium DNS |
-| **Notable services** | Nextcloud, Gitea, Wazuh, Open WebUI / Ollama, Mailcow, Nginx Proxy Manager |
-| **Enterprise lab** | Microsoft SCCM/MECM environment, Tanium |
+<div class="k-rack" markdown>
 
----
+-   [
+    <span class="k-rack-code">Hyp</span>
+    <span class="k-rack-title">Containers &amp; Virtualization</span>
+    <span class="k-rack-desc">Docker, Proxmox VE install and post-install, VMs, LXC containers, and VMware ESXi.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](home-lab/virtualization/index.md){ .k-rack-row }
 
-## 📚 <span style="color:#009688;">Explore the Docs
+-   [
+    <span class="k-rack-code">App</span>
+    <span class="k-rack-title">Applications &amp; Integrations</span>
+    <span class="k-rack-desc">Nextcloud, Bookstack, Paperless-NGX, Snipe-IT, and the Authentik SSO integrations that tie them together.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](home-lab/application/index.md){ .k-rack-row }
 
-<div class="grid cards" markdown>
+-   [
+    <span class="k-rack-code">Svc</span>
+    <span class="k-rack-title">Core Services</span>
+    <span class="k-rack-desc">Ansible lifecycle automation, Cloudflare Tunnel, Mailcow, and OpenVPN.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](home-lab/services/index.md){ .k-rack-row }
 
--   :material-server-network:{ .lg .middle } **Containers & Virtualization**
+-   [
+    <span class="k-rack-code">Mecm</span>
+    <span class="k-rack-title">Microsoft Lab</span>
+    <span class="k-rack-desc">A full SCCM/MECM build on Hyper-V, from domain controller to software update deployment.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](home-lab/microsoft/index.md){ .k-rack-row }
 
-    ---
-
-    Docker, Proxmox VE setup and post-install, VMs, containers, and VMware ESXi.
-
-    [:octicons-arrow-right-24: Start here](home-lab/virtualization/index.md)
-
--   :material-apps:{ .lg .middle } **Applications & Integrations**
-
-    ---
-
-    Self-hosted apps like Nextcloud, Bookstack, Paperless-NGX, and Authentik SSO integrations.
-
-    [:octicons-arrow-right-24: Start here](home-lab/application/index.md)
-
--   :material-cloud-outline:{ .lg .middle } **Core Services**
-
-    ---
-
-    Cloudflare Tunnel/Access, Home Assistant, OpenVPN, and email setup.
-
-    [:octicons-arrow-right-24: Start here](home-lab/services/index.md)
-
--   :material-microsoft-windows:{ .lg .middle } **Microsoft Lab**
-
-    ---
-
-    A full SCCM/MECM lab build: Hyper-V, Active Directory, and software update deployment.
-
-    [:octicons-arrow-right-24: Start here](home-lab/microsoft/index.md)
-
--   :material-shield-search:{ .lg .middle } **Tanium**
-
-    ---
-
-    Administration guides and packaging notes from hands-on Tanium work.
-
-    [:octicons-arrow-right-24: Start here](home-lab/tanium/local_user_removal.md)
+-   [
+    <span class="k-rack-code">Epm</span>
+    <span class="k-rack-title">Tanium</span>
+    <span class="k-rack-desc">Administration guides and packaging notes from hands-on Tanium work.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](home-lab/tanium/local_user_removal.md){ .k-rack-row }
 
 </div>
 
----
+## Lab at a Glance
 
-## 🌟 <span style="color:#009688;">Why a Home Lab?
+<dl class="k-spec" markdown>
 
-A **home lab** is a personal environment for testing, learning, and running your own
-IT infrastructure — full control over your data, more privacy, and room to
+<div markdown>
+<dt>Hypervisor</dt>
+<dd>Proxmox VE on a Dell Precision 3450 SFF</dd>
+</div>
+
+<div markdown>
+<dt>Identity</dt>
+<dd>Authentik SSO across most services</dd>
+</div>
+
+<div markdown>
+<dt>Networking</dt>
+<dd>Cloudflare Tunnels, Pangolin, Technitium DNS</dd>
+</div>
+
+<div markdown>
+<dt>Notable services</dt>
+<dd>Nextcloud, Gitea, Wazuh, Open WebUI / Ollama, Mailcow</dd>
+</div>
+
+<div markdown>
+<dt>Enterprise lab</dt>
+<dd>Microsoft SCCM/MECM environment, Tanium</dd>
+</div>
+
+<div markdown>
+<dt>Backup &amp; monitoring</dt>
+<dd>Proxmox Backup Server, Uptime Kuma</dd>
+</div>
+
+</dl>
+
+## Why a Home Lab?
+
+A home lab is a personal environment for testing, learning, and running your own
+IT infrastructure: full control over your data, more privacy, and room to
 experiment with new technologies without production risk.
 
-[About this site](about.md){ .md-button }
-[Tags](tags.md){ .md-button }
+Everything documented here runs on hardware sitting in my house, so the notes
+reflect what actually worked rather than what the vendor documentation says
+should work.
+
+[About this site](about.md){ .md-button .md-button--primary }
+[Browse tags](tags.md){ .md-button }

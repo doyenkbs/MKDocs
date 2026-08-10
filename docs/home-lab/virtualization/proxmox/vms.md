@@ -3,9 +3,9 @@ tags:
   - Proxmox
 ---
 
-### **<span style="color:#009688;">Creating a Virtual Machine (VM)</span>**
+### Creating a Virtual Machine (VM)
 
-#### **Steps:**
+#### Steps:
 
 1. **Upload ISO** to `local` or `local-lvm` storage.  
 
@@ -22,7 +22,7 @@ tags:
 
 ---
 
-#### **Post-VM Setup:**
+#### Post-VM Setup:
 
 1. **Start** the VM.  
 
@@ -38,13 +38,13 @@ tags:
 
 ---
 
-## **<span style="color:#009688;">VM Templates</span>**
+## VM Templates
 
-### **Using and Creating Templates**
+### Using and Creating Templates
 
-Creating <span style="color:#009688;">VM templates</span> allows you to rapidly deploy new virtual machines based on a pre-configured image.
+Creating VM templates allows you to rapidly deploy new virtual machines based on a pre-configured image.
 
-#### **Steps to create a VM template:**
+#### Steps to create a VM template:
 
 1. **Create and configure a VM**  
 > - Install the desired OS (e.g., Ubuntu minimal)  
@@ -64,7 +64,7 @@ Creating <span style="color:#009688;">VM templates</span> allows you to rapidly 
     ```
 
 
-#### **Using VM Templates**
+#### Using VM Templates
 
 - When creating a new VM, select **Clone** and choose the template as the source  
 - You can create either a **full clone** or a **linked clone** depending on your storage and performance needs

@@ -9,7 +9,7 @@ tags:
 summary: This guide walks through the installation steps for setting up the Configuration Manager (SCCM) Admin Console on both the server and a workstation.
 ---
 
-# **<span style="color:#009688;">SCCM Admin Console Installation**
+# SCCM Admin Console Installation
 
 ---
 
@@ -20,7 +20,7 @@ This guide walks through the prerequisites, download sources, and installation s
 
 ---
 
-## **<span style="color:#009688;">1. Prerequisites**
+## 1. Prerequisites
 
 Before installing the SCCM Admin Console, ensure the following are in place:
 
@@ -47,7 +47,7 @@ Before installing the SCCM Admin Console, ensure the following are in place:
 
 ---
 
-## **<span style="color:#009688;">2. Download SCCM Installation Media**
+## 2. Download SCCM Installation Media
 
 1. Go to the **Microsoft Evaluation Center** and download the latest evaluation version of **Configuration Manager**.
    [*Get installation media*](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/install/get-install-media)
@@ -56,13 +56,13 @@ Before installing the SCCM Admin Console, ensure the following are in place:
 
 ---
 
-## **<span style="color:#009688;">3. Run the Configuration Manager Setup Wizard**
+## 3. Run the Configuration Manager Setup Wizard
 
 Launch the **`Splash.hta`** from the decompressed media and follow the guided wizard.  
 
 Reference: [*Setup Wizard for Primary Site*](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/install/setup-wizard-central-primary)
 
-### **Key Steps and Selections:**
+### Key Steps and Selections:
 
 | Wizard Step | Selection / Input |
 |-------------|------------------|
@@ -78,7 +78,7 @@ Reference: [*Setup Wizard for Primary Site*](https://learn.microsoft.com/en-us/i
 
 ---
 
-## **<span style="color:#009688;">4. Install the Admin Console**
+## 4. Install the Admin Console
 
 Once the **primary site installation** completes:  
 
@@ -91,7 +91,7 @@ Once the **primary site installation** completes:
 
 ---
 
-## **<span style="color:#009688;">5. Post-Installation Checks**
+## 5. Post-Installation Checks
 
 - Launch the **SCCM Admin Console** from the Start Menu.  
 - Confirm connection to the site database.  
@@ -104,7 +104,7 @@ Once the **primary site installation** completes:
 
 ---
 
-## **<span style="color:#009688;">Next Steps**
+## Next Steps
 
 Once your SCCM Primary Site is installed and running, you may want to install the **SCCM Admin Console** on your administrator workstation.  
 

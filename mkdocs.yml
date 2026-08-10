@@ -8,25 +8,34 @@ site_description: >-
 # Configuration
 theme:
   name: material
-  palette: 
-    # Palette toggle for light mode
-    - scheme: default
-      primary: teal  #test
-      accent: deep orange  #test
-      toggle:
-        icon: material/brightness-7 
-        name: Switch to dark mode
-    # Palette toggle for dark mode
+  custom_dir: overrides
+
+  # Colours come from docs/stylesheets/tokens.css, sampled from the logo.
+  # `custom` is what makes Material look for the [data-md-color-*] selectors.
+  # The first entry is the default, so dark ships first.
+  palette:
+    # Dark (default)
     - scheme: slate
-      primary: teal #test
-      accent: deep orange #test
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
-        name: Switch to light mode 
-        
+        name: Switch to light mode
+    # Light
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+  # Archivo / IBM Plex Sans / IBM Plex Mono are self-hosted; see
+  # tools/fetch_fonts.py and docs/stylesheets/fonts.css.
+  font: false
+
   logo: assets/logo.png
   favicon: assets/favicon.png
-        
+
   features:
     - navigation.instant
     - navigation.instant.prefetch
@@ -50,9 +59,12 @@ theme:
     - content.tabs.link
     - content.footnote.tooltips
 
-# Hero
+# Stylesheets, in cascade order: faces, then tokens, then components.
 extra_css:
-  - stylesheets/extra.css
+  - stylesheets/fonts.css
+  - stylesheets/tokens.css
+  - stylesheets/base.css
+  - stylesheets/rack.css
 
 # Extensions
 markdown_extensions:
@@ -97,8 +109,8 @@ markdown_extensions:
 # Plugins
 plugins:
   - search
-  - tags:
-      tags_file: tags.md
+  # tags.md is picked up from the nav automatically; `tags_file` is deprecated
+  - tags
   - offline
 
 copyright: Copyright &copy; 2026 Christian Kaba
