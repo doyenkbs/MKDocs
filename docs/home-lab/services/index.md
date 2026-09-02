@@ -21,6 +21,13 @@ Foundational infrastructure that powers the rest of the lab — automation, secu
     ](cloudflare.md){ .k-rack-row }
 
 -   [
+    <span class="k-rack-code">Dns</span>
+    <span class="k-rack-title">DNS &amp; Reverse Proxy</span>
+    <span class="k-rack-desc">Technitium DNS with split-horizon resolution and Nginx Proxy Manager, so internal hostnames resolve on the LAN instead of hairpinning through the Cloudflare tunnel.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](technitium-dns-install-ubuntu-lxc.md){ .k-rack-row }
+
+-   [
     <span class="k-rack-code">Mta</span>
     <span class="k-rack-title">Mailcow</span>
     <span class="k-rack-desc">Self-hosted mail server powering alerts, notifications, and authentication email for the lab.</span>
@@ -37,6 +44,6 @@ Foundational infrastructure that powers the rest of the lab — automation, secu
 </div>
 
 ## Why This Section Exists
-Every other part of the lab — the containers, the self-hosted apps, the Microsoft and Tanium environments — depends on these services being solid. Automation keeps systems patched without manual effort, Cloudflare and OpenVPN control how (and whether) anything is reachable from outside the network, and Mailcow makes sure alerts and account notifications actually land somewhere.
+Every other part of the lab — the containers, the self-hosted apps, the Microsoft and Tanium environments — depends on these services being solid. Automation keeps systems patched without manual effort, Cloudflare and OpenVPN control how (and whether) anything is reachable from outside the network, and Mailcow makes sure alerts and account notifications actually land somewhere. DNS and the reverse proxy decide how those services are reached from inside the network, and the three pages under **DNS & Reverse Proxy** are meant to be worked through in order: [install Technitium](technitium-dns-install-ubuntu-lxc.md), then [split-horizon DNS](split-horizon-dns-technitium-npm.md), then [Nginx Proxy Manager](nginx-proxy-manager-install-config.md).
 
 If it's not a specific app and not a hypervisor concern, it probably belongs here.

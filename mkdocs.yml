@@ -145,6 +145,7 @@ nav:
         - index.md: home-lab/application/index.md
         - Audiobookshelf: home-lab/application/audiobookshelf.md
         - Bookstack: home-lab/application/bookstack.md
+        - Kasm Workspaces: home-lab/application/kasm-workspaces-install.md
         - Nextcloud: home-lab/application/nextcloud.md
         - Pairdrop: home-lab/application/pairdrop.md
         - Paperless-NGX: home-lab/application/paperless.md
@@ -156,6 +157,7 @@ nav:
                 - Audiobookshelf Integration: home-lab/application/audiobookshelfintegration.md
                 - Bookstack Integration: home-lab/application/bookstackintegration.md
                 - Cloudflare Integration: home-lab/application/cloudflareIntegration.md
+                - Kasm Workspaces Integration: home-lab/application/kasm-authentik-oidc.md
                 - Nextcloud Integration: home-lab/application/nextcloudintegration.md
                 - Paperless-NGX Integration: home-lab/application/paperlessintegration.md
   - Core Services:
@@ -169,7 +171,10 @@ nav:
                 - Overview: home-lab/services/cloudflare.md
                 - Cloudflare Tunnel: home-lab/services/cloudflaretunnel.md
                # - Cloudflare Access: home-lab/services/cloudflareaccess.md
-      # - Technitium DNS: home-lab/services/dns.md
+        - DNS & Reverse Proxy:
+            - Technitium DNS Install: home-lab/services/technitium-dns-install-ubuntu-lxc.md
+            - Split-Horizon DNS: home-lab/services/split-horizon-dns-technitium-npm.md
+            - Nginx Proxy Manager: home-lab/services/nginx-proxy-manager-install-config.md
         - Mailcow: 
             - Overview: home-lab/services/email.md
             - Mailcow Troubleshooting:

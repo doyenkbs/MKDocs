@@ -21,6 +21,13 @@ This section covers the self-hosted applications running in the home lab — fil
     ](bookstack.md){ .k-rack-row }
 
 -   [
+    <span class="k-rack-code">Vdi</span>
+    <span class="k-rack-title">Kasm Workspaces</span>
+    <span class="k-rack-desc">Browser-based containerized desktops and apps, plus fixed RDP servers.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](kasm-workspaces-install.md){ .k-rack-row }
+
+-   [
     <span class="k-rack-code">Files</span>
     <span class="k-rack-title">Nextcloud</span>
     <span class="k-rack-desc">Private cloud storage, file sync, and collaboration suite.</span>
@@ -79,6 +86,7 @@ Once Authentik is running, each of these walks through connecting a specific app
 | Audiobookshelf | [Audiobookshelf Integration](audiobookshelfintegration.md) |
 | Bookstack | [Bookstack Integration](bookstackintegration.md) |
 | Cloudflare Access | [Cloudflare Integration](cloudflareIntegration.md) |
+| Kasm Workspaces | [Kasm Workspaces Integration](kasm-authentik-oidc.md) |
 | Nextcloud | [Nextcloud Integration](nextcloudintegration.md) |
 | Paperless-NGX | [Paperless-NGX Integration](paperlessintegration.md) |
 
