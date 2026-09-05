@@ -1,8 +1,15 @@
+---
+tags:
+  - Ansible
+  - Automation
+  - Patch Management
+---
+
 # Ansible Automation: The Full Lifecycle
 
 ## Overview
 
-The three playbooks in this section aren't independent scripts — they're stages of one system that manages a Linux host from the moment it's created to the moment something goes wrong and needs to be restored. This page ties them together and explains how they hand off to each other.
+The playbooks in this section aren't independent scripts — they're stages of one system that manages a Linux host from the moment it's created to the moment something goes wrong and needs to be restored. This page ties them together and explains how they hand off to each other.
 
 ```mermaid
 flowchart LR
@@ -10,8 +17,10 @@ flowchart LR
     B --> C[Host joins main inventory]
     C --> D[Patch Playbook<br/>weekly]
     C --> E[Config Backup Playbook<br/>daily]
+    C --> H[Infra Patch Playbook<br/>weekly, no auto-reboot]
     D --> F{Something breaks?}
     E --> F
+    H --> F
     F -->|Yes| G[Restore from backup]
     F -->|No| D
     G --> C
@@ -32,16 +41,20 @@ Every host's life starts here, and only here. This playbook runs exactly once pe
 
 Once this playbook finishes, the host graduates from a one-off `bootstrap_hosts.ini` entry into the main inventory — from here on, it's managed the same way as every other host in the lab.
 
+!!! note "Bootstrap only covers hosts you create"
+    Hypervisors and rented VPS instances never go through Stage 1 — they exist before the automation does. Those hosts need the `ansible` account, key, and sudo set up by hand before they can join the inventory. See [Patch Automation → Step 2](ansible-patch.md#step-2-create-a-dedicated-service-account-on-each-server).
+
 ---
 
 ## Stage 2 — Ongoing Maintenance (Every Week / Every Day)
 
-Two playbooks run continuously in the background once a host is onboarded, on independent, offset schedules:
+Three playbooks run continuously in the background once a host is onboarded, on independent, offset schedules:
 
-| Playbook | Frequency | Purpose |
-|---|---|---|
-| **[Patch Automation](ansible-patch.md)** | Weekly (Sun 3 AM) | Keeps packages current, reboots only when required |
-| **[Config Backup](ansible-config-backup.md)** | Daily (1 AM) | Archives critical app/system config to the control node |
+| Playbook | Targets | Frequency | Purpose |
+|---|---|---|---|
+| **[Config Backup](ansible-config-backup.md)** | All hosts | Daily (1 AM) | Archives critical app/system config to the control node |
+| **[Patch Automation](ansible-patch.md)** | Application containers | Weekly (Sun 3 AM) | Patches packages, prunes Docker images, reboots when required |
+| **[Infra Patch](ansible-patch.md#step-10-patching-infrastructure-hosts)** | Hypervisors, public VPS | Weekly (Sun 4 AM) | Patches packages, **reports** reboot need instead of rebooting |
 
 They're deliberately scheduled a few hours apart within the same maintenance window — backup runs *before* patching, so if a patch cycle ever breaks something, there's always a same-day config snapshot to fall back to rather than relying on whatever the last weekly backup happened to catch.
 
@@ -52,11 +65,33 @@ They're deliberately scheduled a few hours apart within the same maintenance win
 # Weekly prune — Sunday 2:00 AM
 0 2 * * 0 ansible-playbook -i hosts.ini prune_backups.yml
 
-# Weekly patch — Sunday 3:00 AM
+# Weekly patch, application containers — Sunday 3:00 AM
 0 3 * * 0 ansible-playbook -i hosts.ini update_lab.yml
+
+# Weekly patch, infrastructure — Sunday 4:00 AM
+0 4 * * 0 ansible-playbook -i hosts.ini update_infra.yml
 ```
 
-Both playbooks target the **same inventory** (`hosts.ini`) — a host only needs to be defined once, and it's automatically covered by both.
+All playbooks target the **same inventory** (`hosts.ini`) — a host is defined once, and which playbook picks it up depends only on which group it's in.
+
+---
+
+## Not Every Host Should Be Patched the Same Way
+
+The instinct is one group, one playbook, everything patched identically. That breaks the first time a hypervisor reboots itself at 3 AM and takes every container with it.
+
+The inventory is split by **how much a bad run costs**, and each tier gets a playbook matched to that risk:
+
+| Tier | Group | Blast radius of a bad run | Reboot policy |
+|---|---|---|---|
+| Application | `linux_servers` | One service down | Automatic, when required |
+| Hypervisor | `proxmox` | Every guest on that host down | Manual only, reported not performed |
+| Public VPS | `vps` | Externally visible outage | Manual only, reported not performed |
+
+Two rules fall out of this split, and both matter:
+
+- **Every group needs its own `[groupname:vars]` block.** Group variables are not inherited. A new group without one falls back to connecting as `root`, which fails on any host with `PermitRootLogin no` and looks exactly like a broken SSH key.
+- **A host in no group is a host in no playbook.** Moving `proxmox` and `vps` out of the main group means nothing patches them until you deliberately write a play that does. That silence is intentional, but it's also easy to forget about.
 
 ---
 
@@ -69,6 +104,9 @@ This is the payoff for maintaining Stage 2 consistently. When a service breaks �
 
 Either path returns the host to Stage 2 — back under normal patch and backup coverage — rather than requiring anything to be reconfigured by hand.
 
+!!! warning "Rebuilding a host at the same IP breaks the control node's SSH trust"
+    A new machine at an existing IP presents a different host key, and SSH refuses to connect. Clear the stale fingerprint and reinstall the automation key before expecting Stage 2 to resume. See [Handling a Changed Host Key](ansible-patch.md#handling-a-changed-host-key).
+
 ---
 
 ## Why This Order Matters
@@ -79,6 +117,12 @@ Each stage depends on the one before it actually happening:
 - Recovery assumes backups have been running long enough to have something recent to restore — **skip consistent Stage 2 runs, and Stage 3 has nothing to work with.**
 
 The lesson from building this out: automation is only as good as its weakest, most-skipped stage. A host that got manually configured and never went through bootstrap is a host that's quietly missing from the whole system — it won't show up as a failure anywhere, it'll just silently not be covered.
+
+The same failure mode applies to hosts that *are* in the inventory but fail every run. A host out of disk, or one whose home directory permissions broke, fails with an `UNREACHABLE` line that scrolls past in a log nobody reads. The rest of the run succeeds, so nothing looks wrong. Make a failure count part of the routine:
+
+```bash
+grep -c "UNREACHABLE\|fatal:" /var/log/ansible-patching.log
+```
 
 ---
 
@@ -91,16 +135,22 @@ Worth calling out explicitly: `bootstrap_hosts.ini` and `hosts.ini` are **not** 
 
 A host should only ever exist in one of these at a time. If a host is still listed in `bootstrap_hosts.ini` after it's been through Stage 1, that's a sign the promotion step (moving it to the main inventory) got missed.
 
+!!! tip "Name hosts in the inventory, don't list bare IPs"
+    An inventory of bare IP addresses contains no record of what each address actually is. When an IP gets reassigned to a different application, the playbook patches the new machine under the old entry and nothing in the output tells you.
+
+    Named entries (`authentik ansible_host=192.168.1.20`) make the recap readable, make an IP change a one-value edit, and make a mismatch visible. See [Patch Automation → Step 5](ansible-patch.md#step-5-build-your-inventory-file) for a script that generates a named inventory from an existing IP-only one.
+
 ---
 
 ## At a Glance
 
-| Stage | Playbook | Trigger | Auth Method |
-|---|---|---|---|
-| 0 — Bootstrap | `bootstrap_lxc.yml` | Manual, once per host | Root + password |
-| 2 — Patch | `update_lab.yml` | Cron, weekly | `ansible` user + SSH key |
-| 2 — Backup | `backup_configs.yml` | Cron, daily | `ansible` user + SSH key |
-| 3 — Recovery | Manual restore + re-run Stage 0/2 | As needed | `ansible` user + SSH key |
+| Stage | Playbook | Targets | Trigger | Auth Method |
+|---|---|---|---|---|
+| 0 — Bootstrap | `bootstrap_lxc.yml` | New LXCs | Manual, once per host | Root + password |
+| 2 — Backup | `backup_configs.yml` | All groups | Cron, daily 1 AM | `ansible` user + SSH key |
+| 2 — Patch | `update_lab.yml` | `linux_servers` | Cron, weekly Sun 3 AM | `ansible` user + SSH key |
+| 2 — Infra Patch | `update_infra.yml` | `proxmox`, `vps` | Cron, weekly Sun 4 AM | `ansible` user + SSH key |
+| 3 — Recovery | Manual restore + re-run Stage 0/2 | As needed | As needed | `ansible` user + SSH key |
 
 ---
 
@@ -109,5 +159,8 @@ A host should only ever exist in one of these at a time. If a host is still list
 This covers the lifecycle for general-purpose Linux hosts. Natural extensions from here:
 
 - A **health check playbook** to catch problems between scheduled patch/backup runs rather than only discovering them after the fact
+- **Failure alerting** — a task that posts the PLAY RECAP somewhere you'll actually see it, closing the silently-failing-host gap that log review alone doesn't
 - **Role-specific bootstrap variants** (e.g. a Docker-ready bootstrap for containerized services) once enough hosts share a common "type"
 - Moving `backup_root_local` off the control node entirely, so Stage 3 recovery doesn't depend on the control node itself surviving
+
+---

@@ -1,3 +1,11 @@
+---
+tags:
+  - Ansible
+  - Automation
+  - SSH Key Authentication
+  - Service Account
+---
+
 # Ansible LXC Bootstrap Playbook
 
 ## Overview
