@@ -326,12 +326,6 @@ systemctl status dns.service
 journalctl -u dns -n 100 --no-pager
 ```
 
-**Updating.** The dashboard shows a banner when a new version is available. Re-run the same install script. It updates in place and keeps the configuration.
-
-```bash
-curl -sSL https://download.technitium.com/dns/install.sh | sudo bash
-```
-
 **Backup.** Use **Administration > Backup** in the console to export a zip containing settings, zones, apps, and blocklists. Do that before any zone change. The on-disk config lives outside the application directory:
 
 ```bash
@@ -339,6 +333,120 @@ ls -la /etc/dns
 ```
 
 Back up the container itself too. Proxmox Backup Server handles this at the LXC level, which is faster to restore than rebuilding the service.
+
+**Updating.** The dashboard shows a banner when a new version is available. See the next section.
+
+## Upgrading
+
+Check what you are on before you start. **About** shows the running version and the banner in the top right shows what is available. The gap between those two numbers decides how much care this takes.
+
+| Upgrade | What happens |
+| --- | --- |
+| Point release, same major version (15.0 to 15.4) | Application files replaced, configuration untouched, no runtime change |
+| Major version (14.x to 15.x) | New .NET runtime required, config format converted on first load, service account and paths may change |
+
+v15 moved to the ASP.NET Core 10 runtime and switched the service to a non-root `dns-server` account. If you installed .NET yourself through apt instead of letting the installer manage it, a major upgrade extracts cleanly and then the service fails to start, because the new binaries need a runtime that is not there. The installer script updates the runtime for you, which is the main reason to use it over a manual extract.
+
+Config conversion runs one way. Once a v15 server has loaded and converted the config, an older binary cannot read it. That is why the rollback that matters is a container-level restore, not swapping application files back.
+
+### Back up first
+
+Snapshot the container if the storage supports it:
+
+```bash
+pct list
+pct snapshot 101 pre_upgrade
+```
+
+Snapshot names are validated as Proxmox configuration IDs. Letters, digits, and underscores only, starting with a letter. `pre-15.4` and `pre.15.4` are both rejected with `invalid configuration ID`.
+
+If the command returns `snapshot feature is not available`, the container's storage cannot snapshot. Plain LVM and directory storage holding raw volumes do not support it, and a bind mount on the container disables the feature regardless of storage type. Confirm which applies:
+
+```bash
+pct config 101
+pvesm status
+```
+
+Match the storage named on the `rootfs:` line against its Type in `pvesm status`. Any `mp0:` line pointing at a host path is a bind mount. Where snapshots are unavailable, take a backup instead:
+
+```bash
+pvesm status --content backup
+vzdump 101 --mode stop --compress zstd --storage <backup-storage>
+```
+
+`--mode stop` produces a clean, consistent copy at the cost of a short DNS and DHCP outage while it runs. Substitute a real storage name for `<backup-storage>`, and confirm the file landed with `pvesm list <backup-storage> --content backup | grep 101`.
+
+Either way, grab the configuration itself. It is small and it restores in seconds:
+
+```bash
+tar -czf /root/technitium-config-$(date +%F).tar.gz /etc/dns
+```
+
+Copy it off the container from the Proxmox host so it survives a container-level problem:
+
+```bash
+pct pull 101 /root/technitium-config-$(date +%F).tar.gz /root/technitium-config.tar.gz
+```
+
+The console export under **Administration > Backup** is worth taking as well, with one limitation: an export from a pre-v14 server will not restore into v14 or later through the UI.
+
+### Run the upgrade
+
+Same script as the install. It handles the runtime, the application files, permissions, and the service restart.
+
+```bash
+curl -sSL https://download.technitium.com/dns/install.sh | sudo bash
+```
+
+A successful run reports the runtime update, the download, the permission fix, and the service restart, ending with `Technitium DNS Server was installed successfully!`.
+
+The manual method is the documented alternative if you want to control each step:
+
+```bash
+cd /tmp
+wget -O DnsServerPortable.tar.gz https://download.technitium.com/dns/DnsServerPortable.tar.gz
+systemctl stop dns.service
+tar -zxf DnsServerPortable.tar.gz -C /opt/technitium/dns
+chown -R dns-server:dns-server /opt/technitium/dns
+systemctl start dns.service
+journalctl --unit dns --follow
+rm -f DnsServerPortable.tar.gz
+```
+
+The `chown` is the step people miss. Extracting as root leaves the new files owned by root while the service runs as `dns-server`, so the server starts but cannot write where it needs to. Stopping the service before extracting also avoids overwriting `.dll` files underneath a running process. Neither concern exists with the installer script, which does both.
+
+### Verify
+
+```bash
+systemctl status dns.service --no-pager
+```
+
+Reload the console with Ctrl+F5 and check that **About** shows the new version. A normal refresh serves cached scripts from the previous version, which makes console buttons appear broken and looks like a failed upgrade.
+
+Then test each resolution path, same as the install verification:
+
+```bash
+dig @10.10.0.3 example.org +short          # recursion through the forwarders
+dig @10.10.0.3 npm.example.com +short      # internal primary zone
+dig @10.10.0.3 dc02.lab.local +short       # conditional forwarder to the DC
+```
+
+Confirm the DHCP tab still shows active leases before you consider it done.
+
+### Loopback queries refused after an upgrade
+
+```
+dig @127.0.0.1 example.org
+;; communications error to 127.0.0.1#53: connection refused
+```
+
+This is not an upgrade failure. **Settings > DNS Server Local End Points** in this guide is bound to the LAN address only, so nothing listens on loopback. Confirm what the server is actually bound to:
+
+```bash
+ss -lntup | grep ':53'
+```
+
+A listener on `10.10.0.3:53` with nothing on `127.0.0.1:53` is the expected result. Test against the LAN address instead, or add `127.0.0.1` to the endpoint list if you want loopback available for troubleshooting from inside the container.
 
 ## Next
 
