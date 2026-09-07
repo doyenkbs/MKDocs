@@ -376,20 +376,6 @@ vzdump 101 --mode stop --compress zstd --storage <backup-storage>
 
 `--mode stop` produces a clean, consistent copy at the cost of a short DNS and DHCP outage while it runs. Substitute a real storage name for `<backup-storage>`, and confirm the file landed with `pvesm list <backup-storage> --content backup | grep 101`.
 
-Either way, grab the configuration itself. It is small and it restores in seconds:
-
-```bash
-tar -czf /root/technitium-config-$(date +%F).tar.gz /etc/dns
-```
-
-Copy it off the container from the Proxmox host so it survives a container-level problem:
-
-```bash
-pct pull 101 /root/technitium-config-$(date +%F).tar.gz /root/technitium-config.tar.gz
-```
-
-The console export under **Administration > Backup** is worth taking as well, with one limitation: an export from a pre-v14 server will not restore into v14 or later through the UI.
-
 ### Run the upgrade
 
 Same script as the install. It handles the runtime, the application files, permissions, and the service restart.
