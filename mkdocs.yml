@@ -208,13 +208,20 @@ nav:
        # - Patch: home-lab/tanium/patch.md
         #- Connect: home-lab/tanium/connect.md
         #- Provision: home-lab/tanium/provision.md
-    - Administration:
+    - Packages:
+        - Overview: home-lab/tanium/packages/index.md
+        - Edge MSI Standardization: home-lab/tanium/packages/edge-msi-standardization.md
+        - Find File by Name: home-lab/tanium/packages/find-file-by-name.md
+        - Local Admin Removal: home-lab/tanium/packages/local-admin-removal.md
+    - Sensors:
+        - Overview: home-lab/tanium/sensors/index.md
+        - Find File by Name: home-lab/tanium/sensors/find-file-by-name.md
+    #- Administration:
         #- Overview: home-lab/tanium/administration.md
         #- Actions: home-lab/tanium/actions.md
         #- Content: home-lab/tanium/content.md
         #- Permissions: home-lab/tanium/permissions.md
         #- Configuration: home-lab/tanium/configuration.md
-        - Packaging: home-lab/tanium/local_user_removal.md
     #- Shared Services:
         #- Overview: home-lab/tanium/shared-services.md
         #- Client Management: home-lab/tanium/client-management.md

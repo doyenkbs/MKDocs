@@ -1,4 +1,4 @@
-# AD Admin OU — Automated Local Admin Removal via Tanium
+# Local Admin Removal
 
 ## Overview
 

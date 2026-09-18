@@ -41,9 +41,9 @@ hide:
 -   [
     <span class="k-rack-code">Epm</span>
     <span class="k-rack-title">Tanium</span>
-    <span class="k-rack-desc">Administration guides and packaging notes from hands-on Tanium work.</span>
+    <span class="k-rack-desc">Custom packages and sensors from hands-on Tanium work.</span>
     <span class="k-rack-go">&rarr;</span>
-    ](home-lab/tanium/local_user_removal.md){ .k-rack-row }
+    ](home-lab/tanium/packages/index.md){ .k-rack-row }
 
 </div>
 
