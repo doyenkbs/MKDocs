@@ -176,6 +176,9 @@ nav:
             - Technitium DNS Install: home-lab/services/technitium-dns-install-ubuntu-lxc.md
             - Split-Horizon DNS: home-lab/services/split-horizon-dns-technitium-npm.md
             - Nginx Proxy Manager: home-lab/services/nginx-proxy-manager-install-config.md
+        - Pangolin:
+            - Install and Manage: home-lab/services/pangolin.md
+            - Configuration: home-lab/services/pangolin-configuration.md
         - Mailcow: 
             - Overview: home-lab/services/email.md
             - Mailcow Troubleshooting:
