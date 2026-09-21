@@ -14,6 +14,9 @@ This page covers upgrading Windows 10 or Windows 11 endpoints to a newer Windows
 
 The examples use Windows 11 23H2 to 25H2. The same process applies to Windows 10 22H2 to Windows 11, only the build numbers change.
 
+!!! info "No endpoint access needed"
+    Every check on this page is written as a Tanium question you run from **Interact**, so an operator without direct or remote access to the endpoint can still troubleshoot. Where a PowerShell command is shown, it is an alternate for someone who does have access.
+
 !!! note "Placeholder values"
     Computer names, tags, and deployment names on this page are examples (`WS-EXAMPLE-01`, `IPU-Stuck`). Replace them with your own.
 
@@ -48,11 +51,21 @@ The `Status` values you will see:
 
 `TargetedBuildVersion` holds the build the endpoint was staged for (for 25H2, `26200`). It tells you what the endpoint was **targeted** for, not what it is **running**.
 
-Each time Phase 1 runs, it renames the existing `OSD` key to `OSD.1` (then `OSD.2`, `OSD.3`, and so on) and creates a fresh `OSD` key. If you need to know what state an endpoint was in before a re-run, look at those backup keys:
+Each time Phase 1 runs, it renames the existing `OSD` key to `OSD.1` (then `OSD.2`, `OSD.3`, and so on) and creates a fresh `OSD` key. Check the current key, and the backup keys if you need to know what state an endpoint was in before a re-run:
 
-```powershell
-Get-ChildItem 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client' | Where-Object Name -match '\\OSD' | ForEach-Object { $_.Name; Get-ItemProperty $_.PSPath | Select-Object Status, TargetedBuildVersion }
-```
+=== "Tanium question"
+
+    ```
+    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+    ```
+
+    `OSD` is the current state and the only key on an endpoint that has run Phase 1 once. To see earlier runs, change `OSD` to `OSD.1` in both places, then `OSD.2`, and so on. `OSD.1` is the oldest run; the highest number is the run just before the current one. An empty result means that backup key does not exist.
+
+=== "PowerShell (alternate)"
+
+    ```powershell
+    Get-ChildItem 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client' | Where-Object Name -match '\\OSD' | ForEach-Object { $_.Name; Get-ItemProperty $_.PSPath | Select-Object Status, TargetedBuildVersion }
+    ```
 
 The only reliable proof the upgrade finished is the OS build number:
 
@@ -175,7 +188,7 @@ If the log shows `Please attach 7zip download to Phase1 Package`, the 7-Zip inst
    `Deployment ended before completing. Previous sub-status was "Waiting for notification".`
 4. After it finishes, confirm the build number in Interact. Do not rely on the Complete count:
    ```
-   Get Computer Name and Registry Value Data["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines
+   Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines
    ```
    Endpoints showing `26200` in the `CurrentBuildNumber` column finished. Anything still on the old build did not, whatever Deploy reports.
 
@@ -188,13 +201,13 @@ Run these from **Interact** (main menu > **Interact**), paste the question into 
 **Fleet overview: current build, OSD status, and targeted build**
 
 ```
-Get Computer Name and Registry Value Data["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines
+Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines
 ```
 
 **Stuck endpoints: status says Upgrade In Progress**
 
 ```
-Get Computer Name and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "Upgrade In Progress"
+Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "Upgrade In Progress"
 ```
 
 Any row where `CurrentBuildNumber` is still the old build (for example `22631`) is stuck. Rows already showing `26200` finished the upgrade and only have a stale status value.
@@ -202,7 +215,7 @@ Any row where `CurrentBuildNumber` is still the old build (for example `22631`) 
 **Is Windows Setup still running?**
 
 ```
-Get Computer Name and Running Processes from all machines with Running Processes contains "SetupHost"
+Get "Computer Name" and "Running Processes" from all machines with "Running Processes" contains "SetupHost"
 ```
 
 If `SetupHost.exe` (or `setup.exe`) is still running, the upgrade may still be working. Leave it alone and check again later.
@@ -210,7 +223,7 @@ If `SetupHost.exe` (or `setup.exe`) is still running, the upgrade may still be w
 **What Deploy thinks happened on a specific endpoint**
 
 ```
-Get Deploy - Deployments from all machines with Computer Name contains "WS-EXAMPLE-01"
+Get "Deploy - Deployments" from all machines with "Computer Name" contains "WS-EXAMPLE-01"
 ```
 
 This shows every deployment on that endpoint and its result. It is the fastest way to explain why a package shows **Not Applicable** (for example, an earlier deployment already marked it Installed).
@@ -218,13 +231,13 @@ This shows every deployment on that endpoint and its result. It is the fastest w
 **Compatibility scan failures**
 
 ```
-Get Computer Name and Deploy - Windows Upgrade Scan Results from all machines with Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "WIM File Copied"
+Get "Computer Name" and "Deploy - Windows Upgrade Scan Results" from all machines with "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "WIM File Copied"
 ```
 
 **Do setup logs exist on the endpoint?**
 
 ```
-Get Computer Name and File Exists["C:\$WINDOWS.~BT\Sources\Panther\setupact.log"] from all machines with Computer Name contains "WS-EXAMPLE-01"
+Get "Computer Name" and "File Exists"["C:\$WINDOWS.~BT\Sources\Panther\setupact.log"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
 ```
 
 !!! tip
@@ -259,7 +272,7 @@ This gives you a stable target for the next steps.
 
 1. In Interact, ask:
    ```
-   Get Online from all machines with Custom Tags contains "IPU-Stuck"
+   Get "Online" from all machines with "Custom Tags" contains "IPU-Stuck"
    ```
 2. Select the results and click **Deploy Action**.
 3. In **Deployment Package**, search for and select **Registry - Set Value**.
@@ -275,7 +288,7 @@ This gives you a stable target for the next steps.
 
 5. Deploy to **one** endpoint first, then ask this question and confirm the `Status` column now reads `WIM File Copied`:
    ```
-   Get Computer Name and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with Computer Name contains "WS-EXAMPLE-01"
+   Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
    ```
    Once it looks right, deploy to the rest.
 
@@ -290,7 +303,7 @@ This gives you a stable target for the next steps.
 1. Create a deployment with the **Phase2 - Re-Scan** package targeting the `IPU-Stuck` tag.
 2. When it finishes, ask this question. Passing endpoints now show `Compat Scan OK`:
    ```
-   Get Computer Name and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with Custom Tags contains "IPU-Stuck"
+   Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with "Custom Tags" contains "IPU-Stuck"
    ```
 3. Endpoints that fail the scan need the fix in section 5 before going further.
 
@@ -301,7 +314,7 @@ This gives you a stable target for the next steps.
 3. Set the deployment to **Ongoing** or give it a long **End Time**.
 4. Confirm success with this question. Every endpoint should show `26200`:
    ```
-   Get Computer Name and Registry Value Data["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and Registry Value Data["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] from all machines with Custom Tags contains "IPU-Stuck"
+   Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] from all machines with "Custom Tags" contains "IPU-Stuck"
    ```
 5. Remove the `IPU-Stuck` tag from the upgraded endpoints with **Custom Tagging - Remove Tags**.
 
@@ -311,11 +324,19 @@ This gives you a stable target for the next steps.
 
 ### Find the Tanium Client folder
 
-The Tanium Client install path varies. Get it on the endpoint with:
+The Tanium Client install path varies. Get it with:
 
-```powershell
-(Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client').Path
-```
+=== "Tanium question"
+
+    ```
+    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client","Path"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+    ```
+
+=== "PowerShell (alternate)"
+
+    ```powershell
+    (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client').Path
+    ```
 
 On most endpoints it is `C:\Program Files (x86)\Tanium\Tanium Client`.
 
@@ -327,12 +348,20 @@ C:\Program Files (x86)\Tanium\Tanium Client\Tools\SoftwareManagement\logs\
 
 Check `subprocess.log` first. Each command step in a Deploy package runs as a subprocess, and this log shows what was launched and the exit code.
 
-List everything in the folder, newest first, to see which logs changed during the upgrade:
+List the files in the folder:
 
-```powershell
-$tc = (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client').Path
-Get-ChildItem "$tc\Tools\SoftwareManagement\logs" -Recurse | Sort-Object LastWriteTime -Descending | Select-Object LastWriteTime, Length, FullName -First 30
-```
+=== "Tanium question"
+
+    ```
+    Get "Computer Name" and "Folder Contents"["C:\Program Files (x86)\Tanium\Tanium Client\Tools\SoftwareManagement\logs"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+    ```
+
+=== "PowerShell (alternate)"
+
+    ```powershell
+    $tc = (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client').Path
+    Get-ChildItem "$tc\Tools\SoftwareManagement\logs" -Recurse | Sort-Object LastWriteTime -Descending | Select-Object LastWriteTime, Length, FullName -First 30
+    ```
 
 ### In-place upgrade transcripts (WinIPU folder)
 
@@ -348,24 +377,40 @@ C:\Program Files (x86)\Tanium\Tanium Client\Tools\SoftwareManagement\logs\WinIPU
 
 The Phase 2 and Phase 3 scripts write their own transcripts to the same folder. File names can vary by package version, so list the folder to see what is there:
 
-```powershell
-$tc = (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client').Path
-Get-ChildItem "$tc\Tools\SoftwareManagement\logs\WinIPU" | Sort-Object LastWriteTime -Descending | Select-Object LastWriteTime, Length, Name
-```
+=== "Tanium question"
 
-Read the end of the Phase 1 transcript:
+    ```
+    Get "Computer Name" and "Folder Contents"["C:\Program Files (x86)\Tanium\Tanium Client\Tools\SoftwareManagement\logs\WinIPU"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+    ```
+
+=== "PowerShell (alternate)"
+
+    ```powershell
+    $tc = (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client').Path
+    Get-ChildItem "$tc\Tools\SoftwareManagement\logs\WinIPU" | Sort-Object LastWriteTime -Descending | Select-Object LastWriteTime, Length, Name
+    ```
+
+Read the end of the Phase 1 transcript. Reading log text needs access to the endpoint (or a log collection your Tanium admin has approved), so this one is PowerShell only:
 
 ```powershell
 $tc = (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client').Path
 Get-Content "$tc\Tools\SoftwareManagement\logs\WinIPU\Win_PreCache.txt" -Tail 60
 ```
 
-Check where the extracted media landed:
+Check that the extracted media landed:
 
-```powershell
-Get-ChildItem 'C:\deploy\Tanium\OS' | Select-Object Name, Length
-Test-Path 'C:\deploy\Tanium\OS\setup.exe'
-```
+=== "Tanium question"
+
+    ```
+    Get "Computer Name" and "File Exists"["C:\deploy\Tanium\OS\setup.exe"] and "File Exists"["C:\deploy\Tanium\OS\sources\install.wim"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+    ```
+
+=== "PowerShell (alternate)"
+
+    ```powershell
+    Get-ChildItem 'C:\deploy\Tanium\OS' | Select-Object Name, Length
+    Test-Path 'C:\deploy\Tanium\OS\setup.exe'
+    ```
 
 ### Windows Setup logs
 
@@ -380,7 +425,13 @@ Test-Path 'C:\deploy\Tanium\OS\setup.exe'
 | `setupact.log` (post-upgrade) | `C:\Windows\Panther\setupact.log` | Upgrade got past the first restart. |
 | SetupDiag results | `C:\Windows\Logs\SetupDiag\SetupDiagResults.xml` | Windows Setup runs SetupDiag automatically on failure. Read this before the raw logs. |
 
-Pull the last 50 lines of the setup error log remotely or in a local shell:
+Check which setup logs exist on the endpoint. This tells you how far Setup got (Panther only: failed before the first restart; Rollback present: it rolled back; SetupDiag present: read that first):
+
+```
+Get "Computer Name" and "File Exists"["C:\$WINDOWS.~BT\Sources\Panther\setuperr.log"] and "File Exists"["C:\$WINDOWS.~BT\Sources\Rollback\setupact.log"] and "File Exists"["C:\Windows\Logs\SetupDiag\SetupDiagResults.xml"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+```
+
+With access to the endpoint (alternate), pull the last 50 lines of the setup error log:
 
 ```powershell
 Get-Content 'C:\$WINDOWS.~BT\Sources\Panther\setuperr.log' -Tail 50
@@ -394,7 +445,19 @@ Select-String -Path 'C:\$WINDOWS.~BT\Sources\Panther\setupact.log' -Pattern '0xC
 
 ### Running SetupDiag manually
 
-If `SetupDiagResults.xml` does not exist, download `SetupDiag.exe` from Microsoft and run it on the endpoint:
+If `SetupDiagResults.xml` does not exist, run SetupDiag through Tanium with a small custom package:
+
+1. Download `SetupDiag.exe` from Microsoft.
+2. Go to **Modules > Deploy > Software > Create Software Package**, add `SetupDiag.exe` under **Package Files**, and set the install command to:
+   ```
+   cmd.exe /c SetupDiag.exe /Output:C:\Windows\Logs\SetupDiag\SetupDiagResults.log
+   ```
+3. Deploy it to the affected endpoints, then confirm the result file was written:
+   ```
+   Get "Computer Name" and "File Exists"["C:\Windows\Logs\SetupDiag\SetupDiagResults.log"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+   ```
+
+With access to the endpoint (alternate), run it directly:
 
 ```cmd
 SetupDiag.exe /Output:C:\Temp\SetupDiagResults.log
