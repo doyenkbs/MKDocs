@@ -219,6 +219,8 @@ nav:
     - Sensors:
         - Overview: home-lab/tanium/sensors/index.md
         - Find File by Name: home-lab/tanium/sensors/find-file-by-name.md
+    - Deploy:
+        - Windows In-Place Upgrade: home-lab/tanium/deploy/windows-inplace-upgrade.md
     #- Administration:
         #- Overview: home-lab/tanium/administration.md
         #- Actions: home-lab/tanium/actions.md
