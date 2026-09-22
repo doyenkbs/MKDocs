@@ -110,7 +110,7 @@ AND PROCESSOR_ARCHITECTURE          = "AMD64"
 
     If the restart never happens, or the upgrade is interrupted or rolls back and leaves `Status = Upgrade In Progress` behind, the endpoint still matches Branch A. Deploy reports it **Complete** and treats Phase 3 as already installed, so re-deploying Phase 3 does nothing.
 
-    Do not use the Deploy Complete count as your success number. The real success number is Branch B: `CurrentBuildNumber = 26200`. The stuck population is exactly "matches Branch A, fails Branch B." Section 3 has the question that finds them, and section 4 covers the fix.
+    Do not use the Deploy Complete count as your success number. The real success number is Branch B: `CurrentBuildNumber = 26200`. The stuck population is exactly "matches Branch A, fails Branch B." Section 3.2 covers how to find and fix them.
 
 ---
 
@@ -124,7 +124,7 @@ AND PROCESSOR_ARCHITECTURE          = "AMD64"
 
 ### Add the Windows installation ISO to Phase 1
 
-The **Phase1 - Pre-Cache** package ships with only the wrapper script. You add the Windows media and a full 7-Zip installer to the package yourself.
+The **Phase1 - Pre-Cache** package includes the wrapper script, the compatibility scan script, and a 7-Zip installer. It does **not** include Windows media. You add the ISO yourself.
 
 **What the script accepts as media** (it checks in this order and uses the first match):
 
@@ -136,18 +136,22 @@ The **Phase1 - Pre-Cache** package ships with only the wrapper script. You add t
 
 The ISO is the simplest option.
 
-**What else the package needs for an ISO:** a full 7-Zip installer. The Tanium Client's built-in `7za.exe` cannot open ISO files, so the script extracts `7z.exe` and `7z.dll` from a 7-Zip installer you attach, then uses those. The installer file name has to match the script's pattern, `7z` or `7zip`, optional version digits, optional `-x64`, ending in `.msi` or `.exe`. These all work: `7z2409-x64.msi`, `7z1900.exe`, `7zip.msi`.
+**Why the package contains 7zip.msi:** the Tanium Client's built-in `7za.exe` cannot open ISO files, so the script extracts `7z.exe` and `7z.dll` from the 7-Zip installer in the package and uses those to unpack the ISO. 7-Zip is never installed on the endpoint; the two files go to `%TEMP%` and are deleted after extraction.
+
+Tanium maintains the `7zip.msi` entry in the predefined package (its origin is `https://www.7-zip.org`), so you do not need to download or replace it. The Tanium Server downloads it and serves it to endpoints like any other package file.
 
 **Steps**
 
 1. Download the Windows 11 ISO for the target version, language, and edition from your licensed source (for example, the Microsoft 365 admin center or Volume Licensing Service Center).
-2. Download the full 7-Zip installer from `https://www.7-zip.org` (for example `7z2409-x64.msi`). Do not rename it to something outside the pattern above.
-3. Go to **Modules > Deploy > Software**.
-4. Click the **InPlace Upgrade to Windows 11 Version 25H2 - Phase1 - Pre-Cache** package, then click **Edit**.
-5. Expand **Package Files** and click **Add Package Files**.
+2. Go to **Modules > Deploy > Software**.
+3. Click the **InPlace Upgrade to Windows 11 Version 25H2 - Phase1 - Pre-Cache** package, then click **Edit**.
+4. Expand **Package Files** and confirm **7zip.msi** is listed with a **Size** and **Sha-256**. That means the Tanium Server has it cached. Leave it as is.
+5. Click **Add Package Files**.
 6. Choose **Local File**, browse to the ISO, and click **Open**. For a large ISO, you can host it on an internal web server and use **Remote File** with that URL instead.
-7. Click **Add Package Files** again and add the 7-Zip installer the same way. If the package already has a `7Zip.msi` entry that points to an external URL your endpoints cannot reach, delete it first.
-8. Click **Save**.
+7. Click **Save**.
+
+!!! note "Only if 7zip.msi is not cached"
+    If your Tanium Server cannot reach `www.7-zip.org` (proxy or isolated network), the `7zip.msi` entry will not download and Phase 1 fails with `Please attach 7zip download to Phase1 Package`. In that case, download the 7-Zip x64 MSI from `https://www.7-zip.org` on a machine with internet access, delete the existing `7zip.msi` entry, and add the downloaded file with **Add Package Files > Local File**. Keep a name the script recognizes: `7z` or `7zip`, optional version digits, optional `-x64`, ending in `.msi` or `.exe` (for example `7z2409-x64.msi` or `7zip.msi`).
 
 **What Phase 1 does on the endpoint**
 
@@ -162,7 +166,7 @@ The ISO is the simplest option.
     - **Disk space:** the endpoint holds the ISO in the Deploy download cache *and* the extracted copy in `C:\deploy\Tanium\OS`, then needs working space for Setup. Target endpoints with plenty of free space on `C:` (20 GB or more is a reasonable floor).
     - **Anything else in `C:\deploy\Tanium\OS` is deleted** every time Phase 1 runs.
 
-If the log shows `Please attach 7zip download to Phase1 Package`, the 7-Zip installer is missing or its name does not match the pattern. If it shows `Missing Setup.Exe. Package must have *BOTH* Install.wim and Setup.exe`, you attached extracted media without `setup.exe`.
+If the log shows `Please attach 7zip download to Phase1 Package`, the `7zip.msi` package file is missing or was not cached (see the note above). If it shows `Missing Setup.Exe. Package must have *BOTH* Install.wim and Setup.exe`, you attached extracted media without `setup.exe`.
 
 !!! note "Direct-Cache"
     The **Phase1 - Direct-Cache** variant gets the media a different way and is meant for endpoints that cannot peer (remote and VPN users). Check that package's **Package Files** after import to see whether it also expects an ISO.
@@ -184,8 +188,7 @@ If the log shows `Please attach 7zip download to Phase1 Package`, the 7-Zip inst
 
 1. Create a deployment with the **Phase3 - Upgrade** package.
 2. Turn on **End User Notification** with a restart prompt so users know a long restart is coming and do not power off mid-upgrade.
-3. Set the deployment to **Ongoing**, or set the **End Time** well past the notification window plus the install time. If the window is too short you get:
-   `Deployment ended before completing. Previous sub-status was "Waiting for notification".`
+3. Set the deployment to **Ongoing**, or set the **End Time** well past the notification window plus the install time. If the window is too short you get `Deployment ended before completing. Previous sub-status was "Waiting for notification".` (see [3.3](#33-deployment-ended-while-waiting-for-notification)).
 4. After it finishes, confirm the build number in Interact. Do not rely on the Complete count:
    ```
    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines
@@ -194,81 +197,94 @@ If the log shows `Please attach 7zip download to Phase1 Package`, the 7-Zip inst
 
 ---
 
-## 3. Interact questions
+## 3. Troubleshooting
 
-Run these from **Interact** (main menu > **Interact**), paste the question into the question bar, and press Enter.
+Every check in this section is a Tanium question. Run it from **Interact** (main menu > **Interact**): paste the question into the question bar and press Enter. Replace `WS-EXAMPLE-01` with the endpoint name.
 
-**Fleet overview: current build, OSD status, and targeted build**
+!!! tip
+    Sensor names can differ between Tanium content versions. If a sensor is not found, type part of the name in the Interact question bar and pick it from the suggestions.
 
-```
-Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines
-```
+### 3.1 Check where an endpoint is
 
-**Stuck endpoints: status says Upgrade In Progress**
-
-```
-Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "Upgrade In Progress"
-```
-
-Any row where `CurrentBuildNumber` is still the old build (for example `22631`) is stuck. Rows already showing `26200` finished the upgrade and only have a stale status value.
-
-**Is Windows Setup still running?**
+Start here for any problem. This shows the running build, the OSD status, and the build the endpoint was staged for:
 
 ```
-Get "Computer Name" and "Running Processes" from all machines with "Running Processes" contains "SetupHost"
+Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","TargetedBuildVersion"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
 ```
 
-If `SetupHost.exe` (or `setup.exe`) is still running, the upgrade may still be working. Leave it alone and check again later.
+Remove the `with "Computer Name" contains ...` part to see the whole fleet.
 
-**What Deploy thinks happened on a specific endpoint**
+| `CurrentBuildNumber` | `Status` | What it means | Go to |
+|---|---|---|---|
+| `26200` | any | Upgrade finished. A leftover `Upgrade In Progress` value is harmless. | Done |
+| old build | `Upgrade In Progress` | Stuck mid-upgrade, or Setup is still running | [3.2](#32-stuck-at-upgrade-in-progress) |
+| old build | `Compat Scan OK` | Ready for Phase 3 but it never started, usually a notification or deployment window problem | [3.3](#33-deployment-ended-while-waiting-for-notification) |
+| old build | `WIM File Copied` | Compatibility scan did not pass, or a re-scan is pending | [3.4](#34-compatibility-scan-failed) |
+| old build | `Ready to Install` | Phase 1 failed while extracting the media | [3.5](#35-phase-1-failed) |
+| old build | blank | Phase 1 never ran on this endpoint | Deploy Phase 1 |
+
+To see what Deploy recorded for every deployment on the endpoint (useful when a package shows **Not Applicable**):
 
 ```
 Get "Deploy - Deployments" from all machines with "Computer Name" contains "WS-EXAMPLE-01"
 ```
 
-This shows every deployment on that endpoint and its result. It is the fastest way to explain why a package shows **Not Applicable** (for example, an earlier deployment already marked it Installed).
-
-**Compatibility scan failures**
-
-```
-Get "Computer Name" and "Deploy - Windows Upgrade Scan Results" from all machines with "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "WIM File Copied"
-```
-
-**Do setup logs exist on the endpoint?**
-
-```
-Get "Computer Name" and "File Exists"["C:\$WINDOWS.~BT\Sources\Panther\setupact.log"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
-```
-
-!!! tip
-    Sensor names can differ between Tanium content versions. If a sensor is not found, type part of the name in the Interact question bar and pick it from the suggestions.
-
 ---
 
-## 4. Recovering a stuck endpoint
+### 3.2 Stuck at Upgrade In Progress
 
-Symptom: `OSD\Status` = `Upgrade In Progress`, `CurrentBuildNumber` is still the old build, and re-running Phase 3 either shows **Not Applicable** or repeats a false **Complete**.
+**Symptom:** `Status` = `Upgrade In Progress`, `CurrentBuildNumber` is still the old build, and Phase 3 shows **Complete** or **Not Applicable**.
 
-Why re-running Phase 3 does not fix it, for two reasons:
+**Why re-running Phase 3 does not fix it:**
 
 1. The endpoint still matches **Branch A** of the install verification (`Status = Upgrade In Progress` plus the staged `setupprep.exe` in `C:\$Windows.~BT\Sources`), so Deploy considers Phase 3 already installed.
-2. Phase 3 only treats an endpoint as eligible when `OSD\Status` = `Compat Scan OK`.
+2. Phase 3 only treats an endpoint as eligible when `Status` = `Compat Scan OK`.
 
-Changing `Status` away from `Upgrade In Progress` breaks Branch A, and the Phase 2 re-scan brings it back to `Compat Scan OK`. That is what the steps below do.
+The fix is to move `Status` off `Upgrade In Progress`, re-scan with Phase 2, and run Phase 3 again. Work through the steps in order.
 
-### Step 1: Confirm Setup is dead
+#### Step 1: Find the stuck endpoints
 
-Run the **Is Windows Setup still running?** question from section 3. If `SetupHost.exe` is running, wait. Only reset endpoints where Setup is no longer running.
+```
+Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "Upgrade In Progress"
+```
 
-### Step 2: Tag the stuck endpoints
+Rows still on the old build (for example `22631`) are stuck. Rows showing `26200` finished and only have a stale status value; ignore them.
 
-1. Run the **Stuck endpoints** question.
-2. Select the rows where the build did not change.
-3. Click **Deploy Action**, choose the **Custom Tagging - Add Tags** package, and add the tag `IPU-Stuck`.
+#### Step 2: Check whether Windows Setup is still running
 
-This gives you a stable target for the next steps.
+```
+Get "Computer Name" and "Running Processes" from all machines with ( "Running Processes" contains "setup.exe" or "Running Processes" contains "SetupHost.exe" ) and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "Upgrade In Progress"
+```
 
-### Step 3: Reset the OSD status with Registry - Set Value
+Any endpoint returned here still has Setup running. The upgrade may still be working, especially before the first restart. **Do not reset these.** Check them again later. Continue only with the endpoints from Step 1 that do **not** appear here.
+
+#### Step 3: Tag the stuck endpoints
+
+1. Re-run the Step 1 question.
+2. Select the rows still on the old build that were not in the Step 2 results.
+3. Click **Deploy Action**.
+4. In **Deployment Package**, select **Custom Tagging - Add Tags**, enter the tag `IPU-Stuck`, and deploy.
+
+The tag gives you a stable target for the rest of the steps.
+
+#### Step 4: Check Action Lock
+
+While Action Lock is on, the Tanium Client does not run actions, so the registry reset, Phase 2, and Phase 3 would all sit waiting. Check it before pushing anything:
+
+```
+Get "Computer Name" and "Action Lock Status" from all machines with "Custom Tags" contains "IPU-Stuck"
+```
+
+If any endpoint shows Action Lock **on**:
+
+1. Select those rows and click **Deploy Action**.
+2. In **Deployment Package**, select **Action Lock Off** and deploy.
+3. Re-run the question above and confirm Action Lock is now off.
+
+!!! warning "Find out why Action Lock was on"
+    Action Lock is sometimes set on purpose (for example, on machines that must not receive changes). Confirm with the owner before turning it off, and note which endpoints you changed so you can turn it back on with the **Action Lock On** package after the upgrade.
+
+#### Step 5: Reset the OSD status with Registry - Set Value
 
 1. In Interact, ask:
    ```
@@ -290,37 +306,111 @@ This gives you a stable target for the next steps.
    ```
    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
    ```
-   Once it looks right, deploy to the rest.
+   Once it looks right, deploy to the rest of the `IPU-Stuck` endpoints.
 
 !!! warning "Test the key path on one endpoint first"
     Tanium's documented example enters the full `WOW6432Node` path in **Registry Key Name** and sets **OS Architecture** to match the endpoints. Another approach is to enter `HKEY_LOCAL_MACHINE\Software\Tanium\Tanium Client\OSD` with **OS Architecture = 32** and let Windows redirect it to `WOW6432Node`. Either way, verify on one endpoint that the value landed under `WOW6432Node` before targeting the group.
 
 !!! note "Why WIM File Copied and not Compat Scan OK"
-    Some guides reset the value straight to `Compat Scan OK` so Phase 3 picks the endpoint up immediately. That skips the compatibility scan, and the interrupted upgrade may have left the machine in a different state than when it last passed. `WIM File Copied` is the value Tanium documents for this reset, and it forces a fresh scan in Step 4. Use `Compat Scan OK` only if you have confirmed the endpoint is healthy and you accept skipping the re-scan.
+    Some guides reset the value straight to `Compat Scan OK` so Phase 3 picks the endpoint up immediately. That skips the compatibility scan, and the interrupted upgrade may have left the machine in a different state than when it last passed. `WIM File Copied` is the value Tanium documents for this reset, and it forces a fresh scan in Step 6. Use `Compat Scan OK` only if you have confirmed the endpoint is healthy and you accept skipping the re-scan.
 
-### Step 4: Re-scan with Phase 2
+#### Step 6: Re-scan with Phase 2
 
-1. Create a deployment with the **Phase2 - Re-Scan** package targeting the `IPU-Stuck` tag.
-2. When it finishes, ask this question. Passing endpoints now show `Compat Scan OK`:
+1. Go to **Modules > Deploy > Deployments > Create Deployment**, select the **Phase2 - Re-Scan** package, and target the `IPU-Stuck` tag.
+2. When it finishes, ask:
    ```
    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] from all machines with "Custom Tags" contains "IPU-Stuck"
    ```
-3. Endpoints that fail the scan need the fix in section 5 before going further.
+   Endpoints that passed now show `Compat Scan OK`. Endpoints that did not pass need [3.4](#34-compatibility-scan-failed) first.
 
-### Step 5: Run Phase 3 again
+#### Step 7: Run Phase 3 again
 
 1. Create a new Phase 3 deployment targeting the `IPU-Stuck` tag.
 2. Enable **End User Notification** with a restart prompt.
-3. Set the deployment to **Ongoing** or give it a long **End Time**.
-4. Confirm success with this question. Every endpoint should show `26200`:
+3. Set the deployment to **Ongoing** or give it a long **End Time** (see [3.3](#33-deployment-ended-while-waiting-for-notification)).
+
+#### Step 8: Confirm and clean up
+
+1. Confirm the upgrade. Every endpoint should show `26200`:
    ```
    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] from all machines with "Custom Tags" contains "IPU-Stuck"
    ```
-5. Remove the `IPU-Stuck` tag from the upgraded endpoints with **Custom Tagging - Remove Tags**.
+2. Remove the tag from the upgraded endpoints with the **Custom Tagging - Remove Tags** package.
+3. If you turned Action Lock off in Step 4 on endpoints that need it, turn it back on with the **Action Lock On** package.
 
 ---
 
-## 5. Logs to check
+### 3.3 Deployment ended while waiting for notification
+
+**Symptom:** the Phase 3 deployment shows:
+
+`Deployment ended before completing. Previous sub-status was "Waiting for notification".`
+
+**Cause:** the deployment reached its **End Time** while the endpoint was still showing the user the restart notification (the user postponed, ignored it, or was not logged on). Setup never started, so the endpoint is usually still at `Status` = `Compat Scan OK` on the old build.
+
+1. Confirm the endpoint state with the [3.1](#31-check-where-an-endpoint-is) question. If it shows `Upgrade In Progress`, use [3.2](#32-stuck-at-upgrade-in-progress) instead.
+2. Check what Deploy recorded:
+   ```
+   Get "Deploy - Deployments" from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+   ```
+3. Create a new Phase 3 deployment for these endpoints and either set it to **Ongoing**, or set the **End Time** well past the notification deadline plus the install time. Keep the **End User Notification** deadline shorter than the deployment window so the upgrade starts before the deployment ends.
+
+---
+
+### 3.4 Compatibility scan failed
+
+**Symptom:** Phase 1 or Phase 2 shows **Update Ineligible**, and `Status` stays at `WIM File Copied`.
+
+1. See why the scan failed:
+   ```
+   Get "Computer Name" and "Deploy - Windows Upgrade Scan Results" from all machines with "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] contains "WIM File Copied"
+   ```
+   Some content versions name the sensor **Deploy - Windows Upgrade Scan Details**.
+2. Fix the blocker (free disk space, remove or update the incompatible app, update the driver). The full scan result is in `C:\$WINDOWS.~BT\Sources\Panther\ScanResult.xml` (section 4).
+3. Deploy the **Phase2 - Re-Scan** package to those endpoints and re-check with the [3.1](#31-check-where-an-endpoint-is) question.
+
+Hardware blocks (TPM, Secure Boot, CPU, RAM) do not clear with a re-scan. Those endpoints need a hardware or firmware change first.
+
+---
+
+### 3.5 Phase 1 failed
+
+**Symptom:** `Status` stays at `Ready to Install` after Phase 1.
+
+Check that the extracted media reached the endpoint:
+
+```
+Get "Computer Name" and "File Exists"["C:\deploy\Tanium\OS\setup.exe"] and "File Exists"["C:\deploy\Tanium\OS\sources\install.wim"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
+```
+
+If either file is missing, extraction failed. Read `WinIPU\Win_PreCache.txt` (section 4) for the error:
+
+| Log message | Cause | Fix |
+|---|---|---|
+| `Please attach 7zip download to Phase1 Package` | `7zip.msi` missing from the package or not cached by the Tanium Server | Check **Package Files** in the Phase 1 package. If `7zip.msi` has no size or hash, follow the "Only if 7zip.msi is not cached" note in section 2. |
+| `Missing Setup.Exe. Package must have *BOTH* Install.wim and Setup.exe` | Extracted media attached without `setup.exe` | Attach the ISO instead, or the complete extracted media. |
+| No media found | No ISO, WIM, or ESD over 2 GB in the package | Add the ISO to the package (section 2). |
+
+Antivirus blocking `C:\deploy` can also stop extraction. Confirm the exclusion is in place.
+
+---
+
+### 3.6 Quick reference
+
+| Symptom | Go to |
+|---|---|
+| Phase 3 shows **Complete** but the build did not change | [3.2](#32-stuck-at-upgrade-in-progress) |
+| Phase 3 shows **Not Applicable** | [3.1](#31-check-where-an-endpoint-is), then follow the table |
+| Phase 1 shows **Not Applicable** | Run `Get "Deploy - Deployments"` for the endpoint. An earlier deployment may already have marked it Installed, and the endpoint may already be eligible for Phase 3. |
+| **Update Ineligible** | [3.4](#34-compatibility-scan-failed) |
+| `Deployment ended before completing ... Waiting for notification` | [3.3](#33-deployment-ended-while-waiting-for-notification) |
+| Stuck at `Ready to Install` | [3.5](#35-phase-1-failed) |
+| Upgrade rolled back after restart | Check which setup logs exist (section 4), read SetupDiag results, then look up the code in section 5 |
+| Deploy actions sit in **Waiting** and never run | Check Action Lock ([3.2, Step 4](#step-4-check-action-lock)) |
+
+---
+
+## 4. Logs to check
 
 ### Find the Tanium Client folder
 
@@ -467,7 +557,7 @@ It reads the Panther and Rollback logs and names the rule that matched (driver, 
 
 ---
 
-## 6. Common Windows Setup error codes
+## 5. Common Windows Setup error codes
 
 Windows Setup errors come as a result code plus an extend code, for example `0xC1900101 - 0x20017`. The result code says what failed, the extend code says which phase.
 
@@ -480,23 +570,6 @@ Windows Setup errors come as a result code plus an extend code, for example `0xC
 | `0xC1900200` / `0xC1900202` | Hardware does not meet requirements | TPM, Secure Boot, CPU, or RAM. Not fixable with a re-scan alone. |
 | `0x80070070` | Not enough disk space | Free at least 20 GB on `C:` and run Phase 2. |
 | `0x80070002` / `0x80070003` | File or path not found | Staged media is missing or incomplete. Re-run Phase 1 to re-cache. |
-
----
-
-## 7. Troubleshooting checklist
-
-| Symptom | Likely cause | Fix |
-|---|---|---|
-| Phase 3 shows **Complete** but the build did not change | Endpoint matches Branch A of Install Verification (Setup staged, `Status = Upgrade In Progress`) but the upgrade never completed | Check `CurrentBuildNumber` with the Fleet overview question in [section 3](#3-interact-questions). Treat those endpoints as stuck (section 4). |
-| Phase 3 shows **Not Applicable** | `OSD\Status` is not `Compat Scan OK` | Run the Fleet overview question in [section 3](#3-interact-questions). If it says `Upgrade In Progress`, follow section 4. |
-| Phase 1 shows **Not Applicable** | An earlier deployment already marked the package Installed | Run `Get Deploy - Deployments` for that endpoint. The endpoint may already be eligible for Phase 3. |
-| **Update Ineligible** after Phase 1 | Compatibility scan failed | Check the Scan Results sensor and `ScanResult.xml`, fix, run Phase 2. |
-| `Deployment ended before completing ... Waiting for notification` | Deployment window too short for the notification plus install time | Set the deployment to Ongoing or extend the End Time. |
-| Upgrade rolled back after restart | Driver or security software | Read `SetupDiagResults.xml`, then `Rollback\setupact.log`. |
-| Stuck at `Upgrade In Progress`, `SetupHost.exe` running | Upgrade still working | Wait. Do not reset. |
-| `Status` stays at `Ready to Install` after Phase 1 | Media extraction failed | Read `WinIPU\Win_PreCache.txt`. Usually a missing or misnamed 7-Zip installer, no ISO over 2 GB in the package, or antivirus blocking `C:\deploy`. |
-| Phase 1 log: `Please attach 7zip download to Phase1 Package` | 7-Zip installer missing or file name does not match the pattern | Add a full 7-Zip installer named like `7z2409-x64.msi` to the package (section 2). |
-| Phase 1 log: `Missing Setup.Exe` | Extracted media attached without `setup.exe` | Attach the ISO instead, or the complete extracted media. |
 
 ---
 
