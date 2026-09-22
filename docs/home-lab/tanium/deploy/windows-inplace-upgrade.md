@@ -275,14 +275,14 @@ While Action Lock is on, the Tanium Client does not run actions, so the registry
 Get "Computer Name" and "Action Lock Status" from all machines with "Custom Tags" contains "IPU-Stuck"
 ```
 
-If any endpoint shows Action Lock **on**:
+The result shows `Action Lock Off` or `Action Lock On` for each endpoint. If any endpoint shows `Action Lock On`:
 
 1. Select those rows and click **Deploy Action**.
-2. In **Deployment Package**, select **Action Lock Off** and deploy.
-3. Re-run the question above and confirm Action Lock is now off.
+2. In **Deployment Package**, select **Tanium Client - Set Action Lock Off** and deploy. The package shows **Action Lock Override is On**, which lets it run on an endpoint that is locked.
+3. Re-run the question above and confirm the result is now `Action Lock Off`.
 
 !!! warning "Find out why Action Lock was on"
-    Action Lock is sometimes set on purpose (for example, on machines that must not receive changes). Confirm with the owner before turning it off, and note which endpoints you changed so you can turn it back on with the **Action Lock On** package after the upgrade.
+    Action Lock is sometimes set on purpose (for example, on machines that must not receive changes). Confirm with the owner before turning it off, and note which endpoints you changed so you can turn it back on with the **Tanium Client - Set Action Lock On** package after the upgrade.
 
 #### Step 5: Reset the OSD status with Registry - Set Value
 
@@ -336,7 +336,7 @@ If any endpoint shows Action Lock **on**:
    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] from all machines with "Custom Tags" contains "IPU-Stuck"
    ```
 2. Remove the tag from the upgraded endpoints with the **Custom Tagging - Remove Tags** package.
-3. If you turned Action Lock off in Step 4 on endpoints that need it, turn it back on with the **Action Lock On** package.
+3. If you turned Action Lock off in Step 4 on endpoints that need it, turn it back on with the **Tanium Client - Set Action Lock On** package.
 
 ---
 
