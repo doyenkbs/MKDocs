@@ -114,12 +114,46 @@
   --md-default-fg-color--light: #3C4C59;
   --md-default-fg-color--lighter: var(--k-muted);
   --md-default-fg-color--lightest: var(--k-rule);
-  --md-code-hl-comment-color: #67788A;
 }
 
 [data-md-color-scheme="slate"] {
   --md-default-fg-color--light: #C3D0DB;
   --md-default-fg-color--lighter: var(--k-muted);
   --md-default-fg-color--lightest: var(--k-rule);
-  --md-code-hl-comment-color: #6E8CA3;
+}
+
+/* ============================================================================
+   Syntax highlighting.
+
+   Code blocks keep the dark chassis background in BOTH schemes (see base.css),
+   so the syntax palette has to be the dark one in both schemes too. Scoped to
+   the block, so inline code keeps inheriting the scheme's own ink.
+
+   Without this, light mode inherits Material's light-background token colours
+   and paints them onto a near-black block: --md-code-hl-name-color falls back
+   to --md-code-fg-color, which is #0C1B26 in light mode — 1.08:1 against the
+   block, i.e. invisible.
+
+   Ratios below are against --k-chassis in light mode (#04121E); the dark-mode
+   block (#0A2436) is lighter, so every value clears AA there as well, worst
+   case 5.31:1.
+   ========================================================================= */
+.md-typeset .highlight,
+.md-typeset pre > code {
+  --md-code-fg-color: #E6EDF3;              /* 16.0 */
+  --md-code-hl-name-color: #E6EDF3;         /* 16.0 */
+  --md-code-hl-generic-color: #E6EDF3;      /* 16.0 */
+  --md-code-hl-operator-color: #B9C7D4;     /* 11.0 */
+  --md-code-hl-punctuation-color: #B9C7D4;  /* 11.0 */
+  --md-code-hl-string-color: #6FD98A;       /* 10.8 */
+  --md-code-hl-constant-color: #57C7F5;     /*  9.8 */
+  --md-code-hl-variable-color: #57C7F5;     /*  9.8 */
+  --md-code-hl-function-color: #8FB6FF;     /*  9.3 */
+  --md-code-hl-keyword-color: #C79AF0;      /*  8.4 */
+  --md-code-hl-number-color: #F0966B;       /*  8.4 */
+  --md-code-hl-special-color: #F0966B;      /*  8.4 */
+  --md-code-hl-comment-color: #8098AC;      /*  6.3 */
+
+  --md-code-hl-color: rgba(1, 174, 240, .20);
+  --md-code-hl-color--light: rgba(1, 174, 240, .10);
 }
