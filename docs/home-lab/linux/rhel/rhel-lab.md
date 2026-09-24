@@ -133,7 +133,7 @@ Click **Create VM** in the top right of the Proxmox interface and work through t
 |---|---|
 | ISO image | the RHEL ISO you uploaded |
 | Type | Linux |
-| Version | 6.x - 2.6 Kernel |
+| Version | 7.x - 2.6 Kernel |
 
 **System**
 
@@ -332,21 +332,115 @@ That lists what the account is permitted to run.
 | `sudo userdel -r labadmin` | Delete the account and its home directory |
 | `getent passwd labadmin` | Look up the account entry |
 
-**Key based SSH** is worth setting up straight away. From your own machine:
+### Setting up key based SSH
+
+Key based authentication means you stop typing a password on every connection, and it is a prerequisite for Ansible and for Cockpit's multi-host view later.
+
+All of this runs on **your own workstation**, not on the RHEL VM, until step 4.
+
+**Step 1: Check whether you already have a key**
+
+=== "Windows (PowerShell)"
+
+    ```powershell
+    Test-Path $env:USERPROFILE\.ssh\id_ed25519.pub
+    ```
+
+=== "Linux / macOS"
+
+    ```bash
+    ls -l ~/.ssh/id_ed25519.pub
+    ```
+
+If that returns `True` or lists the file, skip to step 3 and reuse the key you have. Generating a second one over the top will overwrite it and break every server that already trusts it.
+
+**Step 2: Generate a key pair**
 
 ```bash
-ssh-keygen -t ed25519
-ssh-copy-id labadmin@192.168.1.50
+ssh-keygen -t ed25519 -C "labadmin@rhel9-lab"
 ```
 
-To then disable password authentication on the server, edit `/etc/ssh/sshd_config`, set `PasswordAuthentication no`, and restart the service:
+It asks two questions:
+
+| Prompt | What to do |
+|---|---|
+| `Enter file in which to save the key` | Press Enter to accept the default. Windows: `C:\Users\<you>\.ssh\id_ed25519`. Linux and macOS: `~/.ssh/id_ed25519` |
+| `Enter passphrase` | Optional. A passphrase protects the key if someone copies it off your disk, at the cost of typing it once per session |
+
+You now have two files. `id_ed25519` is the private key and never leaves your machine. `id_ed25519.pub` is the public key and is what you copy to servers.
+
+**Step 3: Copy the public key to the RHEL VM**
+
+=== "Windows (PowerShell)"
+
+    Windows has no `ssh-copy-id`, so pipe the key over an SSH session instead:
+
+    ```powershell
+    Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub | ssh labadmin@192.168.1.50 "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+    ```
+
+    This is the last time it asks for your password.
+
+=== "Linux / macOS"
+
+    ```bash
+    ssh-copy-id labadmin@192.168.1.50
+    ```
+
+    `ssh-copy-id` creates `~/.ssh`, appends the key, and sets the permissions for you.
+
+**Step 4: Fix the SELinux context on the server**
+
+Only needed if you used the PowerShell method, which creates `~/.ssh` by hand rather than through `ssh-copy-id`. On the RHEL VM:
+
+```bash
+restorecon -R -v ~/.ssh
+```
+
+!!! warning "The most common cause of a key that silently does not work on RHEL"
+    SELinux is enforcing by default. A `~/.ssh` directory created outside the normal path can end up with the wrong file context, and `sshd` then refuses to read `authorized_keys` while logging nothing obvious. `restorecon` resets the context to what the policy expects.
+
+    If a key still fails after this, check permissions, which must be exactly `700` on `~/.ssh` and `600` on `~/.ssh/authorized_keys`:
+
+    ```bash
+    ls -ld ~/.ssh
+    ls -l ~/.ssh/authorized_keys
+    ```
+
+**Step 5: Test it**
+
+Open a **new** terminal and connect:
+
+```bash
+ssh labadmin@192.168.1.50
+```
+
+It should log straight in with no password prompt. If it asks for your passphrase, that is the key working correctly.
+
+**Step 6: Disable password authentication (optional)**
+
+Only once step 5 works. On the RHEL VM:
+
+```bash
+sudo vi /etc/ssh/sshd_config
+```
+
+Find the `PasswordAuthentication` line, uncomment it if needed, and set it to `no`:
+
+```
+PasswordAuthentication no
+```
+
+Then restart the service:
 
 ```bash
 sudo systemctl restart sshd
 ```
 
-!!! warning "Test the key first"
-    Confirm key login works in a second terminal before disabling password authentication, or you will lock yourself out of SSH and have to recover through the Proxmox console.
+!!! danger "Keep your working session open"
+    Do not close the terminal you are already connected in. Open a second one and confirm you can still log in. If something is wrong, the session you kept open is how you undo it.
+
+    On a VM you can always recover through the Proxmox console, which is not true of a remote server.
 
 ### Set the hostname
 
@@ -613,10 +707,10 @@ sudo dnf install -y cockpit-machines
 
 Then click the host name in the top left corner of the Cockpit interface and select **Add new host**. It connects over SSH.
 
-Set up key based authentication first, or you will be prompted for a password every time you switch hosts:
+Set up key based authentication from the Cockpit host to each target first, or you will be prompted for a password every time you switch hosts. The steps are the same as [Setting up key based SSH](#setting-up-key-based-ssh) above, run from the Cockpit host rather than your workstation:
 
 ```bash
-ssh-keygen -t ed25519
+ssh-keygen -t ed25519 -C "cockpit@rhel9-lab"
 ssh-copy-id labadmin@192.168.1.51
 ```
 
