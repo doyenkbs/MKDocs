@@ -216,6 +216,7 @@ nav:
         - Edge MSI Standardization: home-lab/tanium/packages/edge-msi-standardization.md
         - Find File by Name: home-lab/tanium/packages/find-file-by-name.md
         - Local Admin Removal: home-lab/tanium/packages/local-admin-removal.md
+        - Set Time Zone: home-lab/tanium/packages/set-time-zone.md
     - Sensors:
         - Overview: home-lab/tanium/sensors/index.md
         - Find File by Name: home-lab/tanium/sensors/find-file-by-name.md
