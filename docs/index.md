@@ -39,6 +39,13 @@ hide:
     ](home-lab/microsoft/index.md){ .k-rack-row }
 
 -   [
+    <span class="k-rack-code">Os</span>
+    <span class="k-rack-title">Linux</span>
+    <span class="k-rack-desc">Running Red Hat Enterprise Linux on Proxmox: subscriptions, repositories, Cockpit, and the kernel patching workflow.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](home-lab/linux/index.md){ .k-rack-row }
+
+-   [
     <span class="k-rack-code">Epm</span>
     <span class="k-rack-title">Tanium</span>
     <span class="k-rack-desc">Custom packages and sensors from hands-on Tanium work.</span>

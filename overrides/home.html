@@ -31,8 +31,12 @@
     'url': 'home-lab/services/ansible-lifecycle-overview/' },
   { 'host': 'zabbix',     'role': 'mon',  'desc': 'Monitoring',        'state': 'wip',
     'url': 'home-lab/application/' },
-  { 'host': 'technitium', 'role': 'dns',  'desc': 'Internal DNS',      'state': 'off',
-    'url': 'home-lab/services/' }
+  { 'host': 'technitium', 'role': 'dns',  'desc': 'Internal DNS',      'state': 'on',
+    'url': 'home-lab/services/technitium-dns-install-ubuntu-lxc/' },
+  { 'host': 'rhel9-lab',  'role': 'os',   'desc': 'Red Hat Enterprise Linux','state': 'on',
+    'url': 'home-lab/linux/rhel/rhel-lab/' },
+  { 'host': 'tanium',     'role': 'epm',  'desc': 'Endpoint management','state': 'on',
+    'url': 'home-lab/tanium/packages/' }
 ] %}
 
 {#

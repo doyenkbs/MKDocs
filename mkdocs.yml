@@ -200,6 +200,11 @@ nav:
               - SCCM/MECM Configuration: home-lab/microsoft/sccm-configuration.md
               - SCCM/MECM Software Updates: home-lab/microsoft/sccm-sup-setup.md
 
+  - Linux:
+        - index.md: home-lab/linux/index.md
+        - Red Hat Enterprise Linux:
+            - RHEL on Proxmox: home-lab/linux/rhel/rhel-lab.md
+
   - Tanium:
     #- Overview: home-lab/tanium/local_user_removal.md
     #- Core Modules:
