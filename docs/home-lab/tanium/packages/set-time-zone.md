@@ -149,7 +149,11 @@ Menu labels can differ slightly between Tanium versions.
       ```
     - **Command Timeout:** `5` minutes.
 5. Under **Files**, click **Add**, choose **Local File**, and upload `set-us-timezone.sh`.
-6. Expand **Parameters**. Under **Parameter Inputs**, add the same **Drop-Down List** parameter as the Windows package, with the same label and the same eight values. It shows in the list as `$1`. This package has no checkbox.
+6. Expand **Parameters**. Under **Parameter Inputs**, add a **Drop-Down List** parameter. It shows in the list as `$1`.
+    - **Label:** `Time Zone`
+    - **Provide Help Text** (optional): select it and enter `Time zone to set on the endpoint.`
+    - **Values:** add one entry for each value, in this order:
+      `Eastern`, `Central`, `Mountain`, `Arizona`, `Pacific`, `Alaska`, `Hawaii`, `PuertoRico`
 7. Click **Save**.
 
 The command calls the script with `/bin/bash` directly, so the script does not need to be marked executable after Tanium downloads it.
