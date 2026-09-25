@@ -205,7 +205,7 @@ This sensor tells you where Java is and what depends on it. Your vulnerability s
 |---|---|
 | Java Path | Full path to `java.exe` (or `jvm.dll` if there is no `java.exe`). Use it with **File Exists** to confirm removal |
 | Java Line | The major version: 8, 11, 17, 21, 25, and so on. Java 1.8 is reported as 8 |
-| Version | Sortable version, for example `8.0.401` for Java 8 update 401, or `17.0.5` |
+| Version | Sortable version, for example `8.0.401` for Java 8 update 401, or `17.0.5`. It keeps three parts, so a four-part release such as `17.0.20.1` shows as `17.0.20`. When the fixed version has four parts, compare it with Version String |
 | Version String | Exactly as Java writes it, for example `1.8.0_401` or `17.0.5`. This is the value vulnerability reports usually show |
 | Type | JDK if `javac.exe` is present, otherwise JRE |
 | Vendor | For example Oracle Corporation, Eclipse Adoptium, Amazon.com Inc., Azul Systems |
@@ -214,6 +214,8 @@ This sensor tells you where Java is and what depends on it. Your vulnerability s
 | Used By Type / Used By | What depends on this runtime (see the table in [How the sensor works](#3-find-what-uses-each-runtime)) |
 
 Example row (values are illustrative): `C:\Program Files\Java\jre1.8.0_401\bin\java.exe|8|8.0.401|1.8.0_401|JRE|Oracle Corporation|Java 8 Update 401 (64-bit) 8.0.4010.11|MsiExec.exe /X{00000000-0000-0000-0000-000000000000} /qn /norestart|None found|No service, process, scheduled task, variable, or file association references it`
+
+A running service usually appears twice for the same Java: once as a **Service** row and once as a **Running Process** row that names the same service. Count dependencies by service, not by row.
 
 ---
 
@@ -230,13 +232,17 @@ Skip a row, or confirm it first, when any of these apply:
 - **The machine also returned a Scan incomplete row.** The list for that machine is partial.
 - **The answer is older than the change you are about to make.** Results are reused for up to an hour (Max Sensor Age), so ask again right before removing anything.
 
+Don't use built-in sensors such as **Service Details** or **Running Processes** to prove that nothing uses a Java. They match on names. A procrun service such as Tomcat9 has no "java" in its name and runs Java inside its own `.exe`, and a Linux `java` process doesn't show which Java it runs. Use them only to check the status of a service that the Used By column already names, for example whether it is running or set to Manual.
+
 ### Standalone Java, nothing uses it
 
-Installed By is a Java installer, Uninstall Command starts with `MsiExec.exe /X`, and Used By Type is **None found**. Uninstall with a Tanium package that runs the Uninstall Command.
+Installed By is a Java installer, Uninstall Command starts with `MsiExec.exe /X`, and Used By Type is **None found**, or lists only **PATH**, **Registry Default**, or **File Association**. The Java installer creates those three entries itself, so they are not a real use, and the uninstall removes them (the Temurin MSI, for example, takes its PATH entry out). Uninstall with a Tanium package that runs the Uninstall Command.
+
+A service or task that shows **(java from PATH)** is a real use. Handle it as [Standalone Java that something uses](#standalone-java-that-something-uses).
 
 ### Standalone Java that something uses
 
-Installed By is a Java installer, and Used By Type lists a service, process, task, variable, or file association. Install a supported Java version first, point the service, task, or `JAVA_HOME` at it, then uninstall the old one.
+Installed By is a Java installer, and Used By Type lists a service, process, task, or environment variable. Install a supported Java version first, [repoint each dependency](#repoint-a-dependency) at it, then uninstall the old one.
 
 ### Java bundled with an application
 
@@ -246,7 +252,7 @@ Installed By starts with `Bundled with`, or reads `No installer entry (inside <f
 
 Installed By is `No installer entry found` (Windows) or `No package owner found` (Linux), and Uninstall Command is `None registered`. Nothing registered this Java, so there is no uninstaller and it has to be deleted.
 
-1. **Confirm nothing uses it.** Used By Type must be **None found** in a fresh answer. If anything is listed, move it to a supported Java first, as in [Standalone Java that something uses](#standalone-java-that-something-uses).
+1. **Confirm nothing uses it.** Used By Type must be **None found** in a fresh answer. If a service, process, or task is listed, [repoint it](#repoint-a-dependency) to a supported Java first. If the service isn't needed any more, remove the service instead (for example `sc.exe delete <service>` on Windows, or `systemctl disable --now <unit>` and delete the unit file on Linux).
 2. **Work out the folder to delete.** It's the Java Path minus `\bin\java.exe` (Windows) or `/bin/java` (Linux). For example, `C:\Tools\jdk-17.0.5\bin\java.exe` means you delete `C:\Tools\jdk-17.0.5`, and `/opt/jdk-17.0.5/bin/java` means `/opt/jdk-17.0.5`. If the Java Path ends in `\bin\server\jvm.dll`, remove that part instead.
 3. **Check that the folder holds only Java.** A Java folder contains `bin`, `lib`, and usually a `release` file. If the folder name is generic (for example `C:\App\runtime`) or it sits inside another product's folder, treat it as [bundled](#java-bundled-with-an-application) instead.
 4. **Delete it with a Tanium package.** On Windows use `cmd.exe /c rmdir /s /q "C:\Tools\jdk-17.0.5"`, and on Linux use `rm -rf /opt/jdk-17.0.5`, with the folder from step 2.
@@ -257,14 +263,45 @@ Installed By is `No installer entry found` (Windows) or `No package owner found`
 Your scanner reports no fixed version for the Java line, or the Java Line is not a long-term support (LTS) release. The LTS lines are 8, 11, 17, 21, and 25. Every other line gets updates only until the next release, six months later. For LTS lines, the end of updates depends on the vendor, so check the **Vendor** column against that vendor's support roadmap. These runtimes can't be patched in place.
 
 1. **Pick the replacement.** Choose the newest LTS release the application supports. Check with the application owner or vendor first. If the row is bundled, follow [Java bundled with an application](#java-bundled-with-an-application) instead.
-2. **Install the new Java** with a Tanium package.
-3. **Repoint every dependency listed in Used By:**
-    - **Windows:** the service (procrun `Jvm` setting, wrapper `.conf`, WinSW `.xml`, or the service path), the scheduled task action, `JAVA_HOME` and PATH, and the `.jar` file association.
-    - **Linux:** the systemd unit (`ExecStart` or `Environment=JAVA_HOME`), cron entries, environment files, and the default Java (`alternatives --set java` on RHEL, `update-alternatives --set java` on Debian and Ubuntu).
-4. **Restart the service or run the task**, and confirm the application works on the new Java.
-5. **Remove the old Java** using the finding above that matches its Installed By.
+2. **Install the new Java** with a Tanium package. On Linux, prefer the distribution package, so normal OS patching keeps it updated.
+3. **[Repoint every dependency](#repoint-a-dependency)** listed in Used By.
+4. **Remove the old Java** using the finding above that matches its Installed By.
 
 After any removal, ask this sensor again and check the Version column against the fixed version.
+
+### Repoint a dependency
+
+Install the new Java first, then change each service, task, or variable named in the **Used By** column to use it.
+
+**Linux systemd service** (Used By Type **Service (systemd)**). Point `JAVA_HOME` in the unit at the new Java and restart the service. Use the path that stays the same across package updates: `/usr/lib/jvm/jre-17` on RHEL, or `/usr/lib/jvm/java-17-openjdk-amd64` on Debian and Ubuntu. On RHEL the real folder has the full version in its name (for example `java-17-openjdk-17.0.20.1.1-1.2.el9.x86_64`) and changes with every update.
+
+```sh
+# RHEL
+dnf install -y java-17-openjdk-headless && NEW=/usr/lib/jvm/jre-17
+# Debian or Ubuntu
+apt-get install -y openjdk-17-jre-headless && NEW=/usr/lib/jvm/java-17-openjdk-amd64
+
+ls "$NEW/bin/java" && sed -i "s|^Environment=JAVA_HOME=.*|Environment=JAVA_HOME=$NEW|" /etc/systemd/system/<unit>.service
+systemctl daemon-reload && systemctl restart <unit> && systemctl is-active <unit>
+```
+
+If the unit runs Java directly instead (`ExecStart=/opt/.../bin/java ...`), change that path. For **Cron Job** and **Environment File** rows, edit the file named in Used By. For **Default Java**, use `alternatives --config java` on RHEL or `update-alternatives --config java` on Debian and Ubuntu.
+
+**Windows procrun service** (Used By Type **Service (procrun Jvm setting)**, typical for Tomcat). Update the service's `Jvm` setting with the service's own `.exe`, then start the service:
+
+```powershell
+& '<application folder>\bin\tomcat9.exe' //US//Tomcat9 --Jvm "<new Java folder>\bin\server\jvm.dll"
+Start-Service Tomcat9; Get-Service Tomcat9
+```
+
+**Other Windows dependencies:**
+
+- **Service (Java Service Wrapper .conf):** edit `wrapper.java.command` in the `.conf` file.
+- **Service (WinSW .xml):** edit `<executable>` in the `.xml` file next to the service's `.exe`.
+- **Scheduled Task:** edit the task's action.
+- **Environment Variable:** set the new path, for example `[Environment]::SetEnvironmentVariable('JAVA_HOME', '<new Java folder>', 'Machine')`.
+
+**Then confirm.** Restart the service or run the task, and check that the application works. Ask this sensor again: the service or task should now appear under the new Java, and the old Java should show **None found** before you remove it.
 
 ---
 
