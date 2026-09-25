@@ -43,7 +43,7 @@ Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/int
 - Open Server Manager → Tools → ADSI Edit and Active Directory Users and Computers (ADUC).
 - In ADSI Edit, right-click ADSI Edit → Connect.
 - Expand CN=System.
-- ERight-click CN=System → New → Object → Container.
+- Right-click CN=System → New → Object → Container.
 - Name the container:
 ``` sql
 System Management
@@ -70,21 +70,21 @@ System Management
 
 --- 
 
-<!-- 
+ 
 
 ### Visual Workflow
 
 ``` mermaid
 flowchart TD
-    A["📂 Active Directory Schema"] -- B["⚙️ Run extadsch.exe\n(Extend Schema)"]
-    B -- C["📜 C:\\extadsch.log\n(Verify Success)"]
+    A["📂 Active Directory Schema"] --> B["⚙️ Run extadsch.exe<br>(Extend Schema)"]
+    B --> C["📜 C:\\extadsch.log<br>(Verify Success)"]
 
-    A -- D["🗂️ CN=System Container"]
-    D -- E["📦 Create 'System Management' Container\n(Case Sensitive)"]
+    A --> D["🗂️ CN=System Container"]
+    D --> E["📦 Create 'System Management' Container<br>(Case Sensitive)"]
 
-    E -- F["👤 Delegate Control via ADUC\n(Advanced Features Enabled)"]
-    F -- G["🖥️ SCCM Server (e.g., SCCMSRV)\nGranted Full Control"]
+    E --> F["👤 Delegate Control via ADUC<br>(Advanced Features Enabled)"]
+    F --> G["🖥️ SCCM Server (e.g., SCCMSRV)<br>Granted Full Control"]
 ```
--->
+
 
 ✅ At this point, Active Directory is prepared for SCCM publishing and the SCCM server can publish site information to AD. 
