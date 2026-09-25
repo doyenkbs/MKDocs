@@ -1,4 +1,4 @@
-# Java - Runtime Inventory and Dependencies (Windows)
+# Java - Runtime Inventory - Dependencies (Windows)
 # Returns EVERY Java runtime, one row per runtime per dependency:
 # Java Path|Java Line|Version|Version String|Type|Vendor|Installed By|Uninstall Command|Used By Type|Used By
 # No version list is built in; decide what is vulnerable with your scanner or Interact filters.
@@ -89,6 +89,15 @@ function Get-UserName([string]$sid) {
  $k = Open-Key 'LocalMachine' 'Registry64' "SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\$sid"
  if ($k) { $p = [string]$k.GetValue('ProfileImagePath'); if ($p) { return [IO.Path]::GetFileName($p) } }
  return $sid
+}
+$Unloaded = @()
+$plk = Open-Key 'LocalMachine' 'Registry64' 'SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList'
+if ($plk) {
+ foreach ($sid in $plk.GetSubKeyNames()) {
+  if ($sid -notmatch '^S-1-5-21-' -or $UserSids -contains $sid) { continue }
+  $pp = Norm ([string]$plk.OpenSubKey($sid).GetValue('ProfileImagePath'))
+  if ($pp) { $Unloaded += $pp.ToLowerInvariant() }
+ }
 }
 $JavaSoftDefaults = New-Object System.Collections.Generic.List[object]
 foreach ($v in $Views) {
@@ -270,6 +279,9 @@ function Get-Owner([string]$h, $info) {
    if (-not $is32 -and $a.Name -match '32-bit') { continue }
    return [pscustomobject]@{ Kind = 'Standalone'; By = "$($a.Name) $($a.Version)".Trim(); Uninstall = (Get-UninstallCmd $a); Root = $null }
   }
+ }
+ foreach ($u in $Unloaded) {
+  if ($hl.StartsWith($u + '\')) { return [pscustomobject]@{ Kind = 'Unknown'; By = 'Unknown (user profile not logged on)'; Uninstall = 'Unknown (user profile not logged on)'; Root = $null } }
  }
  $root = $null
  $parent = [IO.Path]::GetDirectoryName($h)

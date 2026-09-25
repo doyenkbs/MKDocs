@@ -15,11 +15,11 @@ A sensor answers a question in Interact. It runs on every targeted endpoint each
 |---|---|---|---|
 | [Certificate Expiration](certificate-expiration.md) | Which machine certificates expire soon, or have already expired? | Windows, Linux, macOS | 2026-09-24 |
 | [Find File by Name](find-file-by-name.md) | Does this file exist in these folders, and when was it last modified? | Windows | 2026-09-18 |
-| [Java - Runtime Inventory and Dependencies](java-runtime-inventory.md) | Which Java runtimes are installed, and what uses each one? | Windows, Linux | 2026-09-25 |
+| [Java - Runtime Inventory - Dependencies](java-runtime-inventory.md) | Which Java runtimes are installed, and what uses each one? | Windows, Linux | 2026-09-25 |
 
 ## Conventions used here
 
-- **Naming:** short and plain, since the name becomes part of every question typed in Interact. Avoid brackets, quotes, and `|`, which Interact uses for parameters and column splitting.
+- **Naming:** short and plain, since the name becomes part of every question typed in Interact. Avoid brackets, quotes, and `|`, which Interact uses for parameters and column splitting. Avoid reserved words such as `and` as well: the console warns that a name containing one must be wrapped in quotation marks in questions.
 - **Parameters** are read through placeholders such as `||FileName||`. The parameter **Key** in the console must match the placeholder exactly, including capitalization.
 - **Parameters arrive URL-encoded.** Tanium passes `*.pst` to the script as `%2a%2epst`. Every script that takes a parameter decodes it before use.
 - **Multi-column results** use `|` as the delimiter, with the columns defined in the sensor settings.

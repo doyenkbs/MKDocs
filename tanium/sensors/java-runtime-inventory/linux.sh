@@ -1,6 +1,6 @@
 #!/bin/bash
 # =====================================================================
-# Java - Runtime Inventory and Dependencies (Linux)
+# Java - Runtime Inventory - Dependencies (Linux)
 #
 # Finds every Java runtime (JDK or JRE, package or tarball, standalone
 # or bundled) and returns ALL of them, with what uses each one.
