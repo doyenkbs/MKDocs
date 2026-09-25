@@ -229,6 +229,7 @@ nav:
         - Overview: home-lab/tanium/sensors/index.md
         - Certificate Expiration: home-lab/tanium/sensors/certificate-expiration.md
         - Find File by Name: home-lab/tanium/sensors/find-file-by-name.md
+        - Java Runtime Inventory: home-lab/tanium/sensors/java-runtime-inventory.md
     - Deploy:
         - Windows In-Place Upgrade: home-lab/tanium/deploy/windows-inplace-upgrade.md
     #- Administration:

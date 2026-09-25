@@ -15,6 +15,7 @@ A sensor answers a question in Interact. It runs on every targeted endpoint each
 |---|---|---|---|
 | [Certificate Expiration](certificate-expiration.md) | Which machine certificates expire soon, or have already expired? | Windows, Linux, macOS | 2026-09-24 |
 | [Find File by Name](find-file-by-name.md) | Does this file exist in these folders, and when was it last modified? | Windows | 2026-09-18 |
+| [Java - Runtime Inventory and Dependencies](java-runtime-inventory.md) | Which Java runtimes are installed, and what uses each one? | Windows, Linux | 2026-09-25 |
 
 ## Conventions used here
 
