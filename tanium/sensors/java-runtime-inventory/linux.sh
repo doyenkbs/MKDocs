@@ -132,7 +132,7 @@ while read -r h; do
         by="Package ${owner%%|*}"; un="${owner#*|}"
     else
         case "$h" in
-            /opt/*) app=$(echo "$h" | cut -d/ -f1-3); by="No package owner (inside $app)" ;;
+            /opt/*/*) app=$(echo "$h" | cut -d/ -f1-3); by="No package owner (inside $app)" ;;
             *) by="No package owner found" ;;
         esac
         un="None registered"
