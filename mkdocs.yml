@@ -85,7 +85,10 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  # Sensor and package scripts live in tanium/ and are pulled into pages with --8<--.
+  # check_paths fails the build if a referenced script is missing.
+  - pymdownx.snippets:
+      check_paths: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -224,6 +227,7 @@ nav:
         - Set Time Zone: home-lab/tanium/packages/set-time-zone.md
     - Sensors:
         - Overview: home-lab/tanium/sensors/index.md
+        - Certificate Expiration: home-lab/tanium/sensors/certificate-expiration.md
         - Find File by Name: home-lab/tanium/sensors/find-file-by-name.md
     - Deploy:
         - Windows In-Place Upgrade: home-lab/tanium/deploy/windows-inplace-upgrade.md
