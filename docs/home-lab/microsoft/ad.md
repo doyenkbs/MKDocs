@@ -77,7 +77,7 @@ System Management
 ``` mermaid
 flowchart TD
     A["📂 Active Directory Schema"] --> B["⚙️ Run extadsch.exe<br>(Extend Schema)"]
-    B --> C["📜 C:\\extadsch.log<br>(Verify Success)"]
+    B --> C["📜 C:\extadsch.log<br>(Verify Success)"]
 
     A --> D["🗂️ CN=System Container"]
     D --> E["📦 Create 'System Management' Container<br>(Case Sensitive)"]

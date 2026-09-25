@@ -105,18 +105,17 @@ graph TD
 
 ---
 
-<!--
 ## GPO Firewall Policy Flow
 
 
 ``` mermaid
 flowchart TD
-    DC["🖥️ Domain Controller\n(GPO: SCCM Firewall Policy)"]
-    GPO["📜 Group Policy Object\n(Firewall Rules)"]
+    DC["🖥️ Domain Controller<br>(GPO: SCCM Firewall Policy)"]
+    GPO["📜 Group Policy Object<br>(Firewall Rules)"]
     Clients["💻 Domain-Joined Clients"]
 
-    DC --<> GPO
-    GPO --<> Clients
+    DC --> GPO
+    GPO --> Clients
 
     subgraph Rules["Firewall Rules Applied via GPO"]
         RDP["🔓 Allow RDP (3389)"]
@@ -128,8 +127,7 @@ flowchart TD
         WMI["📊 Windows Management Instrumentation (WMI)"]
     end
 
-    GPO --<> Rules
+    GPO --> Rules
 ```
--->
 
 ✅ At this point, all firewall rules are centrally managed by GPO and applied automatically to all domain-joined machines.
