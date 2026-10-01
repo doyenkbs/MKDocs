@@ -186,7 +186,9 @@ nav:
             - Overview: home-lab/services/email.md
             - Mailcow Troubleshooting:
                 - Mailcow Postfix DNS: home-lab/services/mailcow-postfix-dns.md
-        - Stalwart Mail + Bulwark: home-lab/services/stalwart-bulwark.md
+        - Stalwart Mail:
+            - Install (Stalwart + Bulwark): home-lab/services/stalwart-bulwark.md
+            - Authentik SSO: home-lab/services/stalwart-authentik-sso.md
         - OpenVPN: home-lab/services/openvpn.md
 
   - Microsoft Lab:  

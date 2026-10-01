@@ -91,7 +91,7 @@ ssh-keygen -R mail.example.com
 
 If the warning still appears, remove the entry by hand:
 
-1. Read the warning. It names the exact file and line, for example `Offending ECDSA key in C:\\Users\\<you>/.ssh/known_hosts:5`.
+1. Read the warning. It names the exact file and line, for example `Offending ECDSA key in C:\Users\<you>/.ssh/known_hosts:5`.
 2. List every known hosts file in your SSH folder:
 
     ```powershell
@@ -615,6 +615,8 @@ The last command should print nothing. Close the SSH tunnel window; it is no lon
 3. Go to `https://webmail.example.com` and sign in as `user@example.com`.
 4. Send a message to yourself, then to an outside address (Gmail, Outlook.com) and reply back.
 5. Send a message to the address shown at [mail-tester.com](https://www.mail-tester.com) and check the score.
+
+> **Next step (optional):** to sign in to webmail with Authentik single sign-on, see [Stalwart and Bulwark with Authentik SSO](stalwart-authentik-sso.md).
 
 ---
 
