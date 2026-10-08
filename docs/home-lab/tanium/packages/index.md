@@ -16,6 +16,9 @@ A package runs a script on targeted endpoints as an action. Output goes to the a
 | [Edge MSI Standardization](edge-msi-standardization.md) | Makes the Enterprise MSI the only managed copy of Edge, removes the stale Store (AppX) registration even when locked, and clears stale registry entries. | Windows | 2026-09-18 |
 | [Find File by Name](find-file-by-name.md) | Searches drives or folders for a file name or wildcard. Returns every matching path and its last modified date. | Windows | 2026-09-18 |
 | [Local Admin Removal](local-admin-removal.md) | Removes domain accounts in the AD admin OU from the local Administrators group on managed endpoints. Two scripts, two packages. | Windows | 2026-08-10 |
+| [Remove File](remove-file.md) | Deletes one file. The operator retypes the file name to confirm, and system folders, boot files, and the Tanium Client folder are refused. | Windows | 2026-10-08 |
+| [Remove Folder](remove-folder.md) | Deletes one folder and its contents. The operator retypes the folder name to confirm, and system folders, profile roots, and the Tanium Client folder are refused. | Windows | 2026-10-08 |
+| [Remove Store Apps](remove-store-apps.md) | Removes Microsoft Store apps for all users and new users. The operator confirms the app count, and apps Windows depends on are refused. Optional setting stops suggested apps from installing. | Windows | 2026-10-08 |
 | [Set Time Zone](set-time-zone.md) | Sets endpoints to a common U.S. time zone picked from a drop-down. The Windows package also turns automatic time zone on or off. Separate packages for Windows and for Linux and macOS. | Windows, Linux, macOS | 2026-09-23 |
 
 ## Conventions used here

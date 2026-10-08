@@ -189,6 +189,20 @@ Why these values:
 - **Username Domain** turns the Authentik username `user` into `user@example.com`.
 - **Groups Claim is left empty on purpose.** If it is set to `groups`, Stalwart creates a group account for every Authentik group the user belongs to (for example `admins@example.com`). Those group addresses can receive mail from outside, and they show up as shared mailboxes in webmail.
 
+??? note "Mailboxes on more than one domain: use the email claim instead"
+    With `preferred_username` and **Username Domain**, every user ends up on one domain: the Authentik user `user` becomes `user@example.com`. If some mailboxes live on another domain (for example `user@example.org`, which is common after migrating from another mail server), match accounts by email address instead:
+
+    | Field | Value |
+    |---|---|
+    | Username Claim | `email` |
+    | Username Domain | Leave empty |
+
+    Then:
+
+    1. In the Authentik Admin interface, go to **Directory › Users**, open each mail user, and set **Email** to that user's exact Stalwart account name, for example `user@example.org`. Click **Update**.
+    2. In Stalwart, create each account **before** that user's first SSO login: **Management › Directory › Accounts › Create**, with the same address as the account name. Add any other addresses the user receives mail on as aliases of that account. At the first SSO login, Stalwart signs the user in to this existing account and its mail.
+    3. Bind a group to the Authentik application (see [Authentik: control who can sign in](#authentik-control-who-can-sign-in)). Without a binding, any Authentik user can sign in, and Stalwart creates a new mailbox named after that user's email address at the first login.
+
 ---
 
 ## Step 4: Make Authentik the active directory
@@ -363,6 +377,8 @@ Click **Save changes**, then test in a private window. The Bulwark admin passwor
 
 Authentik Admin interface › **Applications › Applications** › `Stalwart Mail` › **Policy / Group / User Bindings** › **Bind existing policy/group/user**. Bind a group such as `mail-users`. Only members can sign in to webmail and the Stalwart console.
 
+Without a binding, every Authentik user can sign in, and Stalwart creates a mailbox for each one at their first login. Add all mail users, including administrators, to the group **before** you create the binding, or they lose access.
+
 ### What stays outside SSO
 
 | Item | Why it stays |
@@ -396,7 +412,7 @@ These affect only the **Stalwart admin console**. Webmail signs in and out norma
 | Webmail shows shared mailboxes named after Authentik groups | **Groups Claim** is set in the Stalwart directory. | Clear **Groups Claim** (Step 3), delete the group accounts under **Directory › Groups**, and restart Stalwart. |
 | Discovery URL returns `404` | Wrong slug, or the application has no provider. | Use the application slug. Copy the **OpenID Configuration URL** from the provider page. |
 | Discovery URL returns `403` from the mail server | A Cloudflare rule blocks server traffic to Authentik. | Allow the mail server's IP, or relax Bot Fight Mode or WAF rules for the Authentik hostname. |
-| Signed in, but the mailbox is the wrong address (for example `akadmin@example.com`) | The Authentik username is used as the mailbox name. | Rename the Authentik user, or change **Username Claim** to `email` if Authentik emails match mailbox addresses. |
+| Signed in, but the mailbox is the wrong address (for example `akadmin@example.com`) | The Authentik username is used as the mailbox name. | Rename the Authentik user, or switch to the email claim (see the note at the end of Step 3). |
 | Mail app hangs on "Creating account..." or reports an authentication error | Wrong app password for that account (for example another user's), a username without the domain, or a revoked app password. Stalwart's IMAP reply to a bad app password makes clients wait about a minute before failing. | Use the full address as the username and that account's own app password. Test with the `curl.exe` command from Step 8. Stop retrying after a few failures: repeated failures get your IP banned. |
 | IMAP log: `Unsupported credentials type for OIDC backend` | The mail app is sending the Authentik password instead of an app password. | Create an app password (Step 8). |
 | "Secondary credentials cannot be set directly" | An admin tried to add an app password to another user's account. | The user creates it from their own account view (Step 8). |

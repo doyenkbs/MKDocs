@@ -481,6 +481,25 @@ dig +short CAA example.com @1.1.1.1
 
 Expected output: nothing.
 
+**Confirm the MX record exists.** Stalwart's DNS task does not always leave one in place. Check:
+
+```bash
+dig +short MX example.com @1.1.1.1
+```
+
+Expected output: `10 mail.example.com.` If nothing prints, click **Add record** and create it:
+
+| Field | Value |
+|---|---|
+| Type | MX |
+| Name | `@` |
+| Mail server | `mail.example.com` |
+| Priority | `10` |
+
+Without an MX record, two things break. Some senders cannot deliver to the domain. And the SPF record `v=spf1 mx -all` matches no server, so receivers reject your outgoing mail as an SPF failure.
+
+**Keep SPF on `mx`, not a fixed IP.** If you edit the SPF record, keep `v=spf1 mx -all` (or `~all`). A record such as `v=spf1 ip4:203.0.113.10 ~all` covers only IPv4. Mail the server sends over IPv6 then fails SPF at receivers that accept IPv6, such as Gmail.
+
 **Check proxy status.** The CNAME records `autoconfig`, `autodiscover`, `mta-sts`, and `ua-auto-config` must be **DNS only** (grey cloud). If any show an orange cloud, click **Edit** and switch them to DNS only.
 
 **Remove the POP3 SRV record if you do not use POP3.** Stalwart publishes `_pop3s._tcp.example.com`, but port 995 is not published in this setup. Delete that SRV record so mail apps do not try POP3.
@@ -517,6 +536,24 @@ In `http://127.0.0.1:18080/admin`, switch to **Settings** and change these three
     - Add the Docker subnet from the command above (for example `172.18.0.0/16`) so Caddy and the tunnel can never be banned.
 
 Trusting the forwarded header is safe here only because port 8080 is never exposed to the internet. Only Caddy and the local `127.0.0.1` binding can reach it.
+
+Restart Stalwart. Saving is not enough: the CORS policy only takes effect after a restart.
+
+```bash
+cd /opt/mail
+docker compose restart stalwart
+```
+
+Confirm CORS is active:
+
+```bash
+curl -si -X OPTIONS http://127.0.0.1:8080/jmap/ \
+  -H 'Origin: https://webmail.example.com' \
+  -H 'Access-Control-Request-Method: POST' \
+  -H 'Access-Control-Request-Headers: authorization,content-type' | grep -i '^access-control'
+```
+
+Expected output includes `access-control-allow-origin: *`. If nothing prints, reopen **Network › HTTP › Security**, check that the toggle stayed on, and restart again.
 
 ---
 
@@ -684,6 +721,57 @@ Stalwart may publish a CAA record again during later DNS management runs. If Cad
 dig +short CAA example.com @1.1.1.1
 ```
 
+### Send Stalwart's log to the console
+
+If `docker compose logs stalwart` prints nothing, Stalwart is not writing its log to the console.
+
+1. In `https://mail.example.com/admin`, switch to **Settings** and go to **Telemetry › Logging**.
+2. Open the **Console** tracer, or click **Create** and set **Tracer type** to `Console`.
+3. Set **Enable this tracer** to on, **Logging level** to `Info`, and **Buffered writes** to off. Buffered writes delay log lines, which makes the log look empty while you troubleshoot.
+4. Click **Save**, then restart Stalwart and check:
+
+    ```bash
+    cd /opt/mail
+    docker compose restart stalwart
+    docker compose logs --since 1m stalwart | tail -20
+    ```
+
+    Expected output: lines such as `Network listener started ... localPort = 993`.
+
+??? note "Server-side mail filters (Sieve)"
+    Sieve filters run on the server, so they apply to every device. Examples: forward a copy of all mail, or move reports into a folder. You can upload a filter over ManageSieve (port 4190) from the server itself.
+
+    1. Install the client and write the filter. This example forwards a copy of every message, files DMARC reports into a folder named `DMARC`, and keeps everything else in the Inbox:
+
+        ```bash
+        apt install -y sieve-connect
+        cat > /root/main.sieve <<'EOF'
+        require ["fileinto", "copy"];
+        redirect :copy "user@example.net";
+        if address :contains "from" "dmarc" {
+            fileinto "DMARC";
+            stop;
+        }
+        keep;
+        EOF
+        ```
+
+        Create the `DMARC` folder in webmail first. Do not combine `keep` and `fileinto` for the same message: the message then lands in both the Inbox and the folder.
+
+    2. Upload and activate it. Run each command on its own line, and paste the account's password at each prompt (its app password, if the account signs in with SSO):
+
+        ```bash
+        sieve-connect --server mail.example.com --port 4190 --user user@example.com --upload --localsieve /root/main.sieve --remotesieve main
+        ```
+        ```bash
+        sieve-connect --server mail.example.com --port 4190 --user user@example.com --activate --remotesieve main
+        ```
+        ```bash
+        sieve-connect --server mail.example.com --port 4190 --user user@example.com --list
+        ```
+
+        The last command should list `main` as active. Pasting several commands at once can feed the next command into the password prompt and fail the login.
+
 ---
 
 ## Troubleshooting
@@ -694,11 +782,13 @@ dig +short CAA example.com @1.1.1.1
 | `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!` when connecting over SSH | The server was reinstalled and has a new host key. | Remove the old entry (Step 1). |
 | Stalwart log: `6111 Invalid format for Authorization header` | The Cloudflare Global API Key was used instead of an API Token. | Replace the secret (Step 9), then create a new DNS management task. |
 | Stalwart log repeats `No TLS certificates available` | The DNS management task failed, so the certificate request never started. | Fix the DNS error and create a new DNS management task (Step 9). |
-| `https://mail.example.com` returns `502` and the Stalwart log shows `Blocked IP address ... remoteIp = 172.18.x.x` | Stalwart auto-banned Caddy's container IP after scanner traffic. | Do Step 11, delete the entry under **Settings › Security › Blocked IPs**, then `docker compose restart stalwart`. |
+| `https://mail.example.com` returns `502` and the Stalwart log shows `Blocked IP address ... remoteIp = 172.18.x.x` | Stalwart auto-banned Caddy's container IP after scanner traffic. | Do Step 11, delete the entry under **Settings › Security › Blocked IPs**, then `docker compose restart stalwart`. The block list is kept in memory, so deleting the entry without the restart changes nothing. |
 | Caddy fails to get a certificate | A CAA record restricts issuance to Stalwart's account, or a record is proxied (orange cloud). | Delete the CAA records and set the records to DNS only (Step 10). |
 | Browser says a site "sent an invalid response" | Caddy has no certificate for that hostname, often because it never loaded an edited Caddyfile. | `docker compose restart caddy` (see Editing the Caddyfile). |
 | Bulwark wizard rejects the setup token | The token expired (1 hour). | Restart Bulwark and read the new token from the log (Step 14). |
-| Webmail login page loads but sign-in fails | CORS is off in Stalwart. | Turn on **Permissive CORS policy** (Step 11). |
+| Webmail sign-in ends at **Authentication Failed**. The browser Network tab (F12) shows **CORS error** on `jmap`. The Bulwark log may also show `Token exchange failed` with `invalid_grant`. | CORS is off in Stalwart, or it was turned on without a restart. The `invalid_grant` is a side effect: Bulwark retries with a login code that was already used. | Step 11: turn on **Permissive CORS policy**, restart Stalwart, and run the CORS check. |
+| Receivers reject outgoing mail with `SPF fail - not authorized` for the server's IP | The domain has no MX record, so `mx` in the SPF record matches nothing. | Add the MX record (Step 10). |
+| Gmail shows SPF pass, but other receivers report SPF fail (or the reverse) | The SPF record lists only an `ip4:` address, so mail sent over IPv6 fails. | Use `v=spf1 mx -all` (Step 10). |
 | Outbound mail stays queued and the log shows timeouts on port 25 | The VPS provider blocks outbound port 25. | Ask the provider to unblock it. |
 
 ---
