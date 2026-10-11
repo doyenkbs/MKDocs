@@ -21,6 +21,20 @@ This section covers the self-hosted applications running in the home lab — fil
     ](bookstack.md){ .k-rack-row }
 
 -   [
+    <span class="k-rack-code">Itsm</span>
+    <span class="k-rack-title">GLPI</span>
+    <span class="k-rack-desc">IT service management: tickets, asset inventory, and knowledge base, run with Docker Compose.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](glpi-docker.md){ .k-rack-row }
+
+-   [
+    <span class="k-rack-code">Psa</span>
+    <span class="k-rack-title">ITFlow</span>
+    <span class="k-rack-desc">IT documentation, ticketing, and invoicing, with email-to-ticket from a self-hosted mailbox.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](itflow-install.md){ .k-rack-row }
+
+-   [
     <span class="k-rack-code">Vdi</span>
     <span class="k-rack-title">Kasm Workspaces</span>
     <span class="k-rack-desc">Browser-based containerized desktops and apps, plus fixed RDP servers.</span>
