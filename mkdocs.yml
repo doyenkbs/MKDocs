@@ -233,6 +233,7 @@ nav:
         - Remove File: home-lab/tanium/packages/remove-file.md
         - Remove Folder: home-lab/tanium/packages/remove-folder.md
         - Remove Store Apps: home-lab/tanium/packages/remove-store-apps.md
+        - Remove VS Code User Install: home-lab/tanium/packages/remove-vscode-user-install.md
         - Set Time Zone: home-lab/tanium/packages/set-time-zone.md
     - Sensors:
         - Overview: home-lab/tanium/sensors/index.md
@@ -244,6 +245,7 @@ nav:
         - Windows In-Place Upgrade: home-lab/tanium/deploy/windows-inplace-upgrade.md
     - Remediation:
         - Defender Vulnerabilities: home-lab/tanium/remediation/defender-vulnerabilities.md
+        - Path Registry Value Type: home-lab/tanium/remediation/path-registry-value-type.md
     #- Administration:
         #- Overview: home-lab/tanium/administration.md
         #- Actions: home-lab/tanium/actions.md

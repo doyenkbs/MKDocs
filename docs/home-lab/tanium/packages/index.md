@@ -19,6 +19,7 @@ A package runs a script on targeted endpoints as an action. Output goes to the a
 | [Remove File](remove-file.md) | Deletes one file. The operator retypes the file name to confirm, and system folders, boot files, and the Tanium Client folder are refused. | Windows | 2026-10-08 |
 | [Remove Folder](remove-folder.md) | Deletes one folder and its contents. The operator retypes the folder name to confirm, and system folders, profile roots, and the Tanium Client folder are refused. | Windows | 2026-10-08 |
 | [Remove Store Apps](remove-store-apps.md) | Removes Microsoft Store apps for all users and new users. The operator confirms the app count, and apps Windows depends on are refused. Optional setting stops suggested apps from installing. | Windows | 2026-10-08 |
+| [Remove VS Code User Install](remove-vscode-user-install.md) | Removes the per-user copy of VS Code (User installer or Store version). One package for signed-in users, run in the user's session, and one for signed-out profiles, cleaned offline. | Windows | 2026-10-14 |
 | [Set Time Zone](set-time-zone.md) | Sets endpoints to a common U.S. time zone picked from a drop-down. The Windows package also turns automatic time zone on or off. Separate packages for Windows and for Linux and macOS. | Windows, Linux, macOS | 2026-09-23 |
 
 ## Conventions used here
