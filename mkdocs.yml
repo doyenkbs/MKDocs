@@ -233,6 +233,7 @@ nav:
         - Local Admin Removal: home-lab/tanium/packages/local-admin-removal.md
         - Remove File: home-lab/tanium/packages/remove-file.md
         - Remove Folder: home-lab/tanium/packages/remove-folder.md
+        - Remove Legacy Python: home-lab/tanium/packages/remove-legacy-python.md
         - Remove Store Apps: home-lab/tanium/packages/remove-store-apps.md
         - Remove VS Code User Install: home-lab/tanium/packages/remove-vscode-user-install.md
         - Set Time Zone: home-lab/tanium/packages/set-time-zone.md
