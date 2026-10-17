@@ -28,7 +28,7 @@ All names and addresses on this page are examples. Replace them with your own:
         +-------------------+--------------------+
         |                                        |
   Mail ports (direct)                     Web ports (Caddy)
-  25, 465, 993, 4190                      80, 443
+  25, 465, 587, 993, 4190                 80, 443
         |                                        |
         v                                        v
    +----------+     http://stalwart:8080    +---------+
@@ -62,7 +62,7 @@ Any reverse proxy that can forward HTTPS by hostname works here. **This guide us
 
 The rest of the setup (Stalwart settings, DNS, Bulwark) is the same whichever proxy you pick. Stalwart's documentation has examples for Caddy, Traefik, Nginx, and HAProxy.
 
-> **Mail ports never go through the proxy.** Ports 25, 465, 993, and 4190 are not HTTP, so they are published directly from the Stalwart container.
+> **Mail ports never go through the proxy.** Ports 25, 465, 587, 993, and 4190 are not HTTP, so they are published directly from the Stalwart container.
 
 ---
 
@@ -121,6 +121,7 @@ In your provider's firewall, allow these inbound ports and block everything else
 | 80 | TCP | Caddy certificate requests and HTTP redirect |
 | 443 | TCP and UDP | HTTPS and HTTP/3 through Caddy |
 | 465 | TCP | Mail submission from clients (implicit TLS) |
+| 587 | TCP | Mail submission with STARTTLS, for apps and devices that cannot use 465 (see [Port 587 for apps that need STARTTLS](#port-587-for-apps-that-need-starttls)) |
 | 993 | TCP | IMAP (implicit TLS) |
 | 4190 | TCP | ManageSieve (optional, only for desktop filter editors) |
 
@@ -196,7 +197,7 @@ apt -y install ca-certificates curl dnsutils netcat-openbsd
 Make sure nothing on the host already uses the mail or web ports:
 
 ```bash
-ss -tlnp | grep -E ':(25|80|443|465|993|4190)\b'
+ss -tlnp | grep -E ':(25|80|443|465|587|993|4190)\b'
 ```
 
 The command should print nothing. If `exim4` or `postfix` appears, remove it:
@@ -263,6 +264,7 @@ services:
     ports:
       - "25:25"
       - "465:465"
+      - "587:587"
       - "993:993"
       - "4190:4190"
       - "127.0.0.1:8080:8080"
@@ -326,7 +328,7 @@ What each choice does:
 |---|---|
 | `stalwartlabs/stalwart:v0.16` | Current image name, pinned to one minor version so an update cannot jump to a version with breaking changes. |
 | Volumes at `/etc/stalwart` and `/var/lib/stalwart` | The only two paths the image writes to. A volume mounted anywhere else is ignored and data is lost when the container is recreated. |
-| No port 587 | Stalwart has no listener on 587 by default. Clients use 465. |
+| `587:587` | Mail submission with STARTTLS for apps that cannot use 465. Stalwart has no listener on 587 by default, so connections are refused until you add one in [Port 587 for apps that need STARTTLS](#port-587-for-apps-that-need-starttls). |
 | `127.0.0.1:8080` | Stalwart's setup screen, reachable only from the server itself (through an SSH tunnel). Removed in Step 15. |
 | No `ports:` on Bulwark | Bulwark is only reached through Caddy on the internal Docker network, so it publishes nothing on the host. |
 | `STALWART_PUBLIC_URL` | Tells Stalwart its public address, since Caddy handles HTTPS in front of it. |
@@ -667,11 +669,92 @@ Most apps (Thunderbird, Apple Mail, Outlook) configure themselves from the autoc
 | Outgoing (SMTP) | `mail.example.com` | 465 | SSL/TLS |
 | Username | Full email address, for example `user@example.com` | | |
 
-Choose **IMAP**, not POP3, so every device sees the same mailbox. If an app offers port 587 with STARTTLS, change it to 465 with SSL/TLS.
+Choose **IMAP**, not POP3, so every device sees the same mailbox. For outgoing mail, prefer 465 with SSL/TLS. Use 587 with STARTTLS only for an app that cannot do 465 (see the next section).
 
 Calendars and contacts use CalDAV and CardDAV on `mail.example.com`. Thunderbird, iOS, and macOS support them natively. On Android, use DAVx5.
 
 If two-factor authentication is turned on for a mailbox, mail apps need an app password, created at `https://mail.example.com/account`.
+
+---
+
+## Port 587 for apps that need STARTTLS
+
+### Why 587 is needed
+
+There are two ways to send mail securely to a mail server:
+
+| Port | How the encryption starts | Setting name in most apps |
+|---|---|---|
+| 465 | Encrypted from the first byte (implicit TLS) | SSL/TLS, SMTPS |
+| 587 | Starts in plain text, then the app sends `STARTTLS` and switches to encryption | STARTTLS, TLS, Submission |
+
+Both are equally secure once connected. The problem is that many apps support only one of them. A lot of self-hosted applications, network scanners and printers, NAS units, and monitoring tools only offer **STARTTLS on port 587**. They have no setting for implicit TLS. Pointed at port 465, they send plain text to a port that expects encryption, and the connection hangs until it times out.
+
+For example, Wardrowbe's email notifications only use STARTTLS, so they cannot send through port 465 at all.
+
+Stalwart only creates the 465 listener by default. Adding a 587 listener lets these apps send through the same server without changing anything else.
+
+### Add the listener
+
+1. Open the Stalwart admin console at `https://mail.example.com/admin`.
+2. Open the **Listeners** page (titled **Manage SMTP, IMAP, HTTP, and other listeners**) and create a new listener:
+
+    | Field | Value |
+    |---|---|
+    | Name | `submission` |
+    | Protocol | **SMTP** |
+    | Bind address | `[::]:587` |
+    | Implicit TLS | **Off** |
+
+    **Implicit TLS must be off.** With it on, port 587 behaves like port 465 and every STARTTLS app fails, which defeats the purpose of the listener. Compare with the existing listeners: `submissions` on 465 has Implicit TLS on, and `smtp` on 25 has it off. Port 587 must match port 25. Stalwart offers STARTTLS on a listener that has Implicit TLS off, using the same certificate as the other listeners.
+
+3. Save, then restart Stalwart so the new listener starts:
+
+    ```bash
+    cd /opt/mail
+    docker compose restart stalwart
+    ```
+
+4. Check that port 587 is open on the server:
+
+    ```bash
+    ss -tlnp | grep ':587\b'
+    ```
+
+    Expected: a `docker-proxy` line listening on `0.0.0.0:587`. If nothing appears, the `587:587` line is missing from `docker-compose.yml` (Step 7). Add it and run `docker compose up -d`.
+
+### Test from the machine that will send
+
+Run this on the host or container of the app that will use port 587, not on the mail server:
+
+```bash
+timeout 8 openssl s_client -starttls smtp -connect mail.example.com:587 -brief </dev/null 2>&1 | head -3
+```
+
+Expected:
+
+```
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.3
+```
+
+| Result | Cause |
+|---|---|
+| `CONNECTION ESTABLISHED` | Port 587 with STARTTLS works |
+| `Connection refused` | Port 587 is not published (`docker-compose.yml`), or the listener does not exist yet |
+| Hangs, then `didn't find starttls in server response` or a timeout | The listener has **Implicit TLS on**. Turn it off and restart Stalwart |
+| Times out with no output at all | The provider firewall blocks TCP 587 (Step 2) |
+
+### App settings for port 587
+
+| Setting | Value |
+|---|---|
+| Server | `mail.example.com` |
+| Port | `587` |
+| Security | STARTTLS (sometimes labeled TLS) |
+| Username | Full email address, for example `user@example.com` |
+| Password | The mailbox password, or an app password if two-factor authentication is on |
+| From address | The same address as the username. Stalwart normally rejects mail sent as an address the login does not own |
 
 ---
 
@@ -790,6 +873,9 @@ If `docker compose logs stalwart` prints nothing, Stalwart is not writing its lo
 | Receivers reject outgoing mail with `SPF fail - not authorized` for the server's IP | The domain has no MX record, so `mx` in the SPF record matches nothing. | Add the MX record (Step 10). |
 | Gmail shows SPF pass, but other receivers report SPF fail (or the reverse) | The SPF record lists only an `ip4:` address, so mail sent over IPv6 fails. | Use `v=spf1 mx -all` (Step 10). |
 | Outbound mail stays queued and the log shows timeouts on port 25 | The VPS provider blocks outbound port 25. | Ask the provider to unblock it. |
+| An app sending on port 587 gets `Connection refused` | Port 587 is not published, or Stalwart has no listener on 587. | Add `587:587` to `docker-compose.yml` and create the listener ([Port 587 for apps that need STARTTLS](#port-587-for-apps-that-need-starttls)). |
+| An app sending on port 587 hangs, then times out | The 587 listener has **Implicit TLS** on, so it expects encryption before the app sends `STARTTLS`. | Turn Implicit TLS off on the 587 listener and restart Stalwart. |
+| An app that only supports STARTTLS times out on port 465 | Port 465 uses implicit TLS, which the app cannot speak. | Point the app at port 587 instead. |
 
 ---
 
