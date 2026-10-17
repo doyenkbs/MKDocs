@@ -157,6 +157,7 @@ nav:
         - Pairdrop: home-lab/application/pairdrop.md
         - Paperless-NGX: home-lab/application/paperless.md
         - Snipe-IT: home-lab/application/snipeit.md
+        - Wardrowbe (AI Wardrobe): home-lab/application/wardrowbe.md
        # - Zabbix: home-lab/application/zabbix.md
         - Authentik: 
             - Authentik Overview: home-lab/application/authentik.md

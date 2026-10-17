@@ -69,6 +69,13 @@ This section covers the self-hosted applications running in the home lab — fil
     <span class="k-rack-go">&rarr;</span>
     ](snipeit.md){ .k-rack-row }
 
+-   [
+    <span class="k-rack-code">Ai</span>
+    <span class="k-rack-title">Wardrowbe</span>
+    <span class="k-rack-desc">AI wardrobe organizer and outfit suggestions, with hosted AI (Gemini primary, Groq fallback through LiteLLM) and Authentik sign-in.</span>
+    <span class="k-rack-go">&rarr;</span>
+    ](wardrowbe.md){ .k-rack-row }
+
 </div>
 
 !!! note "Not documented yet"
@@ -103,6 +110,7 @@ Once Authentik is running, each of these walks through connecting a specific app
 | Kasm Workspaces | [Kasm Workspaces Integration](kasm-authentik-oidc.md) |
 | Nextcloud | [Nextcloud Integration](nextcloudintegration.md) |
 | Paperless-NGX | [Paperless-NGX Integration](paperlessintegration.md) |
+| Wardrowbe | [Step 8 of the Wardrowbe guide](wardrowbe.md#step-8-configure-authentik-oidc) |
 
 ---
 
