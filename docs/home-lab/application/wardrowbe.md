@@ -168,6 +168,7 @@ This file is based on the upstream `docker-compose.prod.yml`, with these changes
 - OIDC settings required, so the app cannot start with the passwordless development login.
 - A `litellm` service for the AI fallback.
 - nginx listens on the LXC's LAN address so the existing tunnel connector can reach it.
+- nginx restarts automatically whenever Compose recreates the backend or frontend (`restart: true` under `depends_on`). nginx looks up the backend's address only when it starts, so without this a recreated backend leaves the site returning 502 errors. This needs Docker Compose 2.17 or newer; check with `docker compose version`.
 
 Create the file:
 
@@ -350,7 +351,13 @@ services:
       - ./nginx/templates:/etc/nginx/templates:ro
     command: >
       /bin/sh -c "envsubst '$${NGINX_AI_TIMEOUT} $${NGINX_CLIENT_MAX_BODY_SIZE} $${BACKEND_HOST} $${BACKEND_INTERNAL_PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
-    depends_on: [frontend, backend]
+    depends_on:
+      frontend:
+        condition: service_started
+        restart: true
+      backend:
+        condition: service_started
+        restart: true
     networks: [wardrobe_net]
 
   litellm:
@@ -1029,6 +1036,7 @@ LiteLLM stores no data in this stack, so rolling back is putting the old digest 
 | Worker log: `All connection attempts failed` for `http://litellm:4000` | LiteLLM is restarting or not running | `docker compose ps litellm` and `docker compose logs --tail=30 litellm` |
 | Test calls through LiteLLM print nothing right after `up -d` | LiteLLM takes longer than 20 to 30 seconds to start the first time | Wait for `Uvicorn running on http://0.0.0.0:4000` in its log |
 | Sign-in loops or shows an OIDC error | `APP_URL` does not match the hostname in the browser, or the Authentik redirect URI uses a different hostname | `APP_URL` and the redirect URI must both use the exact public hostname. After changing `.env`, run `docker compose up -d` |
+| Dashboard stuck on "Loading your wardrobe..." with "An error occurred" pop-ups. Browser developer tools (F12 > Network) show `502` on every `/api/v1/` request, while the backend shows `Up (healthy)` in `docker compose ps` | The backend was recreated (for example after a `.env` change) but nginx was not, so nginx still sends requests to the backend's old internal address | `docker compose restart nginx`. To stop it from happening again, use the `depends_on` block with `restart: true` from Step 4 |
 | A change in `.env` has no effect | Containers read `.env` only when they are created | `docker compose up -d` recreates changed containers. A plain `restart` does not reload `.env` |
 | Workers restart in a loop right after the first start | Database tables do not exist yet | `docker compose exec backend alembic upgrade head`, then `docker compose restart worker image-worker` |
 | `curl http://192.168.1.50:8080/health` works on the LXC but times out from the tunnel host | A firewall between the hosts blocks 8080 | Allow TCP 8080 from the tunnel host to the LXC |
