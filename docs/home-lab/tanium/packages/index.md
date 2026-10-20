@@ -21,6 +21,7 @@ A package runs a script on targeted endpoints as an action. Output goes to the a
 | [Remove Legacy Python](remove-legacy-python.md) | Removes Python 3.10, 3.11, and 3.12 from all-users installs, every user profile (signed in or not), and custom folders at the root of the system drive, including registry keys and PATH entries. Newer Python is not touched. | Windows | 2026-10-17 |
 | [Remove Store Apps](remove-store-apps.md) | Removes Microsoft Store apps for all users and new users. The operator confirms the app count, and apps Windows depends on are refused. Optional setting stops suggested apps from installing. | Windows | 2026-10-08 |
 | [Remove VS Code User Install](remove-vscode-user-install.md) | Removes the per-user copy of VS Code (User installer or Store version). One package for signed-in users, run in the user's session, and one for signed-out profiles, cleaned offline. | Windows | 2026-10-14 |
+| [Remove Zoom User Install](remove-zoom-user-install.md) | Removes the per-user copy of Zoom from every profile, signed in or not, including its uninstall entry and shortcuts. Skips users with Zoom open unless told to close it. When a system-wide Zoom is installed, user data folders are kept and only the per-user program files go. | Windows | 2026-10-20 |
 | [Set Time Zone](set-time-zone.md) | Sets endpoints to a common U.S. time zone picked from a drop-down. The Windows package also turns automatic time zone on or off. Separate packages for Windows and for Linux and macOS. | Windows, Linux, macOS | 2026-09-23 |
 
 ## Conventions used here
