@@ -15,7 +15,10 @@ A sensor answers a question in Interact. It runs on every targeted endpoint each
 |---|---|---|---|
 | [Certificate Expiration](certificate-expiration.md) | Which machine certificates expire soon, or have already expired? | Windows, Linux, macOS | 2026-09-24 |
 | [Find File by Name](find-file-by-name.md) | Does this file exist in these folders, and when was it last modified? | Windows | 2026-09-18 |
+| [Java - Last Run - Prefetch](java-last-run-prefetch.md) | Has Java run on this machine recently, and when? | Windows | 2026-11-03 |
 | [Java - Runtime Inventory - Dependencies](java-runtime-inventory.md) | Which Java runtimes are installed, and what uses each one? | Windows, Linux | 2026-09-25 |
+| [Java - Scheduled Tasks](java-scheduled-tasks.md) | Does any scheduled task launch Java? | Windows | 2026-11-03 |
+| [Scheduled Tasks - By Command](scheduled-tasks-by-command.md) | Which scheduled tasks run a given program, path, or script? | Windows | 2026-11-03 |
 
 ## Conventions used here
 

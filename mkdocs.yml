@@ -243,12 +243,17 @@ nav:
         - Certificate Expiration: home-lab/tanium/sensors/certificate-expiration.md
         - Defender - Computer Status: home-lab/tanium/sensors/defender-computer-status.md
         - Find File by Name: home-lab/tanium/sensors/find-file-by-name.md
+        - Java Last Run (Prefetch): home-lab/tanium/sensors/java-last-run-prefetch.md
         - Java Runtime Inventory: home-lab/tanium/sensors/java-runtime-inventory.md
+        - Java Scheduled Tasks: home-lab/tanium/sensors/java-scheduled-tasks.md
+        - Scheduled Tasks by Command: home-lab/tanium/sensors/scheduled-tasks-by-command.md
     - Deploy:
         - Windows In-Place Upgrade: home-lab/tanium/deploy/windows-inplace-upgrade.md
     - Remediation:
         - Defender Vulnerabilities: home-lab/tanium/remediation/defender-vulnerabilities.md
         - Path Registry Value Type: home-lab/tanium/remediation/path-registry-value-type.md
+    - Tools:
+        - Pseudonymize Exports: home-lab/tanium/tools/pseudonymize-exports.md
     #- Administration:
         #- Overview: home-lab/tanium/administration.md
         #- Actions: home-lab/tanium/actions.md
