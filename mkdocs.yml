@@ -231,6 +231,7 @@ nav:
         - Edge MSI Standardization: home-lab/tanium/packages/edge-msi-standardization.md
         - Find File by Name: home-lab/tanium/packages/find-file-by-name.md
         - Local Admin Removal: home-lab/tanium/packages/local-admin-removal.md
+        - Remove DriverStore Package: home-lab/tanium/packages/remove-driverstore-package.md
         - Remove File: home-lab/tanium/packages/remove-file.md
         - Remove Folder: home-lab/tanium/packages/remove-folder.md
         - Remove Legacy Python: home-lab/tanium/packages/remove-legacy-python.md
@@ -252,6 +253,7 @@ nav:
         - Windows In-Place Upgrade: home-lab/tanium/deploy/windows-inplace-upgrade.md
     - Remediation:
         - Defender Vulnerabilities: home-lab/tanium/remediation/defender-vulnerabilities.md
+        - OpenSSL in Intel iCLS Driver: home-lab/tanium/remediation/openssl-intel-icls.md
         - Path Registry Value Type: home-lab/tanium/remediation/path-registry-value-type.md
     - Tools:
         - Pseudonymize Exports: home-lab/tanium/tools/pseudonymize-exports.md
