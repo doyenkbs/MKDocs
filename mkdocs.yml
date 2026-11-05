@@ -234,7 +234,9 @@ nav:
         - Remove DriverStore Package: home-lab/tanium/packages/remove-driverstore-package.md
         - Remove File: home-lab/tanium/packages/remove-file.md
         - Remove Folder: home-lab/tanium/packages/remove-folder.md
+        - Remove IIS PHP Handler: home-lab/tanium/packages/remove-iis-php-handler.md
         - Remove Legacy Python: home-lab/tanium/packages/remove-legacy-python.md
+        - Remove PHP Install: home-lab/tanium/packages/remove-php-install.md
         - Remove Store Apps: home-lab/tanium/packages/remove-store-apps.md
         - Remove VS Code User Install: home-lab/tanium/packages/remove-vscode-user-install.md
         - Remove Zoom User Install: home-lab/tanium/packages/remove-zoom-user-install.md
@@ -244,6 +246,7 @@ nav:
         - Certificate Expiration: home-lab/tanium/sensors/certificate-expiration.md
         - Defender - Computer Status: home-lab/tanium/sensors/defender-computer-status.md
         - Find File by Name: home-lab/tanium/sensors/find-file-by-name.md
+        - IIS - PHP Usage: home-lab/tanium/sensors/iis-php-usage.md
         - Java Last Run (Prefetch): home-lab/tanium/sensors/java-last-run-prefetch.md
         - Java Runtime Inventory: home-lab/tanium/sensors/java-runtime-inventory.md
         - Java Scheduled Tasks: home-lab/tanium/sensors/java-scheduled-tasks.md
@@ -255,6 +258,7 @@ nav:
         - Defender Vulnerabilities: home-lab/tanium/remediation/defender-vulnerabilities.md
         - OpenSSL in Intel iCLS Driver: home-lab/tanium/remediation/openssl-intel-icls.md
         - Path Registry Value Type: home-lab/tanium/remediation/path-registry-value-type.md
+        - PHP on IIS: home-lab/tanium/remediation/php-on-iis.md
     - Tools:
         - Pseudonymize Exports: home-lab/tanium/tools/pseudonymize-exports.md
     #- Administration:
