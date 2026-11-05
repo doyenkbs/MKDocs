@@ -18,6 +18,7 @@ A sensor answers a question in Interact. It runs on every targeted endpoint each
 | [Java - Last Run - Prefetch](java-last-run-prefetch.md) | Has Java run on this machine recently, and when? | Windows | 2026-11-03 |
 | [Java - Runtime Inventory - Dependencies](java-runtime-inventory.md) | Which Java runtimes are installed, and what uses each one? | Windows, Linux | 2026-09-25 |
 | [Java - Scheduled Tasks](java-scheduled-tasks.md) | Does any scheduled task launch Java? | Windows | 2026-11-03 |
+| [Running Processes - Paths - Hashes](running-processes-paths-hashes.md) | Which programs are running, from which path, and with what file hash? | Windows, Linux | 2026-11-04 |
 | [Scheduled Tasks - By Command](scheduled-tasks-by-command.md) | Which scheduled tasks run a given program, path, or script? | Windows | 2026-11-03 |
 
 ## Conventions used here

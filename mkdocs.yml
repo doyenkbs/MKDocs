@@ -246,6 +246,7 @@ nav:
         - Java Last Run (Prefetch): home-lab/tanium/sensors/java-last-run-prefetch.md
         - Java Runtime Inventory: home-lab/tanium/sensors/java-runtime-inventory.md
         - Java Scheduled Tasks: home-lab/tanium/sensors/java-scheduled-tasks.md
+        - Running Processes - Paths - Hashes: home-lab/tanium/sensors/running-processes-paths-hashes.md
         - Scheduled Tasks by Command: home-lab/tanium/sensors/scheduled-tasks-by-command.md
     - Deploy:
         - Windows In-Place Upgrade: home-lab/tanium/deploy/windows-inplace-upgrade.md
