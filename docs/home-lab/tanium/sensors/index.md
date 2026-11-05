@@ -13,6 +13,7 @@ A sensor answers a question in Interact. It runs on every targeted endpoint each
 
 | Sensor | What it answers | Platform | Updated |
 |---|---|---|---|
+| [.NET App Dependencies](dotnet-app-dependencies.md) | Which apps use each .NET runtime, which version they really load, and which carry their own copy? | Windows | 2026-11-05 |
 | [Certificate Expiration](certificate-expiration.md) | Which machine certificates expire soon, or have already expired? | Windows, Linux, macOS | 2026-09-24 |
 | [Find File by Name](find-file-by-name.md) | Does this file exist in these folders, and when was it last modified? | Windows | 2026-09-18 |
 | [IIS - PHP Usage](iis-php-usage.md) | Which IIS sites still run PHP, which version, and is anyone requesting their pages? | Windows | 2026-11-05 |

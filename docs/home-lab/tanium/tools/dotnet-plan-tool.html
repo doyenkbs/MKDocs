@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>.NET Remediation Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+/* Layout: one working column. Load the exports, read the summary and decisions, then work the filterable plan; the lists the scan cannot see come last. */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --fg: #1b2230;
+  --muted: #5b6577;
+  --line: #dde1e8;
+  --accent: #2f5bd3;
+  --accent-soft: #e7edfc;
+  --p1: #c0392b; --p1-soft: #fbe9e7;
+  --p2: #d46a0f; --p2-soft: #fdf0e3;
+  --p3: #a68300; --p3-soft: #fbf5dc;
+  --p4: #7a8496; --p4-soft: #eef0f3;
+  --ok: #1f7a4d; --ok-soft: #e3f3ea;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151c; --panel: #181e27; --fg: #e4e8ef; --muted: #98a2b3; --line: #2a3340;
+    --accent: #7c9bff; --accent-soft: #1e2a47;
+    --p1: #ff7b6b; --p1-soft: #3a1f1c; --p2: #ffa45c; --p2-soft: #3a2a1a;
+    --p3: #e0c24f; --p3-soft: #33301a; --p4: #a3acbb; --p4-soft: #232b36; --ok: #5fd39a; --ok-soft: #173326;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151c; --panel: #181e27; --fg: #e4e8ef; --muted: #98a2b3; --line: #2a3340;
+  --accent: #7c9bff; --accent-soft: #1e2a47;
+  --p1: #ff7b6b; --p1-soft: #3a1f1c; --p2: #ffa45c; --p2-soft: #3a2a1a;
+  --p3: #e0c24f; --p3-soft: #33301a; --p4: #a3acbb; --p4-soft: #232b36; --ok: #5fd39a; --ok-soft: #173326;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 32px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.25rem; font-weight: 600; }
+p { margin: 0; max-width: 72ch; }
+.mono { font-family: var(--font-mono); font-size: 0.92em; }
+.muted { color: var(--muted); }
+section { display: grid; gap: 14px; margin-top: 44px; }
+.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+
+header { display: grid; gap: 10px; }
+.deadline { display: inline-flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 6px; justify-self: start;
+  padding: 10px 14px; border-radius: 8px; background: var(--p1-soft); color: var(--fg); border: 1px solid var(--line); max-width: 100%; }
+.deadline strong { color: var(--p1); font-variant-numeric: tabular-nums; }
+
+/* Upload */
+.load { margin-top: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 14px; }
+.load-top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.drop { border: 2px dashed var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 8px; justify-items: start; background: var(--bg); }
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.btn { font: inherit; font-size: 0.88rem; font-weight: 500; border: 1px solid var(--accent); background: var(--accent); color: var(--panel);
+  padding: 7px 14px; border-radius: 8px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn[disabled] { opacity: 0.5; cursor: default; }
+.sources { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.src { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.src .k { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+.src .v { overflow-wrap: anywhere; }
+.src.ok { border-color: var(--ok); }
+.src.missing { border-style: dashed; }
+.msg { font-size: 0.88rem; padding: 8px 12px; border-radius: 8px; }
+.msg.err { background: var(--p1-soft); color: var(--p1); }
+.msg.ok { background: var(--ok-soft); color: var(--ok); }
+@media (max-width: 640px) { .sources { grid-template-columns: 1fr; } }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 22px; }
+.stat { background: var(--panel); padding: 14px 16px; display: grid; gap: 2px; min-width: 0; }
+.stat b { font-size: 1.7rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stat span { color: var(--muted); font-size: 0.85rem; }
+.stat.warn b { color: var(--p1); }
+@media (max-width: 640px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.callout { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--p1); border-radius: 8px; padding: 14px 16px; }
+.callout.good { border-left-color: var(--ok); }
+
+.tablebox { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td.ep { white-space: nowrap; }
+.decisions td:first-child { min-width: 170px; }
+.decisions td:nth-child(2) { min-width: 140px; }
+.decisions td:nth-child(3) { min-width: 220px; }
+.decisions td:nth-child(4) { min-width: 280px; }
+
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em; padding: 1px 8px; border-radius: 999px; white-space: nowrap; }
+.pill.kev, .pill.p1 { background: var(--p1-soft); color: var(--p1); }
+.pill.p2 { background: var(--p2-soft); color: var(--p2); }
+.pill.p3 { background: var(--p3-soft); color: var(--p3); }
+.pill.p4 { background: var(--p4-soft); color: var(--p4); }
+.pill.conf { background: var(--accent-soft); color: var(--accent); }
+.pill.nos { background: var(--p4-soft); color: var(--muted); }
+
+.filters { display: grid; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+.frow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.frow > .lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; margin-right: 6px; min-width: 64px; }
+.chip { font: inherit; font-size: 0.82rem; border: 1px solid var(--line); background: var(--bg); color: var(--fg); padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.chip[aria-pressed="true"] .muted { color: inherit; opacity: 0.8; }
+.chip:focus-visible, input:focus-visible, summary:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#q { font: inherit; width: 100%; max-width: 420px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); }
+.count { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.reset { font: inherit; font-size: 0.82rem; background: none; border: 0; color: var(--accent); cursor: pointer; padding: 4px 6px; }
+.plan-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+
+.plan { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow: hidden; }
+.plan-head, .item summary { display: grid; grid-template-columns: 54px 120px 150px 150px minmax(0, 1fr); gap: 12px; align-items: start; padding: 10px 14px; }
+.plan-head { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--line); }
+.item { border-bottom: 1px solid var(--line); border-left: 4px solid transparent; }
+.item:last-child { border-bottom: 0; }
+.item.p1 { border-left-color: var(--p1); } .item.p2 { border-left-color: var(--p2); }
+.item.p3 { border-left-color: var(--p3); } .item.p4 { border-left-color: var(--p4); }
+.item summary { cursor: pointer; list-style: none; }
+.item summary::-webkit-details-marker { display: none; }
+.item summary:hover { background: var(--bg); }
+.item .act { display: flex; gap: 8px; align-items: baseline; min-width: 0; }
+.item .act::after { content: "+"; margin-left: auto; color: var(--muted); font-family: var(--font-mono); }
+.item[open] .act::after { content: "\2212"; }
+.item .act span { min-width: 0; }
+.detail { padding: 4px 14px 16px 14px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 18px; }
+.detail dl { margin: 0; display: grid; gap: 8px; }
+.detail dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+.detail dd { margin: 0; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 0.88rem; align-content: start; }
+.kv span:nth-child(odd) { color: var(--muted); }
+.kv span:nth-child(even) { font-variant-numeric: tabular-nums; min-width: 0; overflow-wrap: anywhere; }
+.empty { padding: 24px; color: var(--muted); text-align: center; }
+@media (max-width: 760px) {
+  .plan-head { display: none; }
+  .item summary { grid-template-columns: auto 1fr; gap: 4px 10px; }
+  .item summary .c-ep { grid-column: 2; }
+  .item summary .c-os, .item summary .c-comp { grid-column: 2; font-size: 0.85rem; color: var(--muted); }
+  .item summary .act { grid-column: 1 / -1; }
+  .detail { grid-template-columns: 1fr; }
+}
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.card h3 { font-size: 1rem; font-weight: 600; overflow-wrap: anywhere; }
+.card .meta { font-size: 0.85rem; color: var(--muted); overflow-wrap: anywhere; }
+.card .do { font-weight: 500; }
+
+.dates { display: grid; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow: hidden; }
+.date { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 16px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.date:last-child { border-bottom: 0; }
+.date time { font-family: var(--font-mono); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.date.past time { color: var(--muted); }
+.date.soon time { color: var(--p1); font-weight: 500; }
+@media (max-width: 520px) { .date { grid-template-columns: 1fr; gap: 2px; } }
+
+ul.notes { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 80ch; }
+footer { margin-top: 48px; font-size: 0.85rem; color: var(--muted); display: grid; gap: 6px; }
+footer a { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Vulnerability remediation · .NET</div>
+    <h1>.NET Remediation Plan</h1>
+    <p class="muted">Load the vulnerability findings export and the .NET App Dependencies sensor export. The page matches each finding to what the sensor found on that endpoint and says what to do: patch, remove, update, or hand to the app owner.</p>
+    <div class="deadline"><span>.NET 8, .NET 9 and PowerShell 7.4 end of support</span><strong id="dl-text">Nov 10, 2026</strong></div>
+  </header>
+
+  <div class="load" id="load">
+    <div class="load-top">
+      <div>
+        <strong>Your data</strong>
+        <p class="muted" style="font-size:0.88rem" id="load-note">Files are read in your browser only. Nothing is uploaded or saved; reloading the page goes back to the data saved with it.</p>
+      </div>
+      <button class="btn ghost" type="button" id="restore" hidden>Go back to the saved data</button>
+    </div>
+    <div class="drop" id="drop">
+      <span>Drop one or both CSV exports here, or</span>
+      <label class="btn" for="file">Choose CSV files</label>
+      <input id="file" type="file" accept=".csv,text/csv" multiple hidden>
+      <span class="muted" style="font-size:0.85rem">The page tells the two files apart by their columns. Load just one to replace only that one.</span>
+    </div>
+    <div class="sources">
+      <div class="src" id="src-f"></div>
+      <div class="src" id="src-s"></div>
+    </div>
+    <div id="msg" hidden></div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <section>
+    <div class="callout" id="callout"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">What the data decides</div>
+    <h2>Runtime decisions backed by the sensor</h2>
+    <p class="muted">For endpoints that answered the sensor question. .NET Framework rows are in the full plan below.</p>
+    <div class="tablebox">
+      <table class="decisions">
+        <thead><tr><th>Endpoints</th><th>Component</th><th>What the sensor showed</th><th>Action</th></tr></thead>
+        <tbody id="decisions"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Full plan</div>
+    <h2>Every endpoint and component</h2>
+    <p class="muted">Priority 1 = KEV finding, 2 = CVSS 9 or higher, 3 = CVSS 7 or higher, 4 = lower. Open a row to see why and what the sensor found.</p>
+    <div class="filters" role="group" aria-label="Filter the plan">
+      <div class="frow"><span class="lbl">Search</span><input id="q" type="search" placeholder="Endpoint, app, component or action" aria-label="Search the plan"></div>
+      <div class="frow" id="f-p"></div>
+      <div class="frow" id="f-g"></div>
+      <div class="frow" id="f-s"></div>
+    </div>
+    <div class="plan-tools">
+      <span class="count" id="count"></span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="reset" id="reset" type="button">Clear filters</button>
+        <button class="btn" id="dl" type="button" hidden>Download plan (CSV)</button>
+      </span>
+    </div>
+    <div id="dl-msg" hidden></div>
+    <div class="plan" id="plan"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Not in the vulnerability scan</div>
+    <h2>.NET copies the scan does not report</h2>
+    <p class="muted">Found only by the sensor: runtimes that products carry inside their own folders, and shared runtimes that are out of support but missing from the findings. Patching the shared .NET runtime never reaches the first kind.</p>
+    <div class="cards" id="hidden"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Missing data</div>
+    <h2>Run the sensor on these endpoints</h2>
+    <p class="muted">They have .NET runtime findings but no sensor result, so it is unknown whether anything uses the runtime.</p>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Endpoint</th><th>OS</th><th>Runtimes in findings</th><th>KEV</th><th>Max CVSS</th><th>Findings</th></tr></thead>
+        <tbody id="need"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Dates</div>
+    <h2>Support deadlines that drive the plan</h2>
+    <div class="dates" id="dates"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">How rows are decided</div>
+    <h2>Rules and what was left out</h2>
+    <ul class="notes" id="notes"></ul>
+  </section>
+
+  <footer>
+    <span>Sources:</span>
+    <a href="https://devblogs.microsoft.com/dotnet/dotnet-8-9-end-of-support/">.NET 8 and .NET 9 end of support (.NET Blog)</a>
+    <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/powershell-support-lifecycle">PowerShell support lifecycle (Microsoft Learn)</a>
+    <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-11-23h2-reaches-end-of-support-in-30-days/amp/">Windows 11 23H2 Enterprise and Education end of support (BleepingComputer)</a>
+  </footer>
+</div>
+
+<script id="data" type="application/json">null</script>
+<script>
+(function () {
+  'use strict';
+  const SAVED = JSON.parse(document.getElementById('data').textContent);
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const EOL_8_9 = new Date(2026, 10, 10);
+
+  // ---------------------------------------------------------------- inputs
+  const FCOL = { id: 'Check ID', ep: 'Endpoint', os: 'Operating System Generation', kev: 'CISA KEV', cvss: 'CVSS Base Score (v3)', epss: 'EPSS Score', prod: 'Detected Products' };
+  const SCOL = ['Framework', 'Requested', 'Roll Forward', 'Resolves To', 'Deployment', 'Arch', 'Category', 'Context', 'App Path'];
+
+  function findingsFromTable(cols, rows) {
+    const ix = {};
+    for (const [k, name] of Object.entries(FCOL)) ix[k] = cols.indexOf(name);
+    if (ix.id < 0 || ix.ep < 0 || ix.prod < 0) return null;
+    const g = (r, k) => ix[k] < 0 ? '' : String(r[ix[k]] ?? '').trim();
+    return rows.filter(r => g(r, 'ep')).map(r => ({
+      id: g(r, 'id'), ep: g(r, 'ep'), os: g(r, 'os'), kev: /^true$/i.test(g(r, 'kev')),
+      cvss: parseFloat(g(r, 'cvss')) || 0, epss: parseFloat(g(r, 'epss')) || 0, prod: g(r, 'prod'),
+    }));
+  }
+
+  // Tanium export: "Computer Name" plus "<sensor name>:<column>"; one export row holds several sensor rows, one per line.
+  function sensorFromExport(cols, rows) {
+    const ep = cols.findIndex(c => /^computer name$/i.test(c));
+    const ix = SCOL.map(n => cols.findIndex(c => c.toLowerCase().endsWith(':' + n.toLowerCase()) || c.toLowerCase() === n.toLowerCase()));
+    if (ep < 0 || ix[0] < 0 || ix[3] < 0 || ix[8] < 0) return null;
+    const out = [];
+    for (const r of rows) {
+      const name = String(r[ep] ?? '').trim();
+      if (!name) continue;
+      const parts = ix.map(i => i < 0 ? [''] : String(r[i] ?? '').split(/\r?\n/));
+      const n = Math.max(...parts.map(p => p.length));
+      for (let k = 0; k < n; k++) {
+        const v = parts.map(p => (p[k] ?? '').trim().replace(/^'/, ''));
+        out.push(rowObj([name, ...v]));
+      }
+    }
+    return out;
+  }
+  const rowObj = a => ({ ep: a[0], fw: a[1], req: a[2], roll: a[3], res: a[4], dep: a[5], arch: a[6], cat: a[7], ctx: a[8], path: a[9] });
+
+  // ---------------------------------------------------------------- engine
+  const STALE_KNOWN = [/\\Dell\\DTP\\\w+Deps\\/i];               // live Dell TechHub parts are in *SubAgent folders
+  const NUGET_TOOL = /\\packages\\[^\\]+\\tools\\/i;              // NuGet package tools copied into site folders
+  const VERSEG = /^(.*\\)(\d+(?:\.\d+){1,3})\\/;                 // ...\App\<version>\...
+
+  function component(p) {
+    p = p.trim();
+    if (!p) return null;
+    if (/HeroDevs/i.test(p)) return 'HeroDevs .NET 6';
+    if (/Framework/i.test(p)) return '.NET Framework';
+    if (/SDK|Visual Studio/i.test(p)) return 'SDK / Visual Studio';
+    const m = p.match(/(Desktop Runtime|core runtime|Hosting Bundle|ASP \.NET core|ASP\.NET Core Runtime|\.NET Runtime) (\d+)\.0/i);
+    if (m) return `.NET ${m[2]} runtime`;
+    if (/^(node|node\.js)$/i.test(p)) return 'Node.js (not .NET)';
+    if (/^git$/i.test(p)) return 'Git (not .NET)';
+    return 'Other: ' + p;
+  }
+  const major = v => { const m = String(v).match(/^(\d+)\./); return m ? Number(m[1]) : null; };
+  const isServer = os => /server/i.test(os || '');
+  const appName = r => {
+    const last = r.path.split('\\').pop() || r.path;
+    return /\.json$/i.test(last) ? last.replace(/\.runtimeconfig\.json$/i, '') : last;
+  };
+  const appLabel = r => { const c = (r.ctx || '').split(';')[0]; return c ? `${appName(r)} (${c})` : appName(r); };
+  const summarize = (rows, limit = 6) => {
+    const l = [...new Set(rows.map(appLabel))].sort();
+    return l.slice(0, limit).join('; ') + (l.length > limit ? `; +${l.length - limit} more` : '');
+  };
+  function productKey(r) {
+    if (r.cat === 'IIS') return (r.ctx || 'IIS site').split(';')[0];
+    let p = r.path.replace(/^[A-Z]:\\(Program Files( \(x86\))?|ProgramData)\\/i, '');
+    if (/^WindowsApps\\/i.test(p)) p = p.split('\\')[1].replace(/_.*$/, '').replace(/^AppUp\./, '');
+    else p = p.split('\\').slice(0, 2).join('\\');
+    return p;
+  }
+  // ".NET 8", ".NET Core 3.1"; with a version: ".NET 8 8.0.33" is avoided by the caller trimming the trailing number
+  function netName(n, ver) {
+    const base = n < 5 ? `.NET Core ${n}.${ver ? ver.split('.')[1] : '1'}` : `.NET ${n}`;
+    return ver ? `${base} ${ver}` : base;
+  }
+  function supportOf(n) {
+    if (n >= 10) return { ok: true, text: 'supported' };
+    if (n === 8 || n === 9) return today < EOL_8_9 ? { ok: true, soon: true, text: 'ends support Nov 10, 2026' } : { ok: false, text: 'out of support since Nov 10, 2026' };
+    if (n === 6) return { ok: false, text: 'out of support since Nov 2024' };
+    if (n === 7) return { ok: false, text: 'out of support since May 2024' };
+    if (n === 3) return { ok: false, text: 'out of support since Dec 2022 (.NET Core 3.1)' };
+    return { ok: false, text: 'out of support' };
+  }
+
+  function build(F, S) {
+    const hasSensor = !!S;
+    S = S || [];
+    const inSensor = new Set(S.map(r => r.ep));
+
+    // Old version folders: known vendor patterns, plus older numbered siblings of a newer copy on the same endpoint.
+    const newest = new Map();
+    for (const r of S) { const m = r.path.match(VERSEG); if (m) { const k = r.ep + '|' + m[1].toLowerCase(); const v = m[2].split('.').map(Number); const cur = newest.get(k); if (!cur || cmpVer(v, cur) > 0) newest.set(k, v); } }
+    for (const r of S) {
+      r.stale = STALE_KNOWN.some(x => x.test(r.path));
+      const m = r.path.match(VERSEG);
+      if (!r.stale && m) r.stale = cmpVer(m[2].split('.').map(Number), newest.get(r.ep + '|' + m[1].toLowerCase())) < 0;
+      r.nuget = NUGET_TOOL.test(r.path);
+      r.major = major(r.res);
+    }
+    const live = S.filter(r => !r.stale && !r.nuget && /^Microsoft\./.test(r.fw));
+    const shared = live.filter(r => r.dep === 'FrameworkDependent' && r.major !== null);
+    const byEp = new Map(); for (const r of live) { if (!byEp.has(r.ep)) byEp.set(r.ep, []); byEp.get(r.ep).push(r); }
+    const sharedOn = (ep, n) => shared.filter(r => r.ep === ep && r.major === n);
+    const newestPatch = {};
+    for (const r of S) if (r.dep === 'FrameworkDependent' && r.major !== null) { const v = r.res.split('.').map(Number); if (!newestPatch[r.major] || cmpVer(v, newestPatch[r.major]) > 0) newestPatch[r.major] = v; }
+
+    // Findings by endpoint + component
+    const groups = new Map();
+    for (const f of F) {
+      for (const p of f.prod.split(';')) {
+        const c = component(p); if (!c) continue;
+        const k = f.ep + '|' + c;
+        if (!groups.has(k)) groups.set(k, { ep: f.ep, comp: c, os: '', prods: new Set(), findings: 0, cves: new Set(), kev: false, kevIds: new Set(), cvss: 0, epss: 0 });
+        const g = groups.get(k);
+        if (!g.os && f.os) g.os = f.os;
+        g.prods.add(p.trim()); g.findings++; g.cves.add(f.id);
+        if (f.kev) { g.kev = true; g.kevIds.add(f.id); }
+        g.cvss = Math.max(g.cvss, f.cvss); g.epss = Math.max(g.epss, f.epss);
+      }
+    }
+    const findingComps = new Set([...groups.values()].map(g => g.ep + '|' + g.comp));
+
+    const plan = [];
+    for (const g of groups.values()) {
+      const d = decide(g);
+      const p = g.kev ? 1 : g.cvss >= 9 ? 2 : g.cvss >= 7 ? 3 : 4;
+      plan.push({ p, ep: g.ep, os: g.os || 'Unknown', comp: g.comp, ...d, products: [...g.prods].sort().join('; '),
+        findings: g.findings, cves: g.cves.size, kev: g.kev, kevId: [...g.kevIds].sort().join(', '), cvss: g.cvss, epss: g.epss, sensor: inSensor.has(g.ep) });
+    }
+    plan.sort((a, b) => a.p - b.p || a.comp.localeCompare(b.comp) || a.ep.localeCompare(b.ep));
+
+    function decide(g) {
+      const { ep, comp, os } = g;
+      const srv = isServer(os);
+      const prods = [...g.prods].join('; ');
+      let apps = '', action = '', why = '', who = '', conf = '';
+      if (comp === '.NET Framework') {
+        if (os === 'Windows 10') {
+          action = 'Upgrade to Windows 11 (or confirm the device has Windows 10 ESU)';
+          why = 'Windows 10 support ended Oct 14, 2025. Without ESU it gets no new .NET Framework updates, so these findings cannot be patched.';
+          who = 'Tanium Patch / feature upgrade'; conf = 'Certain';
+        } else {
+          action = 'Install the latest .NET Framework cumulative update';
+          why = '.NET Framework is part of Windows and cannot be removed. Patching is the only fix.';
+          if (os === 'Windows 11') why += ' If the device is on 23H2 (build 22631), Pro is already out of support and Enterprise gets its last update Nov 10, 2026: move it to 25H2.';
+          who = 'Tanium Patch'; conf = 'Certain';
+        }
+      } else if (/^\.NET \d+ runtime$/.test(comp)) {
+        const n = Number(comp.match(/\d+/)[0]);
+        if (!hasSensor || !inSensor.has(ep)) {
+          action = 'Run the .NET App Dependencies sensor on this endpoint first';
+          why = 'No sensor result for this endpoint, so it is unknown whether anything uses this runtime.';
+          who = 'Tanium Interact';
+        } else {
+          const deps = sharedOn(ep, n);
+          apps = summarize(deps);
+          if (!deps.length) {
+            const maybe = (byEp.get(ep) || []).filter(r => r.res === 'Unparsed version' && /major/i.test(r.roll));
+            if (maybe.length) {
+              apps = summarize(maybe) + ' (set to use the newest .NET installed)';
+              action = `Check first: these apps may be using .NET ${n}`;
+              why = `The sensor could not read the version these apps ask for, and they are set to use the newest .NET on the machine, which can be .NET ${n}. Confirm before removing anything.`;
+              who = 'Tanium Interact'; conf = 'Likely';
+            } else {
+              action = `Remove .NET ${n}` + (srv ? ' after the server owner confirms' : '');
+              why = `Nothing the sensor found on this endpoint loads .NET ${n}. Removing it clears these findings for good.`;
+              if (srv) why += ' On servers, also confirm with the owner: the sensor does not see apps started by scheduled tasks or from folders outside Program Files, ProgramData, IIS and services.';
+              const own = (byEp.get(ep) || []).filter(r => (r.dep === 'PrivateRuntime' || r.dep === 'SelfContained') && r.major === n);
+              if (own.length) {
+                const names = [...new Set(own.map(r => productKey(r)))].join(', ');
+                why += ` ${names} on this endpoint uses its own copy of .NET ${n}, not the shared one. Rescan after removal: if the finding stays, the scanner is reading that copy and only an update of ${names} clears it.`;
+              }
+              who = 'Removal package'; conf = 'Likely';
+            }
+          } else if (n >= 10) {
+            action = `Update to the latest .NET ${n} patch`;
+            why = `.NET ${n} is supported and apps on this endpoint use it.`;
+            who = 'Tanium Patch / Deploy'; conf = 'Certain';
+          } else if (n === 8 || n === 9) {
+            const rf = new Set(deps.map(r => r.roll.toLowerCase()));
+            if ([...rf].every(x => x === 'major' || x === 'latestmajor')) {
+              action = `Install .NET 10, then remove .NET ${n}`;
+              why = `.NET ${n} ends support Nov 10, 2026. Every app that uses it is set to move to a newer major version on its own. Test on one endpoint first.`;
+              who = 'Tanium Deploy + removal package'; conf = 'Certain';
+            } else {
+              action = `Vendor or app owner: get a .NET 10 version of the app. Until then, apply the final .NET ${n} patch and file a risk exception`;
+              why = `.NET ${n} ends support Nov 10, 2026. The app is set to stay on .NET ${n} (roll forward Minor), so installing .NET 10 does not move it.`;
+              why += ' Stopgap to test in the lab first: set "rollForward": "Major" in the app\'s runtimeconfig.json so it runs on .NET 10. It often works, but the vendor may not support it.';
+              who = 'App owner / vendor'; conf = 'Certain';
+              const depPaths = new Set(deps.map(r => r.path));
+              const gap = (byEp.get(ep) || []).filter(r => r.res === 'None installed' && major(r.req) === n && depPaths.has(r.path));
+              if (gap.length) {
+                const fws = [...new Set(gap.map(r => r.fw))].join(', ');
+                why += ` Part of the app also asks for ${fws} ${n}, which the sensor did not find for its architecture (${gap[0].arch}). That part may not start today; the installed copy may be the 32-bit one.`;
+                conf = 'Likely';
+              }
+            }
+          } else {
+            action = `App owner: .NET ${n} is already out of support. Upgrade or retire the app`;
+            why = `.NET ${n} gets no fixes from Microsoft.`;
+            who = 'App owner'; conf = 'Certain';
+          }
+        }
+      } else if (comp === 'HeroDevs .NET 6') {
+        if (hasSensor && inSensor.has(ep) && !sharedOn(ep, 6).length) {
+          action = 'Confirm with the server owner what needs .NET 6, then remove it or keep the HeroDevs updates current';
+          why = 'The sensor found no app on this server that loads .NET 6. Someone paid for HeroDevs extended support, so ask before removing. Updates come from HeroDevs, not Microsoft.';
+          who = 'Server owner / HeroDevs'; conf = 'Likely';
+        } else if (hasSensor && inSensor.has(ep)) {
+          apps = summarize(sharedOn(ep, 6));
+          action = 'Apply the latest HeroDevs .NET 6 update';
+          why = 'Apps use .NET 6 and HeroDevs is the only source of fixes.';
+          who = 'HeroDevs'; conf = 'Certain';
+        } else {
+          action = 'Run the .NET App Dependencies sensor on this endpoint first';
+          why = 'No sensor result, so it is unknown whether anything uses HeroDevs .NET 6.';
+          who = 'Tanium Interact';
+        }
+      } else if (comp === 'SDK / Visual Studio') {
+        const sdk = (prods.match(/SDK (\d+)\.0/) || [])[1];
+        if (/Visual Studio 20|from Visual Studio/i.test(prods)) {
+          action = 'Update Visual Studio through the Visual Studio Installer, or remove Visual Studio if this is not a developer machine';
+          why = 'The SDKs listed came with Visual Studio and are updated by it.';
+          who = 'Developer / Visual Studio Installer'; conf = 'Certain';
+        } else {
+          const n = sdk ? Number(sdk) : 10;
+          const deps = hasSensor && inSensor.has(ep) ? sharedOn(ep, n) : [];
+          const devBox = /dev/i.test(ep) || (byEp.get(ep) || []).some(r => r.cat === 'DevTool');
+          if (devBox) {
+            action = `Update the .NET ${n} SDK to the latest patch`;
+            why = 'This looks like a developer or build machine (name or developer tools found), so the SDK is needed here.';
+            who = 'Machine owner'; conf = 'Likely';
+          } else if (deps.length) {
+            apps = summarize(deps);
+            action = `Install the latest .NET ${n} Desktop Runtime, then remove the .NET ${n} SDK (unless this is a developer machine)`;
+            why = `Apps on this endpoint run on the .NET ${n} that came with the SDK. Install the runtime first so they keep working after the SDK is removed.`;
+            who = 'Tanium Deploy + removal package'; conf = 'Likely';
+          } else {
+            action = 'Remove the .NET SDK unless this is a developer machine';
+            why = 'An SDK is only needed to build software.';
+            who = 'Removal package'; conf = 'Likely';
+          }
+        }
+      } else if (/^Node\.js/.test(comp)) {
+        action = 'Update Node.js (not part of the .NET work)'; why = 'Listed in the same findings but it is a separate product.'; who = 'App owner';
+      } else if (/^Git/.test(comp)) {
+        action = 'Update Git for Windows (not part of the .NET work)'; why = 'Listed in the same findings but it is a separate product.'; who = 'Tanium Deploy';
+      } else {
+        action = 'Review: product not recognized by this page'; why = 'Add a rule for this product if it shows up often.'; who = '';
+      }
+      return { apps, action, group: groupOf(action), why, who, conf };
+    }
+
+    // ---- .NET the scan does not report
+    const hidden = new Map();
+    const addHidden = (key, r, info) => {
+      if (!hidden.has(key)) hidden.set(key, { ...info, eps: new Set(), paths: new Set(), vers: new Set(), subs: new Set(), svc: new Set() });
+      const h = hidden.get(key); h.eps.add(r.ep); h.paths.add(r.path.replace(/\\[^\\]+\.json$/i, ''));
+      return h;
+    };
+    for (const r of live) {
+      if (r.major === null) continue;
+      const ver = r.res.replace(/ \(.*\)$/, '');
+      const sup = supportOf(r.major);
+      const np = newestPatch[r.major];
+      const behind = np && cmpVer(ver.split('.').map(Number), np) < 0 ? `${np.join('.')} is the newest .NET ${r.major} seen in this data.` : '';
+      const known = KNOWN.find(k => k.re.test(r.path) || k.re.test(r.ctx));
+      if (r.dep === 'SelfContained' || r.dep === 'PrivateRuntime') {
+        const prod = productKey(r);
+        const kind = r.dep === 'SelfContained' ? 'bundled' : 'private copy';
+        const h = addHidden(`own|${prod}|${r.major}`, r, {
+          prod, kind, label: netName(r.major, ver), ctx: r.ctx,
+          action: known ? known.action : `Update ${prod} to a release on a supported .NET`,
+          why: (known && known.why ? known.why + ' ' : '') + `${netName(r.major)} is ${sup.text}. It ships inside the product, so patching the shared .NET runtime never reaches it.` + (behind ? ' ' + behind : ''),
+          who: known ? known.who : 'App owner / vendor', conf: 'Likely', sev: sup.ok ? (sup.soon ? 2 : (behind ? 3 : 4)) : 1,
+        });
+        h.vers.add(ver);
+      } else if (r.dep === 'FrameworkDependent' && (!sup.ok || sup.soon) && !findingComps.has(`${r.ep}|.NET ${r.major} runtime`)) {
+        const iis = r.cat === 'IIS';
+        const prod = productKey(r);
+        const vendor = iis ? prod : prod.split('\\')[0];
+        const h = addHidden(`shared|${vendor}|${r.major}`, r, {
+          prod: vendor, kind: 'shared', label: netName(r.major, ver), ctx: iis ? r.ctx : '',
+          action: known ? known.action : iis ? `App owner: rebuild the site on .NET 10, then remove ${netName(r.major)}` : `Update or retire it, then remove ${netName(r.major)}`,
+          why: (known && known.why ? known.why + ' ' : '') + `${netName(r.major)} is ${sup.text}, and the findings for these endpoints do not list it, so the scan is not tracking it.` + (iis ? ' This is a live web app.' : ''),
+          who: known ? known.who : 'App owner', conf: 'Likely', sev: sup.ok ? 2 : 1,
+        });
+        h.vers.add(ver);
+        if (!iis) h.subs.add(prod.split('\\').slice(1).join('\\') || prod);
+        if (r.ctx) h.svc.add(r.ctx.split(';')[0]);
+      }
+    }
+    // Shared runtimes that only old version folders point at
+    for (const [ep, rows] of groupBy(S.filter(r => r.dep === 'FrameworkDependent' && r.major !== null), r => r.ep)) {
+      const liveMajors = new Set(rows.filter(r => !r.stale && !r.nuget).map(r => r.major));
+      for (const r of rows.filter(r => r.stale)) {
+        if (liveMajors.has(r.major) || findingComps.has(`${ep}|.NET ${r.major} runtime`)) continue;
+        const sup = supportOf(r.major);
+        const h = addHidden(`stale|${r.major}`, r, {
+          prod: `Shared ${netName(r.major)} used only by old version folders`, kind: 'shared', label: netName(r.major, r.res), ctx: '',
+          action: `Remove ${netName(r.major)}`,
+          why: `${netName(r.major)} is ${sup.text}. The only things on these endpoints that point at it are old version folders left behind by product updates, not the copies in use.`,
+          who: 'Removal package', conf: 'Likely', sev: sup.ok ? 3 : 1,
+        });
+        h.vers.add(r.res);
+      }
+    }
+    const hiddenList = [...hidden.values()].map(h => {
+      const vers = [...h.vers].sort((a, b) => cmpVer(a.split('.').map(Number), b.split('.').map(Number)));
+      const prod = h.subs.size ? `${h.prod} (${[...h.subs].sort().join(', ')})` : h.prod;
+      const carries = `${h.label.startsWith('.NET Core') ? '.NET Core' : '.NET'} ${vers.join(', ')} (${h.kind})`;
+      return { ...h, prod, carries, ctx: h.svc.size ? [...h.svc].sort().join(', ') : h.ctx, eps: [...h.eps].sort(), paths: [...h.paths].sort() };
+    }).sort((a, b) => a.sev - b.sev || b.eps.length - a.eps.length || a.prod.localeCompare(b.prod));
+
+    // ---- endpoints that still need sensor data
+    const need = [...groupBy(plan.filter(r => !r.sensor && (/^\.NET \d+ runtime$/.test(r.comp) || r.comp === 'HeroDevs .NET 6')), r => r.ep)]
+      .map(([ep, rs]) => ({ ep, os: rs[0].os, comps: [...new Set(rs.map(r => r.comp))].sort().join(', '), kev: rs.some(r => r.kev), cvss: Math.max(...rs.map(r => r.cvss)), findings: rs.reduce((a, r) => a + r.findings, 0) }))
+      .sort((a, b) => (b.kev - a.kev) || b.cvss - a.cvss || a.ep.localeCompare(b.ep));
+
+    const noise = {
+      stale: S.filter(r => r.stale).length, staleEps: new Set(S.filter(r => r.stale).map(r => r.ep)).size,
+      nuget: S.filter(r => r.nuget).length, unparsed: S.filter(r => r.res === 'Unparsed version').length,
+      unreadable: S.filter(r => /^Unreadable/i.test(r.fw)).length, incomplete: S.filter(r => /^Scan incomplete/i.test(r.fw)).length,
+      none: new Set(S.filter(r => /^None found/i.test(r.fw)).map(r => r.ep)).size,
+    };
+    const fEps = new Set(F.map(f => f.ep));
+    return { plan, hidden: hiddenList, need, noise, hasSensor, sensorEps: inSensor.size, findingEps: fEps.size, answered: [...fEps].filter(e => inSensor.has(e)).length };
+  }
+
+  const KNOWN = [
+    { re: /\\PowerShell\\7/i, action: 'Upgrade to PowerShell 7.6 LTS (runs on .NET 10, supported to Nov 14, 2028)', why: 'PowerShell 7.4 ends support Nov 10, 2026, together with .NET 8.', who: 'Tanium Deploy' },
+    { re: /\\WindowsApps\\/i, action: 'Let the Microsoft Store or the vendor driver package update it', why: '', who: 'Store / vendor updates' },
+    { re: /\\WSL\\/i, action: 'Run wsl --update', why: '', who: 'User / Tanium Deploy' },
+    { re: /\\Dell\\/i, action: 'Update the Dell software (TechHub, SupportAssist). Current Dell TechHub releases run on .NET 10', why: '', who: 'Dell update / Tanium Deploy' },
+    { re: /UiPath/i, action: 'Upgrade UiPath to a release built on a supported .NET', why: '', who: 'App owner / UiPath' },
+    { re: /\\Autodesk\\/i, action: 'Upgrade to a current release of the Autodesk product, then remove the old .NET', why: '', who: 'Tanium Deploy' },
+  ];
+
+  function groupOf(a) {
+    if (a.startsWith('Install the latest .NET Framework')) return 'Patch .NET Framework';
+    if (a.startsWith('Upgrade to Windows 11')) return 'Windows 10 upgrade';
+    if (a.startsWith('Run the')) return 'Run the sensor first';
+    if (a.startsWith('Check first')) return 'Check first';
+    if (a.startsWith('Remove .NET') || a.startsWith('Remove the .NET SDK')) return 'Remove';
+    if (/^Update to the latest \.NET|^Update the \.NET \d+ SDK/.test(a)) return 'Update .NET';
+    if (a.startsWith('Install .NET 10, then remove')) return 'Move to .NET 10';
+    if (a.startsWith('Vendor or app owner') || a.startsWith('App owner')) return 'Vendor / app owner';
+    if (a.startsWith('Confirm with the server owner') || /HeroDevs/.test(a)) return 'HeroDevs .NET 6';
+    if (/Visual Studio|SDK/.test(a)) return 'SDK / Visual Studio';
+    if (/not part of the \.NET work/.test(a)) return 'Not .NET';
+    return 'Other';
+  }
+  function cmpVer(a, b) { if (!b) return 1; for (let i = 0; i < Math.max(a.length, b.length); i++) { const d = (a[i] || 0) - (b[i] || 0); if (d) return d; } return 0; }
+  function groupBy(arr, fn) { const m = new Map(); for (const x of arr) { const k = fn(x); if (!m.has(k)) m.set(k, []); m.get(k).push(x); } return m; }
+
+  // ---------------------------------------------------------------- state
+  // SAVED is null on the blank copy published to the documentation site: the page starts empty.
+  const savedF = SAVED ? findingsFromTable(SAVED.findings.cols, SAVED.findings.rows) : [];
+  const savedS = SAVED ? SAVED.sensor.rows.map(rowObj) : null;
+  const blank = () => SAVED
+    ? { F: savedF, S: savedS, fName: SAVED.findings.name, sName: SAVED.sensor.name, fSaved: true, sSaved: true }
+    : { F: [], S: null, fName: '', sName: '', fSaved: false, sSaved: false };
+  const data = blank();
+  if (!SAVED) $('load-note').textContent = 'Files are read in your browser only. Nothing is uploaded or saved; reloading the page clears them.';
+  let R = null;
+  const ui = { q: '', p: new Set(), g: new Set(), s: null };
+
+  function recompute() {
+    R = build(data.F, data.S);
+    window.__netplan = R;
+    renderAll();
+  }
+
+  // ---------------------------------------------------------------- upload
+  function showMsg(text, kind) { const m = $('msg'); m.hidden = !text; m.className = 'msg ' + (kind || ''); m.textContent = text || ''; }
+  function readFile(file) {
+    return new Promise((resolve, reject) => {
+      if (!window.Papa) return reject(new Error('The CSV reader did not load. Check your connection and reload the page.'));
+      Papa.parse(file, { header: false, skipEmptyLines: 'greedy', complete: res => resolve(res.data), error: err => reject(err) });
+    });
+  }
+  async function handleFiles(list) {
+    const files = [...list].filter(f => /\.csv$/i.test(f.name) || /csv/.test(f.type));
+    if (!files.length) { showMsg('Those were not CSV files. Export the findings and the sensor results as CSV, then try again.', 'err'); return; }
+    const done = [], bad = [];
+    for (const file of files) {
+      try {
+        const rows = await readFile(file);
+        if (!rows.length) { bad.push(`${file.name} is empty`); continue; }
+        const cols = rows[0].map(c => String(c).replace(/^\uFEFF/, '').trim());
+        const body = rows.slice(1);
+        const f = findingsFromTable(cols, body);
+        if (f) { if (!f.length) { bad.push(`${file.name} has no findings rows`); continue; } data.F = f; data.fName = file.name; data.fSaved = false; done.push(`${file.name}: ${f.length.toLocaleString()} findings`); continue; }
+        const s = sensorFromExport(cols, body);
+        if (s) { data.S = s; data.sName = file.name; data.sSaved = false; done.push(`${file.name}: ${s.length.toLocaleString()} sensor rows`); continue; }
+        bad.push(`${file.name} is neither export: it needs "Check ID", "Endpoint" and "Detected Products" columns (findings) or "Computer Name" plus the sensor's Framework, Resolves To and App Path columns`);
+      } catch (e) { bad.push(`${file.name} could not be read (${e.message || e})`); }
+    }
+    if (done.length) recompute();
+    showMsg([done.length ? 'Loaded ' + done.join('; ') + '.' : '', bad.join('. ') + (bad.length ? '.' : '')].filter(Boolean).join(' '), bad.length ? 'err' : 'ok');
+  }
+  $('file').addEventListener('change', e => { handleFiles(e.target.files); e.target.value = ''; });
+  const drop = $('drop');
+  ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+  $('restore').addEventListener('click', () => {
+    Object.assign(data, blank());
+    showMsg('Back to the data saved with this page.', 'ok'); recompute();
+  });
+
+  // ---------------------------------------------------------------- render
+  const PNAME = { 1: 'P1 KEV', 2: 'P2', 3: 'P3', 4: 'P4' };
+  function renderAll() {
+    const fEps = new Set(data.F.map(f => f.ep)).size;
+    const hasF = data.F.length > 0, hasS = !!data.S;
+    $('src-f').className = 'src ' + (hasF ? 'ok' : 'missing');
+    $('src-f').innerHTML = hasF
+      ? `<span class="k">Vulnerability findings ${data.fSaved ? '· saved with page' : '· loaded now'}</span><span class="v mono">${esc(data.fName)}</span><span class="muted">${data.F.length.toLocaleString()} findings · ${fEps} endpoints</span>`
+      : `<span class="k">Vulnerability findings</span><span class="v">Not loaded</span><span class="muted">Needs the columns Check ID, Endpoint and Detected Products</span>`;
+    $('src-s').className = 'src ' + (hasS ? 'ok' : 'missing');
+    $('src-s').innerHTML = hasS
+      ? `<span class="k">.NET App Dependencies sensor ${data.sSaved ? '· saved with page' : '· loaded now'}</span><span class="v mono">${esc(data.sName)}</span><span class="muted">${data.S.length.toLocaleString()} sensor rows · ${new Set(data.S.map(r => r.ep)).size} endpoints</span>`
+      : `<span class="k">.NET App Dependencies sensor</span><span class="v">Not loaded</span><span class="muted">Interact export with Computer Name and the sensor's columns</span>`;
+    $('restore').hidden = !SAVED || (data.fSaved && data.sSaved);
+
+    const plan = R.plan;
+    const kevRows = plan.filter(r => r.kev).length;
+    $('stats').innerHTML = [
+      [R.findingEps, 'endpoints with .NET findings'],
+      [plan.length, 'plan rows (endpoint + component)'],
+      [kevRows, 'rows with a KEV finding', kevRows ? 'warn' : ''],
+      [R.need.length, 'endpoints still need sensor data', R.need.length ? 'warn' : ''],
+    ].map(([n, l, c]) => `<div class="stat ${c || ''}"><b>${n}</b><span>${l}</span></div>`).join('');
+
+    const needKev = R.need.filter(n => n.kev).length;
+    const decided = new Set(plan.filter(r => r.sensor && /^\.NET \d+ runtime$|HeroDevs/.test(r.comp)).map(r => r.ep)).size;
+    const runtimeEps = new Set(plan.filter(r => /^\.NET \d+ runtime$|HeroDevs/.test(r.comp)).map(r => r.ep)).size;
+    $('callout').className = 'callout' + (R.need.length || !plan.length ? '' : ' good');
+    $('callout').innerHTML = !plan.length
+      ? `<p><strong>Load the vulnerability findings export to build the plan.</strong> Add the .NET App Dependencies sensor export as well: without it, every .NET runtime row says "Run the sensor first".</p>`
+      : R.need.length
+      ? `<p><strong>Runtime decisions are complete for ${decided} of ${runtimeEps} endpoints with .NET runtime findings.</strong> ${R.answered} of the ${R.findingEps} endpoints in the findings answered the sensor question. ${R.need.length} endpoints with runtime findings have no sensor result${needKev ? `, ${needKev} of them with a KEV finding` : ''}. Their rows say "Run the sensor first". Re-ask the question when they are online and load the new sensor export here.</p>`
+      : `<p><strong>Every endpoint with .NET runtime findings has a sensor result.</strong> All runtime rows below are backed by what the sensor found.</p>`;
+
+    // Decisions table
+    const dec = [...groupBy(plan.filter(r => r.sensor && /^\.NET \d+ runtime$|HeroDevs|SDK/.test(r.comp)), r => r.comp + '|' + r.action)]
+      .map(([, rs]) => ({ rs, p: Math.min(...rs.map(r => r.p)) })).sort((a, b) => a.p - b.p || b.rs.length - a.rs.length);
+    $('decisions').innerHTML = dec.length ? dec.map(({ rs }) => {
+      const eps = rs.map(r => esc(r.ep) + (r.kev ? ' <span class="pill kev">KEV</span>' : '')).join('<br>');
+      const apps = [...new Set(rs.map(r => r.apps).filter(Boolean))];
+      const shown = apps.length ? esc(apps[0]) + (apps.length > 1 ? ` <span class="muted">(+${apps.length - 1} other app sets)</span>` : '') : '<span class="muted">Nothing found that loads it</span>';
+      return `<tr><td class="mono">${eps}</td><td>${esc(rs[0].comp)}</td><td>${shown}</td><td>${esc(rs[0].action)}</td></tr>`;
+    }).join('') : `<tr><td colspan="4" class="muted">No endpoint with runtime findings has a sensor result yet. Load the sensor export above.</td></tr>`;
+
+    // Filters
+    const groups = [...groupBy(plan, r => r.group)].sort((a, b) => b[1].length - a[1].length).map(x => x[0]);
+    for (const k of ['p', 'g']) for (const v of [...ui[k]]) if (!(k === 'p' ? [1, 2, 3, 4] : groups).includes(v)) ui[k].delete(v);
+    const chip = (label, n, key, val, on) => `<button class="chip" type="button" aria-pressed="${on}" data-k="${key}" data-v="${esc(val)}">${esc(label)} <span class="muted">${n}</span></button>`;
+    $('f-p').innerHTML = '<span class="lbl">Priority</span>' + [1, 2, 3, 4].map(p => chip(PNAME[p], plan.filter(r => r.p === p).length, 'p', p, ui.p.has(p))).join('');
+    $('f-g').innerHTML = '<span class="lbl">Action</span>' + groups.map(g => chip(g, plan.filter(r => r.group === g).length, 'g', g, ui.g.has(g))).join('');
+    $('f-s').innerHTML = '<span class="lbl">Sensor</span>' + chip('Has sensor result', plan.filter(r => r.sensor).length, 's', 'yes', ui.s === 'yes') + chip('No sensor result', plan.filter(r => !r.sensor).length, 's', 'no', ui.s === 'no');
+    renderPlan();
+
+    // Not in the scan
+    $('hidden').innerHTML = R.hidden.length ? R.hidden.map(h => `<article class="card">
+        <h3>${esc(h.prod)}</h3>
+        ${h.ctx ? `<div class="meta">${esc(h.ctx)}</div>` : ''}
+        <div><span class="pill ${h.sev === 1 ? 'p1' : h.sev === 2 ? 'p2' : 'p3'}">${esc(h.carries)}</span></div>
+        <p class="do">${esc(h.action)}</p>
+        <p class="muted">${esc(h.why)}</p>
+        <div class="meta"><span class="mono">${esc(h.eps.slice(0, 8).join(', '))}${h.eps.length > 8 ? ` +${h.eps.length - 8} more` : ''}</span> · ${h.eps.length} endpoint${h.eps.length > 1 ? 's' : ''}</div>
+        <div class="meta"><span class="mono">${esc(h.paths[0])}</span>${h.paths.length > 1 ? ` <span>+${h.paths.length - 1} more folders</span>` : ''}</div>
+        <div class="meta">${esc(h.who)} · <span class="pill conf">${esc(h.conf)}</span></div>
+      </article>`).join('') : `<p class="muted">${R.hasSensor ? 'Nothing found outside what the scan reports.' : 'Load the sensor export to see these.'}</p>`;
+
+    // Need sensor
+    $('need').innerHTML = R.need.length ? R.need.map(n => `<tr>
+        <td class="ep mono">${esc(n.ep)}</td><td>${esc(n.os)}</td><td>${esc(n.comps)}</td>
+        <td>${n.kev ? '<span class="pill kev">KEV</span>' : '<span class="muted">No</span>'}</td>
+        <td class="mono">${n.cvss.toFixed(1)}</td><td class="mono">${n.findings}</td></tr>`).join('')
+      : `<tr><td colspan="6" class="muted">None. Every endpoint with runtime findings has a sensor result.</td></tr>`;
+
+    // Notes
+    const N = R.noise;
+    $('notes').innerHTML = [
+      `A runtime counts as used on an endpoint only when the sensor shows an app there that loads it from the shared .NET install. "Remove" means nothing found loads it; on servers, confirm with the owner first.`,
+      `${N.stale.toLocaleString()} sensor rows on ${N.staleEps} endpoints are old version folders and do not count as use: older numbered copies when a newer one sits beside them, and Dell TechHub's <span class="mono">C:\\Program Files\\Dell\\DTP\\*Deps\\&lt;version&gt;</span> folders (the live copies are in the *SubAgent folders).`,
+      `${N.nuget} rows are tools inside NuGet package folders (<span class="mono">\\packages\\&lt;package&gt;\\tools\\</span>) copied into site folders. They are not apps and do not count.`,
+      `${N.unparsed} rows show "Unparsed version" (a four-part version such as 8.0.0.0). If such an app is set to use the newest .NET installed, the page says to check before removing.`,
+      `${N.unreadable} rows show "Unreadable runtimeconfig" and ${N.incomplete} rows show "Scan incomplete". ${N.none} endpoints answered "None found".`,
+      `Priority: 1 = KEV finding, 2 = CVSS 9 or higher, 3 = CVSS 7 or higher, 4 = lower. Confidence: Certain = backed by the data or vendor documentation; Likely = strong inference, check before acting.`,
+    ].map(t => `<li>${t}</li>`).join('');
+  }
+
+  function filtered() {
+    return R.plan.filter(r =>
+      (!ui.p.size || ui.p.has(r.p)) && (!ui.g.size || ui.g.has(r.group)) &&
+      (ui.s === null || (ui.s === 'yes') === r.sensor) &&
+      (!ui.q || [r.ep, r.comp, r.action, r.apps, r.os, r.products, r.why].join(' ').toLowerCase().includes(ui.q)));
+  }
+  function itemHtml(r) {
+    return `<details class="item p${r.p}">
+      <summary>
+        <span><span class="pill p${r.p}">P${r.p}</span></span>
+        <span class="c-ep mono">${esc(r.ep)}${r.kev ? ' <span class="pill kev">KEV</span>' : ''}</span>
+        <span class="c-os">${esc(r.os)}</span>
+        <span class="c-comp">${esc(r.comp)}</span>
+        <span class="act"><span>${esc(r.action)}</span></span>
+      </summary>
+      <div class="detail">
+        <dl>
+          <div><dt>Why</dt><dd>${esc(r.why)}</dd></div>
+          ${r.apps ? `<div><dt>Apps that use it (from the sensor)</dt><dd>${esc(r.apps)}</dd></div>` : ''}
+          <div><dt>Products in the findings</dt><dd>${esc(r.products)}</dd></div>
+        </dl>
+        <div class="kv">
+          <span>Who / tool</span><span>${esc(r.who) || '<span class="muted">n/a</span>'}</span>
+          <span>Confidence</span><span>${r.conf ? `<span class="pill conf">${esc(r.conf)}</span>` : '<span class="muted">n/a</span>'}</span>
+          <span>Findings</span><span>${r.findings} (${r.cves} CVEs)</span>
+          <span>Max CVSS</span><span>${r.cvss.toFixed(1)}</span>
+          <span>Max EPSS</span><span>${r.epss.toFixed(5)}</span>
+          ${r.kevId ? `<span>KEV</span><span class="mono">${esc(r.kevId)}</span>` : ''}
+          <span>Sensor result</span><span>${r.sensor ? 'Yes' : '<span class="pill nos">No</span>'}</span>
+        </div>
+      </div>
+    </details>`;
+  }
+  function renderPlan() {
+    const list = filtered();
+    $('count').textContent = `${list.length} of ${R.plan.length} rows`;
+    $('plan').innerHTML = `<div class="plan-head"><span>Priority</span><span>Endpoint</span><span>OS</span><span>Component</span><span>Action</span></div>` +
+      (list.length ? list.map(itemHtml).join('') : `<div class="empty">No rows match these filters. Use "Clear filters" to see everything.</div>`);
+  }
+
+  document.querySelector('.filters').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    const k = b.dataset.k, v = b.dataset.v;
+    if (k === 's') ui.s = ui.s === v ? null : v;
+    else { const val = k === 'p' ? Number(v) : v; ui[k].has(val) ? ui[k].delete(val) : ui[k].add(val); }
+    document.querySelectorAll(`.chip[data-k="${k}"]`).forEach(c => {
+      const cv = k === 'p' ? Number(c.dataset.v) : c.dataset.v;
+      c.setAttribute('aria-pressed', String(k === 's' ? ui.s === c.dataset.v : ui[k].has(cv)));
+    });
+    renderPlan();
+  });
+  $('q').addEventListener('input', e => { ui.q = e.target.value.trim().toLowerCase(); renderPlan(); });
+  $('reset').addEventListener('click', () => {
+    ui.q = ''; $('q').value = ''; ui.p.clear(); ui.g.clear(); ui.s = null;
+    document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+    renderPlan();
+  });
+
+  // ---------------------------------------------------------------- download
+  const csvCell = v => { const s = String(v ?? ''); return /[",\n\r]/.test(s) || /^[=+\-@]/.test(s) ? '"' + (/^[=+\-@]/.test(s) ? "'" : '') + s.replace(/"/g, '""') + '"' : s; };
+  function planCsv(rows) {
+    const head = ['Priority', 'Endpoint', 'OS', 'Component', 'Action', 'Why', 'Apps that use it (from sensor)', 'Who / tool', 'Confidence', 'Products in findings', 'Findings', 'CVEs', 'KEV', 'KEV CVE', 'Max CVSS', 'Max EPSS', 'In sensor results', 'Status', 'Notes'];
+    const body = rows.map(r => [r.p, r.ep, r.os, r.comp, r.action, r.why, r.apps, r.who, r.conf, r.products, r.findings, r.cves, r.kev ? 'Yes' : 'No', r.kevId, r.cvss.toFixed(1), r.epss.toFixed(5), r.sensor ? 'Yes' : 'No', '', '']);
+    return '\uFEFF' + [head, ...body].map(r => r.map(csvCell).join(',')).join('\r\n');
+  }
+  (async () => {
+    let dl = null;
+    if (window.claude && window.claude.use) {
+      try { dl = await window.claude.use('downloads'); } catch (e) { dl = null; }
+      if (!dl) return;
+    } else {
+      // Ordinary web page (documentation site): save through a normal browser download.
+      dl = { save: ({ filename, data }) => {
+        const url = URL.createObjectURL(new Blob([data], { type: 'text/csv;charset=utf-8' }));
+        const a = Object.assign(document.createElement('a'), { href: url, download: filename });
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        return Promise.resolve();
+      } };
+    }
+    const btn = $('dl'); btn.hidden = false;
+    btn.addEventListener('click', async () => {
+      const rows = filtered();
+      const m = $('dl-msg');
+      btn.disabled = true;
+      try {
+        await dl.save({ filename: `NET-Remediation-Plan-${new Date().toISOString().slice(0, 10)}.csv`, data: planCsv(rows) });
+        m.hidden = false; m.className = 'msg ok'; m.textContent = `Saved ${rows.length} rows (the rows matching your filters).`;
+      } catch (e) {
+        const code = e && e.code;
+        m.hidden = false; m.className = 'msg ' + (code === 'declined' ? '' : 'err');
+        m.textContent = code === 'declined' ? 'Download cancelled.' : code === 'rate_limited' ? 'A download prompt is already open. Finish it, then try again.' : 'Downloads are not available in this view.';
+        if (!['declined', 'rate_limited'].includes(code)) btn.hidden = true;
+      } finally { btn.disabled = false; }
+    });
+  })();
+
+  // ---------------------------------------------------------------- static parts
+  const days = Math.round((EOL_8_9 - today) / 86400000);
+  $('dl-text').textContent = days > 1 ? `Nov 10, 2026 · ${days} days left` : days === 1 ? 'Nov 10, 2026 · tomorrow' : days === 0 ? 'Nov 10, 2026 · today' : 'Nov 10, 2026 · passed';
+  const dates = [
+    ['2022-12-13', '.NET Core 3.1 end of support', 'Not reported by the vulnerability scan. Look for it in the "Not in the vulnerability scan" section.'],
+    ['2024-11-12', '.NET 6 end of support (Microsoft)', 'HeroDevs sells extended updates.'],
+    ['2025-10-14', 'Windows 10 end of support', '.NET Framework updates only with ESU.'],
+    ['2026-11-10', '.NET 8 and .NET 9 end of support', 'Every .NET 8 or 9 install needs to be removed, moved to .NET 10, or covered by a risk exception.'],
+    ['2026-11-10', 'PowerShell 7.4 end of support', 'Upgrade to PowerShell 7.6 LTS (.NET 10, supported to Nov 14, 2028).'],
+    ['2026-11-10', 'Windows 11 23H2 Enterprise and Education last update', 'Pro already ended Nov 2025. Move 23H2 devices to 25H2.'],
+  ];
+  const fmt = d => new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  $('dates').innerHTML = dates.map(([d, t, n]) => `<div class="date ${new Date(d + 'T00:00:00') < today ? 'past' : 'soon'}"><time datetime="${d}">${fmt(d)}</time><div><strong>${esc(t)}</strong><br><span class="muted">${esc(n)}</span></div></div>`).join('');
+
+  recompute();
+})();
+</script>
+
+</body>
+</html>
