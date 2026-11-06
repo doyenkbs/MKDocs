@@ -8,6 +8,9 @@ tags:
 
 # Java - Last Run - Prefetch (Sensor)
 
+!!! tip "Replaced by Java - Install Usage - Prefetch"
+    [Java - Install Usage - Prefetch](java-install-usage.md) returns everything this sensor does, tied to the exact Java that ran, and it tells you when Prefetch is switched on but not being written (common on servers, where this sensor would wrongly report "No Java runs recorded"). Use the newer sensor for new work.
+
 This page shows how to create the **Java - Last Run - Prefetch** sensor in the Tanium Console, and how to use it to decide whether Java can be uninstalled from a workstation without asking anyone.
 
 **What it returns:** one row per Java launcher that Windows has recorded running, with the Prefetch file name, when it last ran, and how many days ago that was.
