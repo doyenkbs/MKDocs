@@ -5,7 +5,7 @@ tags:
 
 # ITFlow Installation (Official Script) with Email Ticketing
 
-This page installs <span class="prod-app">ITFlow</span> on Debian 13 with the official install script, puts it behind Nginx Proxy Manager, and connects a mailbox on a self-hosted Stalwart mail server so that ITFlow:
+This page installs <span class="prod-app">ITFlow</span> on Debian 13 with the official install script. It puts ITFlow behind Nginx Proxy Manager and connects a mailbox on a self-hosted Stalwart mail server. Then ITFlow:
 
 - **sends** ticket notifications, invoices, and quotes over SMTP, and
 - **reads** the mailbox over IMAP and turns incoming email into tickets and ticket replies.
@@ -57,7 +57,7 @@ ITFlow publishes a Docker image, but the project states that it was built by a c
 
 ## Prerequisites
 
-- A **fresh** Debian 13 VM. The script installs Apache, MariaDB, and PHP and replaces the default Apache site, so do not run it on a server that already hosts other things. 2 vCPU, 2 to 4 GB RAM, and 20 GB of disk is enough.
+- A **new** Debian 13 VM. The script installs Apache, MariaDB, and PHP, and replaces the default Apache site. Thus, do not run it on a server that hosts other services. 2 vCPU, 2 to 4 GB RAM, and 20 GB of disk is sufficient.
 - Root access on the VM.
 - A reverse proxy (this guide uses Nginx Proxy Manager).
 - A mailbox for tickets (`support@example.com`) that can sign in over IMAP and SMTP with a password. If your mail server uses Authentik single sign-on, you need an **app password** for this mailbox (see [Step 6](#step-6-prepare-the-support-mailbox)).
@@ -138,7 +138,7 @@ Expected output:
 - `/etc/cron.d/itflow` contains **exactly one line**: `* * * * * www-data /usr/bin/php /var/www/itflow.example.com/cron/cron.php`
 - The second command prints `no crontab for www-data`.
 
-Running `cron.php` **every minute is correct**. In current ITFlow versions, `cron.php` is a dispatcher: each minute it checks which jobs are due (send mail, read the mailbox, nightly tasks, domain and certificate checks) and runs only those. It also locks each job so two runs never overlap.
+To run `cron.php` **every minute is correct**. In current ITFlow versions, `cron.php` is a dispatcher. Each minute, it checks which jobs are due (send mail, read the mailbox, nightly tasks, domain and certificate checks) and runs only those. It also locks each job, so two runs never overlap.
 
 > **Warning:** Do not add other ITFlow lines to cron, and do not add a crontab for `www-data`. Older guides list separate cron lines for `mail_queue.php` and `ticket_email_parser.php`, and older installs ran `cron.php` once a night. Mixing those with the dispatcher runs jobs twice. On older versions, an extra `cron.php` line firing every minute flooded the notifications table with millions of rows.
 
@@ -202,7 +202,7 @@ If your Stalwart server uses Authentik single sign-on (see [Stalwart and Bulwark
 3. Go to **Credentials › App Passwords** and click **Create App password**.
 4. Enter a **Description** such as `ITFlow`.
 5. Leave **Allowed IPs** empty, or enter the **public** IP address the ITFlow VM uses to reach the internet. A private address such as `192.168.1.60` never matches, because the mail server sees your public IP.
-6. Save, and copy the password into a password manager. It is shown only once.
+6. Save. Copy the password into a password manager. Stalwart shows it only one time.
 
 ### Test the mailbox from the ITFlow VM
 
@@ -261,7 +261,7 @@ Click **Save**.
 
 Further down the same page, ITFlow has separate sender settings for tickets, invoices, and quotes. Set every **From email** to `support@example.com` and every **From name** to the name customers should see (for example `Example IT Support`). Click **Save**.
 
-> **Warning:** The sender address must belong to the mailbox that signs in. A mail server rejects mail that the account `support@example.com` tries to send as another address. This is the usual reason email stops working after moving ITFlow to a new domain: the SMTP login uses the new address, but the From fields still show the old one.
+> **Warning:** The sender address must belong to the mailbox that signs in. A mail server refuses mail that the account `support@example.com` tries to send as a different address. This is the usual cause when email stops after you move ITFlow to a new domain: the SMTP login uses the new address, but the From fields still show the old address.
 
 ### Test
 
@@ -289,14 +289,14 @@ At the bottom of the page, use the test buttons: send a test email, and test the
 3. In ITFlow, go to **Tickets**. A new ticket should appear with the email's subject.
 4. In the mailbox, the message has moved to a folder named **ITFlow**.
 5. Reply to the ticket in ITFlow. The sender receives the reply from `support@example.com`, with a ticket number such as `[TCK-001]` in the subject.
-6. Reply to that email. The reply is added to the same ticket.
+6. Reply to that email. ITFlow adds the reply to the same ticket.
 
 ### How email-to-ticket decides what to do
 
 1. Each minute, the dispatcher runs the mailbox job, which checks the inbox for **unread** messages.
 2. It marks each unread message as read and looks for a ticket number such as `[TCK-001]` in the subject.
-3. **Ticket number found:** if the ticket is open, the email is added as a reply. If the ticket is closed, the sender gets an automatic response and ITFlow raises a notification. Closed tickets are not reopened.
-4. **No ticket number:** ITFlow looks for a contact with that email address, then for a client that owns the sender's domain, and opens the ticket there. If neither matches, the message stays in the inbox, unless unknown senders are allowed.
+3. **Ticket number found:** if the ticket is open, ITFlow adds the email as a reply. If the ticket is closed, the sender gets an automatic response and ITFlow shows a notification. ITFlow does not open closed tickets again.
+4. **No ticket number:** ITFlow looks for a contact with that email address, and then for a client that owns the domain of the sender. It opens the ticket there. If neither matches, the message stays in the inbox, unless unknown senders are allowed.
 5. Processed messages move to the **ITFlow** folder.
 
 > **Note:** Only **unread** mail is processed. If you open a message in webmail before ITFlow picks it up, it is marked as read and ITFlow skips it. Mark it as unread to have it processed.

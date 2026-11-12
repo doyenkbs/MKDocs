@@ -1,6 +1,6 @@
 # Core Services & Integrations
 
-Foundational infrastructure that powers the rest of the lab — automation, secure remote access, email, and tunneling. If **Containers & Virtualization** is the compute layer and **Applications** are what runs on top of it, this section is the plumbing that ties everything together and keeps it reachable, patched, and secure.
+The base infrastructure for the rest of the lab: automation, secure remote access, email, and tunnels. **Containers & Virtualization** is the compute layer, and **Applications** run on it. This section connects everything and keeps it reachable, patched, and secure.
 
 ## What's Covered
 
@@ -44,6 +44,6 @@ Foundational infrastructure that powers the rest of the lab — automation, secu
 </div>
 
 ## Why This Section Exists
-Every other part of the lab — the containers, the self-hosted apps, the Microsoft and Tanium environments — depends on these services being solid. Automation keeps systems patched without manual effort, Cloudflare and OpenVPN control how (and whether) anything is reachable from outside the network, and Mailcow makes sure alerts and account notifications actually land somewhere. DNS and the reverse proxy decide how those services are reached from inside the network, and the three pages under **DNS & Reverse Proxy** are meant to be worked through in order: [install Technitium](technitium-dns-install-ubuntu-lxc.md), then [split-horizon DNS](split-horizon-dns-technitium-npm.md), then [Nginx Proxy Manager](nginx-proxy-manager-install-config.md).
+All other parts of the lab (the containers, the self-hosted apps, and the Microsoft and Tanium environments) need these services to work. Automation keeps systems patched without manual work. Cloudflare and OpenVPN control how (and if) users reach anything from outside the network. Mailcow makes sure that alerts and account notifications arrive. DNS and the reverse proxy decide how users reach those services from inside the network. Do the three pages under **DNS & Reverse Proxy** in order: [install Technitium](technitium-dns-install-ubuntu-lxc.md), then [split-horizon DNS](split-horizon-dns-technitium-npm.md), then [Nginx Proxy Manager](nginx-proxy-manager-install-config.md).
 
 If it's not a specific app and not a hypervisor concern, it probably belongs here.

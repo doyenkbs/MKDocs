@@ -5,7 +5,7 @@ tags:
 
 # Nextcloud Integration with Authentik via OpenID Connect (OIDC)
 
-This guide describes how to integrate <span class="prod-app">Nextcloud</span> with <span class="prod-idp">Authentik</span> for Single Sign-On (SSO) and centralized identity managemen using the OpenID Connect (OIDC) protocol. This setup enables secure authentication for users, eliminating local Nextcloud accounts and centralizing identity management with Authentik.
+This guide shows how to connect <span class="prod-app">Nextcloud</span> to <span class="prod-idp">Authentik</span> for Single Sign-On (SSO) and central identity management with the OpenID Connect (OIDC) protocol. With this setup, users do not need local Nextcloud accounts, and Authentik manages all identities.
 
 ---
 
@@ -92,8 +92,8 @@ This guide describes how to integrate <span class="prod-app">Nextcloud</span> wi
 ## Step 6: Test SSO Login
 
 1. Navigate to `https://nextcloud.example.com`.
-2. Try logging in; you should be redirected to Authentik.
-3. After authentication, you will be sent back to Nextcloud and logged in automatically.
+2. Try to log in. Nextcloud must send you to Authentik.
+3. After authentication, Authentik sends you back to Nextcloud, and you are logged in.
 
 ---
 With this setup, Nextcloud is fully integrated into your centralized **Authentik SSO & Zero Trust environment**.
@@ -114,7 +114,7 @@ With this setup, Nextcloud is fully integrated into your centralized **Authentik
 
 ### Disable Other Login Methods and Manage OpenID Connect Providers in Nextcloud
 
-This guide explains how to make OpenID Connect (OIDC) the default and only login method in your Nextcloud instance, as well as how to manage OIDC provider entries via the command line.
+This section shows how to make OpenID Connect (OIDC) the default and only login method in Nextcloud. It also shows how to manage OIDC provider entries from the command line.
 
 ---
 

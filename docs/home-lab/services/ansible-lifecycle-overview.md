@@ -9,7 +9,7 @@ tags:
 
 ## Overview
 
-The playbooks in this section aren't independent scripts — they're stages of one system that manages a Linux host from the moment it's created to the moment something goes wrong and needs to be restored. This page ties them together and explains how they hand off to each other.
+The playbooks in this section are not separate scripts. They are stages of one system that manages a Linux host from its creation until a failure needs a restore. This page shows how the stages connect.
 
 ```mermaid
 flowchart LR
@@ -39,7 +39,7 @@ Every host's life starts here, and only here. This playbook runs exactly once pe
 - Applies baseline hardening (SSH config, UFW, fail2ban)
 - Installs common packages every host needs regardless of role
 
-Once this playbook finishes, the host graduates from a one-off `bootstrap_hosts.ini` entry into the main inventory — from here on, it's managed the same way as every other host in the lab.
+When this playbook completes, move the host from its one-time `bootstrap_hosts.ini` entry to the main inventory. From then on, you manage it the same as all other hosts in the lab.
 
 !!! note "Bootstrap only covers hosts you create"
     Hypervisors and rented VPS instances never go through Stage 1 — they exist before the automation does. Those hosts need the `ansible` account, key, and sudo set up by hand before they can join the inventory. See [Patch Automation → Step 2](ansible-patch.md#step-2-create-a-dedicated-service-account-on-each-server).
@@ -56,7 +56,7 @@ Three playbooks run continuously in the background once a host is onboarded, on 
 | **[Patch Automation](ansible-patch.md)** | Application containers | Weekly (Sun 3 AM) | Patches packages, prunes Docker images, reboots when required |
 | **[Infra Patch](ansible-patch.md#step-10-patching-infrastructure-hosts)** | Hypervisors, public VPS | Weekly (Sun 4 AM) | Patches packages, **reports** reboot need instead of rebooting |
 
-They're deliberately scheduled a few hours apart within the same maintenance window — backup runs *before* patching, so if a patch cycle ever breaks something, there's always a same-day config snapshot to fall back to rather than relying on whatever the last weekly backup happened to catch.
+They run a few hours apart in the same maintenance window, on purpose. The backup runs *before* the patches. Thus, if a patch cycle breaks something, a config snapshot from the same day is always available. You do not depend on the last weekly backup.
 
 ```cron
 # Daily config backup — 1:00 AM
@@ -90,8 +90,8 @@ The inventory is split by **how much a bad run costs**, and each tier gets a pla
 
 Two rules fall out of this split, and both matter:
 
-- **Every group needs its own `[groupname:vars]` block.** Group variables are not inherited. A new group without one falls back to connecting as `root`, which fails on any host with `PermitRootLogin no` and looks exactly like a broken SSH key.
-- **A host in no group is a host in no playbook.** Moving `proxmox` and `vps` out of the main group means nothing patches them until you deliberately write a play that does. That silence is intentional, but it's also easy to forget about.
+- **Each group needs its own `[groupname:vars]` block.** Groups do not inherit variables. A new group without a block connects as `root`. This fails on each host with `PermitRootLogin no`, and it looks the same as a broken SSH key.
+- **A host in no group is a host in no playbook.** When you move `proxmox` and `vps` out of the main group, nothing patches them until you write a play for them. This is on purpose, but it is easy to forget.
 
 ---
 
@@ -100,7 +100,7 @@ Two rules fall out of this split, and both matter:
 This is the payoff for maintaining Stage 2 consistently. When a service breaks — a bad config edit, a corrupted upgrade, a container that needs rebuilding — the recovery path is:
 
 1. **If it's a config problem** → pull the most recent archive from `/root/ansible-backups/<host>/`, extract, and restore the specific file(s) needed (see [Config Backup → Restoring](ansible-config-backup.md#restoring-from-a-backup)).
-2. **If it's a whole-container problem** → rebuild the LXC from a Proxmox template, run the [Bootstrap Playbook](ansible-lxc-bootstrap.md) against it, then restore configs from the last backup before reintroducing it to service.
+2. **If the full container has a problem** → build the LXC again from a Proxmox template. Run the [Bootstrap Playbook](ansible-lxc-bootstrap.md) on it. Then restore the configs from the last backup before you put it back in service.
 
 Either path returns the host to Stage 2 — back under normal patch and backup coverage — rather than requiring anything to be reconfigured by hand.
 
@@ -114,9 +114,9 @@ Either path returns the host to Stage 2 — back under normal patch and backup c
 Each stage depends on the one before it actually happening:
 
 - Patch and backup playbooks assume the `ansible` account and SSH key already exist — **skip bootstrap, and neither playbook can even connect.**
-- Recovery assumes backups have been running long enough to have something recent to restore — **skip consistent Stage 2 runs, and Stage 3 has nothing to work with.**
+- A recovery needs recent backups. **If Stage 2 does not run regularly, Stage 3 has nothing to restore.**
 
-The lesson from building this out: automation is only as good as its weakest, most-skipped stage. A host that got manually configured and never went through bootstrap is a host that's quietly missing from the whole system — it won't show up as a failure anywhere, it'll just silently not be covered.
+The lesson: the automation is only as good as its weakest stage. A host that you configured by hand and that never went through bootstrap is not in the system. It does not show as a failure. It is just not covered.
 
 The same failure mode applies to hosts that *are* in the inventory but fail every run. A host out of disk, or one whose home directory permissions broke, fails with an `UNREACHABLE` line that scrolls past in a log nobody reads. The rest of the run succeeds, so nothing looks wrong. Make a failure count part of the routine:
 

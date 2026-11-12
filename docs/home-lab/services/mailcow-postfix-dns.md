@@ -50,8 +50,8 @@ Watchdog will report declining health levels for postfix / postfix-tlspol when t
    driver failed programming external connectivity on endpoint ...:
    failed to bind host port 0.0.0.0:25/tcp: address already in use
    ```
-2. After stopping/disabling the conflicting host Postfix, the mailcow `postfix-mailcow` container still failed to start correctly — this time because it came up **completely detached from the mailcow Docker network** (confirmed via `docker inspect`, which showed `"NetworkSettings.Networks": {}` — empty).
-3. Because it had no network, it could not reach `unbound-mailcow` (mailcow's internal DNS resolver, normally at a fixed IP like `172.22.1.254`), so every internal hostname lookup (`redis-mailcow`, etc.) failed and postfix could never fully start.
+2. Next, the conflicting host Postfix was stopped and disabled. But the mailcow `postfix-mailcow` container still did not start correctly. This time, it was **fully disconnected from the mailcow Docker network**. `docker inspect` showed this: `"NetworkSettings.Networks": {}` (empty).
+3. Without a network, it could not reach `unbound-mailcow` (the internal DNS resolver of mailcow, usually at a fixed IP like `172.22.1.254`). Thus, each internal hostname lookup (`redis-mailcow`, and others) failed, and postfix could not fully start.
 
 ## Fix
 
@@ -118,7 +118,7 @@ Then confirm actual mail flow: send a test email from SOGo to an external addres
 
 ## Notes / Lessons Learned
 
-- The SOGo "not allowed in state 1" screen is a dead end on its own — always go straight to `docker compose ps` and container logs rather than troubleshooting from the SOGo side.
+- The SOGo "not allowed in state 1" screen does not help you by itself. Always go directly to `docker compose ps` and the container logs. Do not troubleshoot from the SOGo side.
 - VPS providers (Contabo included) sometimes ship a host-level Postfix preinstalled for system mail (cron notices, etc.). This silently conflicts with mailcow's own postfix container on port 25 and won't show up unless you specifically check `ss -tulnp`.
-- A container showing an empty `NetworkSettings.Networks` after a `docker network connect`/restart cycle is a sign the Docker network itself needs to be torn down and recreated (`docker compose down && up -d`) rather than patched container-by-container.
-- Was running mailcow version **2026-03b** at the time (four releases behind 2026-07) — worth checking the changelog between versions, since network-attachment bugs like this are exactly the kind of thing that gets fixed in updates.
+- If a container shows an empty `NetworkSettings.Networks` after a `docker network connect` or restart, you must remove and create the Docker network again (`docker compose down && up -d`). Do not repair one container at a time.
+- The server ran mailcow version **2026-03b** at that time (four releases behind 2026-07). Read the changelog between versions, because updates often repair network-attachment bugs like this.

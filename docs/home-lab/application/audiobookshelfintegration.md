@@ -81,7 +81,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 4. **Use Auto-populate (optional):**
 
-   - In **Issuer URL** paste your Authentik issuer/discovery URL (see step 2) and click **Auto-populate** — Audiobookshelf will fill Authorization, Token, UserInfo and JWKS URLs automatically.
+   - In **Issuer URL**, paste your Authentik issuer/discovery URL (see step 2). Click **Auto-populate**. Audiobookshelf then fills the Authorization, Token, UserInfo, and JWKS URLs.
 
 !!! example "**Fill any remaining fields:**"
     - **Client ID:** (from Authentik)
@@ -102,7 +102,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 ## Step 4: Test Your SSO Login
 
 1. Visit your Audiobookshelf login page.
-2. If auto-launch is enabled, you will be redirected to Authentik to log in.
+2. If auto-launch is on, Audiobookshelf sends you to Authentik to log in.
 3. Otherwise, click the **Login with SSO** (or your chosen button text).
 4. Authenticate via Authentik and confirm access to Audiobookshelf.
 
@@ -115,7 +115,7 @@ Copy these; you’ll paste them into Audiobookshelf.
 
 !!! note
     - **Users:** Each user must exist in <span class="prod-idp">Authentik</span>. If **Auto Register** is enabled, users are created on first login in <span class="prod-app">Audiobookshelf</span> with limited permissions.
-    - **Groups:** If you wish to sync user groups, map claims accordingly in <span class="prod-idp">Authentik</span> and verify `groups` claim handling in <span class="prod-app">Audiobookshelf</span>.
+    - **Groups:** To sync user groups, map the claims in <span class="prod-idp">Authentik</span>. Then check how <span class="prod-app">Audiobookshelf</span> handles the `groups` claim.
     - **Mobile App:** Ensure the extra mobile redirect URI is also added in the provider's allowed redirect URIs.
 
 ---

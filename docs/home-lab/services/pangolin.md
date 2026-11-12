@@ -240,8 +240,8 @@ dependencies, and it is what the dashboard hands you when you choose the Linux i
 1. Open the Pangolin dashboard.
 2. Go to **Sites** and select **Add Site**.
 3. Give it a name and create it.
-4. Copy the **site ID**, **secret**, and **endpoint** shown on the next screen. The secret is shown
-   once.
+4. Copy the **site ID**, **secret**, and **endpoint** from the next screen. Pangolin shows the secret
+   only one time.
 
 ### 2. Use the commands the dashboard generates
 

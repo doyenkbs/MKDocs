@@ -6,7 +6,7 @@ tags:
 
 # Mailcow Installation Guide (Ubuntu)
 
-This guide explains how to install and configure **<span class="prod-app">Mailcow: dockerized</span>** on **Ubuntu 22.04+**, with firewall setup, **SPF, DKIM, and DMARC**, and best practices for **VPS self-hosting**.
+This guide shows how to install and configure **<span class="prod-app">Mailcow: dockerized</span>** on **Ubuntu 22.04+**. It includes firewall setup, **SPF, DKIM, and DMARC**, and good practices for **VPS self-hosting**.
 
 ---
 

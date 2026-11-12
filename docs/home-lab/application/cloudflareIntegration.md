@@ -5,7 +5,7 @@ tags:
 
 # Cloudflare Access + Authentik (OIDC) Integration
 
-This guide walks you through integrating **<span class="prod-app">Cloudflare Access</span>** with **<span class="prod-idp">Authentik</span>** using **OpenID Connect (OIDC)** so your Cloudflare-protected apps use Authentik for SSO/MFA.
+This guide shows how to connect **<span class="prod-app">Cloudflare Access</span>** to **<span class="prod-idp">Authentik</span>** with **OpenID Connect (OIDC)**. Then your Cloudflare-protected apps use Authentik for SSO/MFA.
 
 ---
 ## Overview

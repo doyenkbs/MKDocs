@@ -1,6 +1,6 @@
 # Self-Hosted Applications
 
-This section covers the self-hosted applications running in the home lab — file sharing, document management, media, monitoring, and asset tracking — along with **Authentik**, the identity provider tying most of them together under single sign-on.
+This section covers the self-hosted applications in the home lab: file sharing, document management, media, monitoring, and asset tracking. It also covers **Authentik**, the identity provider that connects most of them through single sign-on.
 
 ## Applications
 
@@ -116,17 +116,17 @@ Once Authentik is running, each of these walks through connecting a specific app
 
 ## Why Authentik Ties This Section Together
 
-Most of the apps above support external authentication, and rather than managing separate logins (and separate MFA setups) per service, this lab routes them all through Authentik as a single identity provider:
+Most of the apps above support external authentication. This lab does not keep a separate login (and a separate MFA setup) for each service. It sends all of them through Authentik as one identity provider:
 
 - **One account, one MFA setup** — enrolled once in Authentik, applies everywhere it's connected
 - **Centralized access control** — enable, disable, or restrict access to a service from one place
 - **Consistent audit trail** — logins across every integrated app are visible from a single admin panel
 
-If you're setting this section up from scratch, a sensible build order is: get the base application running and confirm it works standalone → deploy [Authentik](authentik.md) → then work through that app's specific integration guide above.
+If you set up this section from the start, use this order: install the base application and make sure that it works alone → deploy [Authentik](authentik.md) → then do the integration guide for that app above.
 
 ---
 
 ## Section Notes
 
-- **OpenVPN** provides remote network access into the lab and is documented under [Core Services](../services/openvpn.md) rather than here, since it's infrastructure-level access rather than an individual application.
+- **OpenVPN** gives remote network access to the lab. Its page is under [Core Services](../services/openvpn.md), not here, because it is infrastructure access, not a single application.
 - Most applications here run in their own LXC container on Proxmox — see [Containers & Virtualization](../virtualization/index.md) for the hosting layer these apps sit on top of.

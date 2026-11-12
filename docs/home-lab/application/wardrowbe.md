@@ -600,7 +600,7 @@ The generated values are random strings that nobody types or remembers. They onl
     !!! warning "Set the database password before the first start"
         PostgreSQL saves `POSTGRES_PASSWORD` only when the database is first created. Changing it in `.env` later does not change the real password, and the backend can no longer connect. Generate it once, now, and leave it.
 
-5. **Generate the LiteLLM key and copy it into `AI_API_KEY`.** Both lines must hold the **same** value: LiteLLM requires it on every request, and Wardrowbe sends `AI_API_KEY` as that key. LiteLLM keys start with `sk-`.
+5. **Generate the LiteLLM key and copy it into `AI_API_KEY`.** Both lines must have the **same** value. LiteLLM needs the key on each request, and Wardrowbe sends `AI_API_KEY` as that key. LiteLLM keys start with `sk-`.
 
     ```bash
     cd /opt/wardrowbe
@@ -647,7 +647,7 @@ Never paste the contents of `.env` into a chat, ticket, or screenshot. If a key 
 Notes:
 
 - `AI_REASONING_EFFORT=low`: Gemini 3 models cannot turn their reasoning off, so the upstream default of `none` does not apply. `low` keeps responses fast and cheap.
-- Do not use **Settings › AI Endpoints** inside the Wardrowbe app for a fallback. Endpoints added there have no API key field and reuse the server's `AI_API_KEY`, they are stored per user, and they are tried before the server default. LiteLLM handles fallback for every user in one place.
+- Do not use **Settings › AI Endpoints** in the Wardrowbe app for a fallback. Endpoints that you add there have no API key field and use the `AI_API_KEY` of the server. Wardrowbe stores them for each user and tries them before the server default. LiteLLM handles fallback for all users in one place.
 
 ---
 
@@ -728,7 +728,7 @@ Expected output:
 
     If you did not copy the Client ID and Secret, open **Applications › Providers**, click the Wardrowbe provider, then **Edit**. Both are on that form.
 
-3. Save, then confirm nothing is left empty:
+3. Save. Then make sure that no value is empty:
 
     ```bash
     grep -E '^[A-Z_]+=$' /opt/wardrowbe/.env
@@ -823,7 +823,7 @@ The tunnel connector already runs on another host, so add a route to it instead 
 !!! warning "No second login in front"
     Do not put Cloudflare Access or Pangolin resource authentication in front of this hostname. Authentik already protects the app, a second login gets in the way, and the Wardrowbe mobile app cannot pass through it.
 
-If your LAN DNS server holds a local zone for the same domain (split-horizon), add a record for `wardrobe.example.com` there too, or the name will not resolve on the LAN.
+If your LAN DNS server has a local zone for the same domain (split-horizon), also add a record for `wardrobe.example.com` there. If you do not, the name does not resolve on the LAN.
 
 ---
 

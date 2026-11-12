@@ -7,7 +7,7 @@ tags:
 
 # Split-Horizon DNS with the Technitium Split Horizon App and Nginx Proxy Manager
 
-Most services in this lab are published to the internet through a Cloudflare tunnel. That works, but it means a laptop sitting three feet from the server was resolving `app.example.com` to the Cloudflare edge, going out to the internet, and coming back in through the tunnel to reach a machine on the same switch.
+The lab publishes most services to the internet through a Cloudflare tunnel. This works, but a laptop one meter from the server resolved `app.example.com` to the Cloudflare edge. The traffic went out to the internet and came back through the tunnel to reach a machine on the same switch.
 
 Split-horizon DNS fixes that. The same hostname resolves to the local Nginx Proxy Manager address when the client is on the LAN, and to the Cloudflare tunnel when it is not.
 
@@ -29,7 +29,7 @@ That decision is what creates the need for split horizon in the first place. It 
 
 - A single wildcard certificate for `*.example.com` is valid on both paths, so browsers do not complain in either location.
 - Bookmarks, mobile apps, and saved credentials work without a second set of entries.
-- Anything with a configured base URL keeps working. Applications behind single sign-on are the strict case here. An OAuth or OIDC redirect URI is registered as an exact string, so a service reached under a different hostname internally fails the redirect and the login breaks. Keeping one name avoids maintaining a second set of redirect URIs, or discovering the problem the first time someone signs in from the couch.
+- All services with a configured base URL continue to work. Applications behind single sign-on are the most sensitive case. An OAuth or OIDC redirect URI is an exact string. If users reach a service under a different hostname inside the network, the redirect fails and the login breaks. With one name, you do not need a second set of redirect URIs, and you do not find the problem when someone signs in from home.
 
 **What it costs.** Naming the zone after a domain you also own publicly makes Technitium authoritative for that entire domain on the LAN. From that moment:
 
@@ -41,7 +41,7 @@ The mail hostname failure described further down this page is the direct result 
 
 **The alternative.** Naming the internal zone something that does not exist publicly avoids all of it. No shadowing, no recreated records, no APP records, no app to install. The price is that every internal hostname differs from its public one, which pushes the complexity into certificates, bookmarks, and application configuration instead of into DNS.
 
-**How to choose.** If the services are internal only and never published, use a separate internal domain. If they are already published through a tunnel or reverse proxy and you want one URL that works from anywhere, use the real domain and accept that you now own the internal copy of every name clients need. This lab took the second path deliberately.
+**How to choose.** If the services are internal only and never published, use a separate internal domain. If you already publish them through a tunnel or reverse proxy and want one URL for all locations, use the real domain. You then own the internal copy of each name that clients need. This lab selected the second option on purpose.
 
 ## How traffic flows
 
@@ -195,7 +195,7 @@ Open the zone options and confirm:
 | Query Access | Allow Only Private Networks |
 | Zone Transfer | Allow Only Name Servers In Zone |
 
-With query access restricted to private networks, the zone is never served to a public client. That is worth understanding alongside the APP records: the `public` half of each record is a fallback that this server will not actually serve, because a query from a public network is refused before it gets that far. Real external clients are answered by Cloudflare, not by this server.
+Query access is limited to private networks. Thus, this server never serves the zone to a public client. This is important for the APP records. The `public` half of each record is a fallback that this server does not serve, because the server refuses a query from a public network before that point. Cloudflare answers real external clients, not this server.
 
 Keep the public values accurate anyway. They document what the external answer should be, and they matter if the zone access setting ever changes.
 

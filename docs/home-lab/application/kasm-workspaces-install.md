@@ -338,7 +338,7 @@ The sidecar network uses a custom plugin driver rather than `bridge`. If it refu
 sudo docker plugin ls
 ```
 
-**Uninstall the Desktop Service on every endpoint before or after the teardown.** Agent registration lives in a config file on the endpoint, not in Kasm's database, so an agent survives a full server wipe and keeps heartbeating at the new deployment with a dead token.
+**Uninstall the Desktop Service on each endpoint before or after the teardown.** The agent registration is in a config file on the endpoint, not in the Kasm database. Thus, an agent stays after a full server wipe, and it continues to send heartbeats to the new deployment with a token that does not work.
 
 The Windows agent is an NSIS installer, not an MSI, so `Uninstall-Package` will not work. Find the uninstall string:
 

@@ -113,7 +113,7 @@ docker compose logs -f
 
 **Ports.** 80 and 443 are the proxy itself. 81 is the admin console. Anything beyond those three is a stream host, covered further down. Only publish what you are actually using. Every published port is a listener on the LAN.
 
-**Time zone.** Use an IANA time zone name, which is always `Area/Location` where the area is a continent or ocean: `America/New_York`, `Europe/London`, `Asia/Tokyo`. A country name is not a valid area. If the value does not match a zone in the database, the container silently falls back to UTC rather than failing to start. Nothing breaks, but every timestamp in the access and error logs is then several hours off from wall clock, which makes correlating a proxy log against an application log needlessly painful. Confirm it took:
+**Time zone.** Use an IANA time zone name. It is always `Area/Location`, where the area is a continent or ocean: `America/New_York`, `Europe/London`, `Asia/Tokyo`. A country name is not a valid area. If the value does not match a zone in the database, the container uses UTC and does not show an error. Nothing breaks, but each timestamp in the access and error logs is then some hours different from the real time. This makes it difficult to compare a proxy log with an application log. Make sure that the setting worked:
 
 ```bash
 docker compose exec app date
@@ -238,7 +238,7 @@ Keep stream ports on the LAN. RDP exposed to the internet is scanned and brute-f
 
 **Access Lists** lets you put HTTP basic auth or an IP allowlist in front of a proxy host, applied before the request reaches the backend.
 
-This is useful for services with weak or no authentication of their own. It is not a substitute for real authentication on anything that matters. If you are already running an identity provider, forward authentication through the **Advanced** tab is the better pattern, since it gives you one login and one place to revoke access rather than a separate basic-auth credential per service.
+This helps for services with weak or no authentication of their own. It does not replace real authentication on important services. If you already have an identity provider, use forward authentication through the **Advanced** tab. It gives one login and one place to remove access. Basic authentication needs a separate credential for each service.
 
 ## Fitting with the Cloudflare tunnel
 

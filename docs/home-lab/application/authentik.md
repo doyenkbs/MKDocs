@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Authentik** is a self-hosted identity provider (IdP) supporting OIDC, SAML, LDAP, and more. In this lab, it's the single sign-on layer sitting in front of most self-hosted applications: one login, one MFA enrollment, centralized access control and audit logging across everything it's connected to.
+**Authentik** is a self-hosted identity provider (IdP) for OIDC, SAML, LDAP, and more. In this lab, it is the single sign-on layer in front of most self-hosted applications. It gives one login, one MFA enrollment, and central access control and audit logs for all connected applications.
 
 If you're setting up integrations for a specific app, see the [Authentik Integrations](index.md#authentik-integrations) table on the Applications overview page. This page covers getting Authentik itself installed and kept up to date.
 
@@ -62,7 +62,7 @@ echo "PG_PASS=$(openssl rand -base64 36 | tr -d '\n')" >> .env
 echo "AUTHENTIK_SECRET_KEY=$(openssl rand -base64 60 | tr -d '\n')" >> .env
 ```
 
-Both values are generated randomly and should never be reused elsewhere. Do not shorten `AUTHENTIK_SECRET_KEY` or set it by hand: Django rejects keys under 50 characters or with fewer than 5 unique characters, and logs `security.W009` on every boot until it is fixed. Rotating it later invalidates all sessions and some stored tokens, so get it right at install time.
+Both values are random. Do not use them in other places. Do not make `AUTHENTIK_SECRET_KEY` shorter or set it by hand. Django refuses keys with fewer than 50 characters or fewer than 5 unique characters, and it logs `security.W009` at each start until you correct it. If you change it later, all sessions and some stored tokens stop working. Thus, set it correctly at install time.
 
 ### 4. (Recommended) Pin an explicit version
 
@@ -152,7 +152,7 @@ A healthy outpost holds one websocket open and appears once or twice. Anything a
 
 ## Disk maintenance
 
-Each upgrade leaves the previous server image on disk. Three version hops in one session is enough to fill a small lab disk, and a full disk fails an image pull in a way that is easy to miss (see [step 7](#7-pull-and-restart) below).
+Each upgrade leaves the previous server image on disk. Three version changes in one session can fill a small lab disk. A full disk makes an image pull fail, and this failure is easy to miss (see [step 7](#7-pull-and-restart) below).
 
 Check current usage:
 
@@ -242,7 +242,7 @@ grep '^AUTHENTIK_TAG=' .env
 docker compose config | grep 'image:'
 ```
 
-Both must agree. If `grep` returns nothing while the stack is running, the version is coming from the compose file's fallback rather than from `.env`, and the steps below will not behave as written. Fix the variable before continuing.
+Both values must be the same. If `grep` returns nothing while the stack runs, the version comes from the fallback in the compose file, not from `.env`. Then the steps below do not work as written. Correct the variable before you continue.
 
 **Take an outpost inventory.** Run the checks in [Monitoring outposts](#monitoring-outposts) now, before anything changes. Knowing which outposts were already broken saves you from blaming the upgrade for a failure that predates it.
 
@@ -258,7 +258,7 @@ qm list           # virtual machines
 vzdump <CTID or VMID> --mode snapshot --storage local --compress zstd
 ```
 
-`--mode snapshot` keeps the guest running. The result is crash-consistent, which PostgreSQL recovers from cleanly on start. The logical dump in the next step is the finer-grained option; this is the blunt one, and it is the one that actually saves you when migrations leave the schema unusable.
+`--mode snapshot` keeps the guest running. The result is crash-consistent, and PostgreSQL recovers from it cleanly at start. The logical dump in the next step gives more control. This snapshot is the simple option, but it is the one that helps you when migrations make the schema unusable.
 
 ### 4. Back up config and database
 
@@ -347,7 +347,7 @@ docker compose logs -f server worker
 Migrations run automatically on `server` startup. Watch until they finish. A patch upgrade inside the same major often reports `No migrations to apply`, which is normal. The worker also reports `No migrations to apply` on its own pass, because the server already applied them.
 
 !!! note "Health check errors during startup are expected"
-    The Rust router starts before gunicorn does, so `/health/live/` returns 500 on the server and 503 on the worker for the first 30 to 90 seconds, with a full stack trace each time. Both flip to 200 once gunicorn is listening. Only worry if they are still failing after migrations complete.
+    The Rust router starts before gunicorn. Thus, for the first 30 to 90 seconds, `/health/live/` returns 500 on the server and 503 on the worker, with a full stack trace each time. Both change to 200 when gunicorn listens. Only investigate if they still fail after the migrations complete.
 
 **Verify what is actually running, not what is configured:**
 
@@ -451,7 +451,7 @@ gunzip -c backup_<date>.sql.gz | docker compose exec -T postgresql psql -U authe
 docker compose up -d
 ```
 
-The volume name is prefixed with the compose project name, which defaults to the directory name (`authentik`). The `dropdb` is required: removing the volume causes the Postgres image to run `initdb` and create an empty `authentik` database from `POSTGRES_DB`, which then collides with the `CREATE DATABASE` statement inside the `pg_dumpall` output. Connecting with `-d postgres` avoids restoring into the database being dropped and recreated.
+The volume name starts with the compose project name. By default, this is the directory name (`authentik`). You must run `dropdb`. If you only remove the volume, the Postgres image runs `initdb` and creates an empty `authentik` database from `POSTGRES_DB`. This database then conflicts with the `CREATE DATABASE` statement in the `pg_dumpall` output. The connection with `-d postgres` prevents a restore into the database that you drop and create again.
 
 After any rollback, re-check the outposts. They are not covered by the database restore and will need to be rebuilt at the older version through the UI save described in step 8.
 

@@ -5,7 +5,7 @@ tags:
 
 # Snipe-IT Installation on Ubuntu 24.04
 
-This guide explains how to install <span class="prod-app">Snipe-IT</span>, a self-hosted IT asset management system, on Ubuntu 24.04 using Nginx, MariaDB, and PHP 8.3.
+This guide shows how to install <span class="prod-app">Snipe-IT</span>, a self-hosted IT asset management system, on Ubuntu 24.04 with Nginx, MariaDB, and PHP 8.3.
 
 > Reference: [Snipe-IT Official Installation Guide](https://snipe-it.readme.io/docs/installation)
 

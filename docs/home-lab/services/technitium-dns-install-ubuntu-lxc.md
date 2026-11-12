@@ -8,7 +8,7 @@ tags:
 
 This page covers a clean install of Technitium DNS Server in a Proxmox LXC and the initial setup: web console, forwarders, recursion, ad blocking, DHCP, and zones.
 
-By the end you have a DNS server that hands out its own address over DHCP, filters ads for every client on the network, resolves an internal Active Directory domain through a conditional forwarder, and forwards everything else upstream over DNS-over-HTTPS.
+At the end, you have a DNS server with these functions: it gives its own address over DHCP, it filters ads for all clients on the network, and it resolves an internal Active Directory domain through a conditional forwarder. It sends all other queries upstream over DNS-over-HTTPS.
 
 Split-horizon DNS and the Nginx Proxy Manager integration are covered on separate pages, [Split-Horizon DNS](split-horizon-dns-technitium-npm.md) and [Nginx Proxy Manager](nginx-proxy-manager-install-config.md). Get this page working first.
 
@@ -62,7 +62,7 @@ Create an unprivileged LXC from the Ubuntu 24.04 template.
 
 Technitium will run on 512 MB, but 1 GB gives room for blocklists and cache without touching swap under load. Do not go below 1 GB if you enable query logging.
 
-Disk is where it is easy to overspend. The application, the OS, and the blocklists together sit near 2 GB. The reason to allocate more than that is the SQLite query log, which grows with query volume and is the only part of this install that gets meaningfully larger over time. 16 GB is comfortable. Allocating 50 GB is wasted space on the Proxmox storage pool, and growing an LXC disk later is a single command, so start small.
+It is easy to give too much disk. The application, the OS, and the blocklists together use about 2 GB. The only reason to give more is the SQLite query log, which grows with query volume. It is the only part of this install that becomes much larger over time. 16 GB is sufficient. 50 GB wastes space on the Proxmox storage pool. You can make an LXC disk larger later with one command, so start small.
 
 **Tags.** Proxmox tags cost nothing and make the container list readable once the lab passes ten guests. A `prod` tag on the DNS server is a useful reminder that a careless snapshot rollback here takes the whole network down with it.
 
@@ -345,7 +345,7 @@ Check what you are on before you start. **About** shows the running version and 
 | Point release, same major version (15.0 to 15.4) | Application files replaced, configuration untouched, no runtime change |
 | Major version (14.x to 15.x) | New .NET runtime required, config format converted on first load, service account and paths may change |
 
-v15 moved to the ASP.NET Core 10 runtime and switched the service to a non-root `dns-server` account. If you installed .NET yourself through apt instead of letting the installer manage it, a major upgrade extracts cleanly and then the service fails to start, because the new binaries need a runtime that is not there. The installer script updates the runtime for you, which is the main reason to use it over a manual extract.
+v15 uses the ASP.NET Core 10 runtime, and the service now runs as a non-root `dns-server` account. If you installed .NET yourself through apt and did not let the installer manage it, a major upgrade extracts correctly but the service does not start. The new binaries need a runtime that is not there. The installer script updates the runtime for you. This is the main reason to use it and not a manual extract.
 
 Config conversion runs one way. Once a v15 server has loaded and converted the config, an older binary cannot read it. That is why the rollback that matters is a container-level restore, not swapping application files back.
 

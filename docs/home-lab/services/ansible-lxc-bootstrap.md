@@ -10,9 +10,9 @@ tags:
 
 ## Overview
 
-Every new LXC starts the same way: create a user, drop in an SSH key, install the same baseline packages, harden a few defaults, and only then start actually configuring whatever service the container is for. Done by hand, that's 10–15 minutes of repetitive setup per container — and it's easy to skip a step under time pressure (a missed `ufw` rule, a forgotten SSH key) that only surfaces later as a problem.
+Each new LXC starts the same way: create a user, add an SSH key, install the same baseline packages, and harden some defaults. Only then do you configure the service for the container. By hand, this takes 10 to 15 minutes for each container. Under time pressure, it is easy to skip a step (a missed `ufw` rule, a forgotten SSH key), and the problem shows only later.
 
-This playbook turns that checklist into a single command: point it at a freshly created LXC's IP, and it comes back provisioned, secured to a consistent baseline, and ready for the patch automation and config backup playbooks to manage going forward.
+This playbook changes that checklist into one command. Point it at the IP of a new LXC. The LXC comes back provisioned, secured to a standard baseline, and ready for the patch automation and config backup playbooks.
 
 **What it does:**
 
@@ -155,8 +155,8 @@ Run this playbook using `--ask-pass` (or an existing root/admin key) the first t
 
 - **`password: "!"`** — locks password login for the `ansible` account entirely; it's key-only from the moment it's created.
 - **`validate: "visudo -cf %s"`** — syntax-checks the sudoers file before it's written, so a typo can't lock out sudo access on the host.
-- **`authorized_key` with `lookup('file', ...)`** — reads your existing automation public key off the control node and installs it, reusing the same keypair the rest of your playbooks already use rather than generating a new one per host.
-- **SSH hardening tasks** — disable root login and password auth *after* the key is installed and confirmed working, not before, so you can't lock yourself out mid-run.
+- **`authorized_key` with `lookup('file', ...)`**: reads your existing automation public key from the control node and installs it. It uses the same key pair as your other playbooks. It does not make a new key for each host.
+- **SSH hardening tasks**: disable root login and password authentication *after* the key is installed and works, not before. Thus, you cannot lock yourself out during the run.
 - **`ufw` tasks** — default-deny firewall with SSH explicitly allowed; add more `ufw` allow tasks per-service later (e.g. port 443 for a web app) either here conditionally or in a follow-up playbook once the container's actual role is known.
 - **`notify: restart ssh`** — SSH only restarts once, after both hardening changes, via the handler — avoids restarting the service twice and briefly dropping the connection mid-task.
 
@@ -211,9 +211,9 @@ From here, the host is fully onboarded — the [patch automation](ansible-patch.
 
 A few natural next additions, depending on what the container is for:
 
-- **Docker + Docker Compose install task** — for any container that'll run a Dockerized service (Mailcow, n8n-style apps), add a task block that installs Docker via the official convenience script or repo method.
-- **Authentik SSO pre-registration** — if the new service will sit behind Authentik, this is a good place to at least document the manual SSO setup step, even if the full integration stays manual.
-- **Per-role variants** — once you have a few container "types" (web app, database, monitoring agent), consider splitting this into an Ansible **role** with `vars` files per type, rather than one flat playbook trying to cover everything.
+- **Docker + Docker Compose install task**: for each container that will run a Docker service (Mailcow, n8n-style apps), add a task block that installs Docker with the official convenience script or the repository method.
+- **Authentik SSO pre-registration**: if the new service will be behind Authentik, document the manual SSO setup step here, even if the full integration stays manual.
+- **Per-role variants**: when you have some container types (web app, database, monitoring agent), think about an Ansible **role** with one `vars` file for each type. This is better than one flat playbook for all types.
 
 ---
 

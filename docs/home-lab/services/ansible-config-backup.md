@@ -2,9 +2,9 @@
 
 ## Overview
 
-Patching keeps systems current, but it doesn't protect against the other way things break: a bad manual edit, a failed upgrade that corrupts a config file, or a container that just needs to be rebuilt from scratch. This playbook automates pulling critical configuration files off every managed host and storing them centrally, so a broken service is a restore away instead of a rebuild-from-memory situation.
+Patches keep systems current, but they do not protect against other failures: a bad manual edit, a failed upgrade that damages a config file, or a container that you must build again. This playbook copies important configuration files from each managed host and stores them in one place. Thus, you can restore a broken service. You do not have to build it again from memory.
 
-Unlike full disk/VM backups (handled separately at the Proxmox layer), this playbook focuses specifically on **application and system configuration** — the small, easy-to-lose files that take the longest to reconstruct by hand: SSO provider settings, mail server configs, database connection strings, environment files.
+Full disk and VM backups are a different task (the Proxmox layer does them). This playbook is only for **application and system configuration**. These are the small files that are easy to lose and slow to make again by hand: SSO provider settings, mail server configs, database connection strings, and environment files.
 
 **What it does:**
 
@@ -17,7 +17,7 @@ Unlike full disk/VM backups (handled separately at the Proxmox layer), this play
 
 ## Why Config Backups Matter More Than They Seem To
 
-A full VM/LXC snapshot answers "how do I restore this whole container." A config backup answers a narrower but more common question: "what exactly did I change in this file three weeks ago, and can I get it back without restoring an entire container." It also protects you in scenarios snapshots don't cover well — e.g. you want the *current* Authentik SSO provider settings but don't want to roll the whole container back in time and lose other unrelated changes made since.
+A full VM/LXC snapshot answers the question "how do I restore this full container?" A config backup answers a smaller but more common question: "what did I change in this file three weeks ago, and can I get it back without a restore of the full container?" It also helps when snapshots do not. For example, you want the *current* Authentik SSO provider settings, but you do not want to roll back the full container and lose other changes.
 
 Good candidates for this playbook in a typical self-hosted lab:
 
@@ -121,7 +121,7 @@ If a host has no `backup_paths` defined, the playbook should skip it gracefully 
 **What each part is doing:**
 
 - **`meta: end_host`** — cleanly skips any host without `backup_paths` defined, instead of erroring out or backing up nothing meaningfully.
-- **`synchronize` (rsync under the hood)** — pulls each defined path into a staging directory on the *remote* host first, preserving relative paths with `--relative`, so the archive mirrors the original directory structure.
+- **`synchronize` (rsync)**: copies each defined path into a staging directory on the *remote* host first. It keeps relative paths with `--relative`, so the archive has the same directory structure as the original.
 - **`archive`** — compresses everything into a single dated `.tar.gz` per host.
 - **`fetch`** — pulls that archive back to the control node, organized into a per-host folder.
 - **Cleanup task** — removes the temporary staging files and archive from the remote host so backups don't pile up on the managed hosts themselves.
@@ -200,7 +200,7 @@ Always restore into a temporary location first and review before overwriting a l
 
 - Consider syncing the `backup_root_local` directory itself off the control node (e.g. to Nextcloud, a separate VPS, or Cloudflare R2) — a local-only backup doesn't protect against the control node itself failing.
 - Encrypt sensitive config backups (e.g. anything containing secrets or API tokens) using Ansible Vault or simple `gpg` encryption before long-term storage.
-- Pair this with the [Ansible Patch Automation](ansible-patch.md) playbook — run backups *before* patching in the same maintenance window, so a bad patch always has a same-day config snapshot to fall back to.
+- Use this with the [Ansible Patch Automation](ansible-patch.md) playbook. Run backups *before* patches in the same maintenance window. Then a bad patch always has a config snapshot from the same day.
 
 ---
 

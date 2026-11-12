@@ -107,7 +107,7 @@ Tested with Stalwart 0.16 and Authentik 2026.8.
 
     - **Row 1** is Bulwark's login callback, which can include a language prefix such as `/en/`.
     - **Row 2** covers the Stalwart admin console (`/admin`) and the user account page (`/account`).
-    - **Rows 3 and 4 are required even though row 2 already matches them.** The Stalwart console requests its token from the browser, and Authentik decides which websites may do that (CORS) from the provider's redirect URIs. Authentik reads the hostname literally, so a regex entry (`mail\.example\.com`) never matches. Without a **Strict** entry on the mail hostname, the console login fails with "Failed to fetch".
+    - **Rows 3 and 4 are necessary, although row 2 already matches them.** The Stalwart console requests its token from the browser. Authentik decides which websites can do that (CORS) from the redirect URIs of the provider. Authentik reads the hostname as literal text, so a regex entry (`mail\.example\.com`) never matches. Without a **Strict** entry for the mail hostname, the console login fails with "Failed to fetch".
     - **Rows 5 and 6** are where users land after signing out.
 
 6. Click **Submit**.
@@ -187,7 +187,7 @@ Why these values:
 - **Required Audience** makes Stalwart reject tokens that Authentik issued to any of your other applications.
 - **Required Scopes** is only `openid`, because the Stalwart console may request fewer scopes than Bulwark.
 - **Username Domain** turns the Authentik username `user` into `user@example.com`.
-- **Groups Claim is left empty on purpose.** If it is set to `groups`, Stalwart creates a group account for every Authentik group the user belongs to (for example `admins@example.com`). Those group addresses can receive mail from outside, and they show up as shared mailboxes in webmail.
+- **Groups Claim is empty on purpose.** If you set it to `groups`, Stalwart creates a group account for each Authentik group of the user (for example `admins@example.com`). These group addresses can receive mail from outside, and they show as shared mailboxes in webmail.
 
 ??? note "Mailboxes on more than one domain: use the email claim instead"
     With `preferred_username` and **Username Domain**, every user ends up on one domain: the Authentik user `user` becomes `user@example.com`. If some mailboxes live on another domain (for example `user@example.org`, which is common after migrating from another mail server), match accounts by email address instead:
@@ -199,7 +199,7 @@ Why these values:
 
     Then:
 
-    1. In the Authentik Admin interface, go to **Directory › Users**, open each mail user, and set **Email** to that user's exact Stalwart account name, for example `user@example.org`. Click **Update**.
+    1. In the Authentik Admin interface, go to **Directory › Users** and open each mail user. Set **Email** to the exact Stalwart account name of that user, for example `user@example.org`. Click **Update**.
     2. In Stalwart, create each account **before** that user's first SSO login: **Management › Directory › Accounts › Create**, with the same address as the account name. Add any other addresses the user receives mail on as aliases of that account. At the first SSO login, Stalwart signs the user in to this existing account and its mail.
     3. Bind a group to the Authentik application (see [Authentik: control who can sign in](#authentik-control-who-can-sign-in)). Without a binding, any Authentik user can sign in, and Stalwart creates a new mailbox named after that user's email address at the first login.
 
@@ -297,7 +297,7 @@ Each user creates their own app passwords. An administrator editing someone else
 2. Switch to the account view (the person icon, third icon at the bottom of the left sidebar).
 3. Go to **Credentials › App Passwords** and click **Create App password**.
 4. Enter a **Description** that names the device (for example `Thunderbird laptop`). Leave **Allowed IPs** empty, or the app will fail from other networks such as a phone on mobile data.
-5. Save, and copy the generated password into a password manager. It is shown only once.
+5. Save. Copy the generated password into a password manager. It shows only one time.
 
 In the mail app:
 

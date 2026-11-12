@@ -189,7 +189,7 @@ The **Attribute Mapping** tab populates Kasm profile fields from OIDC claims. It
 | First Name | `given_name` |
 | Last Name | `family_name` |
 
-The other available fields (Phone, Organization, Notes, City, State, Country) have no matching claim in a standard OIDC token, so leave them unmapped unless your provider emits custom claims for them.
+The other fields (Phone, Organization, Notes, City, State, Country) have no matching claim in a standard OIDC token. Do not map them, unless your provider sends custom claims for them.
 
 ## Part 4: Group mapping (optional)
 
