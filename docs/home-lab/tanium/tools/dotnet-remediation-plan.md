@@ -13,7 +13,7 @@ This page covers a browser tool that turns two Tanium exports into a remediation
 - the **vulnerability findings** from Tanium Comply (what is vulnerable), and
 - the **[.NET App Dependencies](../sensors/dotnet-app-dependencies.md) sensor** results from Interact (what uses it).
 
-For each row the tool says what to do (patch, remove, update, move to .NET 10, or hand to the app owner), why, which apps on that endpoint use the runtime, and who does the work. It follows the rules on the [.NET Runtimes](../remediation/dotnet-runtimes.md) page.
+For each row, the tool tells you what to do: patch, remove, update, move to .NET 10, or give to the app owner. It also tells you why, which apps on that endpoint use the runtime, and who does the work. It uses the rules on the [.NET Runtimes](../remediation/dotnet-runtimes.md) page.
 
 **[Open the .NET Remediation Plan tool](dotnet-plan-tool.html)**
 
@@ -69,7 +69,7 @@ The tool needs these columns. Extra columns are ignored.
 
 ### Optional: hide machine names
 
-If you share the files or the plan, run both exports through [Pseudonymize Exports](pseudonymize-exports.md) first, **with one shared map file**, so the same machine has the same pseudonym in both files. Otherwise the tool cannot match findings to sensor results.
+If you share the files or the plan, run both exports through [Pseudonymize Exports](pseudonymize-exports.md) first, **with one shared map file**. Then the same machine has the same pseudonym in both files. If you do not, the tool cannot match findings to sensor results.
 
 ---
 
@@ -118,7 +118,7 @@ The action for each row follows the tables on [.NET Runtimes](../remediation/dot
 - **A runtime counts as used** only when the sensor shows an app on that endpoint that loads it from the shared .NET install. Apps with their own copy of .NET do not count.
 - **Old version folders do not count as use.** When a folder holds several numbered copies of the same product, only the newest counts. Dell TechHub's `<Component>Deps\<version>` folders never count, because the copies in use are in its `<Component>SubAgent` folders.
 - **Tools inside NuGet package folders** (`\packages\<package>\tools\`) do not count.
-- **Before suggesting a removal**, it checks for apps with an unreadable version that are set to use the newest .NET installed, and says to check first.
+- **Before it suggests a removal**, the tool looks for apps with a version that it cannot read and that use the newest installed .NET. If it finds them, it tells you to check first.
 - **On servers**, every removal says to confirm with the owner first.
 - **Confidence:** `Certain` means the action follows from the data or vendor documentation. `Likely` means a strong inference that you should check before acting.
 
@@ -128,7 +128,7 @@ The action for each row follows the tables on [.NET Runtimes](../remediation/dot
 
 - The tool knows a few products by name (PowerShell 7, WSL, Store apps, Dell, UiPath, Autodesk) and suggests a specific update for them. Other products get a general "update or retire it" action.
 - It only knows what the two exports contain. An endpoint that was offline when the sensor question was asked gets "Run the sensor first" for every runtime row.
-- It carries the [sensor's limits](../sensors/dotnet-app-dependencies.md#limits): apps started from folders the sensor does not search are not seen, so a server removal still needs the owner's confirmation.
+- It has the same [limits as the sensor](../sensors/dotnet-app-dependencies.md#limits). It does not see apps that start from folders that the sensor does not search. Thus, a server removal still needs the confirmation of the owner.
 - Product names in `Detected Products` are matched by pattern (`Desktop Runtime 8.0`, `Hosting Bundle 8.0`, `SDK 10.0`, and so on). A product name the tool does not recognize gets a row with the action "Review".
 - Support dates are written into the tool. Check them again after November 2026.
 

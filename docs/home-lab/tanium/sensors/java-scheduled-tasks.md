@@ -8,7 +8,7 @@ tags:
 
 # Java - Scheduled Tasks (Sensor)
 
-This page shows how to create the **Java - Scheduled Tasks** sensor in the Tanium Console, and how to use it to check whether any scheduled job depends on Java before Java is removed.
+This page shows how to create the **Java - Scheduled Tasks** sensor in the Tanium Console. It also shows how to use it to check if a scheduled job uses Java before you remove Java.
 
 **What it returns:** one row per scheduled task that launches Java, with the task path, its state, the account it runs as, when it last ran, and its command line. Machines with no such task return a single `No Java scheduled tasks` row, so the whole fleet answers in one merged row.
 
@@ -23,9 +23,9 @@ The script reads every scheduled task through the Task Scheduler COM API (`Sched
 
 For each task action that starts a program, the script:
 
-1. Expands environment variables in the program path. When the Tanium Client runs the sensor in 32-bit PowerShell, it also maps `%ProgramFiles%` and `System32` to the real 64-bit locations, so the paths it checks are the ones the task will use.
+1. Expands environment variables in the program path. When the Tanium Client runs the sensor in 32-bit PowerShell, the script also maps `%ProgramFiles%` and `System32` to the real 64-bit locations. Thus, it checks the same paths that the task uses.
 2. Checks the program path and arguments for `java.exe`, `javaw.exe`, `javaws.exe`, a `.jar` file, or a `.jnlp` file. The match ignores `javascript`.
-3. If the task runs a `.bat`, `.cmd`, `.ps1`, or `.vbs` file under 1 MB, also checks the contents of that file and adds `[script calls Java]` to the command when it matches.
+3. If the task runs a `.bat`, `.cmd`, `.ps1`, or `.vbs` file under 1 MB, the script also checks the file contents. If they match, it adds `[script calls Java]` to the command.
 
 Tasks that run COM handlers instead of a program are skipped, since they don't start Java directly.
 
@@ -155,7 +155,7 @@ Example row (values are illustrative): `\NightlyExport|Ready|svc-reports|2026-10
     - A path inside an application folder (for example `D:\Apps\Vendor\jre\bin\java.exe`) uses the application's bundled Java. Removing Oracle Java does not affect it.
     - A bare `java` or `%JAVA_HOME%\bin\java` uses whatever Java the system PATH or `JAVA_HOME` points to. Removing that Java breaks the task.
 2. **Check Last Run.** A task that has not run in a year or more is a candidate for removal itself. Confirm with the owner first.
-3. **If the task is needed**, install a supported Java first, change the task or script to use it, and then remove the old Java.
+3. **If you need the task**, install a supported Java first. Change the task or script to use it. Then remove the old Java.
 
 ---
 

@@ -9,9 +9,9 @@ tags:
 
 # IIS - PHP Usage (Sensor)
 
-This page shows how to create the **IIS - PHP Usage** sensor in the Tanium Console, and how to use it to find out whether an IIS server is still serving PHP before you remove or upgrade PHP on it.
+This page shows how to create the **IIS - PHP Usage** sensor in the Tanium Console. It also shows how to use it to find if an IIS server still serves PHP before you remove or upgrade PHP on it.
 
-**What it returns:** one row per IIS site, with the site state, the PHP folder and version that handle `.php` pages for that site, how many `.php` files are in the site folders, how many `.php` requests the site logged in the last N days, and the most recent one. Machines without IIS return a single `Not Applicable` row.
+**What it returns:** one row for each IIS site. The row shows the site state and the PHP folder and version that handle `.php` pages for that site. It also shows the number of `.php` files in the site folders, the number of `.php` requests in the last N days, and the most recent request. Machines without IIS return one `Not Applicable` row.
 
 !!! warning "Test status"
     Run through Tanium on Windows lab endpoints with and without IIS, including a server with PHP 7.1 mapped at server level, before and after the mapping was removed. Stopped sites and handlers set in a site `web.config` have not been tested yet. See [Test results](#test-results).
@@ -23,9 +23,9 @@ This page shows how to create the **IIS - PHP Usage** sensor in the Tanium Conso
 For each site in `C:\Windows\System32\inetsrv\config\applicationHost.config`, the script:
 
 1. Reads the site state (`Started`, `Stopped`) from `appcmd list site`.
-2. Finds the `*.php` handler mapping that applies to the site, in this order: the `web.config` in the site root folder, a `<location>` section for the site in `applicationHost.config`, then the server-level handler. It reports the folder of the `php-cgi.exe` that handler points to, and that file's version.
-3. Counts `.php` files under every physical folder of the site. Junctions are skipped.
-4. Reads the site's W3C logs (`C:\inetpub\logs\LogFiles\W3SVC<site ID>` unless the site logs somewhere else) for the last N days, and counts requests whose URL path ends in `.php` or contains `.php/`.
+2. Finds the `*.php` handler mapping for the site, in this order: the `web.config` in the site root folder, a `<location>` section for the site in `applicationHost.config`, and then the server-level handler. It reports the folder of the `php-cgi.exe` that the handler points to, and the version of that file.
+3. Counts the `.php` files in each physical folder of the site. It skips junctions.
+4. Reads the W3C logs of the site for the last N days. The default location is `C:\inetpub\logs\LogFiles\W3SVC<site ID>`. It counts the requests where the URL path ends in `.php` or contains `.php/`.
 
 The script stops itself after 45 seconds. A count that was cut short ends with `(partial)`.
 

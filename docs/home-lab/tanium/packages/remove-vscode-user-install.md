@@ -88,12 +88,12 @@ VS Code runs as many `Code.exe` processes at once, so 10 to 20 per endpoint is n
 ### What the script does
 
 1. Finds every profile that has the per-user copy (`AppData\Local\Programs\Microsoft VS Code`).
-2. Finds who is signed in, by checking who owns a running `explorer.exe`.
+2. Finds the signed-in users. It checks who owns a running `explorer.exe`.
 3. For each signed-in user who has the per-user copy:
-    1. Checks whether VS Code is open for that user. If it is, and **Close VS Code** is `No`, the user is skipped. If it is `Yes`, VS Code is closed.
+    1. Checks if VS Code is open for that user. If it is open and **Close VS Code** is `No`, the script skips the user. If **Close VS Code** is `Yes`, the script closes VS Code.
     2. Creates a one-time scheduled task that runs `unins000.exe /VERYSILENT /NORESTART /SUPPRESSMSGBOXES` as that user, in their session, and starts it.
 4. Waits up to 5 minutes for the uninstallers to finish.
-5. For each user, checks that `unins000.exe` is gone and that the uninstall entry is gone from the user's registry, then copies the last 20 lines of the uninstaller's own log into the action log.
+5. For each user, makes sure that `unins000.exe` and the uninstall entry are gone from the registry of the user. Then it copies the last 20 lines of the uninstaller log into the action log.
 6. Deletes the scheduled tasks and prints a summary.
 
 Profiles that have the per-user copy but are not signed in are listed in the summary and left alone.
@@ -128,7 +128,7 @@ When more than one applies, the lowest non-zero code is returned.
 
 Menu labels can differ slightly between Tanium versions.
 
-1. Save the [signed-in script](#signed-in-users-script) at the bottom of this page as `Remove-VSCodeUserInstall.ps1`.
+1. Save the [signed-in script](#scripts) at the bottom of this page as `Remove-VSCodeUserInstall.ps1`.
 2. In the Tanium Console, go to **Administration** > **Content** > **Packages**.
 3. Click **Create Package**.
 4. Fill in the fields:
@@ -169,9 +169,9 @@ Users who are not signed in when the action runs are not covered. To catch them 
 
 For each profile on the endpoint:
 
-1. If the user is signed in and has the per-user copy, it is listed in the summary and skipped.
+1. If the user is signed in and has the per-user copy, the script shows the user in the summary and skips the user.
 2. Otherwise, loads the user's `NTUSER.DAT` as `HKEY_USERS\VSCODE_CLEANUP`, deletes the VS Code uninstall entry if it is there, and unloads the hive.
-3. If VS Code was found (folder or uninstall entry), deletes:
+3. If the script found VS Code (folder or uninstall entry), it deletes:
     - `C:\Users\<user>\AppData\Local\Programs\Microsoft VS Code`
     - `C:\Users\<user>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Visual Studio Code`
     - `C:\Users\<user>\Desktop\Visual Studio Code.lnk`, only if the shortcut points into the per-user install folder.
@@ -206,7 +206,7 @@ When more than one applies, `6` is returned first, then `1`, then `4`.
 
 ### Create the package
 
-1. Save the [signed-out script](#signed-out-profiles-script) at the bottom of this page as `Remove-VSCodeUserInstallOffline.ps1`.
+1. Save the [signed-out script](#scripts) at the bottom of this page as `Remove-VSCodeUserInstallOffline.ps1`.
 2. In the Tanium Console, go to **Administration** > **Content** > **Packages**.
 3. Click **Create Package**.
 4. Fill in the fields:
@@ -223,7 +223,7 @@ When more than one applies, `6` is returned first, then `1`, then `4`.
 ### Deploy the package
 
 1. In **Interact**, ask the question from [Find the endpoints](#find-the-endpoints).
-2. Select the computers where nobody is signed in, or where the Signed-In Users package returned exit code `4`.
+2. Select the computers where nobody is signed in. Also select the computers where the Signed-In Users package returned exit code `4`.
 3. Click **Deploy Action**.
 4. In **Deployment Package**, search for and select `Remove VS Code User Install - Signed-Out Profiles`.
 5. Under the schedule, leave it as a one-time action.
@@ -306,7 +306,7 @@ Get Tanium Action Log[12345] from all machines
 
 ### Confirm the copy is gone
 
-Ask the question from [Find the endpoints](#find-the-endpoints) again. The endpoint should no longer return `Microsoft Visual Studio Code (User)`. The **Installed Applications** sensor can return a cached result for a while after the change, so an endpoint that still shows it right after the action may clear on its own. If the removal was for a vulnerability finding, run the Comply assessment again afterward.
+Ask the question from [Find the endpoints](#find-the-endpoints) again. The endpoint must not return `Microsoft Visual Studio Code (User)`. The **Installed Applications** sensor can return a saved result for some time after the change. Thus, an endpoint that still shows VS Code immediately after the action can clear later. If the removal was for a vulnerability finding, run the Comply assessment again.
 
 ---
 
@@ -349,14 +349,14 @@ Ask the question from [Find the endpoints](#find-the-endpoints) again. The endpo
 
 ## Scripts
 
-### Signed-In Users script
+=== "Remove-VSCodeUserInstall.ps1 (signed-in users)"
 
-```powershell
---8<-- "tanium/packages/remove-vscode-user-install/Remove-VSCodeUserInstall.ps1"
-```
+    ```powershell
+    --8<-- "tanium/packages/remove-vscode-user-install/Remove-VSCodeUserInstall.ps1"
+    ```
 
-### Signed-Out Profiles script
+=== "Remove-VSCodeUserInstallOffline.ps1 (signed-out profiles)"
 
-```powershell
---8<-- "tanium/packages/remove-vscode-user-install/Remove-VSCodeUserInstallOffline.ps1"
-```
+    ```powershell
+    --8<-- "tanium/packages/remove-vscode-user-install/Remove-VSCodeUserInstallOffline.ps1"
+    ```

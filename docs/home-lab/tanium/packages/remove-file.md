@@ -12,7 +12,7 @@ A parameterized Tanium package that deletes one file from Windows endpoints.
 
 The operator types the file name a second time before anything is deleted. The script also refuses files in Windows system folders, boot files, and anything in the Tanium Client folder, whatever is typed.
 
-Use this package to remove a single file that a scan or a ticket has flagged, such as a vulnerable DLL left behind by an old install, a stale configuration file, or a log file that has grown too large. To delete a whole folder, use [Remove Folder](remove-folder.md) instead. To find where a file is first, use [Find File by Name](find-file-by-name.md).
+Use this package to remove one file that a scan or a ticket flags. Examples are a vulnerable DLL from an old install, an old configuration file, or a log file that is too large. To delete a full folder, use [Remove Folder](remove-folder.md). To find where a file is first, use [Find File by Name](find-file-by-name.md).
 
 !!! note "Test status"
     Tested on Windows 11 Pro 24H2 with Windows PowerShell 5.1. Each test ran the script through `cmd.exe` from the script's own folder with URL-encoded parameters, the same way a Tanium package runs it. The tests ran as a standard user, not as SYSTEM, and have not yet been repeated through a Tanium action. See [Test results](#test-results).
@@ -182,13 +182,13 @@ Get Tanium Action Log[12345] from all machines
 - **There is no Recycle Bin.** A file deleted by the package is gone. Run a test action on one endpoint before deploying widely.
 - **Hidden, system, and read-only files are deleted too.**
 - **A locked file is not retried.** If a service holds the file open, stop the service first (for example with another package), or deploy the action again after a reboot.
-- **An application may recreate the file.** If the file belongs to software that is still installed, removing the file alone may only last until the application repairs itself or updates. Uninstall or update the application instead when that is the real fix.
+- **An application can create the file again.** If the file belongs to software that is still installed, the application can put the file back when it repairs or updates. If that is the real problem, uninstall or update the application.
 
 ---
 
 ## Test results
 
-Each case ran through `cmd.exe` with URL-encoded parameters. Real deletes ran only against test files created for the purpose. Protected-location cases ran against a copy of the script with the delete command replaced by a stub, so a failed check would have shown up in the log without deleting anything.
+Each case ran through `cmd.exe` with URL-encoded parameters. Real deletes ran only on test files made for the test. Protected-location cases ran on a copy of the script with a stub in place of the delete command. Thus, a failed check would show in the log, but nothing would be deleted.
 
 | Case | Expected | Result |
 |---|---|---|

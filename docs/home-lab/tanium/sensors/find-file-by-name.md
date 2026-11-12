@@ -86,7 +86,7 @@ Menu labels can differ slightly between Tanium versions.
 6. Under the **Windows** script tab:
    - **Script Type:** `PowerShell`
    - **Script:** paste the script at the bottom of this page.
-7. Set the sensor **Timeout** to `60` seconds, which is above the script's default 45-second limit, so the script can return `SEARCH INCOMPLETE` before Tanium stops it.
+7. Set the sensor **Timeout** to `60` seconds. This is more than the 45-second limit of the script. Thus, the script can return `SEARCH INCOMPLETE` before Tanium stops it.
 8. Click **Save**.
 
 ---

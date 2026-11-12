@@ -9,7 +9,7 @@ tags:
 
 # PHP on IIS
 
-Tanium Comply flags PHP on Windows by the file version of `php.exe`. On IIS servers there are usually two cases: a current PHP that is a few patches behind, and an old PHP (often `C:\Program Files (x86)\PHP\v7.1` from the Web Platform Installer) that nobody remembers. Comply shows no patch for either, so Tanium Patch does not fix them.
+Tanium Comply flags PHP on Windows by the file version of `php.exe`. On IIS servers, there are usually two cases. The first is a current PHP that is a few patches behind. The second is an old PHP that nobody remembers (often `C:\Program Files (x86)\PHP\v7.1` from the Web Platform Installer). Comply shows no patch for either, so Tanium Patch does not repair them.
 
 ---
 

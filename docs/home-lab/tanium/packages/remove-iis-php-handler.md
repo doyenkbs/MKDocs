@@ -46,7 +46,7 @@ The log is written to the action log and to `C:\Windows\Temp\Remove-IISPhpHandle
 
 ## Create the package
 
-1. Save the [script](#script) at the bottom of this page as `Remove-IISPhpHandler.ps1`.
+1. Save the [script](#scripts) at the bottom of this page as `Remove-IISPhpHandler.ps1`.
 2. In the Tanium Console, go to **Administration** > **Content** > **Packages**.
 3. Click **Create Package** and fill in:
 
@@ -78,7 +78,7 @@ The log is written to the action log and to `C:\Windows\Temp\Remove-IISPhpHandle
 
 The rollback uses its own small script instead of calling `appcmd` directly in the command line. Tanium URL-encodes the parameter, so a backup name such as `PHP-Cleanup-20261105-142210` reaches the endpoint as `PHP%2dCleanup%2d20261105%2d142210`, and `appcmd` can't find it. The script decodes the name, checks that the backup exists, and lists the available backups when it doesn't.
 
-1. Save the [rollback script](#rollback-script) at the bottom of this page as `Restore-IISConfigBackup.ps1`.
+1. Save the [rollback script](#scripts) at the bottom of this page as `Restore-IISConfigBackup.ps1`.
 2. In **Administration** > **Content** > **Packages**, click **Create Package** and fill in:
 
 | Field | Value |
@@ -104,7 +104,7 @@ Restore puts back the **whole** IIS configuration as of the backup. Any other II
 
 ## Deploy
 
-1. Deploy with **Mode** = `Report` to the endpoint. Read the action log and confirm only the expected handler and FastCGI entries are listed.
+1. Deploy to the endpoint with **Mode** = `Report`. Read the action log. Make sure that it shows only the expected handler and FastCGI entries.
 2. Get the site owner's approval.
 3. Deploy again with **Mode** = `Remove`. Write down the backup name from the log.
 4. Run [Remove PHP Install](remove-php-install.md) for the same folder.
@@ -144,14 +144,16 @@ Restore puts back the **whole** IIS configuration as of the backup. Any other II
 
 ---
 
-## Script
+## Scripts
 
-```powershell
---8<-- "tanium/packages/remove-iis-php-handler/Remove-IISPhpHandler.ps1"
-```
+=== "Remove-IISPhpHandler.ps1"
 
-## Rollback script
+    ```powershell
+    --8<-- "tanium/packages/remove-iis-php-handler/Remove-IISPhpHandler.ps1"
+    ```
 
-```powershell
---8<-- "tanium/packages/remove-iis-php-handler/Restore-IISConfigBackup.ps1"
-```
+=== "Restore-IISConfigBackup.ps1 (rollback)"
+
+    ```powershell
+    --8<-- "tanium/packages/remove-iis-php-handler/Restore-IISConfigBackup.ps1"
+    ```

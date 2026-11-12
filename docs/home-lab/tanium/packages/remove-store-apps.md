@@ -15,7 +15,7 @@ The operator types how many apps are in the list as a confirmation. The script r
 Use this package to remove built-in consumer apps (news, weather, games, and similar) from managed devices.
 
 !!! warning "Test status"
-    Tested on Windows 11 Pro 24H2 with Windows PowerShell 5.1, run through `cmd.exe` with URL-encoded parameters the same way a Tanium package runs it. The parameter checks, protected-app checks, confirmation, and 64-bit restart were all tested. **The removal itself has not been tested yet**, because the test session was not elevated and the script stops before removing anything when it is not running as SYSTEM or an administrator. Test it on one endpoint through Tanium before deploying widely. See [Test results](#test-results).
+    Tested on Windows 11 Pro 24H2 with Windows PowerShell 5.1. The test ran the script through `cmd.exe` with URL-encoded parameters, the same as a Tanium package. The tests covered the parameter checks, protected-app checks, confirmation, and 64-bit restart. **The removal itself was not tested.** The test session did not have administrator rights, and the script stops before any removal when it does not run as SYSTEM or an administrator. Test it on one endpoint through Tanium before a wide deployment. See [Test results](#test-results).
 
 ---
 
@@ -113,7 +113,7 @@ The `DisableReinstall` option adds two settings that stop Windows from installin
 
 What `DisableReinstall` does **not** do:
 
-- **It does not block installing an app on purpose.** Users and administrators can still install the app from the Microsoft Store, with winget, or with a Tanium package.
+- **It does not stop a planned install of an app.** Users and administrators can still install the app from the Microsoft Store, with winget, or with a Tanium package.
 - **It does not turn off Store app updates.** Apps such as Calculator, Photos, and App Installer keep updating normally.
 - **It does not survive a feature update.** An in-place upgrade to a new Windows version can bring the built-in apps back. Run this package again after each feature update, or schedule it to repeat with the same app list.
 
@@ -251,7 +251,7 @@ Get Tanium Action Log[12345] from all machines
 
 - **Parameters arrive URL-encoded.** Tanium passes the comma between app names as `%2C`. The script decodes the values before splitting the list. Without that step, the whole list would be treated as one app name that matches nothing.
 - **It runs as 64-bit.** The AppX commands do not work reliably from 32-bit PowerShell. If the Tanium client starts 32-bit PowerShell, the script restarts itself as 64-bit.
-- **Results are checked, not assumed.** After each removal the script looks for the app again, so `Removed` in the summary means the app is actually gone.
+- **The script checks the results.** After each removal, the script looks for the app again. Thus, `Removed` in the summary means that the app is gone.
 - **A signed-in user with the app open** may still show the app as present right after removal, which reports as `FAILED`. Run the action again after the user signs out.
 - **Feature updates can bring apps back.** See [Stopping apps from coming back](#stopping-apps-from-coming-back).
 

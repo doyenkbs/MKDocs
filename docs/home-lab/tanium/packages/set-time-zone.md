@@ -80,7 +80,7 @@ The order matters on Windows. Turning automatic time zone off before setting the
 
 Platform-specific behavior:
 
-- **Windows:** the script uses `tzutil.exe`. When the box is checked, it also checks whether location access is denied on the device, and logs a warning if it is, because automatic time zone cannot work without it. It does not change the location setting.
+- **Windows:** the script uses `tzutil.exe`. When the box is selected, the script also checks if location access is denied on the device. If it is, the script logs a warning, because automatic time zone cannot work without location access. The script does not change the location setting.
 - **Linux:** the script uses `timedatectl`. On systems without it, it points `/etc/localtime` at the correct file under `/usr/share/zoneinfo`. It also updates `/etc/timezone` (Debian and Ubuntu) and `/etc/sysconfig/clock` (older Red Hat systems) when those files exist.
 - **macOS:** the script uses `systemsetup -settimezone`. If that command fails, it points `/etc/localtime` at the correct zone file instead.
 
@@ -261,338 +261,338 @@ In Action History, an exit code of `1` can show as **Failed**. That is expected 
 ## Things to know
 
 - **Parameters arrive URL-encoded.** Both scripts decode the values and strip extra quotes and spaces before matching them.
-- **Checking the box can undo the time zone you set.** Once automatic time zone is on and the device can find its location, Windows picks the time zone itself. That is the point of the setting, but it means the `$1` value is only a starting point.
+- **The box can change the time zone that you set.** When automatic time zone is on and the device can find its location, Windows selects the time zone. That is the function of the setting, but the `$1` value is then only a start value.
 - **Checkbox values.** Tanium sends `1` for checked and `0` for unchecked. The script also accepts `true`/`false`, `yes`/`no`, `on`/`off`, and blank (treated as unchecked), in case the command is run by hand. Any other value stops the script with exit code `2`.
 - **Automatic time zone needs location access.** On Windows, if location access is denied on the device, automatic time zone has nothing to work with. The script logs a warning but does not change the location setting, since that is a privacy setting.
-- **Running programs may keep the old time zone.** The clock changes right away, but some services and applications that were already running keep logging in the old time zone until they restart. Plan a reboot in the next maintenance window if log timestamps matter.
-- **Group Policy or configuration management can undo the change.** If a GPO, Intune profile, or a tool like Ansible also sets the time zone or automatic time zone, the endpoint will switch back the next time that policy applies. Fix the policy first.
+- **Running programs can keep the old time zone.** The clock changes immediately. But some services and applications that were already running use the old time zone in their logs until they restart. If log times are important, plan a restart in the next maintenance window.
+- **Group Policy or configuration management can reverse the change.** If a GPO, Intune profile, or a tool like Ansible also sets the time zone or automatic time zone, the endpoint changes back the next time that policy applies. Correct the policy first.
 - **macOS privacy controls.** On newer macOS versions, `systemsetup` can be blocked. The script falls back to updating `/etc/localtime` directly, and the log shows which method was used.
 - **Automatic time zone is not the same as time sync.** Automatic time zone picks the zone. Time sync (NTP) keeps the clock accurate. These packages do not change time sync.
 
 ---
 
-## Windows script
+## Scripts
 
-```powershell
-<#
-.SYNOPSIS
-    Sets the Windows time zone to a common U.S. zone and controls automatic time zone.
-    Built for a Tanium action package.
+=== "Windows (PowerShell)"
 
-.DESCRIPTION
-    Takes a short zone key from a Tanium drop-down parameter ($1), maps it to the Windows
-    time zone ID, applies it with tzutil.exe, and verifies the result.
+    ```powershell
+    <#
+    .SYNOPSIS
+        Sets the Windows time zone to a common U.S. zone and controls automatic time zone.
+        Built for a Tanium action package.
 
-    The second parameter ($2) comes from a Tanium checkbox and turns "Set time zone
-    automatically" on (checked) or off (unchecked). The setting is the Start value of the
-    tzautoupdate service: 3 = enabled, 4 = disabled.
+    .DESCRIPTION
+        Takes a short zone key from a Tanium drop-down parameter ($1), maps it to the Windows
+        time zone ID, applies it with tzutil.exe, and verifies the result.
 
-    Valid zone keys ($1):
-        Eastern, Central, Mountain, Arizona, Pacific, Alaska, Hawaii, PuertoRico
+        The second parameter ($2) comes from a Tanium checkbox and turns "Set time zone
+        automatically" on (checked) or off (unchecked). The setting is the Start value of the
+        tzautoupdate service: 3 = enabled, 4 = disabled.
 
-    Automatic time zone ($2):
-        Checked    (1, true, yes, on, enable)  Set the zone, then turn automatic time zone
-                   on. Windows may later replace the zone based on location.
-        Unchecked  (0, false, no, off, disable, or blank)  Turn automatic time zone off,
-                   then set the zone.
+        Valid zone keys ($1):
+            Eastern, Central, Mountain, Arizona, Pacific, Alaska, Hawaii, PuertoRico
 
-.PARAMETER Zone
-    One of the zone keys above. Case-insensitive. Passed by position ($1).
+        Automatic time zone ($2):
+            Checked    (1, true, yes, on, enable)  Set the zone, then turn automatic time zone
+                       on. Windows may later replace the zone based on location.
+            Unchecked  (0, false, no, off, disable, or blank)  Turn automatic time zone off,
+                       then set the zone.
 
-.PARAMETER AutoTimeZone
-    Checkbox value. Checked = on, unchecked or blank = off. Passed by position ($2).
+    .PARAMETER Zone
+        One of the zone keys above. Case-insensitive. Passed by position ($1).
 
-.PARAMETER WhatIfOnly
-    Report current and target settings, change nothing. Exit 0 if compliant, 1 if not.
+    .PARAMETER AutoTimeZone
+        Checkbox value. Checked = on, unchecked or blank = off. Passed by position ($2).
 
-.NOTES
-    Tanium command line:
-        cmd.exe /d /c powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File Set-USTimeZone.ps1 "$1" "$2"
+    .PARAMETER WhatIfOnly
+        Report current and target settings, change nothing. Exit 0 if compliant, 1 if not.
 
-    Exit codes:
-        0  Success, or already compliant
-        1  WhatIfOnly: not compliant
-        2  Invalid or missing parameter
-        3  tzutil failed or verification did not match
-        4  Unexpected error
-#>
-[CmdletBinding()]
-param(
-    [string]$Zone,
-    [string]$AutoTimeZone,
-    [switch]$WhatIfOnly
-)
+    .NOTES
+        Tanium command line:
+            cmd.exe /d /c powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File Set-USTimeZone.ps1 "$1" "$2"
 
-$ErrorActionPreference = 'Stop'
+        Exit codes:
+            0  Success, or already compliant
+            1  WhatIfOnly: not compliant
+            2  Invalid or missing parameter
+            3  tzutil failed or verification did not match
+            4  Unexpected error
+    #>
+    [CmdletBinding()]
+    param(
+        [string]$Zone,
+        [string]$AutoTimeZone,
+        [switch]$WhatIfOnly
+    )
 
-function Write-Log {
-    param([string]$Message)
-    Write-Output ("{0} {1}" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Message)
-}
+    $ErrorActionPreference = 'Stop'
 
-# Tanium can URL-encode parameter values. Decode and normalize before matching.
-function ConvertTo-Key {
-    param([string]$Value)
-    if (-not $Value) { return '' }
-    return ([uri]::UnescapeDataString($Value).Trim().Trim('"', "'").ToLower() -replace '\s', '')
-}
-
-$ZoneMap = @{
-    'eastern'    = 'Eastern Standard Time'       # America/New_York
-    'central'    = 'Central Standard Time'       # America/Chicago
-    'mountain'   = 'Mountain Standard Time'      # America/Denver
-    'arizona'    = 'US Mountain Standard Time'   # America/Phoenix (no DST)
-    'pacific'    = 'Pacific Standard Time'       # America/Los_Angeles
-    'alaska'     = 'Alaskan Standard Time'       # America/Anchorage
-    'hawaii'     = 'Hawaiian Standard Time'      # Pacific/Honolulu (no DST)
-    'puertorico' = 'SA Western Standard Time'    # America/Puerto_Rico (AST, no DST)
-}
-
-$TzAutoKey = 'HKLM:\SYSTEM\CurrentControlSet\Services\tzautoupdate'
-
-function Get-AutoTimeZoneState {
-    if (-not (Test-Path $TzAutoKey)) { return 'NotAvailable' }
-    $start = (Get-ItemProperty -Path $TzAutoKey -Name Start -ErrorAction SilentlyContinue).Start
-    if ($null -eq $start) { return 'NotAvailable' }
-    if ($start -eq 4) { return 'Disabled' }
-    return 'Enabled'
-}
-
-function Set-AutoTimeZoneState {
-    param([ValidateSet('Enabled', 'Disabled')][string]$State)
-    $value = if ($State -eq 'Enabled') { 3 } else { 4 }
-    Set-ItemProperty -Path $TzAutoKey -Name Start -Value $value -Type DWord
-}
-
-try {
-    # ---- Validate input ----
-    $zoneKey = ConvertTo-Key $Zone
-    if (-not $zoneKey -or -not $ZoneMap.ContainsKey($zoneKey)) {
-        Write-Log "ERROR: Invalid or missing zone '$Zone'. Valid: $((($ZoneMap.Keys | Sort-Object) -join ', '))"
-        exit 2
+    function Write-Log {
+        param([string]$Message)
+        Write-Output ("{0} {1}" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Message)
     }
 
-    # Checkbox: accept the common ways a checked or unchecked box can arrive.
-    $autoKey = ConvertTo-Key $AutoTimeZone
-    if ($autoKey -in @('1', 'true', 'yes', 'on', 'checked', 'enable', 'enabled')) {
-        $autoKey = 'enable'
-    } elseif ($autoKey -in @('', '0', 'false', 'no', 'off', 'unchecked', 'disable', 'disabled')) {
-        $autoKey = 'disable'
-    } else {
-        Write-Log "ERROR: Invalid automatic time zone value '$AutoTimeZone'. Expected a checkbox value such as 1/0 or true/false."
-        exit 2
+    # Tanium can URL-encode parameter values. Decode and normalize before matching.
+    function ConvertTo-Key {
+        param([string]$Value)
+        if (-not $Value) { return '' }
+        return ([uri]::UnescapeDataString($Value).Trim().Trim('"', "'").ToLower() -replace '\s', '')
     }
 
-    $targetId   = $ZoneMap[$zoneKey]
-    $targetAuto = if ($autoKey -eq 'enable') { 'Enabled' } else { 'Disabled' }
-
-    # Tanium client may run 32-bit on 64-bit Windows. Use Sysnative so we hit the real tzutil.
-    $tzutil = Join-Path $env:WINDIR 'Sysnative\tzutil.exe'
-    if (-not (Test-Path $tzutil)) { $tzutil = Join-Path $env:WINDIR 'System32\tzutil.exe' }
-
-    $currentId   = (& $tzutil /g).Trim()
-    $currentAuto = Get-AutoTimeZoneState
-    Write-Log "Host: $env:COMPUTERNAME | Zone: $currentId -> $targetId | Automatic time zone: $currentAuto -> $targetAuto"
-
-    # ---- Audit mode ----
-    if ($WhatIfOnly) {
-        $zoneOk = ($currentId -eq $targetId)
-        $autoOk = ($currentAuto -eq 'NotAvailable') -or ($currentAuto -eq $targetAuto)
-        if ($zoneOk -and $autoOk) { Write-Log 'COMPLIANT'; exit 0 }
-        Write-Log ("NOT COMPLIANT (zone ok: {0}, automatic time zone ok: {1})" -f $zoneOk, $autoOk)
-        exit 1
+    $ZoneMap = @{
+        'eastern'    = 'Eastern Standard Time'       # America/New_York
+        'central'    = 'Central Standard Time'       # America/Chicago
+        'mountain'   = 'Mountain Standard Time'      # America/Denver
+        'arizona'    = 'US Mountain Standard Time'   # America/Phoenix (no DST)
+        'pacific'    = 'Pacific Standard Time'       # America/Los_Angeles
+        'alaska'     = 'Alaskan Standard Time'       # America/Anchorage
+        'hawaii'     = 'Hawaiian Standard Time'      # Pacific/Honolulu (no DST)
+        'puertorico' = 'SA Western Standard Time'    # America/Puerto_Rico (AST, no DST)
     }
 
-    # ---- Disable automatic time zone BEFORE setting the zone, so it cannot flip it back ----
-    if ($targetAuto -eq 'Disabled') {
-        if ($currentAuto -eq 'NotAvailable') {
-            Write-Log 'Automatic time zone is not available on this system. Skipped.'
-        } elseif ($currentAuto -eq 'Disabled') {
-            Write-Log 'Automatic time zone already disabled.'
+    $TzAutoKey = 'HKLM:\SYSTEM\CurrentControlSet\Services\tzautoupdate'
+
+    function Get-AutoTimeZoneState {
+        if (-not (Test-Path $TzAutoKey)) { return 'NotAvailable' }
+        $start = (Get-ItemProperty -Path $TzAutoKey -Name Start -ErrorAction SilentlyContinue).Start
+        if ($null -eq $start) { return 'NotAvailable' }
+        if ($start -eq 4) { return 'Disabled' }
+        return 'Enabled'
+    }
+
+    function Set-AutoTimeZoneState {
+        param([ValidateSet('Enabled', 'Disabled')][string]$State)
+        $value = if ($State -eq 'Enabled') { 3 } else { 4 }
+        Set-ItemProperty -Path $TzAutoKey -Name Start -Value $value -Type DWord
+    }
+
+    try {
+        # ---- Validate input ----
+        $zoneKey = ConvertTo-Key $Zone
+        if (-not $zoneKey -or -not $ZoneMap.ContainsKey($zoneKey)) {
+            Write-Log "ERROR: Invalid or missing zone '$Zone'. Valid: $((($ZoneMap.Keys | Sort-Object) -join ', '))"
+            exit 2
+        }
+
+        # Checkbox: accept the common ways a checked or unchecked box can arrive.
+        $autoKey = ConvertTo-Key $AutoTimeZone
+        if ($autoKey -in @('1', 'true', 'yes', 'on', 'checked', 'enable', 'enabled')) {
+            $autoKey = 'enable'
+        } elseif ($autoKey -in @('', '0', 'false', 'no', 'off', 'unchecked', 'disable', 'disabled')) {
+            $autoKey = 'disable'
         } else {
-            Set-AutoTimeZoneState -State Disabled
-            Write-Log 'Automatic time zone disabled (tzautoupdate Start=4).'
+            Write-Log "ERROR: Invalid automatic time zone value '$AutoTimeZone'. Expected a checkbox value such as 1/0 or true/false."
+            exit 2
         }
-    }
 
-    # ---- Set the zone ----
-    if ($currentId -eq $targetId) {
-        Write-Log 'Zone already set to target. No zone change made.'
-    } else {
-        $out = & $tzutil /s "$targetId" 2>&1
-        if ($LASTEXITCODE -ne 0) {
-            Write-Log "ERROR: tzutil /s failed with exit code $LASTEXITCODE. Output: $out"
-            exit 3
-        }
-        $newId = (& $tzutil /g).Trim()
-        if ($newId -ne $targetId) {
-            Write-Log "ERROR: Verification failed. Expected '$targetId', got '$newId'."
-            exit 3
-        }
-        Write-Log "Zone changed from '$currentId' to '$newId'."
-    }
+        $targetId   = $ZoneMap[$zoneKey]
+        $targetAuto = if ($autoKey -eq 'enable') { 'Enabled' } else { 'Disabled' }
 
-    # ---- Enable automatic time zone AFTER setting the zone ----
-    if ($targetAuto -eq 'Enabled') {
-        if ($currentAuto -eq 'NotAvailable') {
-            Write-Log 'Automatic time zone is not available on this system. Skipped.'
-        } else {
-            if ($currentAuto -eq 'Enabled') {
-                Write-Log 'Automatic time zone already enabled.'
+        # Tanium client may run 32-bit on 64-bit Windows. Use Sysnative so we hit the real tzutil.
+        $tzutil = Join-Path $env:WINDIR 'Sysnative\tzutil.exe'
+        if (-not (Test-Path $tzutil)) { $tzutil = Join-Path $env:WINDIR 'System32\tzutil.exe' }
+
+        $currentId   = (& $tzutil /g).Trim()
+        $currentAuto = Get-AutoTimeZoneState
+        Write-Log "Host: $env:COMPUTERNAME | Zone: $currentId -> $targetId | Automatic time zone: $currentAuto -> $targetAuto"
+
+        # ---- Audit mode ----
+        if ($WhatIfOnly) {
+            $zoneOk = ($currentId -eq $targetId)
+            $autoOk = ($currentAuto -eq 'NotAvailable') -or ($currentAuto -eq $targetAuto)
+            if ($zoneOk -and $autoOk) { Write-Log 'COMPLIANT'; exit 0 }
+            Write-Log ("NOT COMPLIANT (zone ok: {0}, automatic time zone ok: {1})" -f $zoneOk, $autoOk)
+            exit 1
+        }
+
+        # ---- Disable automatic time zone BEFORE setting the zone, so it cannot flip it back ----
+        if ($targetAuto -eq 'Disabled') {
+            if ($currentAuto -eq 'NotAvailable') {
+                Write-Log 'Automatic time zone is not available on this system. Skipped.'
+            } elseif ($currentAuto -eq 'Disabled') {
+                Write-Log 'Automatic time zone already disabled.'
             } else {
-                Set-AutoTimeZoneState -State Enabled
-                Write-Log 'Automatic time zone enabled (tzautoupdate Start=3).'
-            }
-            Write-Log 'WARNING: With automatic time zone on, Windows can replace this zone based on location.'
-
-            # Automatic time zone needs location access. Report it, but do not change a privacy setting.
-            $locKey = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location'
-            $loc = (Get-ItemProperty -Path $locKey -Name Value -ErrorAction SilentlyContinue).Value
-            if ($loc -eq 'Deny') {
-                Write-Log 'WARNING: Location access is denied on this device, so automatic time zone will not detect a location.'
+                Set-AutoTimeZoneState -State Disabled
+                Write-Log 'Automatic time zone disabled (tzautoupdate Start=4).'
             }
         }
+
+        # ---- Set the zone ----
+        if ($currentId -eq $targetId) {
+            Write-Log 'Zone already set to target. No zone change made.'
+        } else {
+            $out = & $tzutil /s "$targetId" 2>&1
+            if ($LASTEXITCODE -ne 0) {
+                Write-Log "ERROR: tzutil /s failed with exit code $LASTEXITCODE. Output: $out"
+                exit 3
+            }
+            $newId = (& $tzutil /g).Trim()
+            if ($newId -ne $targetId) {
+                Write-Log "ERROR: Verification failed. Expected '$targetId', got '$newId'."
+                exit 3
+            }
+            Write-Log "Zone changed from '$currentId' to '$newId'."
+        }
+
+        # ---- Enable automatic time zone AFTER setting the zone ----
+        if ($targetAuto -eq 'Enabled') {
+            if ($currentAuto -eq 'NotAvailable') {
+                Write-Log 'Automatic time zone is not available on this system. Skipped.'
+            } else {
+                if ($currentAuto -eq 'Enabled') {
+                    Write-Log 'Automatic time zone already enabled.'
+                } else {
+                    Set-AutoTimeZoneState -State Enabled
+                    Write-Log 'Automatic time zone enabled (tzautoupdate Start=3).'
+                }
+                Write-Log 'WARNING: With automatic time zone on, Windows can replace this zone based on location.'
+
+                # Automatic time zone needs location access. Report it, but do not change a privacy setting.
+                $locKey = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location'
+                $loc = (Get-ItemProperty -Path $locKey -Name Value -ErrorAction SilentlyContinue).Value
+                if ($loc -eq 'Deny') {
+                    Write-Log 'WARNING: Location access is denied on this device, so automatic time zone will not detect a location.'
+                }
+            }
+        }
+
+        Write-Log 'SUCCESS'
+        exit 0
+    }
+    catch {
+        Write-Log "ERROR: $($_.Exception.Message)"
+        exit 4
+    }
+    ```
+
+=== "Linux and macOS (sh)"
+
+    ```sh
+    #!/bin/sh
+    # ---------------------------------------------------------------------------
+    # set-us-timezone.sh
+    # Sets the time zone on Linux and macOS to a common U.S. zone.
+    # Built for a Tanium action package.
+    # POSIX sh (runs under /bin/sh or /bin/bash, including macOS bash 3.2).
+    #
+    # Usage:
+    #   set-us-timezone.sh <Zone> [--whatif]
+    #
+    # Zone ($1):
+    #   Eastern, Central, Mountain, Arizona, Pacific, Alaska, Hawaii, PuertoRico
+    #
+    # Automatic time zone is not changed by this script.
+    #
+    # Tanium command line:
+    #   /bin/bash set-us-timezone.sh "$1"
+    #
+    # Exit codes:
+    #   0  Success, or already set to the target zone
+    #   1  --whatif: not compliant
+    #   2  Invalid or missing Zone parameter
+    #   3  Change failed or verification did not match
+    #   4  Unsupported OS or zoneinfo file missing
+    # ---------------------------------------------------------------------------
+
+    log() { printf '%s %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"; }
+
+    WHATIF=0
+    for a in "$@"; do [ "$a" = "--whatif" ] && WHATIF=1; done
+
+    RAW="$1"
+
+    # Normalize: strip quotes, whitespace, and URL-encoded spaces; lowercase.
+    KEY=$(printf '%s' "$RAW" | sed -e 's/%20//g' -e 's/["'\'' ]//g' | tr '[:upper:]' '[:lower:]')
+
+    case "$KEY" in
+        eastern)    TZ_TARGET="America/New_York" ;;
+        central)    TZ_TARGET="America/Chicago" ;;
+        mountain)   TZ_TARGET="America/Denver" ;;
+        arizona)    TZ_TARGET="America/Phoenix" ;;
+        pacific)    TZ_TARGET="America/Los_Angeles" ;;
+        alaska)     TZ_TARGET="America/Anchorage" ;;
+        hawaii)     TZ_TARGET="Pacific/Honolulu" ;;
+        puertorico) TZ_TARGET="America/Puerto_Rico" ;;
+        *)
+            log "ERROR: Invalid or missing zone '$RAW'. Valid: Eastern, Central, Mountain, Arizona, Pacific, Alaska, Hawaii, PuertoRico"
+            exit 2
+            ;;
+    esac
+
+    OS=$(uname -s)
+    HOST=$(hostname)
+
+    ZONEDIR=/usr/share/zoneinfo
+    if [ ! -f "$ZONEDIR/$TZ_TARGET" ]; then
+        log "ERROR: $ZONEDIR/$TZ_TARGET not found. tzdata may be missing on this host."
+        exit 4
+    fi
+
+    get_current() {
+        CUR=""
+        if [ "$OS" = "Linux" ] && command -v timedatectl >/dev/null 2>&1; then
+            CUR=$(timedatectl show -p Timezone --value 2>/dev/null)
+        fi
+        if [ -z "$CUR" ] && [ -L /etc/localtime ]; then
+            CUR=$(readlink /etc/localtime | sed -e 's#.*/zoneinfo/##')
+        fi
+        if [ -z "$CUR" ] && [ -f /etc/timezone ]; then
+            CUR=$(cat /etc/timezone)
+        fi
+        [ -z "$CUR" ] && CUR="unknown"
+        printf '%s' "$CUR"
     }
 
-    Write-Log 'SUCCESS'
+    CURRENT=$(get_current)
+    log "Host: $HOST | OS: $OS | Current: $CURRENT | Target: $TZ_TARGET"
+
+    if [ "$WHATIF" -eq 1 ]; then
+        if [ "$CURRENT" = "$TZ_TARGET" ]; then log "COMPLIANT"; exit 0; fi
+        log "NOT COMPLIANT"
+        exit 1
+    fi
+
+    if [ "$CURRENT" = "$TZ_TARGET" ]; then
+        log "Already set to target zone. No change made."
+        exit 0
+    fi
+
+    case "$OS" in
+        Linux)
+            if command -v timedatectl >/dev/null 2>&1 && timedatectl set-timezone "$TZ_TARGET" 2>/dev/null; then
+                log "Applied with timedatectl."
+            else
+                # No systemd, or timedatectl failed (container, old distro). Fall back to the symlink.
+                ln -sf "$ZONEDIR/$TZ_TARGET" /etc/localtime || { log "ERROR: Could not update /etc/localtime"; exit 3; }
+                log "Applied by relinking /etc/localtime."
+            fi
+            # Keep distro-specific files in sync so other tools agree.
+            [ -f /etc/timezone ] && printf '%s\n' "$TZ_TARGET" > /etc/timezone
+            if [ -f /etc/sysconfig/clock ]; then
+                sed -i "s#^ZONE=.*#ZONE=\"$TZ_TARGET\"#" /etc/sysconfig/clock
+            fi
+            ;;
+        Darwin)
+            # systemsetup can fail under recent macOS privacy controls. Fall back to the symlink.
+            if /usr/sbin/systemsetup -settimezone "$TZ_TARGET" >/dev/null 2>&1; then
+                log "Applied with systemsetup."
+            else
+                ln -sf "$ZONEDIR/$TZ_TARGET" /etc/localtime || { log "ERROR: Could not update /etc/localtime"; exit 3; }
+                log "systemsetup failed. Applied by relinking /etc/localtime."
+            fi
+            ;;
+        *)
+            log "ERROR: Unsupported OS '$OS'."
+            exit 4
+            ;;
+    esac
+
+    NEW=$(get_current)
+    if [ "$NEW" != "$TZ_TARGET" ]; then
+        log "ERROR: Verification failed. Expected '$TZ_TARGET', got '$NEW'."
+        exit 3
+    fi
+
+    log "SUCCESS: Time zone changed from '$CURRENT' to '$NEW'."
     exit 0
-}
-catch {
-    Write-Log "ERROR: $($_.Exception.Message)"
-    exit 4
-}
-```
-
----
-
-## Linux and macOS script
-
-```sh
-#!/bin/sh
-# ---------------------------------------------------------------------------
-# set-us-timezone.sh
-# Sets the time zone on Linux and macOS to a common U.S. zone.
-# Built for a Tanium action package.
-# POSIX sh (runs under /bin/sh or /bin/bash, including macOS bash 3.2).
-#
-# Usage:
-#   set-us-timezone.sh <Zone> [--whatif]
-#
-# Zone ($1):
-#   Eastern, Central, Mountain, Arizona, Pacific, Alaska, Hawaii, PuertoRico
-#
-# Automatic time zone is not changed by this script.
-#
-# Tanium command line:
-#   /bin/bash set-us-timezone.sh "$1"
-#
-# Exit codes:
-#   0  Success, or already set to the target zone
-#   1  --whatif: not compliant
-#   2  Invalid or missing Zone parameter
-#   3  Change failed or verification did not match
-#   4  Unsupported OS or zoneinfo file missing
-# ---------------------------------------------------------------------------
-
-log() { printf '%s %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"; }
-
-WHATIF=0
-for a in "$@"; do [ "$a" = "--whatif" ] && WHATIF=1; done
-
-RAW="$1"
-
-# Normalize: strip quotes, whitespace, and URL-encoded spaces; lowercase.
-KEY=$(printf '%s' "$RAW" | sed -e 's/%20//g' -e 's/["'\'' ]//g' | tr '[:upper:]' '[:lower:]')
-
-case "$KEY" in
-    eastern)    TZ_TARGET="America/New_York" ;;
-    central)    TZ_TARGET="America/Chicago" ;;
-    mountain)   TZ_TARGET="America/Denver" ;;
-    arizona)    TZ_TARGET="America/Phoenix" ;;
-    pacific)    TZ_TARGET="America/Los_Angeles" ;;
-    alaska)     TZ_TARGET="America/Anchorage" ;;
-    hawaii)     TZ_TARGET="Pacific/Honolulu" ;;
-    puertorico) TZ_TARGET="America/Puerto_Rico" ;;
-    *)
-        log "ERROR: Invalid or missing zone '$RAW'. Valid: Eastern, Central, Mountain, Arizona, Pacific, Alaska, Hawaii, PuertoRico"
-        exit 2
-        ;;
-esac
-
-OS=$(uname -s)
-HOST=$(hostname)
-
-ZONEDIR=/usr/share/zoneinfo
-if [ ! -f "$ZONEDIR/$TZ_TARGET" ]; then
-    log "ERROR: $ZONEDIR/$TZ_TARGET not found. tzdata may be missing on this host."
-    exit 4
-fi
-
-get_current() {
-    CUR=""
-    if [ "$OS" = "Linux" ] && command -v timedatectl >/dev/null 2>&1; then
-        CUR=$(timedatectl show -p Timezone --value 2>/dev/null)
-    fi
-    if [ -z "$CUR" ] && [ -L /etc/localtime ]; then
-        CUR=$(readlink /etc/localtime | sed -e 's#.*/zoneinfo/##')
-    fi
-    if [ -z "$CUR" ] && [ -f /etc/timezone ]; then
-        CUR=$(cat /etc/timezone)
-    fi
-    [ -z "$CUR" ] && CUR="unknown"
-    printf '%s' "$CUR"
-}
-
-CURRENT=$(get_current)
-log "Host: $HOST | OS: $OS | Current: $CURRENT | Target: $TZ_TARGET"
-
-if [ "$WHATIF" -eq 1 ]; then
-    if [ "$CURRENT" = "$TZ_TARGET" ]; then log "COMPLIANT"; exit 0; fi
-    log "NOT COMPLIANT"
-    exit 1
-fi
-
-if [ "$CURRENT" = "$TZ_TARGET" ]; then
-    log "Already set to target zone. No change made."
-    exit 0
-fi
-
-case "$OS" in
-    Linux)
-        if command -v timedatectl >/dev/null 2>&1 && timedatectl set-timezone "$TZ_TARGET" 2>/dev/null; then
-            log "Applied with timedatectl."
-        else
-            # No systemd, or timedatectl failed (container, old distro). Fall back to the symlink.
-            ln -sf "$ZONEDIR/$TZ_TARGET" /etc/localtime || { log "ERROR: Could not update /etc/localtime"; exit 3; }
-            log "Applied by relinking /etc/localtime."
-        fi
-        # Keep distro-specific files in sync so other tools agree.
-        [ -f /etc/timezone ] && printf '%s\n' "$TZ_TARGET" > /etc/timezone
-        if [ -f /etc/sysconfig/clock ]; then
-            sed -i "s#^ZONE=.*#ZONE=\"$TZ_TARGET\"#" /etc/sysconfig/clock
-        fi
-        ;;
-    Darwin)
-        # systemsetup can fail under recent macOS privacy controls. Fall back to the symlink.
-        if /usr/sbin/systemsetup -settimezone "$TZ_TARGET" >/dev/null 2>&1; then
-            log "Applied with systemsetup."
-        else
-            ln -sf "$ZONEDIR/$TZ_TARGET" /etc/localtime || { log "ERROR: Could not update /etc/localtime"; exit 3; }
-            log "systemsetup failed. Applied by relinking /etc/localtime."
-        fi
-        ;;
-    *)
-        log "ERROR: Unsupported OS '$OS'."
-        exit 4
-        ;;
-esac
-
-NEW=$(get_current)
-if [ "$NEW" != "$TZ_TARGET" ]; then
-    log "ERROR: Verification failed. Expected '$TZ_TARGET', got '$NEW'."
-    exit 3
-fi
-
-log "SUCCESS: Time zone changed from '$CURRENT' to '$NEW'."
-exit 0
-```
+    ```

@@ -15,6 +15,7 @@ A package runs a script on targeted endpoints as an action. Output goes to the a
 |---|---|---|---|
 | [Edge MSI Standardization](edge-msi-standardization.md) | Makes the Enterprise MSI the only managed copy of Edge, removes the stale Store (AppX) registration even when locked, and clears stale registry entries. | Windows | 2026-09-18 |
 | [Find File by Name](find-file-by-name.md) | Searches drives or folders for a file name or wildcard. Returns every matching path and its last modified date. | Windows | 2026-09-18 |
+| [Free Up User Disk Space](free-up-user-disk-space.md) | Frees disk space. Removes old temp files, error reports, and the Delivery Optimization cache, sets OneDrive files not used for 14 days to online-only, and asks the user before it empties Recycle Bin items older than 30 days. Optional: Windows Update downloads, crash dumps, browser caches, and Windows.old. | Windows | 2026-11-12 |
 | [Local Admin Removal](local-admin-removal.md) | Removes domain accounts in the AD admin OU from the local Administrators group on managed endpoints. Two scripts, two packages. | Windows | 2026-08-10 |
 | [Remove DriverStore Package](remove-driverstore-package.md) | Removes old driver packages from the Windows DriverStore by folder name, using pnputil without force. Packages a device is still using are refused. Used to clear scanner findings for libraries bundled in old drivers. | Windows | 2026-11-05 |
 | [Remove File](remove-file.md) | Deletes one file. The operator retypes the file name to confirm, and system folders, boot files, and the Tanium Client folder are refused. | Windows | 2026-10-08 |
@@ -26,6 +27,9 @@ A package runs a script on targeted endpoints as an action. Output goes to the a
 | [Remove VS Code User Install](remove-vscode-user-install.md) | Removes the per-user copy of VS Code (User installer or Store version). One package for signed-in users, run in the user's session, and one for signed-out profiles, cleaned offline. | Windows | 2026-10-14 |
 | [Remove Zoom User Install](remove-zoom-user-install.md) | Removes the per-user copy of Zoom from every profile, signed in or not, including its uninstall entry and shortcuts. Skips users with Zoom open unless told to close it. When a system-wide Zoom is installed, user data folders are kept and only the per-user program files go. | Windows | 2026-10-20 |
 | [Set Time Zone](set-time-zone.md) | Sets endpoints to a common U.S. time zone picked from a drop-down. The Windows package also turns automatic time zone on or off. Separate packages for Windows and for Linux and macOS. | Windows, Linux, macOS | 2026-09-23 |
+| [Update Node.js in Adobe CC](update-adobe-cc-node.md) | Replaces the old node.exe files inside Adobe Creative Cloud (Libraries and Experience) with the patched Node.js build of the same major version. Works with Creative Cloud open; the old file is deleted at the next restart if still in use. Two scripts, two packages. | Windows | 2026-11-06 |
+| [Update Store Apps](update-store-apps.md) | Triggers a Microsoft Store update scan as SYSTEM and checks that the listed apps reached a minimum version. Updates every Store app that has an update, and cannot update system apps such as Windows Security. | Windows | 2026-11-05 |
+| [Windows Component Cleanup (DISM)](windows-component-cleanup.md) | Removes old update files from the Windows component store (WinSxS) with DISM. Optional ResetBase frees more space, but installed updates can no longer be uninstalled. | Windows | 2026-11-12 |
 
 ## Conventions used here
 

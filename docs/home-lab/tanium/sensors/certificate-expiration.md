@@ -140,7 +140,7 @@ Rules for every folder:
 - A Let's Encrypt layout (`live/<name>/cert.pem`) inside any scanned folder is read. Those files are symlinks, which the folder scan would otherwise skip.
 - **Skipped on purpose:**
     - The system trust store: symlinks (such as the CA links in `/etc/ssl/certs` on Debian), CA bundles such as `ca-certificates.crt` and `ca-bundle.crt`, and anything under `ca-trust`, `nssdb`, or `java`.
-    - Old copies in folders named `backup`, `backups`, or `archive`. Mailcow keeps every previous certificate in `ssl/backups/`, which added more than 100 expired rows on one lab server and pushed the run time to 28 seconds.
+    - Old copies in folders named `backup`, `backups`, or `archive`. Mailcow keeps each old certificate in `ssl/backups/`. On one lab server, this added more than 100 expired rows and increased the run time to 28 seconds.
     - Sample certificates in folders such as `ssl-example` or `samples`.
 - Private key files are read but fail to parse as certificates, so they are skipped. Key material is never returned.
 
@@ -276,7 +276,7 @@ Checked in a lab tenant before building this sensor. No core Tanium sensor repor
 ## Things to know
 
 - **Read-only.** Windows opens each store read-only. Linux and macOS only read files and export certificates to the script's output. Nothing is written on the endpoint.
-- **Certificates that aren't certificate files on the host are not seen.** Some applications keep certificates in their own database (Authentik in the lab), inside the container image, or in a named Docker volume. The sensor reads host folders only. For those, use Certificate Manager, which also checks what each listening port serves.
+- **The sensor does not see certificates that are not files on the host.** Some applications keep certificates in their own database (Authentik in the lab), in the container image, or in a named Docker volume. The sensor reads only host folders. For these, use Certificate Manager. It also checks the certificate that each listening port shows.
 - **Java keystores and PKCS#12 files (`.jks`, `.pfx`, `.p12`) are not read.** They usually need a password.
 - **Only the first certificate in a PEM file is read.** In a full-chain file, that is the server certificate.
 - **Match certificates across platforms on Thumbprint, not Subject.** Windows and Linux write commas inside a name differently: `O="Example, Inc."` on Windows and `O=Example\, Inc.` on Linux.

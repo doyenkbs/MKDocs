@@ -20,7 +20,7 @@ Newer versions of Python are not touched, and neither is the all-users Python La
     Scanners, Tanium Comply included, check the per-user copy in `C:\Users\<user>\AppData\Local\Programs\Python\` separately from the all-users copy. Installing a newer Python does not clear the finding, because the old copy is still there. Removing the old copy clears it. A finding can cover several vulnerabilities at once when they all point to the same old `python.exe`, so one removal often clears several findings on the same endpoint.
 
 !!! warning "Test status"
-    An earlier version of this script (all-users uninstall plus per-user folders, uninstall entries, Start menu, and PATH, for 3.10 and 3.11) was run through Tanium on one Windows endpoint with a per-user Python 3.11.2 install, and removed the install folder. The script on this page adds 3.12, custom folders, PythonCore registry keys, the per-user launcher, signed-out profiles, logging, and exit codes. **It has only been checked for syntax so far.** Test it on one endpoint before deploying widely. See [Test results](#test-results).
+    An earlier version of this script ran through Tanium on one Windows endpoint with a per-user Python 3.11.2 install, and it removed the install folder. That version did the all-users uninstall and removed per-user folders, uninstall entries, Start menu items, and PATH entries for 3.10 and 3.11. The script on this page adds 3.12, custom folders, PythonCore registry keys, the per-user launcher, signed-out profiles, logging, and exit codes. **Only a syntax check was done on this script.** Test it on one endpoint before a wide deployment. See [Test results](#test-results).
 
 ---
 
@@ -108,19 +108,19 @@ Copies made by hand or from the embeddable zip do not show in Installed Applicat
     1. Reads the install folders registered for 3.10, 3.11, and 3.12 under `HKLM\SOFTWARE\Python\PythonCore`.
     2. For each `Python 3.1x.x (64-bit)` or `(32-bit)` entry, runs the installer's own quiet uninstall from `C:\ProgramData\Package Cache\`.
     3. If the cached installer is gone, removes the hidden MSI components one by one with `msiexec /x`.
-3. **Custom folders:** deletes registered install folders that still exist, and `Python*` folders at the root of the system drive, but only when `python.exe` directly inside the folder is version 3.10, 3.11, or 3.12. A drive root and anything under `C:\Windows` are never deleted.
+3. **Custom folders:** deletes registered install folders that still exist. It also deletes `Python*` folders at the root of the system drive, but only when `python.exe` in the folder is version 3.10, 3.11, or 3.12. The script never deletes a drive root or anything in `C:\Windows`.
 4. Removes the `PythonCore\3.10`, `3.11`, and `3.12` keys for all users, once their uninstall entries are gone.
 5. **Every user profile:**
     1. Deletes `AppData\Local\Programs\Python\Python3xx` and `AppData\Roaming\Python\Python3xx`.
     2. Deletes the per-user Python Launcher, only if its `py.exe` is version 3.10, 3.11, or 3.12.
-    3. Deletes `AppData\Local\Programs\Python` if nothing is left in it.
+    3. Deletes `AppData\Local\Programs\Python` if it is empty.
     4. Deletes Start menu folders named `Python 3.10`, `Python 3.11`, or `Python 3.12`.
-    5. Opens the user's registry (the live one if the user is signed in, otherwise `NTUSER.DAT` loaded as `HKEY_USERS\PY_CLEANUP`) and deletes custom install folders registered there, the uninstall entries, the `PythonCore` keys, and the PATH entries for those versions.
-6. Checks that nothing is left and prints a summary.
+    5. Opens the registry of the user. It uses the live registry if the user is signed in. If not, it loads `NTUSER.DAT` as `HKEY_USERS\PY_CLEANUP`. Then it deletes the custom install folders registered there, the uninstall entries, the `PythonCore` keys, and the PATH entries for those versions.
+6. Makes sure that nothing stays, and prints a summary.
 
 ### What it leaves behind
 
-- **Windows Installer records for per-user installs.** The hidden MSI packages stay registered to the user. They do not run anything and do not affect inventory or scanners, but that user cannot repair or reinstall that exact old version per user afterward.
+- **Windows Installer records for per-user installs.** The hidden MSI packages stay registered to the user. They do not run anything, and they do not change inventory or scanner results. But after the removal, that user cannot repair or reinstall that old version per user.
 - **pip's download cache** in `C:\Users\<user>\AppData\Local\pip\cache`. It is shared by all Python versions.
 - **Virtual environments** the user created with the old version. They stop working once the old version is gone and have to be recreated.
 
@@ -222,7 +222,7 @@ Get Tanium Action Log[12345] from all machines
 
 ### Confirm Python is gone
 
-Ask the question from [Find the endpoints](#find-the-endpoints) again. The endpoint should no longer return Python 3.10, 3.11, or 3.12. The **Installed Applications** sensor can return a cached result for a while after the change, so an endpoint that still shows it right after the action may clear on its own. If the removal was for a vulnerability finding, run the Comply assessment again afterward.
+Ask the question from [Find the endpoints](#find-the-endpoints) again. The endpoint must not return Python 3.10, 3.11, or 3.12. The **Installed Applications** sensor can return a saved result for some time after the change. Thus, an endpoint that still shows Python immediately after the action can clear later. If the removal was for a vulnerability finding, run the Comply assessment again.
 
 ---
 
@@ -236,11 +236,11 @@ Ask the question from [Find the endpoints](#find-the-endpoints) again. The endpo
 
 ## Things to know
 
-- **Users can reinstall the old version.** A per-user install needs no administrator rights, so a user can download Python 3.11 again and the finding comes back. If this keeps happening, the fix is a policy (application control or a standard Python version), not this package.
+- **Users can install the old version again.** A per-user install needs no administrator rights. A user can download Python 3.11 again, and the finding comes back. If this occurs many times, use a policy (application control or a standard Python version), not this package.
 - **Signed-in users are cleaned too.** Their registry is edited live. A PATH change takes effect the next time the user signs in.
 - **Folder deletes are checked, not assumed.** Each delete is checked afterward, and the final check looks for every `python.exe` the script knows about.
 - **It runs as 64-bit.** If the Tanium client starts 32-bit PowerShell, the script restarts itself as 64-bit, so 64-bit registry entries are not missed.
-- **Copies outside the known locations are not found.** A copy made by hand in a nested folder such as `C:\Tools\python3.11` or on another drive has no registry entry to follow. Use the path from Comply's **Actual Values** and the [Remove Folder](remove-folder.md) package for those.
+- **The script does not find copies outside the known locations.** A copy made by hand in a nested folder, such as `C:\Tools\python3.11`, or on a different drive has no registry entry. For these copies, use the path from **Actual Values** in Comply and the [Remove Folder](remove-folder.md) package.
 - **Deleting the folder by hand is not enough.** It leaves the uninstall entry and PythonCore keys behind, and inventory keeps reporting the old version. Use this package instead.
 
 ---

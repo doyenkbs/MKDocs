@@ -9,9 +9,9 @@ tags:
 # Java - Last Run - Prefetch (Sensor)
 
 !!! tip "Replaced by Java - Install Usage - Prefetch"
-    [Java - Install Usage - Prefetch](java-install-usage.md) returns everything this sensor does, tied to the exact Java that ran, and it tells you when Prefetch is switched on but not being written (common on servers, where this sensor would wrongly report "No Java runs recorded"). Use the newer sensor for new work.
+    [Java - Install Usage - Prefetch](java-install-usage.md) returns all the data of this sensor, linked to the Java that ran. It also tells you when Prefetch is on but does not write files. This is common on servers, where this sensor would incorrectly report "No Java runs recorded". Use the newer sensor for new work.
 
-This page shows how to create the **Java - Last Run - Prefetch** sensor in the Tanium Console, and how to use it to decide whether Java can be uninstalled from a workstation without asking anyone.
+This page shows how to create the **Java - Last Run - Prefetch** sensor in the Tanium Console. It also shows how to use it to decide if you can uninstall Java from a workstation without approval.
 
 **What it returns:** one row per Java launcher that Windows has recorded running, with the Prefetch file name, when it last ran, and how many days ago that was.
 
@@ -42,9 +42,9 @@ The sensor only reads file names and dates. It does not open the Prefetch files 
 
 ## Use cases
 
-**Uninstalling Java from workstations without approval.** The main use. When a workstation has Oracle Java installed, Java has not run for 30 days or more, and the Java on it is not bundled with an application, it is a safe removal. See [Workstation removal process](#workstation-removal-process).
+**Uninstall Java from workstations without approval.** This is the main use. A workstation is safe for removal when it has Oracle Java, Java has not run for 30 days or more, and the Java is not part of an application. See [Workstation removal process](#workstation-removal-process).
 
-**Telling installer activity apart from real use.** The Oracle Java installer runs `javaws.exe` itself during an install or update. When many machines show `JAVAWS.EXE`, `JAVAW.EXE`, and `JP2LAUNCHER.EXE` all running within a couple of minutes of each other, on the same date across the fleet, that is an update being installed, not people using Java. Check that date against your Java update or deployment schedule before you treat it as use.
+**Tell installer activity from real use.** The Oracle Java installer runs `javaws.exe` during an install or update. Sometimes many machines show `JAVAWS.EXE`, `JAVAW.EXE`, and `JP2LAUNCHER.EXE` within a few minutes of each other, on the same date. This is an update install, not people who use Java. Compare that date with your Java update or deployment schedule before you treat it as use.
 
 **Finding where Java Web Start is still in use.** Machines with a recent `JAVAWS.EXE` or `JP2LAUNCHER.EXE` outside an update window are running a `.jnlp` application. Those are the users to talk to before Java leaves their machine.
 
@@ -108,7 +108,7 @@ Leave it empty. This sensor has no parameters.
 
 ### Step 6: Scripts section
 
-For each platform in the table: click the platform tab on the left, check **Enable sensor for [platform] platform**, set **Query Type** in the top right, click inside the script editor, press **Ctrl + A**, press **Delete**, then paste the script for that platform.
+For each platform in the table, do these steps: click the platform tab on the left, select **Enable sensor for [platform] platform**, and set **Query Type** in the top right. Then click in the script editor, press **Ctrl + A**, press **Delete**, and paste the script for that platform.
 
 | Platform | Enable | Query Type | Script |
 |---|---|---|---|
@@ -198,7 +198,7 @@ If only an application's bundled Java runs, move the machine to Uninstall. The O
 1. Uninstall Oracle Java on about 5 machines from the Uninstall bucket with your uninstall package, using the product codes from the **Installed Applications** uninstall string. Wait 3 to 5 business days for tickets.
 2. Build a computer group from a positive filter that matches the rest of the Uninstall bucket, and deploy to it.
 
-Bundled Java and the Java runtime Tanium Comply ships inside the Tanium Client folder are not MSI products, so an uninstall that targets Oracle Java MSI product codes leaves them alone.
+Bundled Java is not an MSI product. The Java runtime that Tanium Comply keeps in the Tanium Client folder is also not an MSI product. Thus, an uninstall that targets Oracle Java MSI product codes does not touch them.
 
 ### 5. Verify
 

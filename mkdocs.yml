@@ -230,6 +230,7 @@ nav:
         - Overview: home-lab/tanium/packages/index.md
         - Edge MSI Standardization: home-lab/tanium/packages/edge-msi-standardization.md
         - Find File by Name: home-lab/tanium/packages/find-file-by-name.md
+        - Free Up User Disk Space: home-lab/tanium/packages/free-up-user-disk-space.md
         - Local Admin Removal: home-lab/tanium/packages/local-admin-removal.md
         - Remove DriverStore Package: home-lab/tanium/packages/remove-driverstore-package.md
         - Remove File: home-lab/tanium/packages/remove-file.md
@@ -241,6 +242,9 @@ nav:
         - Remove VS Code User Install: home-lab/tanium/packages/remove-vscode-user-install.md
         - Remove Zoom User Install: home-lab/tanium/packages/remove-zoom-user-install.md
         - Set Time Zone: home-lab/tanium/packages/set-time-zone.md
+        - Update Node.js in Adobe CC: home-lab/tanium/packages/update-adobe-cc-node.md
+        - Update Store Apps: home-lab/tanium/packages/update-store-apps.md
+        - Windows Component Cleanup (DISM): home-lab/tanium/packages/windows-component-cleanup.md
     - Sensors:
         - Overview: home-lab/tanium/sensors/index.md
         - .NET App Dependencies: home-lab/tanium/sensors/dotnet-app-dependencies.md

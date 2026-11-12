@@ -22,12 +22,12 @@ It deletes only the one folder you type in. It doesn't look at the PHP version. 
 First it checks that it's safe to delete. If any check fails, it stops and changes nothing:
 
 1. **Is it the right kind of folder?** The folder must be directly inside `C:\Program Files (x86)\PHP` or `C:\Program Files\PHP`, and must contain `php.exe`.
-2. **Is a website using it?** If IIS (the Windows web server) is set up to run PHP from this folder, the script stops. Deleting the folder would break those websites. **Force does not skip this check.** Remove the IIS settings first with [Remove IIS PHP Handler](remove-iis-php-handler.md).
+2. **Does a website use it?** If IIS (the Windows web server) runs PHP from this folder, the script stops. A folder delete would break those websites. **Force does not skip this check.** First, remove the IIS settings with [Remove IIS PHP Handler](remove-iis-php-handler.md).
 3. **Is PHP running right now?** If a program is running from the folder, the script stops. If you set **Force** to `Yes`, it closes those programs, waits 5 seconds, and checks again. If they started again on their own, something (a service or scheduled task) keeps launching them, and the script stops.
 
 If everything is safe, it:
 
-1. Runs PHP's uninstaller, if PHP was installed with one (an MSI installer).
+1. Runs the PHP uninstaller, if PHP has one (an MSI installer).
 2. Deletes the folder.
 3. Removes PHP from the installed programs list, if it's still there.
 4. Removes the folder from the system PATH.
@@ -107,7 +107,7 @@ This run stopped because IIS still used the folder:
 
 ## Things to know
 
-- **Force can break things.** If a scheduled task or script was running that PHP, it fails the next time it runs, because the folder is gone. Tell its owner first.
+- **Force can cause failures.** If a scheduled task or script used that PHP, it fails the next time that it runs, because the folder is gone. Tell its owner first.
 - **Only the folder you type.** PHP in other places, such as `C:\PHP` or `D:\php`, is refused. This stops a typo from deleting the PHP a website still needs.
 - **Don't use this for current PHP.** If the PHP version still gets security fixes, update it instead. See [PHP on IIS](../remediation/php-on-iis.md).
 

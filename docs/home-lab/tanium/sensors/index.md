@@ -32,11 +32,11 @@ A sensor answers a question in Interact. It runs on every targeted endpoint each
 - **Multi-column results** use `|` as the delimiter, with the columns defined in the sensor settings.
 - **Time budget.** Each script stops itself before the sensor timeout and returns a status line instead of being killed mid-run. Set the sensor timeout above that internal limit.
 - **One sensor, one script per platform.** Windows, Linux, and Mac scripts live in the same sensor instead of separate sensors per OS.
-- **Status results are never blank:** `None` when nothing matches, `Not Applicable` when the feature doesn't exist on that endpoint, and `Error: <reason>` on failure, using a fixed set of reasons so results can be filtered. Find File by Name predates this convention and still uses `NOT FOUND` style strings.
+- **Status results are never empty:** `None` when nothing matches, `Not Applicable` when the feature is not on that endpoint, and `Error: <reason>` on failure. The reasons come from a fixed list, so you can filter the results. Find File by Name is older than this rule and still uses `NOT FOUND` style text.
 - **Read-only.** Sensors never change anything on the endpoint.
 
 ## Before creating a sensor
 
 1. Replace the `||Parameter||` placeholders with real values in a test copy, then run it locally to confirm it works and to measure the run time.
 2. Compare that run time against the sensor timeout. A sensor is re-run on every question, so anything close to the limit will hurt at scale.
-3. Check the **Max Sensor Age**. Results are reused for that long before the script runs again.
+3. Check the **Max Sensor Age**. Tanium uses saved results for this time before the script runs again.

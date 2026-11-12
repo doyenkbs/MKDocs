@@ -42,7 +42,7 @@ You need two exports: what is vulnerable (Comply) and what uses it (the sensor).
     Get Computer Name and .NET App Dependencies from all machines with Is Windows equals True
     ```
 
-3. **Endpoints that did not answer.** Machines that are offline when you ask have no sensor result. Ask again later and export again. Without a sensor result, a runtime finding cannot be decided.
+3. **Endpoints that did not answer.** Machines that are offline when you ask have no sensor result. Ask again later and export again. Without a sensor result, you cannot decide on a runtime finding.
 4. **Optional, sharing the data.** To get help from someone outside your team, run both files through [Pseudonymize Exports](../tools/pseudonymize-exports.md) with one shared map file.
 5. **Build the plan.** Load both CSV files into the [.NET Remediation Plan](../tools/dotnet-remediation-plan.md) tool. It applies the rules below to every endpoint.
 

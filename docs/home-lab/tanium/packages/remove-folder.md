@@ -191,7 +191,7 @@ Get Tanium Action Log[12345] from all machines
 
 ## Test results
 
-Each case ran through `cmd.exe` with URL-encoded parameters. Real deletes ran only against test folders created for the purpose. Protected-folder cases ran against a copy of the script with the delete command replaced by a stub, so a failed check would have shown up in the log without deleting anything.
+Each case ran through `cmd.exe` with URL-encoded parameters. Real deletes ran only on test folders made for the test. Protected-folder cases ran on a copy of the script with a stub in place of the delete command. Thus, a failed check would show in the log, but nothing would be deleted.
 
 | Case | Expected | Result |
 |---|---|---|

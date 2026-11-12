@@ -8,7 +8,7 @@ tags:
 
 # Pseudonymize Exports (Scripts)
 
-This page covers two PowerShell scripts that let you share Tanium exports (Comply findings, Interact question results, Asset reports) without sharing real machine names, and then turn the analysis back into a list of real machines you can act on.
+This page shows two PowerShell scripts. The first lets you share Tanium exports (Comply findings, Interact question results, Asset reports) without real machine names. The second changes the analysis back into a list of real machines for your actions.
 
 | Script | What it does |
 |---|---|
@@ -24,7 +24,7 @@ Both scripts run on your own workstation against exported CSV files. They never 
 
 ## Use cases
 
-**Getting help with a vulnerability export.** A Comply export of every finding for one product (for example all Java CVEs) can have thousands of rows across a hundred or more machines. You want an AI assistant, a colleague outside the team, or a consultant to turn it into a plan: which installs to remove, which to upgrade, which machines need more than one fix. Pseudonymize it first, share it, and get the plan back with pseudonyms in it.
+**Get help with a vulnerability export.** A Comply export of all findings for one product (for example all Java CVEs) can have thousands of rows for a hundred or more machines. You want an AI assistant, a colleague outside the team, or a consultant to make a plan from it: which installs to remove, which to upgrade, and which machines need more than one fix. Pseudonymize the export first, share it, and get the plan back with pseudonyms in it.
 
 **Joining several exports in one analysis.** A findings export says what is vulnerable. An Interact export of running processes says what is in use. An Installed Applications export gives the uninstall strings. The analysis only works if the same machine has the same name in every file. Run all the files through the script together (or one after another with the same map file) and the joins still work.
 
@@ -32,7 +32,7 @@ Both scripts run on your own workstation against exported CSV files. They never 
 
 **Attaching data to a vendor support case.** Send the vendor the rows they need to reproduce a detection problem without giving them your naming convention or user names.
 
-**Turning the plan back into targets.** When the plan comes back, `Restore-RealNames.ps1` puts the real names back, so you can build a computer group or paste the names into an action's target list.
+**Change the plan back into targets.** When you get the plan, `Restore-RealNames.ps1` puts the real names back. Then you can make a computer group, or paste the names into the target list of an action.
 
 ---
 
@@ -50,9 +50,9 @@ Each endpoint name becomes the first three characters of the real name, in capit
 
 Rules the script follows:
 
-- **The short name is the key.** `srv-app01.example.com`, `SRV-APP01`, and `srv-app01` are treated as the same machine, so an export that uses FQDNs still joins to one that uses short names. IP addresses are kept whole.
+- **The short name is the key.** The scripts treat `srv-app01.example.com`, `SRV-APP01`, and `srv-app01` as the same machine. Thus, an export with FQDNs still joins to an export with short names. The scripts keep IP addresses complete.
 - **One map for everything.** The map file (`Pseudonym-Map.csv`) is loaded at the start of every run and saved at the end. New machines get the next free number. Existing machines keep their pseudonym.
-- **Names inside other columns are replaced too.** A UNC path such as `\\srv-app01\share` in another column becomes `\\SRV-EP001\share`. Only names of 4 characters or more are replaced inside other columns, so a short name such as `dc1` does not replace parts of ordinary words.
+- **The scripts also replace names in other columns.** A UNC path such as `\\srv-app01\share` in a different column becomes `\\SRV-EP001\share`. In other columns, the scripts replace only names of 4 or more characters. Thus, a short name such as `dc1` does not change parts of normal words.
 - **User profile names are masked.** `C:\Users\jdoe\...`, `/home/jdoe/...`, and `/Users/jdoe/...` become `C:\Users\<user>\...` and so on, in every column. This one is not reversible.
 
 !!! tip "Check what your first three characters give away"

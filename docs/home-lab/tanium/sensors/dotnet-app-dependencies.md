@@ -8,14 +8,14 @@ tags:
 
 # .NET App Dependencies (Sensor)
 
-This page shows how to create the **.NET App Dependencies** sensor in the Tanium Console, and how to use it to find out which apps use each .NET runtime before you remove or upgrade it.
+This page shows how to create the **.NET App Dependencies** sensor in the Tanium Console. It also shows how to use it to find the apps that use each .NET runtime before you remove or upgrade the runtime.
 
-**What it returns:** one row per app and per .NET framework the app asks for: the framework, the version the app asks for, the rule the app uses to pick a version, the installed version it would actually load, where that copy of .NET comes from, the app's architecture, and where the app was found (IIS site, Windows service, app, or developer tool). Machines with no .NET apps return a single `None found` row.
+**What it returns:** one row for each app and each .NET framework that the app requests. The row shows the framework, the version that the app requests, and the rule that the app uses to select a version. It also shows the installed version that the app would load, the source of that copy of .NET, the app architecture, and where the sensor found the app (IIS site, Windows service, app, or developer tool). Machines with no .NET apps return one `None found` row.
 
 It covers .NET Core 3.1 and .NET 5 and later (including ASP.NET Core and the Windows Desktop runtime). It does not cover .NET Framework 4.x, which is part of Windows and is fixed by Windows updates.
 
 !!! warning "Test status"
-    Run through Tanium on Windows 11 and Windows Server lab endpoints: machines without .NET apps, desktop apps that carry their own .NET, a product that ships a private .NET runtime (SQL Server Management Studio 21), an ASP.NET Core site in IIS outside `C:\inetpub`, two Windows services (one started from its own `.exe`, one through `dotnet.exe`), and an app pinned to a version that is not installed. See [Test results](#test-results).
+    Tests ran through Tanium on Windows 11 and Windows Server lab endpoints. The test cases were: machines without .NET apps, desktop apps with their own .NET, a product with a private .NET runtime (SQL Server Management Studio 21), and an ASP.NET Core site in IIS outside `C:\inetpub`. They also included two Windows services (one starts from its own `.exe`, one through `dotnet.exe`) and an app set to a version that is not installed. See [Test results](#test-results).
 
 ---
 
@@ -23,17 +23,17 @@ It covers .NET Core 3.1 and .NET 5 and later (including ASP.NET Core and the Win
 
 Every .NET app (Core 3.1, 5 and later) ships a small file next to its program called `<app>.runtimeconfig.json`. It says which .NET framework the app needs, which version, and how strict the app is about that version. The sensor finds those files, reads them, and works out which installed copy of .NET the app would really load.
 
-1. **Lists the installed .NET runtimes.** It reads the install folder from `HKLM\SOFTWARE\dotnet\Setup\InstalledVersions\<x64 or x86>\InstallLocation` (usually `C:\Program Files\dotnet`) and lists every version under its `shared` folder. Version folders left behind by an uninstall (no `.dll` files inside) are ignored.
-2. **Finds the apps.** It looks for `*.runtimeconfig.json` in this order, so the most important places are covered even if time runs out:
+1. **Lists the installed .NET runtimes.** It reads the install folder from `HKLM\SOFTWARE\dotnet\Setup\InstalledVersions\<x64 or x86>\InstallLocation` (usually `C:\Program Files\dotnet`). Then it lists each version in its `shared` folder. It ignores version folders that an uninstall left (folders with no `.dll` files).
+2. **Finds the apps.** It looks for `*.runtimeconfig.json` in this order. Thus, it covers the most important places first if time runs out:
     1. IIS site and application folders, from `C:\Windows\System32\inetsrv\config\applicationHost.config`
     2. The folder of every Windows service program, from `HKLM\SYSTEM\CurrentControlSet\Services\<service>\ImagePath`. For a service started as `dotnet.exe <app>.dll`, it uses the folder of the `.dll`
     3. `C:\Program Files`, `C:\Program Files (x86)`, `C:\ProgramData` (except `C:\ProgramData\Microsoft`), and `C:\inetpub`, 5 folder levels deep
     4. Each user profile's `AppData\Local\Programs` and `.dotnet\tools`
     5. Other fixed drives such as `D:\`, 4 folder levels deep
-3. **Works out which .NET each app loads.** It applies the same rules .NET uses at startup (see [Roll forward](#roll-forward-in-plain-words)). If no installed shared runtime fits, it looks in the app's own product folder for a private copy of .NET (a folder with `host\fxr` and `shared` inside). Some products ship one and point their own programs at it.
+3. **Finds the .NET that each app loads.** It uses the same rules as .NET at startup (see [Roll forward](#roll-forward-in-plain-words)). If no installed shared runtime is correct, it looks for a private copy of .NET in the product folder of the app (a folder with `host\fxr` and `shared` in it). Some products have a private copy and use it for their own programs.
 4. **Labels each app** by where it was found: `IIS`, `Service`, `DevTool`, or `App`.
 
-It skips folders that only add noise or time: `C:\Windows`, `C:\Program Files\WindowsApps` (except Store apps that run as a service), the .NET install folder itself, Visual Studio install folders (the Visual Studio Installer updates those), Windows Defender, WinSxS, `node_modules`, `.git`, `Package Cache`, and test runner files named `testhost*`.
+It skips folders that only add unwanted results or time: `C:\Windows`, `C:\Program Files\WindowsApps` (except Store apps that run as a service), the .NET install folder, Visual Studio install folders (the Visual Studio Installer updates them), Windows Defender, WinSxS, `node_modules`, `.git`, `Package Cache`, and test runner files named `testhost*`.
 
 The script stops itself after 40 seconds and adds a `Scan incomplete` row naming the folders it did not finish. It also stops scanning any one folder tree after 15,000 folders, so a single huge folder (an agent queue or cache) cannot use the whole time. On a lab laptop with more than 85,000 folders under `C:\Program Files (x86)` the full scan took about 7 seconds.
 
@@ -50,7 +50,7 @@ An app does not always need the exact version it was built with. Its **roll forw
 | `LatestPatch` | Newest patch of the exact minor version | Loads 8.0.x only |
 | `Disable` | Exactly the version asked for | Loads 8.0.0 only. Almost never installed, so the app fails |
 
-This is why removing .NET 8 breaks some apps and not others: an app set to `Minor` stops starting, while an app set to `Major` moves to .NET 10 on its own.
+This is why the removal of .NET 8 stops some apps but not others. An app set to `Minor` does not start. An app set to `Major` moves to .NET 10 automatically.
 
 ---
 
@@ -267,10 +267,10 @@ The full decision guide is in [.NET Runtimes](../remediation/dotnet-runtimes.md)
 ## Limits
 
 - **.NET Framework 4.x is not covered.** It is part of Windows. Windows updates fix it.
-- **Only the folders listed in [How the sensor works](#how-the-sensor-works) are searched.** An app started by a scheduled task or from another folder on `C:\` (for example `C:\Tools`) is not found. Check those with [Scheduled Tasks - By Command](scheduled-tasks-by-command.md) and [Running Processes - Paths - Hashes](running-processes-paths-hashes.md) (look for `\dotnet\dotnet.exe` in the Path column).
+- **The sensor searches only the folders in [How the sensor works](#how-the-sensor-works).** It does not find an app that a scheduled task starts, or an app in a different folder on `C:\` (for example `C:\Tools`). Check these with [Scheduled Tasks - By Command](scheduled-tasks-by-command.md) and [Running Processes - Paths - Hashes](running-processes-paths-hashes.md) (look for `\dotnet\dotnet.exe` in the Path column).
 - **Installed runtimes that nothing uses get no row.** The sensor lists apps, not runtimes. A runtime that appears in your vulnerability findings but in no **Resolves To** value is the one nothing uses.
 - **Old version folders show up as apps.** Some products keep old copies after updating. Dell TechHub, for example, keeps `C:\Program Files\Dell\DTP\<Component>Deps\<version>` folders that often show `None installed`. The copies in use are in the `<Component>SubAgent` folders.
-- **Tools inside NuGet package folders show up as apps.** A site folder that contains `packages\<package>\tools\` (for example the Entity Framework `ef6` tool) gives a row that is not a real app.
+- **Tools in NuGet package folders show as apps.** A site folder that contains `packages\<package>\tools\` (for example the Entity Framework `ef6` tool) gives a row that is not a real app.
 - **Context shows the first match.** A folder used by two IIS sites shows only one of them.
 
 ---

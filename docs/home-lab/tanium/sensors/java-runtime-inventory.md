@@ -9,12 +9,12 @@ tags:
 
 # Java - Runtime Inventory - Dependencies (Sensor)
 
-This page shows how to create the **Java - Runtime Inventory - Dependencies** sensor by hand in the Tanium Console, and how to use it with your vulnerability scanner to find and fix vulnerable Java for the long term.
+This page shows how to create the **Java - Runtime Inventory - Dependencies** sensor in the Tanium Console. It also shows how to use the sensor with your vulnerability scanner to find and repair vulnerable Java.
 
-**What it returns:** every Java runtime on each endpoint, patched or not, one row per runtime per thing that uses it. Each row gives the `java.exe` path, the Java line (8, 11, 17, 21, 25, ...), the version, the vendor, what installed it, the uninstall command, and the service, process, scheduled task, variable, or file association that depends on it.
+**What it returns:** each Java runtime on each endpoint, patched or not. The sensor returns one row for each runtime and each item that uses it. Each row gives the `java.exe` path, the Java line (8, 11, 17, 21, 25, ...), the version, the vendor, the installer, and the uninstall command. It also gives the service, process, scheduled task, variable, or file association that uses the runtime.
 
 !!! note "Why there is no version list in this sensor"
-    Java gets security fixes every quarter, so any list of vulnerable versions inside a sensor goes out of date within three months and then gives wrong answers without any warning. This sensor only reports facts that do not expire: what is installed, where, and what uses it. Your vulnerability scanner decides which versions are vulnerable, because it already receives new CVE data automatically. For a one-time cleanup with a built-in version list, use the Tanium sensor **Java - Vulnerable Installs - Dependencies**.
+    Java gets security fixes every quarter. A list of vulnerable versions in a sensor becomes old within three months, and then it gives wrong answers with no warning. This sensor reports only facts that do not become old: what is installed, where, and what uses it. Your vulnerability scanner decides which versions are vulnerable, because it gets new CVE data automatically. For a one-time cleanup with a built-in version list, use the Tanium sensor **Java - Vulnerable Installs - Dependencies**.
 
 !!! warning "Build it by hand"
     The Tanium Console limits each platform script to 28,000 characters. The Windows script below is about 25,800 characters. Paste it exactly as shown; do not add comments or indentation.
@@ -35,11 +35,11 @@ A Java runtime is any folder that has `bin\java.exe` or `bin\server\jvm.dll`. Th
 
 The folder search skips cache and data folders and stops after 35 seconds. If it stops early, the sensor adds a **Scan incomplete** row so you know that result is partial.
 
-The Linux script looks in `/usr/lib/jvm`, `/usr/java`, the default `java` on the PATH, running Java processes, `JAVA_HOME` in `/etc/environment`, `/etc/profile.d`, and `/etc/default`, and searches `/opt`, `/usr/local`, `/srv`, `/app`, `/apps`, `/u01`, and `/data` without crossing into network mounts. That search stops after 30 seconds in total and adds the same **Scan incomplete** row.
+The Linux script looks in `/usr/lib/jvm`, `/usr/java`, the default `java` on the PATH, running Java processes, and `JAVA_HOME` in `/etc/environment`, `/etc/profile.d`, and `/etc/default`. It also searches `/opt`, `/usr/local`, `/srv`, `/app`, `/apps`, `/u01`, and `/data`, but not network mounts. The search stops after 30 seconds and adds the same **Scan incomplete** row.
 
 ### 2. Read the version and who installed it
 
-The version comes from the `release` file in the Java folder, or from the file version of `java.exe` if there is no `release` file. The sensor reports it two ways: **Version String** exactly as Java writes it (for example `1.8.0_401`), and **Version** in a sortable form (for example `8.0.401`), so Java 8 and newer lines can be compared the same way.
+The version comes from the `release` file in the Java folder. If there is no `release` file, it comes from the file version of `java.exe`. The sensor shows the version in two forms. **Version String** shows it as Java writes it (for example `1.8.0_401`). **Version** shows it in a form that sorts correctly (for example `8.0.401`). Thus, you can compare Java 8 and newer lines the same way.
 
 ### 3. Find what uses each runtime
 
@@ -58,7 +58,7 @@ The version comes from the `release` file in the Java folder, or from the file v
 | ... (same application folder, likely uses it) | A service or process in the same application folder as a bundled Java. This is an inference, not a direct reference |
 | None found | Nothing references it. This runtime is usually the safest to remove |
 
-Command lines are never returned. For running Java processes the sensor shows only the jar file name or main class, so `-D` arguments (which can hold passwords) stay on the endpoint.
+The sensor never returns command lines. For running Java processes, it shows only the jar file name or main class. Thus, `-D` arguments (which can contain passwords) stay on the endpoint.
 
 ---
 
@@ -66,7 +66,7 @@ Command lines are never returned. For running Java processes the sensor shows on
 
 - You need a role that can create sensors in the content set you plan to use.
 - If a sensor named **Java - Runtime Inventory - Dependencies** already exists, edit it instead of creating a second one. Sensor names must be unique.
-- Copy each script with the copy button on its code block so nothing is changed.
+- Use the copy button on each code block to copy the script. This prevents changes to the script.
 
 ---
 
@@ -119,7 +119,7 @@ After you check **Split into multiple columns**:
 | 8 | Used By Type | Text | Checked | Unchecked |
 | 9 | Used By | Text | Checked | Unchecked |
 
-**Java Line** as Numeric and **Version** as Version let the results grid sort them correctly (so `8.0.60` sorts before `8.0.401`). Rows where the version could not be read show `unknown` in both columns.
+Set **Java Line** to Numeric and **Version** to Version. Then the results grid sorts them correctly (`8.0.60` comes before `8.0.401`). If the sensor cannot read the version, both columns show `unknown`.
 
 ### Step 5: Parameters section
 
@@ -127,7 +127,7 @@ Leave it empty. This sensor has no parameters.
 
 ### Step 6: Scripts section
 
-For each platform in the table: click the platform tab on the left, check **Enable sensor for [platform] platform**, set **Query Type** in the top right, click inside the script editor, press **Ctrl + A**, press **Delete**, then paste the script for that platform.
+For each platform in the table, do these steps: click the platform tab on the left, select **Enable sensor for [platform] platform**, and set **Query Type** in the top right. Then click in the script editor, press **Ctrl + A**, press **Delete**, and paste the script for that platform.
 
 | Platform | Enable | Query Type | Script |
 |---|---|---|---|
@@ -191,8 +191,8 @@ For each platform in the table: click the platform tab on the left, check **Enab
 
 This sensor tells you where Java is and what depends on it. Your vulnerability scanner tells you which versions are vulnerable. Use them together:
 
-1. **Get the fixed version from the scanner.** Open a Java finding in your vulnerability report and note the fixed (or first non-vulnerable) version for each Java line, for example Java 17 fixed in 17.0.21. A Java line that no longer receives updates (check the vendor's support roadmap) has no fixed version, so every copy of it is vulnerable.
-2. **List Java on the affected machines.** Ask the sensor on all machines, or narrow it to the machines in the report: `Get Java - Runtime Inventory - Dependencies from all machines`
+1. **Get the fixed version from the scanner.** Open a Java finding in your vulnerability report. Write down the fixed (first non-vulnerable) version for each Java line, for example 17.0.21 for Java 17. Some Java lines do not get updates any more (see the vendor's support roadmap). These lines have no fixed version, so each copy is vulnerable.
+2. **List Java on the affected machines.** Ask the sensor on all machines, or only on the machines in the report: `Get Java - Runtime Inventory - Dependencies from all machines`
 3. **Narrow to one Java line if needed.** In the results, narrow by the **Java Line** column (for example `8`) or the **Version String** column (for example `1.8.0_`).
 4. **Compare.** In the results grid, sort by **Java Line** and then **Version**. Every row whose Version is below the fixed version for its Java line is vulnerable. For large result sets, export the results to CSV from the results grid and compare there.
 5. **Remediate** using the Installed By, Uninstall Command, and Used By columns. See [Remediation by finding](#remediation-by-finding).
@@ -215,7 +215,7 @@ This sensor tells you where Java is and what depends on it. Your vulnerability s
 
 Example row (values are illustrative): `C:\Program Files\Java\jre1.8.0_401\bin\java.exe|8|8.0.401|1.8.0_401|JRE|Oracle Corporation|Java 8 Update 401 (64-bit) 8.0.4010.11|MsiExec.exe /X{00000000-0000-0000-0000-000000000000} /qn /norestart|None found|No service, process, scheduled task, variable, or file association references it`
 
-A running service usually appears twice for the same Java: once as a **Service** row and once as a **Running Process** row that names the same service. Count dependencies by service, not by row.
+A running service usually shows two times for the same Java: one **Service** row and one **Running Process** row with the same service name. Count dependencies by service, not by row.
 
 ---
 
@@ -227,16 +227,16 @@ Match each vulnerable row to a finding below using its **Installed By** and **Us
 
 Skip a row, or confirm it first, when any of these apply:
 
-- **Installed By is `Unknown (user profile not logged on)`.** The Java is inside the profile of a user who was logged off when the sensor ran, so the sensor could not read that user's installer entries or environment variables. The row doesn't show whether the Java was installed or copied, or whether that user's `JAVA_HOME` points at it. Don't act on it. Ask the sensor again on that machine while the user is logged on, and use the new answer.
-- **Used By Type ends with `likely uses it`.** The link is based on folder location only. Confirm with the application owner.
+- **Installed By is `Unknown (user profile not logged on)`.** The Java is in the profile of a user who was not logged on when the sensor ran. Thus, the sensor could not read the installer entries or environment variables of that user. The row does not show if the Java was installed or copied, or if the `JAVA_HOME` of that user points to it. Do not act on this row. Ask the sensor again on that machine when the user is logged on, and use the new answer.
+- **Used By Type ends with `likely uses it`.** The sensor found the link from the folder location only. Confirm it with the application owner.
 - **The machine also returned a Scan incomplete row.** The list for that machine is partial.
-- **The answer is older than the change you are about to make.** Results are reused for up to an hour (Max Sensor Age), so ask again right before removing anything.
+- **The answer is older than your change.** Tanium uses saved results for up to one hour (Max Sensor Age). Ask again immediately before you remove anything.
 
-Don't use built-in sensors such as **Service Details** or **Running Processes** to prove that nothing uses a Java. They match on names. A procrun service such as Tomcat9 has no "java" in its name and runs Java inside its own `.exe`, and a Linux `java` process doesn't show which Java it runs. Use them only to check the status of a service that the Used By column already names, for example whether it is running or set to Manual.
+Do not use built-in sensors such as **Service Details** or **Running Processes** to prove that nothing uses a Java. These sensors match on names. A procrun service such as Tomcat9 does not have "java" in its name, and it runs Java inside its own `.exe`. A Linux `java` process does not show which Java it uses. Use these sensors only to check the status of a service that the Used By column names, for example if it runs or if it is set to Manual.
 
 ### Standalone Java, nothing uses it
 
-Installed By is a Java installer, Uninstall Command starts with `MsiExec.exe /X`, and Used By Type is **None found**, or lists only **PATH**, **Registry Default**, or **File Association**. The Java installer creates those three entries itself, so they are not a real use, and the uninstall removes them (the Temurin MSI, for example, takes its PATH entry out). Uninstall with a Tanium package that runs the Uninstall Command.
+Installed By is a Java installer. Uninstall Command starts with `MsiExec.exe /X`. Used By Type is **None found**, or shows only **PATH**, **Registry Default**, or **File Association**. The Java installer creates these three entries, so they are not a real use. The uninstall removes them (for example, the Temurin MSI removes its PATH entry). Uninstall with a Tanium package that runs the Uninstall Command.
 
 A service or task that shows **(java from PATH)** is a real use. Handle it as [Standalone Java that something uses](#standalone-java-that-something-uses).
 
@@ -250,19 +250,19 @@ Installed By starts with `Bundled with`, or reads `No installer entry (inside <f
 
 ### Java with no installer entry (copied or unzipped)
 
-Installed By is `No installer entry found` (Windows) or `No package owner found` (Linux), and Uninstall Command is `None registered`. Nothing registered this Java, so there is no uninstaller and it has to be deleted.
+Installed By is `No installer entry found` (Windows) or `No package owner found` (Linux). Uninstall Command is `None registered`. No installer registered this Java, so there is no uninstaller. You must delete the folder.
 
-1. **Confirm nothing uses it.** Used By Type must be **None found** in a fresh answer. If a service, process, or task is listed, [repoint it](#repoint-a-dependency) to a supported Java first. If the service isn't needed any more, remove the service instead (for example `sc.exe delete <service>` on Windows, or `systemctl disable --now <unit>` and delete the unit file on Linux).
+1. **Make sure that nothing uses it.** Used By Type must be **None found** in a new answer. If the row shows a service, process, or task, [repoint it](#repoint-a-dependency) to a supported Java first. If you do not need the service, remove the service (for example `sc.exe delete <service>` on Windows, or `systemctl disable --now <unit>` and delete the unit file on Linux).
 2. **Work out the folder to delete.** It's the Java Path minus `\bin\java.exe` (Windows) or `/bin/java` (Linux). For example, `C:\Tools\jdk-17.0.5\bin\java.exe` means you delete `C:\Tools\jdk-17.0.5`, and `/opt/jdk-17.0.5/bin/java` means `/opt/jdk-17.0.5`. If the Java Path ends in `\bin\server\jvm.dll`, remove that part instead.
-3. **Check that the folder holds only Java.** A Java folder contains `bin`, `lib`, and usually a `release` file. If the folder name is generic (for example `C:\App\runtime`) or it sits inside another product's folder, treat it as [bundled](#java-bundled-with-an-application) instead.
+3. **Make sure that the folder contains only Java.** A Java folder contains `bin`, `lib`, and usually a `release` file. If the folder name is general (for example `C:\App\runtime`) or the folder is in the folder of a different product, use [bundled](#java-bundled-with-an-application) instead.
 4. **Delete it with a Tanium package.** On Windows use `cmd.exe /c rmdir /s /q "C:\Tools\jdk-17.0.5"`, and on Linux use `rm -rf /opt/jdk-17.0.5`, with the folder from step 2.
 5. **Confirm** with `Get File Exists[<Java Path>] from all machines`, replacing `<Java Path>` with the value from the Java Path column.
 
 ### Java lines that no longer get updates
 
-Your scanner reports no fixed version for the Java line, or the Java Line is not a long-term support (LTS) release. The LTS lines are 8, 11, 17, 21, and 25. Every other line gets updates only until the next release, six months later. For LTS lines, the end of updates depends on the vendor, so check the **Vendor** column against that vendor's support roadmap. These runtimes can't be patched in place.
+Your scanner reports no fixed version for the Java line, or the Java line is not a long-term support (LTS) release. The LTS lines are 8, 11, 17, 21, and 25. All other lines get updates only until the next release, six months later. For LTS lines, the vendor decides when updates stop. Compare the **Vendor** column with the support roadmap of that vendor. You cannot patch these runtimes in place.
 
-1. **Pick the replacement.** Choose the newest LTS release the application supports. Check with the application owner or vendor first. If the row is bundled, follow [Java bundled with an application](#java-bundled-with-an-application) instead.
+1. **Select the replacement.** Use the newest LTS release that the application supports. Ask the application owner or vendor first. If the row is bundled, use [Java bundled with an application](#java-bundled-with-an-application).
 2. **Install the new Java** with a Tanium package. On Linux, prefer the distribution package, so normal OS patching keeps it updated.
 3. **[Repoint every dependency](#repoint-a-dependency)** listed in Used By.
 4. **Remove the old Java** using the finding above that matches its Installed By.
@@ -301,7 +301,7 @@ Start-Service Tomcat9; Get-Service Tomcat9
 - **Scheduled Task:** edit the task's action.
 - **Environment Variable:** set the new path, for example `[Environment]::SetEnvironmentVariable('JAVA_HOME', '<new Java folder>', 'Machine')`.
 
-**Then confirm.** Restart the service or run the task, and check that the application works. Ask this sensor again: the service or task should now appear under the new Java, and the old Java should show **None found** before you remove it.
+**Then confirm.** Restart the service or run the task. Make sure that the application works. Ask this sensor again. The service or task must now show under the new Java. The old Java must show **None found** before you remove it.
 
 ---
 
@@ -309,7 +309,7 @@ Start-Service Tomcat9; Get-Service Tomcat9
 
 None for new Java releases or security updates: the sensor has no version list. Revisit it only if:
 
-- **Java is installed in a folder the search does not cover.** Add it to `$ExtraScanRoots` (Windows, for example `@('D:\Apps')`) or `EXTRA_SCAN_ROOTS` (Linux, for example `"/data/apps"`) near the top of the script.
+- **Java is in a folder that the search does not cover.** Add the folder to `$ExtraScanRoots` (Windows, for example `@('D:\Apps')`) or `EXTRA_SCAN_ROOTS` (Linux, for example `"/data/apps"`) near the top of the script.
 - **Scans stop early on large servers.** Raise `$ScanSeconds` or `SCAN_SECONDS`.
 
 ---
@@ -329,8 +329,8 @@ None for new Java releases or security updates: the sensor has no version list. 
 
 ## Limits
 
-- Per-user Java folders (`AppData\Local\Programs`, `AppData\Local\JetBrains`, `.jdks`) are searched for every profile, logged on or not. Only the registry checks are limited to logged-on users: per-user installer entries and user environment variables are read from loaded profiles only. For a user who is logged off, a per-user Java still appears, but Installed By and Uninstall Command show `Unknown (user profile not logged on)`, and a user `JAVA_HOME` or PATH entry that points at it is not listed.
-- **(java from PATH)** dependencies use the system PATH, so a task that runs as a user with a different PATH may resolve to another Java.
-- Rows marked **likely uses it** are based on folder location only. Confirm before removing.
-- The sensor returns more rows than the vulnerable-only version, because patched runtimes are included.
+- The sensor searches per-user Java folders (`AppData\Local\Programs`, `AppData\Local\JetBrains`, `.jdks`) for each profile, logged on or not. Only the registry checks are for logged-on users: the sensor reads per-user installer entries and user environment variables from loaded profiles only. For a user who is not logged on, a per-user Java still shows. But Installed By and Uninstall Command show `Unknown (user profile not logged on)`. The sensor does not show a user `JAVA_HOME` or PATH entry that points to it.
+- **(java from PATH)** dependencies use the system PATH. A task that runs as a user with a different PATH can use a different Java.
+- For rows marked **likely uses it**, the sensor used only the folder location. Confirm before you remove anything.
+- The sensor returns more rows than the vulnerable-only version, because it includes patched runtimes.
 - Java-based products such as Apache Tomcat or Log4j have their own vulnerabilities. Updating Java does not fix those.

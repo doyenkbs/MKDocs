@@ -10,7 +10,7 @@ tags:
 
 This page shows how to create the **Defender - Computer Status** sensor by hand in the Tanium Console.
 
-**What it returns:** one row per Windows endpoint with Defender's running mode (Normal, Passive, EDR Block Mode), whether the antivirus and real-time protection are on, tamper protection, the platform version, and how old the signatures are.
+**What it returns:** one row for each Windows endpoint. The row shows the Defender running mode (Normal, Passive, EDR Block Mode), if the antivirus and real-time protection are on, tamper protection, the platform version, and the age of the signatures.
 
 It is built from `Get-MpComputerStatus`. Running that cmdlet raw through a sensor returns 40+ properties as separate lines, which can't be sorted or filtered. This sensor picks the useful ones and returns them as columns.
 
@@ -86,7 +86,7 @@ Leave it empty. This sensor has no parameters.
 
 ### Step 6: Scripts section
 
-For each platform in the table: click the platform tab on the left, check **Enable sensor for [platform] platform**, set **Query Type** in the top right, click inside the script editor, press **Ctrl + A**, press **Delete**, then paste the script for that platform.
+For each platform in the table, do these steps: click the platform tab on the left, select **Enable sensor for [platform] platform**, and set **Query Type** in the top right. Then click in the script editor, press **Ctrl + A**, press **Delete**, and paste the script for that platform.
 
 | Platform | Enable | Query Type | Script |
 |---|---|---|---|

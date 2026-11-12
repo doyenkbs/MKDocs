@@ -326,7 +326,7 @@ Run each command in an elevated PowerShell session on the VM, from the folder wh
     ```powershell
     .\Break-PathRegType.ps1 -Mode Status
     ```
-2. Break PATH the same way the affected machines were broken:
+2. Break PATH in the same way as on the affected machines:
     ```powershell
     .\Break-PathRegType.ps1 -Mode Break
     ```
@@ -363,7 +363,7 @@ Also confirmed on Windows 11: `Get-ItemProperty` returns the Path entries alread
 
 ### Repair-WmiHealth.ps1
 
-Each case ran through `cmd.exe` with the Mode parameter quoted, the same way a Tanium package runs it. The broken cases used a copy of the script pointed at a namespace that does not exist, with the salvage command replaced by a stub, so no real WMI repository was changed.
+Each case ran through `cmd.exe` with the Mode parameter in quotes, the same as a Tanium package. The broken cases used a copy of the script that pointed to a namespace that does not exist, with a stub in place of the salvage command. Thus, no real WMI repository changed.
 
 | Case | Expected | Result |
 |---|---|---|
@@ -382,20 +382,20 @@ Each case ran through `cmd.exe` with the Mode parameter quoted, the same way a T
 
 ## Scripts
 
-### Fix-PathRegType.ps1
+=== "Fix-PathRegType.ps1"
 
-```powershell
---8<-- "tanium/packages/fix-path-reg-type/Fix-PathRegType.ps1"
-```
+    ```powershell
+    --8<-- "tanium/packages/fix-path-reg-type/Fix-PathRegType.ps1"
+    ```
 
-### Repair-WmiHealth.ps1
+=== "Repair-WmiHealth.ps1"
 
-```powershell
---8<-- "tanium/packages/wmi-health/Repair-WmiHealth.ps1"
-```
+    ```powershell
+    --8<-- "tanium/packages/wmi-health/Repair-WmiHealth.ps1"
+    ```
 
-### Break-PathRegType.ps1 (lab only)
+=== "Break-PathRegType.ps1 (lab only)"
 
-```powershell
---8<-- "tanium/packages/fix-path-reg-type/Break-PathRegType.ps1"
-```
+    ```powershell
+    --8<-- "tanium/packages/fix-path-reg-type/Break-PathRegType.ps1"
+    ```

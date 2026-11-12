@@ -19,7 +19,7 @@ It does the same job as the **Running Processes with MD5 Hash** sensor from Inci
 
 ## Use cases
 
-**Checking whether an old runtime is actually in use before removing it.** Installed Applications shows that Java 6, an old .NET runtime, or an old Python is installed. It doesn't show whether anything is running it. Ask this sensor with a path filter, such as `\jre6\` for Java 6, across every machine that has it installed. Machines that return nothing for that path had no process running from it when you asked. It is a point-in-time check, so combine it with [Java - Last Run - Prefetch](java-last-run-prefetch.md) and [Java - Scheduled Tasks](java-scheduled-tasks.md) for Java, and get the application owner's sign-off before removing anything from a server.
+**Check if an old runtime is in use before you remove it.** Installed Applications shows that Java 6, an old .NET runtime, or an old Python is installed. It does not show if something runs it. Ask this sensor with a path filter, such as `\jre6\` for Java 6, on all machines that have it. If a machine returns nothing for that path, no process ran from it at that time. This is a check at one point in time. For Java, use it with [Java - Last Run - Prefetch](java-last-run-prefetch.md) and [Java - Scheduled Tasks](java-scheduled-tasks.md). Get the approval of the application owner before you remove anything from a server.
 
 **Sweeping the fleet for a known-bad file.** A security advisory or threat report gives you a SHA256 for a malicious or vulnerable binary. Filter on that hash to find every machine running it right now, whatever the file is named and wherever it was copied.
 
@@ -84,7 +84,7 @@ These appear in the Path column with the Hash column empty.
 ### Windows
 
 1. Reads every running process from WMI (`Win32_Process`) and keeps the unique executable paths. WMI returns full paths for both 32-bit and 64-bit processes.
-2. Opens each file read-only, with sharing set so files in use and files marked for deletion can still be read, and hashes it with the .NET hash classes.
+2. Opens each file as read-only, with sharing set so that it can read files in use and files marked for deletion. Then it hashes the file with the .NET hash classes.
 3. Skips the hash for files over 1 GB.
 
 **Why the Sysnative mapping matters.** The Tanium Client is a 32-bit program on most installs (`C:\Program Files (x86)\Tanium\Tanium Client`), so the sensor runs in 32-bit PowerShell. Windows quietly redirects a 32-bit program's reads from `C:\Windows\System32` to `C:\Windows\SysWOW64`. Without a fix, two things go wrong:
@@ -96,8 +96,8 @@ The script detects 32-bit PowerShell on 64-bit Windows and reads `System32` file
 
 ### Linux
 
-1. Lists every process in `/proc` and reads the `/proc/<pid>/exe` link to get the program path. Kernel threads have no program file and are skipped.
-2. Hashes `/proc/<pid>/exe` itself, not the path it points to. That link always opens the file the process is actually running, so a binary that was replaced or deleted after the process started still hashes correctly, and so does a process inside a container.
+1. Lists each process in `/proc` and reads the `/proc/<pid>/exe` link to get the program path. Kernel threads have no program file, so the script skips them.
+2. Hashes `/proc/<pid>/exe`, not the path that it points to. That link always opens the file that the process runs. Thus, the hash is correct for a binary that was replaced or deleted after the process started, and for a process in a container.
 3. Uses `md5sum`, `sha1sum`, or `sha256sum` from coreutils.
 
 ---
@@ -226,7 +226,7 @@ On the Tanium Console, in **Interact**:
     Get Computer Name and Running Processes - Paths - Hashes[MD5] from all machines with Computer Name equals "<windows-host>"
     ```
 
-2. In the MD5 result, check that `C:\Windows\System32\lsass.exe` and `dwm.exe` have hashes. `Error hashing ... does not exist` on System32 files means an older copy of the script without the Sysnative fix was pasted.
+2. In the MD5 result, make sure that `C:\Windows\System32\lsass.exe` and `dwm.exe` have hashes. If System32 files show `Error hashing ... does not exist`, you pasted an older copy of the script without the Sysnative fix.
 3. Repeat on one Linux machine:
 
     ```
@@ -305,7 +305,7 @@ Get Computer Name and Running Processes - Paths - Hashes[NONE] from all machines
 
 ## Limits
 
-- **Point in time.** A program that runs on a schedule or a few times a month only shows up if it is running when the question is asked.
+- **One point in time.** A program that runs on a schedule or a few times a month shows only if it runs when you ask the question.
 - **No command lines, users, process IDs, or start times.** Path and hash only.
 - **Protected processes are skipped on Windows.** `System`, `Registry`, and some security agents return no path to WMI, even for `SYSTEM`.
 - **Files over 1 GB are listed without a hash.**

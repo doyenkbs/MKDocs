@@ -10,7 +10,7 @@ tags:
 
 A parameterized Tanium package that removes old driver packages from the Windows DriverStore, by folder name.
 
-Windows keeps a copy of every driver package it has installed under `C:\Windows\System32\DriverStore\FileRepository\`. When a driver is updated, the old copy usually stays behind. Vulnerability scanners and Tanium Comply read the files in those old copies, so a driver that was updated long ago can still be flagged for a library it bundles, such as OpenSSL.
+Windows keeps a copy of each driver package that it installs in `C:\Windows\System32\DriverStore\FileRepository\`. When a driver updates, the old copy usually stays. Vulnerability scanners and Tanium Comply read the files in these old copies. Thus, a scanner can flag an old driver for a library that it contains, such as OpenSSL.
 
 This package removes the old copy the supported way, with `pnputil /delete-driver`. It never uses `/force`, so Windows refuses to remove a package that a device is still using.
 
@@ -167,9 +167,9 @@ Get Tanium Action Log[12345] from all machines
 
 - **Parameters arrive URL-encoded.** Tanium passes `iclsclient.inf_amd64_c25dbc60ad3b371a` to the script as `iclsclient%2einf%5famd64%5fc25dbc60ad3b371a`, and commas as `%2c`. The script decodes the value before checking it. An earlier version without the decode step rejected every name with exit code `3`, which is the validation working as intended.
 - **It runs as 64-bit.** If the Tanium Client starts 32-bit PowerShell, the script restarts itself as 64-bit. Without this, `pnputil.exe` and `Get-WindowsDriver` would not work against `C:\Windows\System32`.
-- **The error "the specified file is not an installed OEM INF"** from a manual `pnputil /delete-driver` means the oem number does not match a registered package on that machine. Either the number came from another machine, or the folder is orphaned. This package avoids the first case by looking up the number on each endpoint.
+- **The error "the specified file is not an installed OEM INF"** from a manual `pnputil /delete-driver` means that the oem number does not match a registered package on that machine. The number came from a different machine, or the folder has no registration. This package prevents the first case, because it finds the number on each endpoint.
 - **Folder dates are not a reliable age.** After a pnputil delete, the **Date modified** on many FileRepository folders can change at the same time. Use the driver version in the action log, or the library version in the Comply finding, to tell old packages from new ones.
-- **Removing an unused package is not the same as fixing the active driver.** If the flagged package is the one in use, exit code `2` is the signal to deploy a newer driver from the vendor first, then run this package again to remove the old copy.
+- **To remove an unused package does not repair the active driver.** If the flagged package is in use, exit code `2` tells you to deploy a newer driver from the vendor first. Then run this package again to remove the old copy.
 - **Removed packages can't be rolled back from the DriverStore.** Reinstalling the driver from the vendor brings the package back if it is needed.
 
 ---

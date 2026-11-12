@@ -9,7 +9,7 @@ tags:
 
 # Defender Vulnerability Remediation
 
-A Windows machine is remediated for the 2026 Defender CVEs when its Defender platform is **4.18.26040.7 or later** and its engine is **1.1.26040.8 or later**. That applies even when another antivirus (for example CrowdStrike Falcon) is the active protection, because the scanner checks Defender's files, not whether Defender is protecting the machine.
+A Windows machine is repaired for the 2026 Defender CVEs when its Defender platform is **4.18.26040.7 or later** and its engine is **1.1.26040.8 or later**. This applies also when a different antivirus (for example CrowdStrike Falcon) is the active protection. The scanner checks the Defender files, not if Defender protects the machine.
 
 This page covers how to find every affected machine with Tanium, which scenario each one is in, and the fix for each scenario.
 
@@ -148,7 +148,7 @@ The `WinDefend` service status decides the fix. Match each machine to one row, t
 | 10 | Not present | (none) | No `WinDefend` service, no `MsMpEng.exe`, no `Platform` folder | Defender is gone. The scanner is matching something else | [E](#fix-e-scanner-flag-with-no-defender-files) |
 | 11 | Any | Any | Custom sensor returns `Error:`, versions show `0.0.0.0` | Defender can't be read, usually because the service is stopped | Recheck with questions 1 to 3, then use row 6, 7, or 8 |
 
-If a machine has `DisableAntiSpyware` set to `1`, find and change the source of that policy before trying Fix A or B, or the setting comes back at the next policy refresh.
+If a machine has `DisableAntiSpyware` set to `1`, find and change the source of that policy before you try Fix A or B. If you do not, the setting comes back at the next policy refresh.
 
 ---
 
@@ -161,7 +161,7 @@ If a machine has `DisableAntiSpyware` set to `1`, find and change the source of 
 
 Defender is running, so it can take updates. The update path is what is broken.
 
-1. Check the update source. If machines use WSUS or another patch tool, confirm these are approved:
+1. Check the update source. If machines use WSUS or a different patch tool, make sure that these updates are approved:
     - **Microsoft Defender Antivirus** platform update (KB4052623)
     - **Definition Updates** for Microsoft Defender Antivirus. These carry the engine
 2. Force an engine and signature update with a package that runs:
@@ -175,7 +175,7 @@ Defender is running, so it can take updates. The update path is what is broken.
 
 `Uninstall-WindowsFeature` only exists on Windows Server. Defender can't be removed from Windows 10 or 11, so the files have to be updated instead.
 
-1. Test the KB4052623 platform installer as a package on one workstation. A platform update may not install while `WinDefend` is stopped, so confirm it on one machine first.
+1. Test the KB4052623 platform installer as a package on one workstation. A platform update can fail to install while `WinDefend` is stopped. Thus, test it on one machine first.
 2. Rerun [question 1](#1-versions-and-service-state) and [question 3](#3-what-is-on-disk) on that machine. A new `4.18.26xxx` folder and a Product Version at or above `4.18.26040.7` mean it worked.
 3. If the platform update does not install, there are two options. Both need security team approval:
     - Onboard the machine to Defender for Endpoint so Defender runs in passive mode and updates itself (scenario 2).

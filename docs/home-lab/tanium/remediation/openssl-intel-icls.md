@@ -33,7 +33,7 @@ The iCLS driver uses the 3.0 branch, so any copy below `3.0.16` is flagged.
 
 ### How serious it is
 
-CVE-2024-13176 is a timing side channel in ECDSA signatures that use the NIST P-521 curve. An attacker has to measure the time of a large number of signatures, either from the same machine or over a very fast, low-latency network, to recover the private key. The CVSS v3 base score in Comply is 4.1.
+CVE-2024-13176 is a timing side channel in ECDSA signatures that use the NIST P-521 curve. To get the private key, an attacker must measure the time of many signatures. The attacker must do this from the same machine or over a very fast, low-latency network. The CVSS v3 base score in Comply is 4.1.
 
 That makes it a low-priority finding. It still shows on reports, so it is worth cleaning up, and the cleanup is low risk.
 

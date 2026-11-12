@@ -9,9 +9,9 @@ tags:
 
 This page shows how to create the **Scheduled Tasks - By Command** sensor in the Tanium Console. It is the general version of [Java - Scheduled Tasks](java-scheduled-tasks.md): you type what to look for when you ask the question.
 
-**What it returns:** one row per scheduled task whose name, command line, or script contains the text you enter, with the task path, its state, the account it runs as, when it last ran, and its command line.
+**What it returns:** one row for each scheduled task whose name, command line, or script contains the text that you enter. The row shows the task path, its state, the account that it runs as, when it last ran, and its command line.
 
-**How it differs from the built-in Scheduled Tasks sensor:** the built-in sensor lists every task on every machine, with only the task name and action, and leaves out run times so that results merge. This sensor filters on the endpoint, so only matching tasks come back, and it adds the state, the run-as account, and a last-run value you choose the detail of.
+**How it is different from the built-in Scheduled Tasks sensor:** the built-in sensor lists each task on each machine with only the task name and action. It does not include run times, so that results can merge. This sensor filters on the endpoint, so only matching tasks come back. It also adds the state, the run-as account, and a last-run value with the detail that you select.
 
 !!! warning "Command lines are returned"
     Matching tasks come back with their full command line, and arguments can hold passwords or connection strings. Keep the sensor in a content set that only your endpoint team can use, and read results before you paste them anywhere.
@@ -27,13 +27,13 @@ For each task action, it checks the **Match** text, ignoring case, against:
 - The task path and name, for example `\Vendor\NightlyExport`
 - The program and its arguments, with environment variables expanded
 - The class ID and data of COM handler actions
-- With **ScanScripts** set to `Yes`: the contents of any `.bat`, `.cmd`, `.ps1`, or `.vbs` file under 1 MB that the task runs, either as the program itself or named in the arguments (for example `powershell.exe -File D:\Scripts\cleanup.ps1`). A match inside a script adds `[script <name> matches]` to the command.
+- With **ScanScripts** set to `Yes`: the contents of each `.bat`, `.cmd`, `.ps1`, or `.vbs` file under 1 MB that the task runs. The file can be the program itself or a name in the arguments (for example `powershell.exe -File D:\Scripts\cleanup.ps1`). A match in a script adds `[script <name> matches]` to the command.
 
 Match is plain text, not a regular expression or wildcard. `D:\Scripts` finds every task that mentions that folder.
 
 ### Last run and merging
 
-Tanium merges result rows only when every column is identical. An exact run time is different on almost every machine, so the same task on 300 machines comes back as up to 300 rows, and each unique value adds load on the Tanium Server. The **LastRun** parameter lets you choose:
+Tanium merges result rows only when all columns are the same. An exact run time is different on almost each machine. Thus, the same task on 300 machines can come back as 300 rows, and each unique value adds load on the Tanium Server. The **LastRun** parameter lets you select:
 
 | LastRun | Last Run value | Use it for |
 |---|---|---|
@@ -196,7 +196,7 @@ Scroll to the bottom of the page and click **Save**.
     Get Computer Name and Scheduled Tasks - By Command[CheckStatus,Yes,Exact] from all machines with Computer Name contains "<hostname>"
     ```
 
-3. Check that you see 5 columns, and that the task you expected is listed.
+3. Make sure that you see 5 columns and the task that you expected.
 4. Ask it again with a value that doesn't exist (for example `zzzq`) and check that the machine returns `No matching scheduled tasks`.
 
 ---
@@ -210,7 +210,7 @@ Get Scheduled Tasks - By Command[python,Yes,Age] from all machines with Is Windo
 Get Computer Name and Scheduled Tasks - By Command[D:\Scripts,No,Day] from all machines with Is Windows equals True
 ```
 
-**Computer Name is optional.** Without it, identical rows from different machines merge into one row, and the **Count** column shows how many machines returned it. Use that to see what exists across the fleet. Add Computer Name when you need the list of machines, or select a row in the results and ask a follow-up question that adds Computer Name, so only the machines behind that row answer.
+**Computer Name is optional.** Without it, the same rows from different machines merge into one row. The **Count** column shows how many machines returned it. Use this to see what exists on all machines. When you need the list of machines, add Computer Name. Or select a row in the results and ask a follow-up question that adds Computer Name. Then only the machines in that row answer.
 
 ---
 

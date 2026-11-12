@@ -18,7 +18,7 @@ The system-wide copy in `C:\Program Files\Zoom` or `C:\Program Files (x86)\Zoom`
     A common reason to run this is a vulnerability finding on an outdated Zoom. Scanners, Tanium Comply included, check for `Zoom.exe` in each user profile separately from the system-wide copy. Removing the per-user copy clears that finding. If users still need Zoom, they need another copy that is kept up to date, because this package takes theirs away.
 
 !!! warning "Test status"
-    The package was run through Tanium on two endpoints: one with only a per-user copy, open at the time (removed, exit `0`), and one with only the system-wide copy (nothing touched, exit `0`). **An endpoint with both copies, and a signed-out profile, have not been tested yet.** Test those on one endpoint before deploying widely. See [Test results](#test-results).
+    The package ran through Tanium on two endpoints. The first had only a per-user copy, which was open (removed, exit `0`). The second had only the system-wide copy (no change, exit `0`). **An endpoint with both copies and a signed-out profile were not tested.** Test them on one endpoint before a wide deployment. See [Test results](#test-results).
 
 ---
 
@@ -89,17 +89,17 @@ A Zoom that is open from Program Files is not closed and does not block anything
 
 ## What the script does
 
-1. Finds every user profile on the endpoint: profiles Windows knows about (local, domain, and work or school accounts), plus folders left in `C:\Users` by accounts that were deleted.
-2. Checks whether a system-wide Zoom is installed, and for each profile, whether it has a per-user `Zoom.exe`. That decides what is deleted, as in the table above.
-3. Checks whether Zoom is running from anything that will be deleted. If it is and **Close Zoom** is `No`, the profile is skipped. If it is `Yes`, Zoom is closed.
+1. Finds each user profile on the endpoint. This includes profiles that Windows knows (local, domain, and work or school accounts) and folders in `C:\Users` from deleted accounts.
+2. Checks if a system-wide Zoom is installed. For each profile, it checks if the profile has a per-user `Zoom.exe`. The result decides what the script deletes, as in the table above.
+3. Checks if Zoom runs from a location that the script will delete. If it does and **Close Zoom** is `No`, the script skips the profile. If **Close Zoom** is `Yes`, the script closes Zoom.
 4. Cleans the user's registry:
     - **Signed in:** works on the user's loaded registry directly.
     - **Signed out:** loads the user's `NTUSER.DAT` as `HKEY_USERS\ZOOM_CLEANUP`, cleans it, and unloads it.
 
     In both cases it deletes the `ZoomUMX` uninstall entry, any other uninstall entry whose uninstall command points into `AppData\Roaming\Zoom`, and any **Run** value that points there. Every signed-out profile's registry is checked, not only profiles that still have the folder, so entries left behind by a manual delete are caught too.
-5. Deletes the shortcuts in the user's Start menu and on the desktop that point into what is being deleted, and the Start menu folder if that leaves it empty. Shortcuts that point anywhere else, including to the system-wide copy, are left alone.
+5. Deletes the shortcuts in the Start menu and on the desktop of the user that point to the deleted items. It also deletes the Start menu folder if the folder becomes empty. The script does not touch shortcuts that point to other locations, such as the system-wide copy.
 6. Deletes the folders from step 2.
-7. Checks that no `Zoom.exe` is left in the profile, and prints a summary.
+7. Makes sure that no `Zoom.exe` stays in the profile, and prints a summary.
 
 ### What it leaves behind
 
@@ -240,7 +240,7 @@ Get Tanium Action Log[12345] from all machines
 
 ### Confirm the copy is gone
 
-Ask the Find File by Name question from [Find the endpoints](#find-the-endpoints) again. The endpoint should return `NOT FOUND`. The **Installed Applications** sensor can return a cached result for a while after the change, so an endpoint that still shows Zoom right after the action may clear on its own. If the removal was for a vulnerability finding, run the Comply assessment again afterward.
+Ask the Find File by Name question from [Find the endpoints](#find-the-endpoints) again. The endpoint must return `NOT FOUND`. The **Installed Applications** sensor can return a saved result for some time after the change. Thus, an endpoint that still shows Zoom immediately after the action can clear later. If the removal was for a vulnerability finding, run the Comply assessment again.
 
 ---
 
@@ -255,7 +255,7 @@ Ask the Find File by Name question from [Find the endpoints](#find-the-endpoints
 ## Things to know
 
 - **Zoom is closed by path, not by name.** Only processes running from what is about to be deleted are closed. A system-wide Zoom that is open is not touched.
-- **A per-user copy is found by `Zoom.exe`, not by the folders.** The folders alone do not mean a per-user copy, since the system-wide copy creates them too.
+- **The script finds a per-user copy from `Zoom.exe`, not from the folders.** The folders alone do not show a per-user copy, because the system-wide copy also creates them.
 - **It runs as 64-bit.** If the Tanium client starts 32-bit PowerShell, the script restarts itself as 64-bit.
 - **Parameters arrive URL-encoded.** The script decodes **Close Zoom** before checking it.
 - **Users can install it again.** Any user can click a meeting link and get a new per-user copy. To stop that, block `%OSDRIVE%\Users\*\AppData\Roaming\Zoom\bin\*` with Tanium Enforce or AppLocker.

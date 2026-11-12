@@ -11,21 +11,21 @@ tags:
 # Edge MSI Standardization
 
 !!! note "Test status"
-    Verified on Windows test machines: the MSI install on a device with no Edge, AppX removal by both the all-users and per-user routes, sign-in re-registration of a staged package, the deprovisioned-marker cleanup, the version-floor guard, the missing-MSI exit, and a clean idempotent second run. Not yet verified: the non-removable unlock path, which has not triggered on any test machine. Run it on a test machine matching your own image before any wider deployment.
+    Tests on Windows test machines verified these items: the MSI install on a device with no Edge, AppX removal by the all-users route and the per-user route, re-registration of a staged package at sign-in, the deprovisioned-marker cleanup, the version-floor guard, the missing-MSI exit, and a clean second run. The tests did not verify the unlock path for non-removable packages, because no test machine triggered it. Run the package on a test machine that matches your image before a wider deployment.
 
-A Tanium package that makes the Enterprise MSI the thing that owns Microsoft Edge on an endpoint, and clears leftover Microsoft Store (AppX) registrations, including ones marked non-removable.
+A Tanium package that makes the Enterprise MSI the owner of Microsoft Edge on an endpoint. It also removes leftover Microsoft Store (AppX) registrations, including registrations marked non-removable.
 
 It takes no parameters. The package contents are the configuration: the script plus the Enterprise MSI.
 
 ## The problem this solves
 
-Windows ships an in-box copy of Edge that registers as an AppX package named `Microsoft.MicrosoftEdge.Stable`. If an image was built without the Enterprise MSI, the endpoint ends up with that in-box copy and no `EdgeUpdate` service, so the browser has no way to update itself and sits on whatever version the image was captured with. Vulnerability scanners keep reporting the old AppX version even after the MSI is pushed, because the old registration is still there.
+Windows includes an in-box copy of Edge. This copy registers as an AppX package named `Microsoft.MicrosoftEdge.Stable`. If the image does not include the Enterprise MSI, the endpoint has only the in-box copy and no `EdgeUpdate` service. Thus, the browser cannot update itself and stays on the version in the image. Vulnerability scanners continue to report the old AppX version after you push the MSI, because the old registration stays.
 
 Three things have to happen, in this order:
 
 1. The Enterprise MSI has to own Edge on the endpoint.
-2. That has to be verified before anything is removed.
-3. Only then can the leftover AppX registrations and their registry entries be cleaned up.
+2. The script verifies the MSI install before it removes anything.
+3. Then the script removes the leftover AppX registrations and their registry entries.
 
 Getting the order wrong is how endpoints end up with no browser at all.
 
@@ -33,7 +33,7 @@ Getting the order wrong is how endpoints end up with no browser at all.
 
 ## The MSI in the package decides everything
 
-There is no version threshold to set and no parameter to keep up to date. The script reads the installed MSI Edge version from the registry and treats that as the line: any AppX registration older than it is a leftover, and anything at or above it is left alone.
+You do not set a version threshold, and no parameter needs updates. The script reads the installed MSI Edge version from the registry and uses it as the limit. An AppX registration older than this version is a leftover. The script does not touch registrations at or above this version.
 
 More than one registration can exist at once. A real test VM carried three:
 
@@ -45,7 +45,7 @@ More than one registration can exist at once. A real test VM carried three:
 | AppX installed | `153.0.4234.32` | Matches the MSI. Kept. |
 | AppX provisioned | `153.0.4234.32` | Matches the MSI. Kept. |
 
-What is left is the registration the MSI owns and nothing else.
+Only the registration that the MSI owns stays.
 
 To move the fleet to a newer Edge, stage a newer MSI in the package. Nothing else changes.
 
@@ -53,15 +53,15 @@ To move the fleet to a newer Edge, stage a newer MSI in the package. Nothing els
 
 If the registry says MSI Edge is on one version but `msedge.exe` on disk is older, the script uses the lower of the two. A registration matching the binary that is actually running is never removed on the strength of a registry value that disagrees with it.
 
-This guard fires on real machines. One observed case: MSI Edge registered as `153.0.4234.48` while `msedge.exe` on disk was still `153.0.4234.32`, minutes after `EdgeUpdate` had updated the registration but before the binary caught up. The floor stayed at `.32`, so the matching AppX registration was left alone. Had the floor followed the registry to `.48`, that registration would have been targeted for removal on an endpoint that needed no work at all.
+This guard does occur on real machines. In one case, the registry showed MSI Edge as `153.0.4234.48`, but `msedge.exe` on disk was still `153.0.4234.32`. `EdgeUpdate` had updated the registration a few minutes before, but the file had not changed yet. The floor stayed at `.32`, so the script did not touch the matching AppX registration. If the floor had used the registry value `.48`, the script would have removed that registration on an endpoint that needed no work.
 
 ---
 
 ## The end state is no Store registration
 
-On an endpoint where the only AppX registration is the in-box one and the MSI has taken over, the script removes that registration and nothing replaces it. `EdgeUpdate` and the MSI do not create AppX registrations, so the endpoint ends with none.
+On some endpoints, the only AppX registration is the in-box one, and the MSI now owns Edge. On these endpoints, the script removes that registration, and nothing replaces it. `EdgeUpdate` and the MSI do not create AppX registrations. Thus, the endpoint has no AppX registration at the end.
 
-That is the intended outcome. The Store registration was never what made Edge work: the browser is the Win32 install under `C:\Program Files (x86)\Microsoft\Edge\Application`, and the MSI creates its own all-users Start menu shortcut pointing straight at `msedge.exe`.
+This is the correct result. Edge never needed the Store registration to work. The browser is the Win32 install in `C:\Program Files (x86)\Microsoft\Edge\Application`. The MSI creates its own all-users Start menu shortcut to `msedge.exe`.
 
 ```
 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk
@@ -71,17 +71,17 @@ C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk
 Because `EdgeUpdate` moves the MSI version ahead of any AppX registration over time, most endpoints eventually reach this state. An endpoint whose image carries a matching or newer registration keeps it.
 
 !!! warning "Verify this suits your environment"
-    What else in Windows keys off the Edge AppX package identity has not been fully established: the app execution alias, the default-apps page, and on Windows 11 the search and widget surfaces are candidates. Edge itself runs regardless. On the first endpoint you remediate, check that Edge opens from the Start menu, that Settings, Default apps still lets you set it, and that a link clicked in another application opens it.
+    Other Windows parts can use the Edge AppX package identity, but we do not know all of them. Possible parts are the app execution alias, the default-apps page, and on Windows 11 the search and widget areas. Edge itself runs without the registration. On the first endpoint that you repair, do these checks: Edge opens from the Start menu, **Settings > Default apps** still lets you set Edge, and a link in a different application opens Edge.
 
 ---
 
 ## Staged packages and sign-in
 
-The registration matching the MSI is often `Staged` and held only by `SYSTEM`, while an older registration is the one a user profile actually holds `Installed`. Removing the older one first would leave the profile with nothing, so the script tries to promote the newer one before removing anything.
+Often, the registration that matches the MSI is `Staged` and only `SYSTEM` holds it. An older registration is the one that a user profile holds as `Installed`. If the script removes the older one first, the profile has no registration. Thus, the script tries to promote the newer registration before it removes anything.
 
-`Add-AppxPackage -Register ... -AllUsers` does that in one step, but the `-AllUsers` parameter does not exist on every Windows build. The script checks for it with `(Get-Command Add-AppxPackage).Parameters.ContainsKey('AllUsers')` rather than assuming, because calling it where it is absent raises a parameter-binding error, not a deployment error.
+`Add-AppxPackage -Register ... -AllUsers` does this in one step. But some Windows builds do not have the `-AllUsers` parameter. The script checks for it with `(Get-Command Add-AppxPackage).Parameters.ContainsKey('AllUsers')`. If the parameter is missing and the script uses it, PowerShell shows a parameter-binding error, not a deployment error.
 
-Where the parameter is missing, the script relies on the package being provisioned. Windows registers a provisioned package for a profile at sign-in. Verified on a test VM:
+If the parameter is missing, the script uses the provisioned package. Windows registers a provisioned package for a profile at sign-in. A test VM verified this:
 
 | When | Registration state |
 |---|---|
@@ -116,9 +116,9 @@ The script reads endpoint state twice, before and after the install, because tha
 
 `$KeepEdgeUpdate = $true` (the default) leaves the `EdgeUpdate` service and its scheduled tasks running, so Edge can self-patch between Tanium cycles.
 
-`$KeepEdgeUpdate = $false` stops and disables the service, disables the update tasks, and writes `Update{GUID}=0` under `HKLM\SOFTWARE\Policies\Microsoft\EdgeUpdate`. Tanium then becomes the only path by which Edge gets patched.
+`$KeepEdgeUpdate = $false` stops and disables the service, disables the update tasks, and writes `Update{GUID}=0` under `HKLM\SOFTWARE\Policies\Microsoft\EdgeUpdate`. Then only Tanium can patch Edge.
 
-The second option is a real choice with a real cost. An endpoint with no update service is exactly the condition that leaves machines stranded on an old build when a patch cycle is missed. Pick it only if Edge patch compliance is something you actively monitor.
+The second option has a real cost. An endpoint with no update service stays on an old build when a patch cycle is missed. Select this option only if you monitor Edge patch compliance.
 
 ---
 
@@ -135,7 +135,7 @@ HKLM:\SOFTWARE\Microsoft\EdgeUpdate
 HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate
 ```
 
-That list is for wiping Edge off a machine entirely before a clean reinstall. Run it after the MSI is installed and it deletes the browser you just installed, along with its policy configuration. This script does not touch any of those paths.
+That list removes Edge fully from a machine before a clean reinstall. If you run it after the MSI install, it deletes the browser that you installed and its policy configuration. This script does not touch any of those paths.
 
 What it does remove:
 
@@ -151,19 +151,19 @@ That last one matters. Removing a provisioned package writes a deprovisioned mar
 
 ## Three removal routes
 
-`Remove-AppxPackage` fails in more than one way, so the script tries three routes in order and checks the result of each by re-querying rather than by trusting whether an error was raised. A removal can report failure and still have taken effect, which was observed during testing.
+`Remove-AppxPackage` can fail in more than one way. Thus, the script tries three routes in order. After each route, it queries the package again to check the result. It does not trust the error alone. During tests, a removal reported a failure but the package was removed.
 
 1. **All-users removal.** Works when the package is in the all-user store.
-2. **Per-user removal** for each SID in `PackageUserInformation`. A registration held only by a user profile is not in the all-user store, so route 1 fails with `0x80070002`, file not found, and the error text shows an empty source path (`... on Package ... from:` with nothing after it). A per-SID removal handles it.
+2. **Per-user removal** for each SID in `PackageUserInformation`. A registration that only a user profile holds is not in the all-user store. Thus, route 1 fails with `0x80070002` (file not found). The error text shows an empty source path (`... on Package ... from:` with nothing after it). A per-SID removal removes it.
 3. **Clearing the non-removable flag**, for `0x80073CFA`, covered below.
 
-If all three leave the package in place, that package is counted as a failure and the script continues with the rest, ending with exit 12.
+If the package stays after all three routes, the script counts it as a failure. The script continues with the other packages and ends with exit 12.
 
 ### Clearing the non-removable flag
 
-Where the package is marked as non-removable in the AppX store, the script:
+If the AppX store marks the package as non-removable, the script does these steps:
 
-1. Enabling `SeTakeOwnershipPrivilege` and `SeRestorePrivilege` in the process token. SYSTEM holds both, but neither is enabled by default.
+1. Enables `SeTakeOwnershipPrivilege` and `SeRestorePrivilege` in the process token. SYSTEM has both privileges, but they are not enabled by default.
 2. Taking ownership of `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Applications\<PackageFullName>`.
 3. Granting the local Administrators group full control of that key.
 4. Setting `NonRemovable` to `0`.
@@ -180,7 +180,7 @@ If any of that fails, the script logs the reason, counts it as a failure, and ca
 - The Microsoft Edge Enterprise MSI (Stable x64), staged in the same Tanium package. Download it from [https://www.microsoft.com/edge/business/download](https://www.microsoft.com/edge/business/download).
 
 !!! info "No network access at run time"
-    The script never downloads anything. It looks for `$MsiName` in the directory the action runs from, which is where Tanium extracts the package files, and calls `msiexec` against that local path. The download link above is for the person building the package, not for the endpoint.
+    The script never downloads anything. It looks for `$MsiName` in the directory that the action runs from. Tanium extracts the package files to this directory. The script then runs `msiexec` with that local path. The download link above is for the person who builds the package, not for the endpoint.
 
     That makes it usable in air-gapped environments, and it avoids every endpoint pulling the same 150 MB installer across the WAN. The MSI moves once, through Tanium's own distribution, like any other package file.
 
@@ -188,7 +188,7 @@ If any of that fails, the script logs the reason, counts it as a failure, and ca
 
 ## Configuration
 
-Three settings, in the Config block at the top of the script. Edit them and repackage. Nothing is passed in at run time.
+The script has three settings in the Config block at the top. Edit them and update the package. The action does not send values at run time.
 
 | Setting | Default | What it does |
 |---|---|---|
@@ -200,7 +200,7 @@ Three settings, in the Config block at the top of the script. Edit them and repa
 
 ## Output
 
-Only decisions, actions, and failures are logged. The last line is always a single `RESULT`.
+The script logs only decisions, actions, and failures. The last line is always one `RESULT` line.
 
 An in-box Edge endpoint, MSI installed by this run:
 
@@ -227,9 +227,9 @@ RESULT|Success|MSI=153.0.4234.32|Removed=1
 
 A `Warn` line about an all-users removal failing is normal and not an error. It means route 1 did not apply and route 2 did the work.
 
-The `RESULT` line and the exit code are what the action status reflects across the fleet, which is why they stay even though the same facts can be queried afterward. A failed action is visible immediately in Action History without running a question against every endpoint.
+The action status for all endpoints comes from the `RESULT` line and the exit code. Thus, the script keeps them, although you can query the same facts later. You see a failed action immediately in Action History. You do not have to ask a question on every endpoint.
 
-A full transcript is written to `C:\ProgramData\_TaniumLogs\Set-EdgeMsiOnly.log`, and the msiexec log to `C:\ProgramData\_TaniumLogs\EdgeMSI_Install.log`.
+The script writes a full transcript to `C:\ProgramData\_TaniumLogs\Set-EdgeMsiOnly.log`. It writes the msiexec log to `C:\ProgramData\_TaniumLogs\EdgeMSI_Install.log`.
 
 ### Exit codes
 
@@ -243,9 +243,9 @@ A full transcript is written to `C:\ProgramData\_TaniumLogs\Set-EdgeMsiOnly.log`
 
 ### `RESULT|Skipped` is not a failure
 
-One narrow case returns `RESULT|Skipped` with **exit 0**: a newer registration exists but is only `Staged`, cannot be registered on that build, and is not provisioned. Removing the older registration there would strand the profile between two packages with nothing to restore it, so the script leaves the endpoint alone.
+One special case returns `RESULT|Skipped` with **exit 0**. In this case, a newer registration exists but is only `Staged`, the build cannot register it, and it is not provisioned. If the script removed the older registration, the profile would have no usable package and nothing to restore it. Thus, the script does not change the endpoint.
 
-It returns exit 0 deliberately. A non-zero exit would mark the action failed in Tanium for an endpoint that is in a safe, deliberate state, and a wall of red across healthy endpoints trains people to ignore the exits that matter, 10 and 12. Find these endpoints by querying the `RESULT` line instead.
+The script returns exit 0 on purpose. A non-zero exit marks the action as failed in Tanium, but the endpoint is in a safe state. Many red results on healthy endpoints teach people to ignore the exits that are important (10 and 12). To find these endpoints, query the `RESULT` line.
 
 ---
 
@@ -254,7 +254,7 @@ It returns exit 0 deliberately. A non-zero exit would mark the action failed in 
 Menu labels can differ slightly between Tanium versions.
 
 1. Save the script at the bottom of this page as `Set-EdgeMsiOnly.ps1`.
-2. Download the Edge Enterprise MSI (Stable x64) and rename it to `MicrosoftEdgeEnterpriseX64.msi`, or change `$MsiName` in the script to match the file name you have.
+2. Download the Edge Enterprise MSI (Stable x64). Rename it to `MicrosoftEdgeEnterpriseX64.msi`, or change `$MsiName` in the script to match your file name.
 3. In the Tanium Console, go to **Administration** > **Content** > **Packages**.
 4. Click **Create Package**.
 5. Fill in the fields:
@@ -265,11 +265,11 @@ Menu labels can differ slightly between Tanium versions.
       cmd.exe /d /c powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File Set-EdgeMsiOnly.ps1
       ```
     - **Command Timeout:** `15` minutes.
-6. Under **Files**, click **Add**, choose **Local File**, and upload both `Set-EdgeMsiOnly.ps1` and the MSI. Both must be in the same package, because the script looks for the MSI in the directory the action runs from.
+6. Under **Files**, click **Add**, select **Local File**, and upload `Set-EdgeMsiOnly.ps1` and the MSI. Both files must be in the same package, because the script looks for the MSI in the directory that the action runs from.
 7. Leave **Parameter Inputs** empty. This package takes none.
 8. Click **Save**.
 
-When a newer Edge build is needed, edit the package, replace the MSI file, and save. The script does not change.
+When you need a newer Edge build, edit the package, replace the MSI file, and save. The script stays the same.
 
 ---
 
@@ -278,28 +278,28 @@ When a newer Edge build is needed, edit the package, replace the MSI file, and s
 1. Run against **one test VM** first, ideally one built from the same image as the endpoints you are targeting.
 2. Confirm on that VM, in this order:
     - Edge opens and reports the expected version under `edge://settings/help`.
-    - Only the MSI-matching registration is left:
+    - Only the registration that matches the MSI stays:
       ```powershell
       Get-AppxPackage -AllUsers -Name Microsoft.MicrosoftEdge.Stable |
           Select-Object Version, @{n='Users';e={($_.PackageUserInformation | ForEach-Object { "$($_.UserSecurityId.Sid) [$($_.InstallState)]" }) -join '; '}}
       ```
-    - The MSI is registered:
+    - The MSI shows in the registry:
       ```powershell
       Get-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" |
           Where-Object { $_.DisplayName -eq "Microsoft Edge" } | Select-Object DisplayVersion, WindowsInstaller
       ```
-3. **Sign out and sign back in, then run the registration query again.** Immediately after the run the surviving package may be `Staged` for `SYSTEM` only. It should come back `Installed` for the user SID. If it does not, stop and investigate before going further.
+3. **Sign out, sign in again, and run the registration query again.** Immediately after the run, the remaining package can be `Staged` for `SYSTEM` only. After sign-in, it must show `Installed` for the user SID. If it does not, stop and find the cause before you continue.
 4. Expand to a pilot group, then the fleet, using **Distribute over** to spread the load. The MSI install is the expensive part.
 
-To size the work before committing to a wide run, ask in Interact which endpoints have MSI Edge and which AppX versions are registered, and target from those results. The script does not report inventory back, because Interact already answers that better.
+Before a wide run, find the size of the work. In Interact, ask which endpoints have MSI Edge and which AppX versions are registered. Target from those results. The script does not report inventory, because Interact does that better.
 
 ---
 
 ## Notes
 
-- **Policy clearing is point in time.** If a GPO or Intune baseline sets `Install{GUID}=0` or `InstallDefault=0`, clearing it in the script only lasts until the next policy refresh. Raise it with whoever owns that policy if the failure recurs.
-- **Fix the image, not just the endpoints.** If the golden image ships the in-box Store version instead of the Enterprise MSI, every newly recomposed machine comes back with the same gap. Updating the image is what stops this recurring.
-- **Re-running is safe.** On an endpoint that is already correct, the script logs the state, finds nothing below the MSI version, and exits 0 without changing anything.
+- **The script clears policy only one time.** If a GPO or Intune baseline sets `Install{GUID}=0` or `InstallDefault=0`, the cleared value comes back at the next policy refresh. If the failure occurs again, tell the owner of that policy.
+- **Fix the image, not only the endpoints.** If the golden image has the in-box Store version and not the Enterprise MSI, each new machine has the same problem. Update the image to stop this.
+- **You can run the script again safely.** On an endpoint that is already correct, the script logs the state, finds nothing below the MSI version, and exits 0 without changes.
 
 ---
 

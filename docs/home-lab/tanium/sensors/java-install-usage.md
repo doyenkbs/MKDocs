@@ -8,11 +8,11 @@ tags:
 
 # Java - Install Usage - Prefetch (Sensor)
 
-This page shows how to create the **Java - Install Usage - Prefetch** sensor in the Tanium Console, and how to use it to decide which Java on a machine can be removed and which one is actually being used.
+This page shows how to create the **Java - Install Usage - Prefetch** sensor in the Tanium Console. It also shows how to use it to decide which Java on a machine you can remove and which Java is in use.
 
-**What it returns:** one row per Java on a Windows machine. Each row gives the Java folder, its version, how it was installed, when it was installed, when it last ran, a plain-language usage summary, which Java programs ran, and the uninstall command.
+**What it returns:** one row for each Java on a Windows machine. Each row gives the Java folder, its version, how and when it was installed, and when it last ran. It also gives a plain-language usage summary, the Java programs that ran, and the uninstall command.
 
-**Why it exists:** a machine often has several Java installs at once: two or three Java 8 updates, a JDK, and Java bundled inside applications. A list of what is installed doesn't tell you which one is used. Windows Prefetch keeps a record of every program that runs, and this sensor ties each of those records to the exact Java folder that ran, so you can see which Java is in use and which has never run.
+**Why it exists:** a machine often has many Java installs: two or three Java 8 updates, a JDK, and Java in applications. A list of installed Java does not show which one is used. Windows Prefetch keeps a record of each program that runs. This sensor links each record to the Java folder that ran. Thus, you can see which Java is in use and which Java never ran.
 
 !!! note "Replaces Java - Last Run - Prefetch"
     [Java - Last Run - Prefetch](java-last-run-prefetch.md) shows that Java ran, but not which Java. This sensor shows everything that one did, tied to the Java that ran it, and it also tells you when Prefetch is switched on but not being written. Use this one going forward.
@@ -27,7 +27,7 @@ When a program runs, Windows writes a file to `C:\Windows\Prefetch` named `<PROG
 
 ### 2. The sensor works out that hash for every Java it finds
 
-For each Java folder on the machine, the script calculates the hash that Windows would use for `java.exe`, `javaw.exe`, `javaws.exe`, and `jp2launcher.exe` in that folder, and looks for a Prefetch file with that name. A match proves that this exact Java ran, and the file's date says when.
+For each Java folder on the machine, the script calculates the hash that Windows uses for `java.exe`, `javaw.exe`, `javaws.exe`, and `jp2launcher.exe` in that folder. Then it looks for a Prefetch file with that name. A match proves that this Java ran, and the file date shows when.
 
 It finds Java in:
 
@@ -46,7 +46,7 @@ When a Prefetch file doesn't match any Java on disk, the script also tries Oracl
 
 ### 4. Checking that Prefetch is working
 
-Prefetch can be switched on but not written. This is common on Windows Server, where the SysMain service is usually turned off. A running machine writes Prefetch files all day, so if no Prefetch file anywhere is newer than 3 days, the sensor reports **Unknown (Prefetch not recording)** instead of claiming that Java never ran.
+Prefetch can be on but not write files. This is common on Windows Server, where the SysMain service is usually off. A running machine writes Prefetch files all day. Thus, if no Prefetch file is newer than 3 days, the sensor reports **Unknown (Prefetch not recording)**. It does not report that Java never ran.
 
 The sensor is read-only. It doesn't use WMI, doesn't compile code, doesn't write files, and works whether the Tanium Client runs it in 64-bit or 32-bit PowerShell.
 
@@ -126,7 +126,7 @@ Leave it empty. This sensor has no parameters.
 
 ### Step 6: Scripts section
 
-For each platform in the table: click the platform tab on the left, check **Enable sensor for [platform] platform**, set **Query Type** in the top right, click inside the script editor, press **Ctrl + A**, press **Delete**, then paste the script for that platform.
+For each platform in the table, do these steps: click the platform tab on the left, select **Enable sensor for [platform] platform**, and set **Query Type** in the top right. Then click in the script editor, press **Ctrl + A**, press **Delete**, and paste the script for that platform.
 
 | Platform | Enable | Query Type | Script |
 |---|---|---|---|
@@ -207,7 +207,7 @@ Example row (values are illustrative): `C:\Program Files\Java\jre1.8.0_511|8.0.5
 
 ## Using it in a Java cleanup
 
-1. **Ask the question with Computer Name,** so every row is tied to a machine:
+1. **Ask the question with Computer Name.** Then each row shows its machine:
 
     ```text
     Get Computer Name and Java - Install Usage - Prefetch from all machines with ( Is Windows equals True and Installed Applications:Name contains "Java" )
@@ -244,6 +244,6 @@ For a large result set, export the results to CSV and sort by **Usage** and **In
 - **Windows only.** Linux and macOS have no Prefetch.
 - **Prefetch remembers about 1,024 programs.** On a busy machine, the record of something that hasn't run in a long time can be dropped. That shows as `No runs recorded`, which still means it hasn't run recently.
 - **Java started through a renamed program is not seen.** See the warning in [Using it in a Java cleanup](#using-it-in-a-java-cleanup).
-- **Removed Java is named only for Oracle Java 6, 7, and 8.** A removed Java 11 or newer shows as `Ran from a folder that was not found`, because those folder names carry the full version.
+- **The sensor names removed Java only for Oracle Java 6, 7, and 8.** A removed Java 11 or newer shows as `Ran from a folder that was not found`, because those folder names contain the full version.
 - **Per-user installs** show `No installer entry`. The sensor doesn't read installer entries from user profiles.
 - **Last Run is a date, not a time,** so results from many machines merge into fewer rows.

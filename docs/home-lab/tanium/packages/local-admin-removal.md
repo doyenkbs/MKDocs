@@ -41,7 +41,7 @@ Install-WindowsFeature -Name RSAT-AD-PowerShell
 
 ## Step 1 — Create the Encrypted Token Files
 
-This is a **one-time setup** step run interactively on the runner server. The Tanium API token is encrypted with a portable AES-256 key — unlike DPAPI, this is not bound to a specific user or machine, so the Tanium client service can decrypt it regardless of which account it runs as.
+This is a **one-time setup** step. Do it on the runner server. A portable AES-256 key encrypts the Tanium API token. Unlike DPAPI, this key is not linked to one user or machine. Thus, the Tanium client service can decrypt the token with any account.
 
 Two files are produced and must live in the same directory as `Get-AdminOU.ps1`:
 
@@ -396,7 +396,7 @@ exit 0
 
 ## Step 4 — Create Tanium Package 1 (AD Query Package)
 
-This package runs `Get-AdminOU.ps1` on the designated runner server — this does not have to be the Domain Controller, just any domain-joined server with RSAT installed and the Tanium client running.
+This package runs `Get-AdminOU.ps1` on the runner server. This server does not have to be the Domain Controller. Any domain-joined server with RSAT and the Tanium client is correct.
 
 ### Directory layout on the runner server
 

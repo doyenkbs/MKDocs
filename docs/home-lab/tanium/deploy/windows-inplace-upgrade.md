@@ -10,7 +10,7 @@ tags:
 
 # Windows In-Place Upgrade with Tanium Deploy
 
-This page covers upgrading Windows 10 or Windows 11 endpoints to a newer Windows 11 feature release using the predefined in-place upgrade packages in Tanium Deploy, and what to do when endpoints get stuck.
+This page shows how to upgrade Windows 10 or Windows 11 endpoints to a newer Windows 11 feature release. It uses the predefined in-place upgrade packages in Tanium Deploy. It also shows what to do when endpoints stop during the upgrade.
 
 The examples use Windows 11 23H2 to 25H2. The same process applies to Windows 10 22H2 to Windows 11, only the build numbers change.
 
@@ -136,22 +136,22 @@ The **Phase1 - Pre-Cache** package includes the wrapper script, the compatibilit
 
 The ISO is the simplest option.
 
-**Why the package contains 7zip.msi:** the Tanium Client's built-in `7za.exe` cannot open ISO files, so the script extracts `7z.exe` and `7z.dll` from the 7-Zip installer in the package and uses those to unpack the ISO. 7-Zip is never installed on the endpoint; the two files go to `%TEMP%` and are deleted after extraction.
+**Why the package contains 7zip.msi:** the built-in `7za.exe` of the Tanium Client cannot open ISO files. Thus, the script extracts `7z.exe` and `7z.dll` from the 7-Zip installer in the package, and uses them to unpack the ISO. The script never installs 7-Zip on the endpoint. It puts the two files in `%TEMP%` and deletes them after the extraction.
 
 Tanium maintains the `7zip.msi` entry in the predefined package (its origin is `https://www.7-zip.org`), so you do not need to download or replace it. The Tanium Server downloads it and serves it to endpoints like any other package file.
 
 **Steps**
 
-1. Download the Windows 11 ISO for the target version, language, and edition from your licensed source (for example, the Microsoft 365 admin center or Volume Licensing Service Center).
+1. Download the Windows 11 ISO for the target version, language, and edition from your licensed source. Examples are the Microsoft 365 admin center and the Volume Licensing Service Center.
 2. Go to **Modules > Deploy > Software**.
 3. Click the **InPlace Upgrade to Windows 11 Version 25H2 - Phase1 - Pre-Cache** package, then click **Edit**.
-4. Expand **Package Files** and confirm **7zip.msi** is listed with a **Size** and **Sha-256**. That means the Tanium Server has it cached. Leave it as is.
+4. Expand **Package Files**. Make sure that **7zip.msi** shows a **Size** and a **Sha-256**. This means that the Tanium Server has the file. Do not change it.
 5. Click **Add Package Files**.
 6. Choose **Local File**, browse to the ISO, and click **Open**. For a large ISO, you can host it on an internal web server and use **Remote File** with that URL instead.
 7. Click **Save**.
 
 !!! note "Only if 7zip.msi is not cached"
-    If your Tanium Server cannot reach `www.7-zip.org` (proxy or isolated network), the `7zip.msi` entry will not download and Phase 1 fails with `Please attach 7zip download to Phase1 Package`. In that case, download the 7-Zip x64 MSI from `https://www.7-zip.org` on a machine with internet access, delete the existing `7zip.msi` entry, and add the downloaded file with **Add Package Files > Local File**. Keep a name the script recognizes: `7z` or `7zip`, optional version digits, optional `-x64`, ending in `.msi` or `.exe` (for example `7z2409-x64.msi` or `7zip.msi`).
+    If your Tanium Server cannot reach `www.7-zip.org` (proxy or isolated network), the `7zip.msi` entry does not download. Phase 1 then fails with `Please attach 7zip download to Phase1 Package`. To repair this, download the 7-Zip x64 MSI from `https://www.7-zip.org` on a machine with internet access. Delete the existing `7zip.msi` entry. Add the downloaded file with **Add Package Files > Local File**. Use a name that the script recognizes: `7z` or `7zip`, optional version digits, optional `-x64`, and the extension `.msi` or `.exe` (for example `7z2409-x64.msi` or `7zip.msi`).
 
 **What Phase 1 does on the endpoint**
 
@@ -180,7 +180,7 @@ If the log shows `Please attach 7zip download to Phase1 Package`, the `7zip.msi`
 
 ### Fix and re-scan (Phase 2)
 
-1. Find out why the scan failed using the **Deploy - Windows Upgrade Scan Results** sensor (some content versions name it **Deploy - Windows Upgrade Scan Details**; search Interact for `Windows Upgrade Scan` if neither name matches).
+1. Use the **Deploy - Windows Upgrade Scan Results** sensor to find why the scan failed. Some content versions name it **Deploy - Windows Upgrade Scan Details**. If neither name matches, search Interact for `Windows Upgrade Scan`.
 2. Fix the blocker (free disk space, remove the incompatible app, update the driver).
 3. Deploy the **Phase2 - Re-Scan** package to those endpoints.
 
@@ -278,11 +278,11 @@ Get "Computer Name" and "Action Lock Status" from all machines with "Custom Tags
 The result shows `Action Lock Off` or `Action Lock On` for each endpoint. If any endpoint shows `Action Lock On`:
 
 1. Select those rows and click **Deploy Action**.
-2. In **Deployment Package**, select **Tanium Client - Set Action Lock Off** and deploy. The package shows **Action Lock Override is On**, which lets it run on an endpoint that is locked.
+2. In **Deployment Package**, select **Tanium Client - Set Action Lock Off** and deploy. The package shows **Action Lock Override is On**. This lets it run on a locked endpoint.
 3. Re-run the question above and confirm the result is now `Action Lock Off`.
 
 !!! warning "Find out why Action Lock was on"
-    Action Lock is sometimes set on purpose (for example, on machines that must not receive changes). Confirm with the owner before turning it off, and note which endpoints you changed so you can turn it back on with the **Tanium Client - Set Action Lock On** package after the upgrade.
+    Sometimes, Action Lock is set on purpose (for example, on machines that must not get changes). Ask the owner before you turn it off. Record the endpoints that you change. After the upgrade, turn Action Lock on again with the **Tanium Client - Set Action Lock On** package.
 
 #### Step 5: Reset the OSD status with Registry - Set Value
 
@@ -336,7 +336,7 @@ The result shows `Action Lock Off` or `Action Lock On` for each endpoint. If any
    Get "Computer Name" and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion","CurrentBuildNumber"] and "Registry Value Data"["HKEY_LOCAL_MACHINE\Software\WOW6432Node\Tanium\Tanium Client\OSD","Status"] from all machines with "Custom Tags" contains "IPU-Stuck"
    ```
 2. Remove the tag from the upgraded endpoints with the **Custom Tagging - Remove Tags** package.
-3. If you turned Action Lock off in Step 4 on endpoints that need it, turn it back on with the **Tanium Client - Set Action Lock On** package.
+3. If you turned off Action Lock in Step 4 on endpoints that need it, turn it on again with the **Tanium Client - Set Action Lock On** package.
 
 ---
 
@@ -353,7 +353,7 @@ The result shows `Action Lock Off` or `Action Lock On` for each endpoint. If any
    ```
    Get "Deploy - Deployments" from all machines with "Computer Name" contains "WS-EXAMPLE-01"
    ```
-3. Create a new Phase 3 deployment for these endpoints and either set it to **Ongoing**, or set the **End Time** well past the notification deadline plus the install time. Keep the **End User Notification** deadline shorter than the deployment window so the upgrade starts before the deployment ends.
+3. Create a new Phase 3 deployment for these endpoints. Set it to **Ongoing**, or set the **End Time** much later than the notification deadline plus the install time. Make the **End User Notification** deadline shorter than the deployment window. Then the upgrade starts before the deployment ends.
 
 ---
 
@@ -542,7 +542,7 @@ If `SetupDiagResults.xml` does not exist, run SetupDiag through Tanium with a sm
    ```
    cmd.exe /c SetupDiag.exe /Output:C:\Windows\Logs\SetupDiag\SetupDiagResults.log
    ```
-3. Deploy it to the affected endpoints, then confirm the result file was written:
+3. Deploy it to the affected endpoints. Then make sure that the script wrote the result file:
    ```
    Get "Computer Name" and "File Exists"["C:\Windows\Logs\SetupDiag\SetupDiagResults.log"] from all machines with "Computer Name" contains "WS-EXAMPLE-01"
    ```
