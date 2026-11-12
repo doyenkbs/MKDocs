@@ -51,7 +51,7 @@ This guide walks through planning, configuring, and maintaining software updates
 
 ##  Planning the SUP infrastructure
 1. Decide which sites require a SUP (Central Administration Site and all primary sites must have at least one SUP to do compliance assessment).  
-2. Choose whether the SUP and WSUS run on the same server or remote — the first SUP installed at a site becomes the **synchronization source**; additional SUPs act as replicas.  
+2. Select if the SUP and WSUS run on the same server or on a remote server. The first SUP installed at a site becomes the **synchronization source**. Other SUPs are replicas.
 3. Consider scale (number of clients), distribution points, network topology, and internet-based clients.  
 
 ---
@@ -59,7 +59,7 @@ This guide walks through planning, configuring, and maintaining software updates
 ##  Prepare the WSUS server(s)
 1. Install the **WSUS role** and required IIS features on the chosen server(s).  
 2. Configure WSUS initial settings (content directory, update source, proxy settings).  
-3. If the SUP is remote from the site server and the site computer account lacks access, create a **WSUS Server Connection Account** (must be local admin on the WSUS server and in the WSUS Administrators group).  
+3. If the SUP is on a different server and the site computer account has no access, create a **WSUS Server Connection Account**. It must be a local admin on the WSUS server and a member of the WSUS Administrators group.
 
 !!! tip
     Run WSUS cleanup and maintenance tasks before your first large sync.

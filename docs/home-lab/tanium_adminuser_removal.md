@@ -35,7 +35,7 @@ Install-WindowsFeature -Name RSAT-AD-PowerShell
 ### Tanium
 
 - API service account with permissions to upload files and update **package 2**
-- **Package 2** (`LabTest - Remove Admin` for example) already created in the Tanium console before running `Get-AdminOU.ps1` for the first time — note its numeric Package ID (`148603` for example)
+- **Package 2** (for example `LabTest - Remove Admin`) must exist in the Tanium console before the first run of `Get-AdminOU.ps1`. Record its numeric Package ID (for example `148603`).
 
 ---
 
@@ -309,7 +309,7 @@ exit 0
 
 ## Step 4 — Create Tanium Package 1 (AD Query Package)
 
-This package runs `Get-AdminOU.ps1` on the designated runner server — this does not have to be the Domain Controller, just any domain-joined server with RSAT installed and the Tanium client running.
+This package runs `Get-AdminOU.ps1` on the runner server. This server does not have to be the Domain Controller. Any domain-joined server with RSAT and the Tanium client is correct.
 
 ### Directory layout on the runner server
 
@@ -338,7 +338,7 @@ Replace `F:\path\to\scripts\` with the actual path on your runner server.
 Because `$PSScriptRoot` in the script resolves to `F:\path\to\scripts\`, both `tanium_api_cred.bin` and `InAdminOU.txt` are automatically found in the same directory — no hardcoded paths needed inside the script.
 
 <!-- !!! warning
-    `tanium_api_cred.bin` is DPAPI-encrypted and bound to the Windows user account and machine it was created on. The Tanium client service on the runner server must execute as the same user account that ran the credential generation command in Step 1 — otherwise decryption fails and Phase 2 returns `Forbidden`.
+    `tanium_api_cred.bin` is DPAPI-encrypted and linked to the Windows user account and machine that created it. The Tanium client service on the runner server must run as the same user account that ran the credential command in Step 1. If not, decryption fails and Phase 2 returns `Forbidden`.
 
 !!! note
     Target Package 1 only at the designated runner server using a Tanium targeting filter on computer name or subnet — not at all endpoints. -->

@@ -15,7 +15,7 @@ tags:
 
 Most home labs run Ubuntu, Debian, or a RHEL rebuild like Rocky or AlmaLinux. Those are fine, but if you work in an environment that runs Red Hat Enterprise Linux, practicing on the real thing is worth the extra setup. You get `subscription-manager`, Red Hat errata, and the same kernel patching workflow that shows up in vulnerability remediation tickets.
 
-This guide covers getting RHEL at no cost, building the VM on Proxmox VE, installing and registering it, the post-installation setup, and the problems worth knowing about before you hit them.
+This guide shows how to get RHEL at no cost, build the VM on Proxmox VE, and install and register RHEL. It also covers the post-installation setup and the problems to know about before they occur.
 
 **What you'll end up with:**
 
@@ -88,7 +88,7 @@ The download page offers two ISO formats per release.
 | Binary DVD | ~10 GB | Yes, all of them | No |
 | Boot ISO | ~1 GB | No | Yes |
 
-**Use the DVD.** The Boot ISO downloads every package from Red Hat's CDN during installation, which means the install depends on working DNS, working TLS, and a working entitlement before you have a shell to troubleshoot with. The DVD carries everything locally and installs offline.
+**Use the DVD.** The Boot ISO downloads each package from the Red Hat CDN during installation. Thus, the install needs working DNS, working TLS, and a working entitlement before you have a shell to troubleshoot. The DVD has all packages locally and installs offline.
 
 ### Download
 
@@ -610,7 +610,7 @@ sudo dnf clean all
     A pinned release eventually falls out of support and stops receiving fixes. Pinning controls *when* you upgrade, it does not avoid upgrading. Track the end of support date for whatever minor release you pin to.
 
 !!! danger "Document every release lock"
-    A lock nobody knows about breaks vulnerability scanning in a way that wastes hours. A scanner flags a package as outdated when the fix only exists in a later minor release the system is deliberately not tracking, the remediation ticket goes to whoever owns the host, and the fix genuinely cannot be applied. If you pin something, write it down where the people reading scan results will find it.
+    An unknown lock breaks vulnerability scans and wastes hours. A scanner flags a package as old when the fix exists only in a later minor release that the system does not track on purpose. The remediation ticket goes to the host owner, and the owner cannot apply the fix. If you pin a package, record it where the people who read scan results will find it.
 
 Note that a release lock does **not** stop kernel updates. You still receive kernel errata published for the pinned release, so the patching workflow below works the same way.
 
@@ -1075,7 +1075,7 @@ Start with the failed list, read the unit's recent log lines, then look at the u
 
     The second copy is deliberate, since `clean` can remove it again.
 
-    **If that does not work, it is not your system.** When the subscription shows Active on the account, the product certificate is present, `subscription-manager list --installed` correctly reports the OS, the system registers cleanly, and the certificate still has zero content sets, the subscription pool needs refreshing on Red Hat's side. Nothing local will fix it.
+    **If that does not work, the problem is not your system.** These conditions can all be true: the subscription shows Active on the account, the product certificate is there, `subscription-manager list --installed` shows the OS correctly, and the system registers cleanly. If the certificate still has zero content sets, Red Hat must refresh the subscription pool on their side. No local change repairs it.
 
     Contact **Customer Service**, not technical support:
 

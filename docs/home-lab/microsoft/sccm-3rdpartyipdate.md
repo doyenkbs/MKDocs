@@ -41,7 +41,7 @@ Third-party software often contains vulnerabilities that need timely patching. B
 1. In the SCCM console, go to **Administration → Site Configuration → Sites**.  
 2. Select your site and click **Configure Site Components → Software Update Point**.  
 3. In the SUP settings, check **Enable third-party software updates**.  
-4. Ensure the **WSUS Signing Certificate** is configured and deployed to clients.  
+4. Configure the **WSUS Signing Certificate** and deploy it to clients.
 
 ---
 

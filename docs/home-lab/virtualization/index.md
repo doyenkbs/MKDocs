@@ -1,6 +1,6 @@
 # Containers & Virtualization
 
-The compute layer of the home lab — the hypervisors and containerization platform that everything else in this site (self-hosted apps, core services, the Microsoft and Tanium labs) actually runs on top of.
+The compute layer of the home lab: the hypervisors and the container platform that all other parts of this site run on (self-hosted apps, core services, and the Microsoft and Tanium labs).
 
 ## What's Covered
 
@@ -54,7 +54,7 @@ Almost everything documented elsewhere on this site runs *on top of* what's cove
 - **[Core Services](../services/index.md)** — Mailcow, Cloudflare tunnels, and the Ansible automation stack all run on hosts provisioned here
 - **[Microsoft Lab](../microsoft/index.md)** — the SCCM/MECM environment runs on Hyper-V VMs, documented separately since it uses a different virtualization stack for that specific lab
 
-If you're setting up a new service anywhere else in this documentation, this is the section to start from: provision the VM or LXC here first, then move on to the app-specific guide.
+To set up a new service from a different part of this documentation, start in this section. Make the VM or LXC here first. Then go to the guide for the app.
 
 ---
 
@@ -71,4 +71,4 @@ See [Proxmox Virtual Machines](proxmox/vms.md) and [Proxmox Containers](proxmox/
 
 ## Related: New LXC Bootstrap Automation
 
-Once a new LXC is created here, the [Ansible LXC Bootstrap playbook](../services/ansible-lxc-bootstrap.md) in Core Services takes over — creating the automation service account, hardening SSH, and installing baseline packages — so it's ready for the [patch](../services/ansible-patch.md) and [backup](../services/ansible-config-backup.md) automation from day one.
+After you create a new LXC here, the [Ansible LXC Bootstrap playbook](../services/ansible-lxc-bootstrap.md) in Core Services continues the work. It creates the automation service account, hardens SSH, and installs baseline packages. Then the LXC is ready for the [patch](../services/ansible-patch.md) and [backup](../services/ansible-config-backup.md) automation from the first day.

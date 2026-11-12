@@ -13,7 +13,7 @@ summary: This section explains how to configure firewall rules via **Group Polic
 
 ---
 
-This section describes how to prepare **Active Directory (AD)** for **System Center Configuration Manager (SCCM)** by extending the AD schema, creating the **System Management container**, and delegating permissions to the SCCM server. These steps ensure SCCM can publish its site information into Active Directory.
+This section shows how to prepare **Active Directory (AD)** for **System Center Configuration Manager (SCCM)**. You extend the AD schema, create the **System Management container**, and delegate permissions to the SCCM server. These steps let SCCM publish its site information into Active Directory.
 
 Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/intune/configmgr/core/get-started/set-up-your-lab) for detailed setup instructions and access to all necessary download links for the lab.
 

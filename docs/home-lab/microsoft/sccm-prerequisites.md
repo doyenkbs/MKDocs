@@ -12,14 +12,14 @@ summary: This guide walks you through preparing your SCCM (Configuration Manager
 # SCCM / MECM Server Setup – Prerequisites & Tools
 
 
-This guide walks you through preparing your **SCCM (Configuration Manager)** or **MECM** server by installing required Windows features, setting up SQL Server and Reporting Services, installing ADK/WinPE, and ensuring you’re ready to deploy OS images and manage software updates.
+This guide shows how to prepare your **SCCM (Configuration Manager)** or **MECM** server. You install the necessary Windows features, set up SQL Server and Reporting Services, and install ADK/WinPE. Then the server is ready to deploy OS images and manage software updates.
 
 Click [Set up a Configuration Manager lab](https://learn.microsoft.com/en-us/intune/configmgr/core/get-started/set-up-your-lab) for detailed setup instructions and access to all necessary download links for the lab.
 
 ---
 
 ## 1. Prerequisite Windows Features
-On the SCCM/MECM server, install the roles and features through **Server Manager → Add Roles and Features**, and if prompted, use the alternate source path to the `SXS` folder from the installation ISO.
+On the SCCM/MECM server, install the roles and features through **Server Manager → Add Roles and Features**. If Windows asks for it, use the alternate source path to the `SXS` folder on the installation ISO.
 
 - **Web Server (IIS)**  
 - **.NET Framework 3.5** 

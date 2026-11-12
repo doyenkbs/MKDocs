@@ -16,7 +16,7 @@ summary: This guide walks through the installation steps for setting up the Conf
 The **SCCM (System Center Configuration Manager) Admin Console** is a management interface that allows administrators to connect to and manage an existing SCCM site from a workstation.  
 Installing the console on a separate machine provides flexibility, enabling day-to-day administration without requiring direct login to the SCCM site server.  
 
-This guide walks through the prerequisites, download sources, and installation steps for setting up the **Configuration Manager (SCCM) Admin Console** on both the server and a workstation, ensuring proper integration with your SCCM environment.
+This guide shows the prerequisites, download sources, and installation steps for the **Configuration Manager (SCCM) Admin Console**. It covers the server and a workstation.
 
 ---
 
@@ -82,7 +82,7 @@ Reference: [*Setup Wizard for Primary Site*](https://learn.microsoft.com/en-us/i
 
 Once the **primary site installation** completes:  
 
-1. The **SCCM Admin Console** is installed automatically on the site server.  
+1. The site server installs the **SCCM Admin Console** automatically.
 2. To install the Admin Console on another workstation:  
    >- Run **`AdminConsole.msi`** from the `\Tools\ConsoleSetup` folder in your installation media.  
    >- Follow the wizard to complete installation.  
