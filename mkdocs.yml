@@ -238,6 +238,7 @@ nav:
         - Remove IIS PHP Handler: home-lab/tanium/packages/remove-iis-php-handler.md
         - Remove Legacy Python: home-lab/tanium/packages/remove-legacy-python.md
         - Remove PHP Install: home-lab/tanium/packages/remove-php-install.md
+        - Remove Stale User Profiles: home-lab/tanium/packages/remove-stale-user-profiles.md
         - Remove Store Apps: home-lab/tanium/packages/remove-store-apps.md
         - Remove VS Code User Install: home-lab/tanium/packages/remove-vscode-user-install.md
         - Remove Zoom User Install: home-lab/tanium/packages/remove-zoom-user-install.md
