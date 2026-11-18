@@ -242,6 +242,7 @@ nav:
         - Remove Store Apps: home-lab/tanium/packages/remove-store-apps.md
         - Remove VS Code User Install: home-lab/tanium/packages/remove-vscode-user-install.md
         - Remove Zoom User Install: home-lab/tanium/packages/remove-zoom-user-install.md
+        - Run Command (Break-Glass): home-lab/tanium/packages/run-command.md
         - Set Time Zone: home-lab/tanium/packages/set-time-zone.md
         - Update Node.js in Adobe CC: home-lab/tanium/packages/update-adobe-cc-node.md
         - Update Store Apps: home-lab/tanium/packages/update-store-apps.md
