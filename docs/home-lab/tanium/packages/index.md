@@ -13,7 +13,7 @@ A package runs a script on targeted endpoints as an action. Output goes to the a
 
 | Package | What it does | Platform | Updated |
 |---|---|---|---|
-| [Edge MSI Standardization](edge-msi-standardization.md) | Makes the Enterprise MSI the only managed copy of Edge, removes the stale Store (AppX) registration even when locked, and clears stale registry entries. | Windows | 2026-09-18 |
+| [Edge MSI Standardization](edge-msi-standardization.md) | Makes the Enterprise MSI the owner of Edge, clears the policy values that stop Edge from installing or updating, and removes older Store (AppX) registrations that a user holds. | Windows | 2026-11-24 |
 | [Find File by Name](find-file-by-name.md) | Searches drives or folders for a file name or wildcard. Returns every matching path and its last modified date. | Windows | 2026-09-18 |
 | [Free Up User Disk Space](free-up-user-disk-space.md) | Frees disk space. Removes old temp files, error reports, and the Delivery Optimization cache, sets OneDrive files not used for 14 days to online-only, and asks the user before it empties Recycle Bin items older than 30 days. Optional: Windows Update downloads, crash dumps, browser caches, and Windows.old. | Windows | 2026-11-12 |
 | [Local Admin Removal](local-admin-removal.md) | Removes domain accounts in the AD admin OU from the local Administrators group on managed endpoints. Two scripts, two packages. | Windows | 2026-08-10 |
